@@ -1,0 +1,17 @@
+// @import url('https://fonts.googleapis.com/css?family=Exo+2');
+@import "bootstrap/scss/bootstrap";
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&family=Mukta:wght@600&family=Narnoor&family=Nunito:wght@200&family=Roboto+Mono:ital,wght@0,100;1,700&display=swap');
+  body {
+    font-family: 'Manrope';
+  }
+
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.5s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+  }
