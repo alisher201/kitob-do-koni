@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- {{ $i18n.locale }}
-    <h1>{{ $t('hello', { name: 'vue-i18n' }) }}</h1> 
-   -->
+    <h1>{{ $t('hello', { name: 'vue-i18n' }) }}</h1>  -->
+  
 
 
 
@@ -10,21 +10,21 @@
 
     <HeaderContact />
     <HeaderLogo />
-    <nav class="navbar">
+    <nav class="navbar pb-0">
       <HeaderMobileMenu />
-      <div class="navbar-group">
+      <div class="navbar-group container  px-0">
         <HeaderNavLinks />
       </div>
-      <div class="navbar-group">
+      <!-- <div class="navbar-group">
         <HeaderSearchBar />
         <HeaderProfile />
         <HeaderCartButton @open="cartState" />
-      </div>
+      </div> -->
     </nav>
     <!--User Modal-->
-    <HeaderUserModal />
+    <!-- <HeaderUserModal /> -->
     <!--Cart Component-->
-    <HeaderCart :is-open="cart" @closeCart="cartState" />
+    <!-- <HeaderCart :is-open="cart" @closeCart="cartState" /> -->
   </div>
 </template>
 

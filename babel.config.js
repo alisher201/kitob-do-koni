@@ -1,5 +1,6 @@
 module.exports = {
-  presets: [
-    '@vue/app'
-  ]
+  // presets: [
+  //   '@vue/app'
+  // ]
+  presets: ['@nuxt/babel-preset-app']
 }

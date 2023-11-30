@@ -6,7 +6,8 @@
 
         <div class="col px-0 d-flex justify-content-end">
           <div class="col-5 d-flex justify-content-between">
-            <form>
+            
+            <div class="d-flex align-items-center">
               <label for="locale-select" class="me-1">
                 <img src="~assets/contact/solar_global-bold.png" alt=""
               /></label>
@@ -20,7 +21,7 @@
                   Ruscha
                 </option>
               </select>
-            </form>
+            </div>
 
             <a href="#">
               <img src="~/assets/contact/ri_facebook-fill.png" alt=""
@@ -55,10 +56,13 @@ select {
     outline: none;
     color: white;
     font-size: 16px;
+    cursor: pointer;
 }
 select option {
     color: #000;
+    cursor: pointer;
    
 }
+
 
 </style>

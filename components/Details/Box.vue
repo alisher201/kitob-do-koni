@@ -49,11 +49,6 @@ function addtoCart(item: object) {
 </script>
 
 <style scoped lang="scss">
-.img-fluid {
-  min-width: 90% !important;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
 .control {
   .number {
     border: 0.2px solid lightgrey;

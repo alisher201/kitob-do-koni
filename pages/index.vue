@@ -1,7 +1,11 @@
 <template>
   <main>
     <HomeCarousel />
-    <HomeAboutUs />
+    <HomePossibilities/>
+    <!-- <HomeMarketFast/> -->
+    <HomeMobileApp/>
+  
+
   </main>
 </template>
 

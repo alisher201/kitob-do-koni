@@ -1,6 +1,5 @@
+import { State } from "../components/types";
 import { defineStore } from "pinia";
-import { State } from '@/components/types'
-
 export const useMainStore = defineStore("main", {
   state: (): State => ({
     productInfo: {},
@@ -134,9 +133,9 @@ export const useMainStore = defineStore("main", {
     totalPrice: ({ cartItems }): number | undefined => {
       if (cartItems.length !== 1) {
         const sum = cartItems?.reduce((acc: number, obj: any) => {
-          let result = acc + obj.price
-          return result
-        },0);
+          let result = acc + obj.price;
+          return result;
+        }, 0);
         return sum;
       }
       return cartItems[0].price;
@@ -154,7 +153,7 @@ export const useMainStore = defineStore("main", {
     // Info Component
     addtoInfo(n: number) {
       const selectedProduct = this.items.find((item) => item.id === n);
-      this.productInfo = selectedProduct! ;
+      this.productInfo = selectedProduct!;
     },
   },
 });

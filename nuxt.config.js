@@ -1,5 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
 export default defineNuxtConfig({
+  // alias:{
+  //     "assets": "/<rootDir>/assets",
+
+  // },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
@@ -10,7 +15,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["store"],
   },
-  modules: ["@nuxt/devtools", "@pinia/nuxt"],
+  modules: ["@nuxt/devtools", "@pinia/nuxt", 'nuxt-swiper'],
   extends: ["nuxt-seo-kit"],
   routeRules: {
     "/**": { robots: "index, follow" },
@@ -19,7 +24,7 @@ export default defineNuxtConfig({
     public: {
       siteUrl:
         process.env.NUXT_PUBLIC_SITE_URL,
-      siteName: "V-Store",
+      siteName: "Kitob",
       siteDescription:
         "A Full StoreFront built with Nuxt 3 + Pinia 2 + Bootstrap 5....",
       language: "en-US",
@@ -40,4 +45,12 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: false },
+  ssr: true,
+  loading:  false,
+  server: {
+    port: process.env.PORT || 3000,
+  },
+
+
+
 });

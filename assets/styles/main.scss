@@ -3,7 +3,12 @@
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&family=Mukta:wght@600&family=Narnoor&family=Nunito:wght@200&family=Roboto+Mono:ital,wght@0,100;1,700&display=swap');
   body {
     font-family: 'Manrope';
+    overflow-x: hidden;
   }
+  // * {
+    
+  //   overflow-x: hidden;
+  // }
 
 
 .page-enter-active,
@@ -14,4 +19,7 @@
 .page-leave-to {
   opacity: 0;
   filter: blur(1rem);
+  }
+  h1,h2,h3,h4,h5,h6 {
+    overflow: hidden;
   }

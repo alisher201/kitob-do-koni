@@ -1,28 +1,60 @@
 <template>
-  <section class="carousel">
-    <div id="heroControls" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#heroControls" data-bs-slide-to="0" class="active" aria-current="true"
-          aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#heroControls" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#heroControls" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  <section class="container mt-5">
+    <div class="row ">
+      <div class="col-8 p-0">
+        <div
+          id="carouselExampleDark"
+          class="carousel carousel-dark slide carouselSize"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="10000">
+              <img src="~/assets/jum1.jpg" class="d-block w-100" alt="..." />
+            </div>
+            <div class="carousel-item" data-bs-interval="2000">
+              <img src="~/assets/jum2.jpg" class="d-block w-100" alt="..." />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="~/assets/carousel1.png"
+                class="d-block w-100"
+                alt="..."
+              />
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleDark"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleDark"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
       </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img class="img-fluid" src="~/assets/jum1.jpg" alt="First-slide" title="First-slide">
+      <div class="col-4">
+        <div class="">
+          <img src="~/assets/jumaMuborak.png" alt="" class="advertisement">
         </div>
-        <div class="carousel-item">
-          <img class="img-fluid" src="~/assets/jum2.jpg" alt="Second-slide" title="Second-slide">
-        </div>
-        <div class="carousel-item">
-          <img class="img-fluid" src="~/assets/jum3.jpg" alt="Third-slide" title="Third-slide">
+        <div class="mt-3">
+          <img src="~/assets/jumaMuborak.png" alt="" class="advertisement"/>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<style scoped>
+<style>
 .img-fluid {
   min-width: 800px !important;
 }
@@ -35,7 +67,17 @@
   border: 0.6px solid rgb(129, 127, 127);
 }
 
-.carousel-indicators>.active {
+.carousel-indicators > .active {
   background: #e0f0f8;
+}
+
+.carouselSize img {
+  /* width: 700px !important; */
+  height: 300px;
+  border-radius: 10px;
+}
+.advertisement {width: 100%;
+  height: 142px;
+  border-radius: 12px;
 }
 </style>
