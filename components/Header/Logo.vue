@@ -18,11 +18,16 @@
         <img src="~/assets/contact/category.png" alt="" /> Katalog
       </button>
 
-      <div class="input-group" style="width: 479px; height: 44px">
-        <input type="text" class="form-control" placeholder="kitob izlash..." />
+      <div class="input-group" style="width: 479px">
+        <input
+          type="text"
+          class="form-control"
+          style="height: 44px"
+          placeholder="kitob izlash..."
+        />
         <span
           class="input-group-text d-flex justify-content-center align-items-center"
-          style="width: 68px"
+          style="width: 68px; height: 44px"
           ><img src="~/assets/contact/bx_search-alt-2.png" alt=""
         /></span>
       </div>
@@ -45,7 +50,6 @@
     <div class="" style="min-height: 100vh">
       <HomeCategoriesList />
     </div>
-    
   </div>
 </template>
 

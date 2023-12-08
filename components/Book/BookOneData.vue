@@ -1,9 +1,52 @@
+<script setup>
+import bookImg from "../../assets/contact/bookimg.png";
+import bookImg1 from "../../assets/contact/bookImg2.png";
+
+
+
+const bookcontent = ref(null)
+const bookImgs = [
+  { imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+  {
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  {
+    imgs: bookImg,
+    bookTitle: "Sharqiy ekspressdagi qotillik",
+    author: "Agata Kristi",
+  },
+  {
+    imgs: bookImg1,
+    bookTitle: "Sharqiy ekspressdagi qotillik",
+    author: "Dafna Dyu Morye",
+  },
+  { imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+  {
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+
+];
+
+const orderItem = () => {
+  const router = useRouter()
+  router.push('/OrderItem')
+
+}
+onMounted(() => {
+  bookcontent.value = 1;
+})</script>
+
 <template>
   <div class="container mb-5 pb-5 px-0">
-    <small class="mt-5">
+    <div class="my-3"><small class="mt-5">
       Bosh sahifa / Katalog / San'at va Suratkashlik / Atom odatlari (Jeyms
       Klir)
-    </small>
+    </small></div>
+    
 
     <div class="row">
       <div class="col-4 ">
@@ -42,16 +85,16 @@
             <img src="../../assets/contact/download.png" alt="" />
           </div>
         </div>
-        <div>
-          <span class="">
+        <div class="d-flex align-items-center">
+          <p class="d-flex align-items-center">
             <img src="../../assets/contact/Star.png" alt="" class=""
-          /></span>
+          /></p>
 
-          <span class="star">5,0</span> <small class="statCount">(123)</small>
-          <span class="mx-2">|</span>
-          <span><img src="../../assets/contact/chat.png" alt="" /></span>
-          <span class="commentCount">127</span>
-          <smal class="statCount">отзывов</smal>
+          <p class="star">5,0</p> <small class="statCount">(123)</small>
+          <p class="mx-2">|</p>
+          <p><img src="../../assets/contact/chat.png" alt="" /></p>
+          <p class="commentCount">127</p>
+          <p class="statCount small ">отзывов</p>
         </div>
         <div>
           <span class="statCount">narxi:</span>
@@ -102,30 +145,27 @@
             </div>
 
             <button class="w-100 basket mt-2">Savatga qo'shish</button>
-            <button class="w-100 buy mt-2">Tezkor sotib olish</button>
+            <button class="w-100 buy mt-2" @click="orderItem">Tezkor sotib olish</button>
           </div>
         </div>
       </div>
     </div>
     <div class="bookData">
-      <div class="aboutMenu">
-        <span class="aboutBook">M'alumot</span>
-      <span class="ms-3">Tarkib</span>
-      <span class="ms-3">Sharhlar</span>
+      <div class="aboutMenu d-flex">
+      
+        
+        <div class="" :class="{'aboutBook' : bookcontent == 1}" @click="bookcontent = 1">M'alumot</div>
+      <div class="ms-3" :class="{'aboutBook' : bookcontent == 2}" @click="bookcontent = 2">Tarkib</div>
+      <div class="ms-3" :class="{'aboutBook' : bookcontent == 3}" @click="bookcontent = 3">Sharhlar</div>
       </div>
-      <hr>
-      <div class="about">
-        <p><span ref="mySpan">Muallif</span> <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-        <p class="mt-2">Janr <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-
-        <p  class="mt-2">Yil <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-
-        <p class="mt-2">Yosh chegarasi <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-        <p class="mt-2">ISBN <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-        <p class="mt-2">Sahifalar soni <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-        <p class="mt-2">Turkum <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-        <p class="mt-2">Nashriyot uyi <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-
+      <hr class="mt-0">
+      <div v-show="bookcontent == 1"><BookAbaut/></div>
+      <div v-show="bookcontent ==2">
+        <h1>ma'lumot yo'q</h1>
+      </div>
+     
+      <div class="comments" v-if="bookcontent == 3">
+        <BookComments/>
       </div>
       
     </div>
@@ -167,44 +207,15 @@
             <div class="ps-2"><small class="author">{{ item.author }}</small></div>
             <img src="../../assets/contact/Star.png" alt="" />
             <small class="stats ms-2">5,0</small>
-            <span class="starsNumbers">(32)☹️</span>
+            <span class="starsNumbers">(32)</span>
           </div>
         </div>
       </div>
   </div>
 </template>
-<script setup>
-import bookImg from "../../assets/contact/bookimg.png";
-import bookImg1 from "../../assets/contact/bookImg2.png";
-const mySpan = ref(null)
-console.log(mySpan.value);
 
-const bookImgs = [
-  { imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {
-    imgs: bookImg,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Agata Kristi",
-  },
-  {
-    imgs: bookImg1,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Dafna Dyu Morye",
-  },
-  { imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  }
-];</script>
 
-<style>
+<style scoped>
 .bookimg {
   display: flex;
   align-items: center;
@@ -297,15 +308,17 @@ const bookImgs = [
 
 }
 .aboutBook {
-  border-bottom: 2px solid blue;
-  padding-bottom: 16px;
+  border-bottom: 2px solid #307cce;
+  padding-bottom: 8px;
+  color: #307cce;
 }
 .aboutMenu {
+
   padding: 32px 32px 0 32px;
 }
-.about {
+
+.comments {
   padding: 0 32px 32px 32px;
-  color: #858D96;
 
 }
 .nextRight {
@@ -403,5 +416,10 @@ const bookImgs = [
   width: 100%;
   height: 100%;
   border-radius: 7px;
+}
+.aboutMenu div:hover {
+  cursor: pointer;
+  font-weight: 500;
+
 }
 </style>
