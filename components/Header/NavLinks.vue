@@ -25,26 +25,26 @@ const navLinks = [
     name: "Audio kitob",
     Link: "/contact",
   },
-  {
-    name: "Aksessuarlar",
-    Link: "/contact",
-  },
-  {
-    name: "O'quvchi qurulma",
-    Link: "/contact",
-  },
-  {
-    name: "Krujka",
-    Link: "/contact",
-  },
-  {
-    name: "Futbolka",
-    Link: "/contact",
-  },
-  {
-    name: "Ruchka",
-    Link: "/contact",
-  },
+  // {
+  //   name: "Aksessuarlar",
+  //   Link: "/contact",
+  // },
+  // {
+  //   name: "O'quvchi qurulma",
+  //   Link: "/contact",
+  // },
+  // {
+  //   name: "Krujka",
+  //   Link: "/contact",
+  // },
+  // {
+  //   name: "Futbolka",
+  //   Link: "/contact",
+  // },
+  // {
+  //   name: "Ruchka",
+  //   Link: "/contact",
+  // },
 ];
 </script>
 <style>

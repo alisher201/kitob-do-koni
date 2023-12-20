@@ -47,9 +47,9 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   ssr: true,
   loading:  false,
-  server: {
-    port: process.env.PORT || 3000,
-  },
+  // server: {
+  //   port: process.env.PORT || 3000,
+  // },
 
 
 

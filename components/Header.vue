@@ -53,7 +53,7 @@ const cartState = () => (cart.value = !cart.value);
 
 <style lang="scss">
 nav {
-  z-index: 100;
+  z-index: 1;
 }
 
 .navbar {
