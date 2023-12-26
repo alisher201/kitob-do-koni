@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <div class="container mb-5 pb-5 px-0">
       <h4 class="mt-4" style="font-weight: 700">Buyurtmani rasmiylashtirish</h4>
 
@@ -190,7 +191,7 @@
         </div>
 
         <div class="deliverGrid ">
-          <div class="deliver d-flex" v-for="(item, idx) in delevirey">
+          <div class="deliver d-flex" v-for="(item, idx) in delevirey" :key="idx">
             <input class="form-check-input" type="radio" name="deliver" :value="idx" v-model="delevireyAdress"/>
             <div class="ps-2">
               <small>{{ item.delevireyData }}</small>

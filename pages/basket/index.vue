@@ -26,7 +26,7 @@
                                 <p class="remove">Удалить все</p>
                             </div>
                         </div>
-                        <div class="d-flex mt-4" v-for="(item, idx) in basketProduct">
+                        <div class="d-flex mt-4" v-for="(item, idx) in basketProduct" :key="idx">
                             <div class="me-3 d-flex align-items-center"><input type="checkbox" class="basketCheck"></div>
                             <div class="basketProduts">
                                 <div class=" d-flex justify-content-between">
