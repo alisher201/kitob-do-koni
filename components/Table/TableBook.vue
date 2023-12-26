@@ -1,5 +1,5 @@
 <template>
-    <div style="display:flex">
+    <div class="wrapper">
         <div class="main" v-for="(item,ind) in data" :key="ind">
             <img :src="item.img" alt="">
             <h2>{{item.name}}</h2>
@@ -67,6 +67,10 @@ const data = [
 </script>
 
 <style lang="scss" scoped>
+.wrapper{
+    display: flex;
+    background-color:#FAFAFA
+}
 .main{
     width: 840px;
     height: 438px;
