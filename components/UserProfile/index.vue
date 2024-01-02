@@ -16,7 +16,7 @@
           </div>
           <img src="@/assets/profile/chiziq.svg" alt="" />
           
-          <NuxtLink to="/profile/Img" class="main_list" >
+          <NuxtLink to="/profile" class="main_list" >
             <img class="rasm"  src="@/assets/profile/Frame.svg" alt="" />
             <p  class="h2">Bildirishnoma</p>
           </NuxtLink>
@@ -28,7 +28,7 @@
             <img class="rasm" src="@/assets/profile/watch.svg" alt="" />
             <p href="" class="h2">Mening Kitoblarim</p>
           </NuxtLink>
-          <NuxtLink to=""  class="main_list">
+          <NuxtLink to="/profile/settings"  class="main_list">
             <img class="rasm" src="@/assets/profile/nastroyka.svg" alt="" />
             <p href="" class="h2">Profil sozlamalar</p>
           </NuxtLink>
@@ -64,6 +64,7 @@ definePageMeta({
   border-bottom: none; 
   text-decoration: none;
 }
+
 .main {
   background-color: #fafafa;
   width: 358px;

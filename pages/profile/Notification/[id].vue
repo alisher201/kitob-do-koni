@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="div">
-            <NuxtLink to='Img'>
+            <dev @click="back.go(-1)">
                 <img class="h1" src="@/assets/profile/back.png" alt="">
-
-            </NuxtLink>
+                
+            </dev>
 
             <div  class="div1">
                 <div  class="div2">
@@ -19,9 +19,16 @@
 </template>
 
 <script setup>
+const back = useRouter();
 </script>
 
 <style lang="scss" scoped>
+.router-link-exact-active,.nuxt-link,
+ .nuxt-link{
+  background-color: #f1f1f1;
+  border-bottom: none; 
+  text-decoration: none;
+}
 .div{
     width: 961px;
     height: 538px;

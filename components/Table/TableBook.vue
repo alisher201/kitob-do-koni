@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <div class="main" v-for="(item,ind) in data" :key="ind">
+        <NuxtLink to="/reading" class="main" v-for="(item,ind) in data" :key="ind">
             <img :src="item.img" alt="">
             <h2>{{item.name}}</h2>
             <p class="main_p">{{item.author}}</p>
@@ -10,7 +10,7 @@
                 <img class="main_list_img" style="height:2px;margin-top:8px" :src="item.stecer" alt="">
             </div>
            
-        </div>
+        </NuxtLink>
     </div>
 </template>
 
@@ -73,13 +73,13 @@ const data = [
 }
 .main{
     width: 840px;
-    height: 438px;
+    height: 308px;
     top: 232px;
-    left: 479px;
+    // left: 479px;
     border-radius: 10px;
     background-color:#FAFAFA;
     // background-color: red;
-    margin-left:30px
+    margin-left:30px;
 }
 .main_list{
     display: flex;
@@ -99,7 +99,7 @@ h2{
     margin:6px 7px 3px 8px; 
 }
 .main_p{
-    width: 92px;
+    width: 105px;
     height: 18px;
     top: 570px;
     left: 517px;
@@ -118,6 +118,9 @@ h2{
     top: 592px;
     left: 517px;
     margin:3px 39px 4px 8px; 
+}
+.main_list{
+    margin:0px 0px 0px 8px;
 }
 .main_list_p{
     width: 27px;
@@ -140,5 +143,6 @@ h2{
     top: 619px;
     left: 549px;
     border-radius: 2px;
+
 }
 </style>

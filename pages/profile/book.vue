@@ -72,6 +72,8 @@
     margin: 15px 0px 30px 30px;
     // background-color: red;
     padding: 5px;
+    cursor: pointer;
+
   }
   .nuxt-link-exact-active .nuxt-link,
   .NuxtLink .nuxt-link-exact .nuxt-link {

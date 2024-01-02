@@ -1,15 +1,9 @@
 <template>
-    <div>
-        <BookOneData/>
-       
-        
-
-        
-        
-    </div>
+  <div>
+    <BookOneData />
+  </div>
 </template>
 <script>
 </script>
 <style>
-    
 </style>

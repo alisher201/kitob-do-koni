@@ -1,12 +1,7 @@
 <template>
   <div class="navbar-item  d-none d-xl-block d-lg-block py-2 ">
     <NuxtLink
-      class="navLink"
-      :class="idx != 0 ? 'ms-3' : 'ms-0'"
-      :to="link.Link"
-      v-for="(link, idx) in navLinks" :key="idx"
-      :id="idx"
-      >{{ link.name }}
+      class="navLink" :class="idx != 0 ? 'ms-3' : 'ms-0'" :to="link.Link" v-for="(link, idx) in navLinks" :key="idx" :id="idx">{{ link.name }}
     </NuxtLink>
   </div>
 </template>
