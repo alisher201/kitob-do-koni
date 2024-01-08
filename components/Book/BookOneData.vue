@@ -34,7 +34,6 @@ const bookImgs = [
 const orderItem = () => {
   const router = useRouter()
   router.push('/OrderItem')
-
 }
 onMounted(() => {
   bookcontent.value = 1;

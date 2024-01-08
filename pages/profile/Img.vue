@@ -4,7 +4,7 @@
       <h1 class="h1">Bildirishnoma</h1>
   
       <div class="main_list" >
-        <NuxtLink to="/profile/SinglePage"   class="img1"  v-for="(item,index) in data" :key="index">
+        <NuxtLink to="/profile/[id]"   class="img1"  v-for="(item,index) in data" :key="index">
             <img :src="item.img"  alt="">
             <div >
                 <h2>{{item.word}}</h2>
