@@ -1,49 +1,49 @@
 <template>
   <div>
     <div class="container mb-5 pb-5 px-0">
-      <h4 class="mt-4" style="font-weight: 700">Buyurtmani rasmiylashtirish</h4>
+      <h4 class="mt-4" style="font-weight: 700">{{ $t("home.processing") }}</h4>
 
       <div class="d-flex justify-content-between">
         <div class="OrderProcessing">
           <div class="d-flex">
             <div class="processingNumber">1</div>
-            <p class="yourData ms-2">Sizning ma'lumotlaringiz</p>
+            <p class="yourData ms-2">{{ $t("home.yourInfo") }}</p>
           </div>
 
           <div class="processingData mt-3">
             <div>
               <label for="" class="processingLabel mb-1"
-                >Familiya <span>*</span></label
+                >{{ $t("home.surname") }}<span>*</span></label
               >
               <input
                 type="text"
                 class="form-control"
-                placeholder="Familiyangizni kiriting"
+                :placeholder="$t('home.entersurname')"
               />
             </div>
             <div>
               <label for="" class="processingLabel mb-1"
-                >Ism <span>*</span></label
+                >{{ $t("home.name") }}<span>*</span></label
               >
               <input
                 type="text"
                 class="form-control"
-                placeholder="Familiyangizni kiriting"
+                :placeholder="$t('home.entername')"
               />
             </div>
             <div>
               <label for="" class="processingLabel mb-1"
-                >Telefon raqam<span>*</span></label
+                >{{ $t("home.phone") }}<span>*</span></label
               >
               <input
                 type="text"
                 class="form-control"
-                placeholder="Familiyangizni kiriting"
+                :placeholder="$t('home.enternum')"
               />
             </div>
             <div>
               <label for="" class="processingLabel mb-1"
-                >Yetkazib berish shahri<span>*</span></label
+                >{{ $t("home.city") }}<span>*</span></label
               >
               <select class="form-select" aria-label="Default select example">
                 <option selected>Open this select menu</option>
@@ -54,7 +54,7 @@
             </div>
             <div>
               <label for="" class="processingLabel mb-1"
-                >Tuman <span>*</span></label
+                >{{ $t("home.district") }}<span>*</span></label
               >
               <select class="form-select">
                 <option selected><small>Open this select menu</small></option>
@@ -65,60 +65,59 @@
             </div>
             <div>
               <label for="" class="processingLabel mb-1"
-                >Manzil<span>*</span></label
+                >{{ $t("home.address") }}<span>*</span></label
               >
               <input
                 type="text"
                 class="form-control"
-                placeholder="Familiyangizni kiriting"
+                :placeholder="$t('home.enteraddress')"
               />
             </div>
           </div>
           <div class="mt-3">
-            <label for="" class="processingLabel mb-1">Kuryer uchun izoh</label>
+            <label for="" class="processingLabel mb-1">{{ $t("home.courier") }}</label>
             <input
               type="text"
               class="form-control"
-              placeholder="Familiyangizni kiriting"
             />
           </div>
         </div>
         <!-- buyurtma haqida -->
         <div class="yourOrderContainer">
-          <p class="yourOrder">Sizning buyurtmangiz</p>
+          <p class="yourOrder">{{ $t("home.basket.order") }}</p>
           <div class="d-flex justify-content-between orderAbout">
-            <p>Kitoblar (3)</p>
-            <p>128.000 so'm</p>
+            <p>{{ $t("home.basket.books") }} (3)</p>
+            <p>128.000 {{ $t("home.basket.sum") }}</p>
           </div>
 
           <div class="d-flex justify-content-between orderAbout my-1">
-            <p>Yetkazib berish</p>
-            <p>20.000 so'm</p>
+            <p>{{ $t("home.basket.delivery") }}</p>
+            <p>20.000 {{ $t("home.basket.sum") }}</p>
           </div>
 
           <div class="d-flex justify-content-between orderAbout">
-            <p>Chegirma</p>
-            <p>0 so'm</p>
+            <p>{{ $t("home.basket.discount") }}</p>
+            <p>0 {{ $t("home.basket.sum") }}</p>
           </div>
           <hr />
 
           <div class="d-flex justify-content-between orderTotal">
-            <p>Jami</p>
-            <p>148000 so'm</p>
+            <p>{{ $t("home.basket.total") }}</p>
+            <p>148000 {{ $t("home.basket.sum") }}</p>
           </div>
           <div class="mt-2">
-            <small>Promokod bormi ?</small>
+            <small>{{ $t("home.code") }}</small>
             <div class="d-flex justify-content-between mt-2">
               <input
                 type="text"
-                placeholder="  Promokodni kiriting"
+                :placeholder=" $t('home.enterCode')"
                 class="orderPromokod"
               />
 
-              <button class="submitProma">Qo'llash</button>
+              <button class="submitProma">{{ $t("home.apply") }}</button>
             </div>
             <button class="w-100 sendOrder mt-3" @click="payment">
-              Buyurtmani rasmiylashtirish
+              {{ $t("home.processing") }}
             </button>
           </div>
         </div>
@@ -128,9 +127,9 @@
       <div class="paymentType">
         <div class="d-flex">
           <div class="processingNumber">2</div>
-          <p class="yourData ms-2">To'lov usulini tanlang</p>
+          <p class="yourData ms-2">{{ $t("home.payment") }}</p>
         </div>
-        <p class="bycard">Karta orqali onlayn</p>
+        <p class="bycard">{{ $t("home.card") }}</p>
         <div class="peymentCards">
           <div
             class="peymentCard d-flex"
@@ -162,7 +161,7 @@
         </div>
         <div>
           <small style="font-weight: 600"
-            >Naqd pul yoki karta orqali qabul qilganda</small
+            >{{ $t("home.cash") }}</small
           >
         </div>
         <div class="peymentCard d-flex mt-3">
@@ -186,7 +185,7 @@
       <div class="delevryAdress">
         <div class="d-flex">
           <div class="processingNumber">3</div>
-          <p class="yourData ms-2">Yetkazib berish vaqtini tanlang</p>
+          <p class="yourData ms-2">{{ $t("home.deliverTime") }}</p>
         </div>
 
         <div class="deliverGrid ">

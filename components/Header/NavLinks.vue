@@ -6,7 +6,7 @@
       :to="link.Link"
       v-for="(link, idx) in navLinks"
       :id="idx"
-      >{{ link.name }}
+      >{{ $t(link.name) }}
     </NuxtLink>
   </div>
 </template>
@@ -14,15 +14,15 @@
 <script setup lang="ts">
 const navLinks = [
   {
-    name: "Barcha kitoblar",
+    name: "header.menu.allBooks",
     Link: "/",
   },
   {
-    name: "Elektron kitob",
+    name: "header.menu.elecBook",
     Link: "/products",
   },
   {
-    name: "Audio kitob",
+    name: "header.menu.audioBook",
     Link: "/contact",
   },
   // {

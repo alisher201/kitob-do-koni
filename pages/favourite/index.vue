@@ -5,7 +5,7 @@
 
 <div class="container px-0 mt-4">
        <!-- populr book -->
-       <p style="font-size: 18px; color:#35363D ;">Sizni qiziqtirishi mumkin</p>
+       <p style="font-size: 18px; color:#35363D ;">{{ $t("home.favorites.interested") }}</p>
     
     <div class=" bookGrid mt-4">
     <div class="p-0 booksList" v-for="(item, index) in bookImgs" :key="index" @click="selectBook(item.id)">
