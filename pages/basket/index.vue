@@ -49,17 +49,52 @@
                             alt=""
                           />
                         </div>
-                        <div class="basketdelate">
-                          <img
-                            src="../../assets/contact/basketdelate.png"
-                            alt=""
-                            class="imgDelate"
-                          />
-                          <img
-                            src="../../assets/contact/basketDelateHover.png"
-                            alt=""
-                            class="basketDelateHover"
-                          />
+                        <div class="d-flex mt-4" v-for="(item, idx) in basketProduct" :key="idx">
+                            <div class="me-3 d-flex align-items-center"><input type="checkbox" class="basketCheck"></div>
+                            <div class="basketProduts">
+                                <div class=" d-flex justify-content-between">
+                                    <div class="d-flex">
+                                        <div><img :src="item.Img" alt="" class="basketImg"></div>
+                                        <div class="ms-4  ps-2">
+                                            <p class="bookTitle">{{ item.bookName }}</p>
+                                            <p class="bookAuthor">{{ item.bookAuthor }}</p>
+                                            <p class="bookPrice">{{ item.bookPrice }}</p>
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class=" d-flex  flex-column justify-content-between">
+                                        <div>
+
+                                            <div class="d-flex">
+                                                <div class="basketLike"> <img src="../../assets/contact/basketLike.png"
+                                                        alt="">
+                                                </div>
+                                                <div class="basketdelate">
+                                                    <img src="../../assets/contact/basketdelate.png" alt=""
+                                                        class="imgDelate">
+                                                    <img src="../../assets/contact/basketDelateHover.png" alt=""
+                                                        class="basketDelateHover">
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="productCount">
+                                            <img src="../../assets/contact/minus.png" alt="">
+                                            1
+                                            <img src="../../assets/contact/plyus.png" alt="">
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
                         </div>
                       </div>
                     </div>
