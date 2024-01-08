@@ -9,7 +9,7 @@
         <div v-show="content == 1"><TableBook/></div>
         <div v-show="content == 2"><TableNotfound/></div>
       </div>
-    </div>  
+    </div>
   </template>
   
   <script setup>

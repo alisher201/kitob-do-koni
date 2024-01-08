@@ -1,14 +1,15 @@
 <template>
     <div>
+        <Audio[id]/>
+        <slot/>
     </div>
 </template>
 
 <script setup>
-definePageMeta({
-    layout:'bookreading'
-})
+
 </script>
 
 <style lang="scss" scoped>
 
 </style>
+

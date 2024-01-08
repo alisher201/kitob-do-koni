@@ -5,7 +5,7 @@
 
 <script setup>
 definePageMeta({
-    layout:'bookreading'
+    layout:'audio'
 })
 </script>
 
