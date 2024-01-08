@@ -1,5 +1,6 @@
 <template>
-  <div style="position: absolute; background: #31313159; width: 100%; height: 130vh; z-index: 4; "
+  <div>
+    <div style="position: absolute; background: #31313159; width: 100%; height: 130vh; z-index: 4; "
     :style="{ display: inputFocus ? 'block' : 'none' }">
   </div>
   <div class="containerLogo d-flex align-items-center">
@@ -14,7 +15,7 @@
       </button>
       <div style="position: relative; z-index: 4;">
         <div class="input-group" style="width: 479px">
-          <input type="text" v-model="searchbooks" class="form-control" style="height: 44px" placeholder="kitob izlash..."
+          <input type="text" v-model="searchbooks" class="form-control" style="height: 44px" :placeholder="$t('header.search')"
             @focus="BookSearch" @blur="inputBlur" />
           <span class="input-group-text d-flex justify-content-center align-items-center"
             style="width: 68px; height: 44px"><img src="~/assets/contact/bx_search-alt-2.png" alt="" /></span>
@@ -28,15 +29,15 @@
 
       <div class="ms-5 karzinka" @click="$router.push('/basket')">
         <img src="@/assets/contact/karzinka.png" alt="" />
-        <span class="ms-1 forFont">Savatcha</span>
+        <span class="ms-1 forFont">{{ $t('header.basket') }}</span>
       </div>
       <div class="dataCursor" @click="$router.push('/favourite')">
         <img src="@/assets/contact/like.png" alt="" />
-        <span class="ms-1 forFont">Sevimlilar</span>
+        <span class="ms-1 forFont">{{ $t('header.favorites') }}</span>
       </div>
-      <div class="dataCursor">
+      <div class="dataCursor" @click="$router.push('/profile')">
         <img src="@/assets/contact/user.png" alt="" />
-        <span class="ms-1 forFont">Profile</span>
+        <span class="ms-1 forFont">{{ $t('header.profile') }}</span>
       </div>
     </div>
   </div>
@@ -46,7 +47,11 @@
       <HomeCategoriesList />
     </div>
   </div>
+  </div>
+ 
+
 </template>
+
 <script setup>
 const router = useRouter()
 const searchbooks = ref(null)
