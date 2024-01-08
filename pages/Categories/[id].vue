@@ -21,41 +21,38 @@
           Barchasi 14 <img src="@/assets/contact/arrowDown.png" alt="" />
         </p>
         <hr class="my-4" />
-        <h6><strong>Format</strong></h6>
+        <h6><strong>{{ $t("home.format") }}</strong></h6>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />Barcha
-          turdagi kitoblar
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.kinds") }}
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />Elektron
-          kitob
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.elecBook") }}
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />Audio
-          kitob
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.audioBook") }}
         </p>
         <hr class="my-4" />
 
-        <h6><strong>Narx</strong></h6>
+        <h6><strong>{{ $t("home.price") }}</strong></h6>
         <div class="row">
           <div class="col-6">
-            <label class="price">dan</label>
+            <label class="price">{{ $t("home.from") }}</label>
             <input type="text" class="form-control mb-1" />
           </div>
           <div class="col-6">
-            <label class="price">gacha</label
+            <label class="price">{{ $t("home.upTo") }}</label
             ><input type="text" class="form-control" />
           </div>
         </div>
 
         <hr class="my-4" />
-        <h6><strong>Til</strong></h6>
+        <h6><strong>{{ $t("home.lang") }}</strong></h6>
         <p>
           <input type="checkbox" class="form-check-input me-2 ms-1" />
-          Barcha tildagi kitoblar
+          {{ $t("home.allLang") }}
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />O'zbekcha
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.uzb") }}
         </p>
         <p>
           <input type="checkbox" class="form-check-input me-2 ms-1" />English
@@ -67,9 +64,9 @@
 
       <div class="col-8  ps-4  pe-0">
         <div class=" d-flex justify-content-between">
-          <h6 class=" p-0">To'plamlar, kataloglar va ko'rgazmalar</h6>
+          <h6 class=" p-0">{{ $t("home.catalog") }}</h6>
           <button class="categoriaAll btn btnColor">
-            Saralash <img src="@/assets/contact/arrowDown.png" alt="" />
+            {{ $t("home.sorting") }} <img src="@/assets/contact/arrowDown.png" alt="" />
           </button>
         </div>
         <div class=" bookGrid mt-4">
