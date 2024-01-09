@@ -16,26 +16,26 @@
           </div>
           <img src="@/assets/profile/chiziq.svg" alt="" />
           
-          <NuxtLink to="/profile" class="main_list" >
+          <div @click="$router.push('/profile')" class="main_list" >
             <img class="rasm"  src="@/assets/profile/Frame.svg" alt="" />
             <p  class="h2">Bildirishnoma</p>
-          </NuxtLink>
-          <NuxtLink to="/profile/order" class="main_list" >
+          </div>
+          <div @click="$router.push('/profile/order')"  class="main_list" >
             <img class="rasm" src="@/assets/profile/qongiroq.svg" alt="" />
             <p  href="" class="h2">Buyurtma tarixi</p>
-          </NuxtLink>
-          <NuxtLink to="/profile/book" class="main_list">
+          </div>
+          <div @click="$router.push('/profile/book')"  class="main_list">
             <img class="rasm" src="@/assets/profile/watch.svg" alt="" />
             <p href="" class="h2">Mening Kitoblarim</p>
-          </NuxtLink>
-          <NuxtLink to="/profile/settings"  class="main_list">
+          </div>
+          <div @click="$router.push('/profile/settings')" to="/profile/settings"  class="main_list">
             <img class="rasm" src="@/assets/profile/nastroyka.svg" alt="" />
             <p href="" class="h2">Profil sozlamalar</p>
-          </NuxtLink>
-          <NuxtLink to="" class="main_list">
+          </div>
+          <div @click="$router.push('/')" class="main_list">
             <img class="rasm" src="@/assets/profile/tabler_logout.svg" alt="" />
             <p to="" class="h2" style="color: red">chiqish</p>
-          </NuxtLink>
+          </div>
         </div>
       </div>
       <!-- <div v-if="notification">
@@ -58,12 +58,7 @@ definePageMeta({
 </script>
   <style lang="scss" scoped>
 
-.router-link-exact-active,.nuxt-link,
- .nuxt-link{
-  background-color: #f1f1f1;
-  border-bottom: none; 
-  text-decoration: none;
-}
+
 
 .main {
   background-color: #fafafa;
@@ -83,6 +78,10 @@ definePageMeta({
   left: 141px;
   border-radius: 10px;
   margin-top: 5px;
+  cursor: pointer;  
+}
+.main_list:active{
+  background-color: blue;
 }
 .aylana {
   display: flex;

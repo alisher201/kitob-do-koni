@@ -1,7 +1,6 @@
 <template>
     <div>
-       <!-- <ReadingBookPage /> -->
-       <!-- <reading /> -->
+        <RegisterPage />
         <slot />
     </div>
 </template>

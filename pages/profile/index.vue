@@ -4,13 +4,13 @@
         <h1 class="h1">Bildirishnoma</h1>
     
         <div class="main_list" >
-          <NuxtLink to="/Notification/[id]"   class="img1"  v-for="(item,index) in data" :key="index" @click="selectImg(item.id)">
+          <dev class="img1"  v-for="(item,index) in data" :key="index" @click="selectImg(item.id)">
               <img :src="item.img"  alt="">
               <div >
                   <h2>{{item.word}}</h2>
                   <p>{{item.world}}</p>
               </div>
-          </NuxtLink>
+            </dev>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
         router.push(`/profile/Notification/${id}`)
        }
   </script>
-  
+     
   <style lang="scss" scoped>
   .nuxt-link-exact-active {
     text-decoration: none;
@@ -99,6 +99,24 @@
       display: grid;
       grid-template-columns: repeat(auto-fit,minmax(300px,2fr));
   }
+  .img1{
+      
+      width: 415px;
+      height: 115px;
+      top: 297px;
+      left: 509px;
+      border-radius: 10px;
+      border:blue;
+      border: 1px solid #A1C4E2;
+      display: flex;
+      // color: #1b33e4;
+      background-color: #FFFFFF;
+      margin-right: 25px;
+      // background-color: red;
+      
+  }
+  
+
   h2{
       width: 218px;
       height: 38px;
@@ -139,22 +157,7 @@
       border-radius: 5px;
   
   }
-  .img1{
-      
-      width: 415px;
-      height: 115px;
-      top: 297px;
-      left: 509px;
-      border-radius: 10px;
-      border:blue;
-      border: 1px solid #A1C4E2;
-      display: flex;
-      // color: #1b33e4;
-      background-color: #FFFFFF;
-      margin-right: 25px;
-      // background-color: red;
-      
-  }
+
   img{
       width: 90px;
       height: 95px;

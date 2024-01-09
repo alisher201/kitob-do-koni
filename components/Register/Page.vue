@@ -1,8 +1,6 @@
 <template>
     <div>
-       <!-- <ReadingBookPage /> -->
-       <!-- <reading /> -->
-        <slot />
+        salomat
     </div>
 </template>
 
