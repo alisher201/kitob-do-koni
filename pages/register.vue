@@ -1,7 +1,6 @@
 <template>
     <div>
-        <!-- <NuxtPage /> -->
-        sa
+        <NuxtPage />
     </div>
 </template>
 

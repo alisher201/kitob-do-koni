@@ -1,6 +1,7 @@
 <template>
     <div>
-        <RegisterPage />
+        <LoginPage />
+        salomat
         <!-- <slot /> -->
     </div>
 </template>

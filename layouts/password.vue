@@ -1,6 +1,6 @@
 <template>
     <div>
-        <RegisterPage />
+        <PasswordPage />
         <!-- <slot /> -->
     </div>
 </template>

@@ -77,9 +77,6 @@ const selectData = (data) => {
 }
 
 onMounted(() => {
-
-
-
 })
 </script>
 
