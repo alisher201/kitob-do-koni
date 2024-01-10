@@ -121,7 +121,7 @@ const submitPeyment = () => {
 
 .cardImg {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   height: 230px;
   border-radius: 15px;
   background: url("../../assets/contact/cardBbackground.png");

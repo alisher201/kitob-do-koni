@@ -47,7 +47,7 @@ const navLinks = [
   // },
 ];
 </script>
-<style>
+<style scoped>
 .router-link-active {
   color: #2869ab !important;  
   border-bottom: 2px solid #2869ab;

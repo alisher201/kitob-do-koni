@@ -10,6 +10,8 @@
         </small>
       </div>
       <div v-else>
+
+
         <div class="mt-4 mb-3">
           <span class="basketTitle"> </span>
           <small class="basketCount">3 {{ $t("home.basket.product") }}</small>
@@ -26,6 +28,8 @@
                 <p class="remove">{{ $t("home.basket.delete") }}</p>
               </div>
             </div>
+
+
             <div class="d-flex mt-4" v-for="(item, idx) in basketProduct">
               <div class="me-3 d-flex align-items-center">
                 <input type="checkbox" class="basketCheck" />
@@ -49,53 +53,8 @@
                             alt=""
                           />
                         </div>
-                        <div class="d-flex mt-4" v-for="(item, idx) in basketProduct" :key="idx">
-                            <div class="me-3 d-flex align-items-center"><input type="checkbox" class="basketCheck"></div>
-                            <div class="basketProduts">
-                                <div class=" d-flex justify-content-between">
-                                    <div class="d-flex">
-                                        <div><img :src="item.Img" alt="" class="basketImg"></div>
-                                        <div class="ms-4  ps-2">
-                                            <p class="bookTitle">{{ item.bookName }}</p>
-                                            <p class="bookAuthor">{{ item.bookAuthor }}</p>
-                                            <p class="bookPrice">{{ item.bookPrice }}</p>
 
 
-
-                                        </div>
-                                    </div>
-                                    <div class=" d-flex  flex-column justify-content-between">
-                                        <div>
-
-                                            <div class="d-flex">
-                                                <div class="basketLike"> <img src="../../assets/contact/basketLike.png"
-                                                        alt="">
-                                                </div>
-                                                <div class="basketdelate">
-                                                    <img src="../../assets/contact/basketdelate.png" alt=""
-                                                        class="imgDelate">
-                                                    <img src="../../assets/contact/basketDelateHover.png" alt=""
-                                                        class="basketDelateHover">
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                        <div class="productCount">
-                                            <img src="../../assets/contact/minus.png" alt="">
-                                            1
-                                            <img src="../../assets/contact/plyus.png" alt="">
-
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
                       </div>
                     </div>
                     <div class="productCount">
@@ -120,7 +79,7 @@
             <div class="yourOrderContainer mt-5">
               <p class="yourOrder">{{ $t("home.basket.order") }}</p>
               <div class="d-flex justify-content-between orderAbout">
-                <p>{{ $t("home.basket.books") }} ({{ basketProduct[1].count }})</p>
+                <p>{{ $t("home.basket.books") }} ({{ totalSum}})</p>
                 <p>128.000 {{ $t("home.basket.sum") }}</p>
               </div>
 
@@ -185,6 +144,34 @@ const basketProduct = ref([
     count: 1,
   },
 ]);
+
+let totalSum = ref(null)
+
+
+
+
+const calulatorProduct = (arry) => {
+  let sum =  0
+  
+  arry.forEach((product, index) => {
+        sum += product.count
+    
+      });
+      totalSum.value = sum
+      console.log(totalSum.value);
+
+}
+
+watch(basketProduct, (newVal, oldVal) => {
+  calulatorProduct(newVal)
+  
+    }, { deep: true })
+
+
+    onMounted(() => {
+      calulatorProduct(basketProduct.value)
+
+})
 const empty = ref(false);
 </script>
 

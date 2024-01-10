@@ -56,6 +56,9 @@
 const router = useRouter()
 const searchbooks = ref(null)
 const inputFocus = ref(false)
+ const store = useTestTStore();
+// console.log(store.fechData());
+
 
 const BookSearch = () => {
   document.body.style.overflow = 'hidden'
@@ -77,6 +80,7 @@ const selectData = (data) => {
 }
 
 onMounted(() => {
+  store.fechData()
 
 
 

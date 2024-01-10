@@ -4,13 +4,13 @@
         <h1 class="h1">Bildirishnoma</h1>
     
         <div class="main_list" >
-          <NuxtLink to="/Notification/[id]"   class="img1"  v-for="(item,index) in data" :key="index" @click="selectImg(item.id)">
+          <div    class="img1"  v-for="(item,index) in data" :key="index" @click="selectImg(item.id)">
               <img :src="item.img"  alt="">
               <div >
                   <h2>{{item.word}}</h2>
                   <p>{{item.world}}</p>
               </div>
-          </NuxtLink>
+          </div>
         </div>
       </div>
     </div>

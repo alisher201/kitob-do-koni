@@ -52,9 +52,7 @@
 const content = ref(false)
 const notification = ref(true)
 
-definePageMeta({
-  title: "profile",
-});
+
 </script>
   <style lang="scss" scoped>
 
