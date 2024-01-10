@@ -13,9 +13,13 @@ export const useTestTStore = defineStore ("home",{
     actions: {
         fechData() {
           $fetch(` ${this.url}/book/category`)
+        },
+        async fechBanner(){
+           return await $fetch(`${this.url}/blog`)
+           .then(res => {
+            console.log(res);
+           })
         }
-
-      
     }
 
     

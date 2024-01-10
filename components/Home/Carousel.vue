@@ -1,5 +1,6 @@
 <template>
   <section class="container mt-5">
+    fffff
     <div class="row ">
       <div class="col-8 p-0">
         <div
@@ -53,6 +54,15 @@
     </div>
   </section>
 </template>
+<script setup>
+const store = useTestTStore()
+
+
+onMounted(() => {
+  console.log('jjjjjj');
+
+})
+</script>
 
 <style>
 .img-fluid {
