@@ -48,7 +48,6 @@ let swiper = null
 
 const onSwiper = (sw) => {
   swiper = sw
-  console.log(swiper, 'data');
 };
 
 </script>

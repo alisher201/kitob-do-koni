@@ -33,9 +33,10 @@ export default defineNuxtConfig({
       language: "en-US",
     },
   },
-  plugins: [{ src: "~/plugins/vercel.ts", mode: "client" }],
+  plugins: [{ src: "~/plugins/vercel.ts", mode: "client" }, { src: "~/plugins/i18n.js" }],
   pinia: {
     autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
+    
   },
   css: ["~/assets/styles/main.scss"],
   render: {
@@ -53,6 +54,11 @@ export default defineNuxtConfig({
   // server: {
   //   port: process.env.PORT || 3000,
   // },
+  i18n: {
+    compilation: {
+      strictMessage: true,
+    },
+  },
 
 
 
