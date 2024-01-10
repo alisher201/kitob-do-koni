@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container px-0" style="display:flex; justify-content:space-between">
-      <div class="main">
+      <div class="main" >
         <div style="padding: 22px">
           <div style="display: flex">
             <div class="aylana">
@@ -16,11 +16,11 @@
           </div>
           <img src="@/assets/profile/chiziq.svg" alt="" />
           
-          <div @click="$router.push('/profile')" class="main_list" >
+          <div   @click="$router.push('/profile')" class="main_list" >
             <img class="rasm"  src="@/assets/profile/Frame.svg" alt="" />
             <p  class="h2">Bildirishnoma</p>
           </div>
-          <div @click="$router.push('/profile/order')"  class="main_list" >
+          <div   @click="$router.push('/profile/order')"  class="main_list" >
             <img class="rasm" src="@/assets/profile/qongiroq.svg" alt="" />
             <p  href="" class="h2">Buyurtma tarixi</p>
           </div>
@@ -49,6 +49,7 @@
 </template> 
 
 <script setup>
+
 const content = ref(false)
 const notification = ref(true)
 
@@ -58,7 +59,9 @@ definePageMeta({
 </script>
   <style lang="scss" scoped>
 
-
+.active {
+  background-color: blue;
+}
 
 .main {
   background-color: #fafafa;

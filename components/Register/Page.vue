@@ -51,6 +51,7 @@
           <div class="mb-3 mt-3 list">
             <label for="email" class="form-label">Ism familiya <span>*</span></label>
             <input type="email" class="form-control" id="email" placeholder="Ism familiyangizni kiriting" name="email"/>
+            
           </div>
           <div class="mb-3 mt-3 list">
             <label for="email" class="form-label">Telefon raqam <span>*</span></label>
@@ -62,7 +63,8 @@
             
             <input  type="password" class="form-control" id="password" placeholder="parol o'ylab top" name="password"/>
           </div> 
-          <button>Ro'yxatdan o'tish</button>
+          <button  @click.prevent="preventRefresh"  @click="$router.push('/')" >Ro'yxatdan o'tish</button>
+          
           <div class="bottom">
             <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Tizimga kirish</NuxtLink> </h2>
           </div>    

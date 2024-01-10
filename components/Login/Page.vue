@@ -31,15 +31,16 @@
               <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/>
             </div>
             <div class="mb-3 mt-3 list inputbox">
-              <label for="password" class="form-label">Parol <span>*</span></label>
-              
-              <box-icon type='solid' name='user-circle'></box-icon>
-              
+              <label for="password" class="form-label">Parol <span>*</span></label>              
               <input  type="password" class="form-control" id="password" placeholder="parol o'ylab top" name="password"/>
+                <div class="li">
+                    <v-form>parol </v-form>
+                    <NuxtLink to="/password" href="">Parolni unutdingizmi?</NuxtLink>
+                </div>
             </div> 
-            <button>Ro'yxatdan o'tish</button>
+            <button  @click.prevent="preventRefresh"  @click="$router.push('/')">Login</button>
             <div class="bottom">
-              <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Ro'yxatdan o'tish</NuxtLink> </h2>
+              <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink> </h2>
             </div>    
               
           </form>
@@ -149,6 +150,23 @@
     margin:0px 0px 30px 0px;
     padding: 0px;
   }
+  .li{
+    display: flex;
+    justify-content: space-between;
+  }
+  .li a{
+    width: 132px;
+    height: 18px;
+    top: 557px;
+    left: 1248px;
+    font-family: Manrope;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+    color:#41A2DB;
+}
   button{
     width: 100%;
     background-color:#1C5793;
@@ -187,4 +205,5 @@
   .NuxtLink{
     color: #1C5793;
   }
+ 
   </style>

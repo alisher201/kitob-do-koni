@@ -28,28 +28,28 @@
           <div v-show="content == 1">
             <form @submit="preventDefault" action="">
                 <div class="mb-3 mt-3 list">
-                <label for="tel" class="form-label">Telefon raqam <span>*</span></label>
-                <input type="tel" class="form-control" id="tel" placeholder="+998 00 000 00 00" name="email"/>
+                    <label for="tel" class="form-label">Telefon raqam <span>*</span></label>
+                    <input type="tel" class="form-control" id="tel" placeholder="+998 00 000 00 00" name="tel"/>
                 </div>
-                <button @click.prevent="preventRefresh" :class="{'content': content == 2}" @click="content = 2">Davom etish</button>
+                     <button @click.prevent="preventRefresh" :class="{'content': content == 2}" @click="content = 2">Davom etish</button>
                 <div class="bottom">
-                <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Ro'yxatdan o'tish</NuxtLink> </h2>
+                     <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Ro'yxatdan o'tish</NuxtLink> </h2>
                 </div>    
               
              </form>
           </div>
           <div v-show="content == 2">
             <form @submit="preventDefault" action="">
-            <div class="mb-3 mt-3 list">
-              <label for="email" class="form-label">Tasdiqlash kodi: <span>+998 97 589 53 69 </span>  telefon raqamga yu bordik</label>
-              <input type="email" class="form-control" id="email" placeholder="395027" name="email"/>
-              <label for=""><img src="../../assets/register/i.png" alt="" style="margin-right:10px">SMS kodi kelmadi. <a href="">.Qayta yuboring</a></label>
-            </div>
-            <button @click.prevent="preventRefresh" :class="{'content': content == 3}" @click="content = 3" >Davom etish</button>
-            <div class="bottom">
-              <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Ro'yxatdan o'tish</NuxtLink> </h2>
-            </div>    
-          </form>
+                <div class="mb-3 mt-3 list">
+                    <label for="email" class="form-label">Tasdiqlash kodi: <span>+998 97 589 53 69 </span>  telefon raqamga yu bordik</label>
+                    <input type="email" class="form-control" id="email" placeholder="395027" name="email"/>
+                    <label for=""><img src="../../assets/register/i.png" alt="" style="margin-right:10px">SMS kodi kelmadi. <a href="">.Qayta yuboring</a></label>
+                </div>
+                    <button @click.prevent="preventRefresh" :class="{'content': content == 3}" @click="content = 3" >Davom etish</button>
+                <div class="bottom">
+                <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Ro'yxatdan o'tish</NuxtLink> </h2>
+                </div>    
+            </form>
           </div>
         
           <div v-show="content == 3">
@@ -75,12 +75,29 @@
   </template>
   
   <script setup>
+    
   const content = ref(null)
   
   onMounted(() => {
     content.value = 1;
   })
-  
+
+
+  const rules = computed(() => {
+  return {
+    email: { required, email },
+    password: { required, minLength: minLength(6) },
+    confirmPassword: { required, sameAs: sameAs(formData.password) },
+  };
+});
+
+
+
+  const formData = reactive({
+  tel: '',
+  password: '',
+  newPassword: null,
+});
   </script>
   
   <style lang="scss" scoped>
