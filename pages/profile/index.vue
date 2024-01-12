@@ -73,14 +73,14 @@
     left: 479px;
     border-radius: 10px;
     // color: #FAFAFA;
-    background-color:#FAFAFA;     
-    // background-color: red;
+    // background-color:#FAFAFA;     
+    background-color: red;
     margin: 60px 121px 283px 40px;
     
   }
   .h1{
       width: 136px;
-      height: 27px;
+      height: 37px;
       top: 250px;
       left: 509px;
       font-family: Manrope;
@@ -89,7 +89,8 @@
       line-height: 27px;
       letter-spacing: 0.02em;
       text-align: left;
-      margin:18px 0px 0px 30px;
+      margin:0px 0px 0px 30px;
+      padding-top:10px;  
   }
   .main_list{
       display:flex;
