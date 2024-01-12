@@ -4,7 +4,7 @@
       class="navLink"
       :class="idx != 0 ? 'ms-3' : 'ms-0'"
       :to="link.Link"
-      v-for="(link, idx) in navLinks"
+      v-for="(link, idx) in navLinks" :key="idx"
       :id="idx"
       >{{ $t(link.name) }}
     </NuxtLink>
@@ -47,7 +47,7 @@ const navLinks = [
   // },
 ];
 </script>
-<style>
+<style scoped>
 .router-link-active {
   color: #2869ab !important;  
   border-bottom: 2px solid #2869ab;

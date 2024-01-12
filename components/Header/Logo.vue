@@ -1,5 +1,6 @@
 <template>
-  <div style="position: absolute; background: #31313159; width: 100%; height: 130vh; z-index: 4; "
+  <div>
+    <div style="position: absolute; background: #31313159; width: 100%; height: 130vh; z-index: 4; "
     :style="{ display: inputFocus ? 'block' : 'none' }">
   </div>
   <div class="containerLogo d-flex align-items-center">
@@ -34,7 +35,7 @@
         <img src="@/assets/contact/like.png" alt="" />
         <span class="ms-1 forFont">{{ $t('header.favorites') }}</span>
       </div>
-      <div class="dataCursor">
+      <div class="dataCursor" @click="$router.push('/profile')">
         <img src="@/assets/contact/user.png" alt="" />
         <span class="ms-1 forFont">{{ $t('header.profile') }}</span>
       </div>
@@ -46,11 +47,18 @@
       <HomeCategoriesList />
     </div>
   </div>
+  </div>
+ 
+
 </template>
+
 <script setup>
 const router = useRouter()
 const searchbooks = ref(null)
 const inputFocus = ref(false)
+ const store = useTestTStore();
+// console.log(store.fechData());
+
 
 const BookSearch = () => {
   document.body.style.overflow = 'hidden'
@@ -72,6 +80,7 @@ const selectData = (data) => {
 }
 
 onMounted(() => {
+  store.fechData()
 
 
 

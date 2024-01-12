@@ -10,6 +10,8 @@
         </small>
       </div>
       <div v-else>
+
+
         <div class="mt-4 mb-3">
           <span class="basketTitle"> </span>
           <small class="basketCount">3 {{ $t("home.basket.product") }}</small>
@@ -74,18 +76,8 @@
                             />
                           </svg>
                         </div>
-                        <div class="basketdelate">
-                          <img
-                            src="../../assets/contact/basketdelate.png"
-                            alt=""
-                            class="imgDelate"
-                          />
-                          <img
-                            src="../../assets/contact/basketDelateHover.png"
-                            alt=""
-                            class="basketDelateHover"
-                          />
-                        </div>
+
+
                       </div>
                     </div>
                     <div class="productCount">

@@ -1,5 +1,5 @@
 <template>
-  fgsfgsfg
+
   <div class="row justify-content-center text-center">
     <div v-for="item in cards" class="col-10 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-4 pb-3" :key="item.id">
       <div class="card">
