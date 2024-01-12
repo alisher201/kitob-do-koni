@@ -7,10 +7,11 @@
           class="carousel carousel-dark slide carouselSize"
           data-bs-ride="carousel"
         >
-          <div class="carousel-inner">
-            <div v-for="(img, index) in store.baner" :key="index" class="carousel-item" :class="{ active: index === 0 }">
-              <!-- {{img}} -->
-              <img :src="url +'/' + img.banner" class="d-block w-100" :alt="img.alternative_text" />
+          <div v-if="store.banner" class="carousel-inner">
+            <!-- <pre>{{store}}</pre> -->
+            <div v-for="(img, index) in store.banner" :key="index" class="carousel-item" :class="{ active: index === 0 }">
+              
+              <img :src="url +'/' + img?.banner" class="d-block w-100" :alt="img.alternative_text" />
             </div>
           </div>
           <button
@@ -33,18 +34,19 @@
           </button>
         </div>
       </div>
-<div class="col-4">
-  <div>
-    <img :src="url + '/' + store.banner[0].banner" alt="" class="advertisement" />
-  </div>
-  <div class="mt-3">                            
-    <img src="~/assets/jumaMuborak.png" alt="" class="advertisement" />
-  </div>
-</div>
+      <div  v-if="store.banner"  class="col-4">
+        <div v-for="(img, index) in [store.site_bar]" :key="index">
+          <div>
+            <img :src="url + img[0]?.banner" alt="" class="advertisement" />
+          </div>
+          <div class="mt-3">
+            <img :src="url + '/' + img[0]?.banner" alt="" class="advertisement" />
+          </div>
+        </div>
+      </div>
 
     </div>
   </section>
-  <!-- {{ store.baner }} -->
 </template>
 <script setup>
 import { useRuntimeConfig } from "nuxt/app";
@@ -53,7 +55,7 @@ const store = useTestTStore();
 
 onMounted(() => {
   store.fechBanner();
-  console.log(url);
+  console.log(store);
 });
 </script>
 
