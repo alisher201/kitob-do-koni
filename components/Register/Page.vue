@@ -1,3 +1,43 @@
+<!-- <template>
+  <div id="app">
+    <Form @submit="onSubmit">
+      <Field name="email" type="email" :rules="validateEmail" />
+      <ErrorMessage name="email" />
+      <button>Sign up</button>
+    </Form>
+  </div>
+</template>
+<script>
+import { Form, Field, ErrorMessage } from 'vee-validate';
+export default {
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
+  methods: {
+    onSubmit(values) {
+      console.log(values, null, 2);
+    },
+    validateEmail(value) {
+      // if the field is empty
+      if (!value) {
+        return 'This field is required';
+      }
+      // if the field is not a valid email
+      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      if (!regex.test(value)) {
+        return 'This field must be a valid email';
+      }
+      // All is good
+      return true;
+    },
+  },
+};
+</script> -->
+
+
+
 <template>
   <div class="d-flex">
     <div class="main">
@@ -47,35 +87,92 @@
             bilan baham ko'rishlari mumkin
           </p>
         </div> -->
-        <form action="">
+        <Form @submit="onSubmit" action="">
           <div class="mb-3 mt-3 list">
             <label for="email" class="form-label">Ism familiya <span>*</span></label>
-            <input type="email" class="form-control" id="email" placeholder="Ism familiyangizni kiriting" name="email"/>
+
+            <!-- <input type="email" class="form-control" id="email" placeholder="Ism familiyangizni kiriting" name="email"/> -->
+            <Field name="string" type="string" placeholder="Ism familiyangizni kiriting" class="form-control" :rules="validateEmail"/>
+            <ErrorMessage style="color:red" name="string" />
+
             
           </div>
           <div class="mb-3 mt-3 list">
             <label for="email" class="form-label">Telefon raqam <span>*</span></label>
-            <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/>
+            <!-- <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/> -->
+            <Field type="number" class="form-control" id="number" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber"/>
+            <ErrorMessage style="color:red" name="number" />
+
+
           </div>
           <div class="mb-3 mt-3 list inputbox">
             <label for="password" class="form-label">Parol <span>*</span></label>
             <box-icon type='solid' name='user-circle'></box-icon>
             
-            <input  type="password" class="form-control" id="password" placeholder="parol o'ylab top" name="password"/>
+            <!-- <input  type="password" class="form-control" id="password" placeholder="parol o'ylab top" name="password"/> -->
+            <Field type="password" class="form-control" id="password" placeholder="parol o'ylab top"  name="password" :rules="validatePassword"/>
+            <ErrorMessage style="color:red" name="password" />
+            
           </div> 
-          <button  @click.prevent="preventRefresh"  @click="$router.push('/')" >Ro'yxatdan o'tish</button>
-          
+          <!-- <button  @click.prevent="preventRefresh"  @click="$router.push('/')" >Ro'yxatdan o'tish</button> -->
+          <button>Ro'yxatdan o'tish</button>
           <div class="bottom">
             <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Tizimga kirish</NuxtLink> </h2>
           </div>    
             
-        </form>
+        </Form>
+        <!-- <Form @submit="onSubmit">
+          <Field name="email" type="email" :rules="validateEmail" />
+          <ErrorMessage name="email" />
+
+          <Field name="email" type="email" :rules="validateEmail" />
+          <ErrorMessage style="color:red" name="email" />
+          <button>Sign up</button>
+        </Form> -->
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
+<script >
+import { Form, Field, ErrorMessage } from 'vee-validate';
+export default {
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
+  methods: {
+    onSubmit(values) {
+      console.log(values, null, 2);
+    },
+    validateEmail(value) {
+      if (!value) {
+        return 'ism familyangizni kiritng';
+      }
+  
+      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      if (!regex.test(value)) {
+        return "parol noto'g'ri";
+      }
+      // All is good
+      return true;
+    },
+    validateNumber(value) {
+        if(!value){
+          return 'telefon raqamni kiritng kiriting'
+        }
+      },
+      validatePassword(value) {
+        if(!value){
+          return 'Parol kiritng'
+        }
+      }
+  },
+};
+
+
+
 const content = ref(null)
 
 onMounted(() => {

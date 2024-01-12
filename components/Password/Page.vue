@@ -26,47 +26,61 @@
             </h2>
           </div>
           <div v-show="content == 1">
-            <form @submit="preventDefault" action="">
+            <Form @submit="onSubmit"  action="">
                 <div class="mb-3 mt-3 list">
                     <label for="tel" class="form-label">Telefon raqam <span>*</span></label>
-                    <input type="tel" class="form-control" id="tel" placeholder="+998 00 000 00 00" name="tel"/>
+                    <!-- <input type="number" class="form-control" id="number" placeholder="+998 00 000 00 00" name="tel"/> -->
+                    <Field type="number" class="form-control" id="email" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber" />
+              <ErrorMessage style="color:red" name="number" />
                 </div>
                      <button @click.prevent="preventRefresh" :class="{'content': content == 2}" @click="content = 2">Davom etish</button>
-                <div class="bottom">
-                     <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Ro'yxatdan o'tish</NuxtLink> </h2>
+                      <!-- <button>Davom etish</button> -->
+                     <div class="bottom">
+                     <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink> </h2>
                 </div>    
               
-             </form>
+             </Form>
           </div>
           <div v-show="content == 2">
-            <form @submit="preventDefault" action="">
+            <Form   @submit="onSubmit" action="">
                 <div class="mb-3 mt-3 list">
                     <label for="email" class="form-label">Tasdiqlash kodi: <span>+998 97 589 53 69 </span>  telefon raqamga yu bordik</label>
-                    <input type="email" class="form-control" id="email" placeholder="395027" name="email"/>
-                    <label for=""><img src="../../assets/register/i.png" alt="" style="margin-right:10px">SMS kodi kelmadi. <a href="">.Qayta yuboring</a></label>
+                    <!-- <input type="email" class="form-control" id="email" placeholder="395027" name="email"/> -->
+                    <Field type="number" class="form-control" id="email" placeholder="sms codini kiritng" name="number" :rules="validateCode" />
+                    <div class="li">
+                    <ErrorMessage style="color:red" name="number" />
+                     <a href="">.Qayta yuboring</a>
+
+                    </div>
+                  
                 </div>
                     <button @click.prevent="preventRefresh" :class="{'content': content == 3}" @click="content = 3" >Davom etish</button>
                 <div class="bottom">
-                <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Ro'yxatdan o'tish</NuxtLink> </h2>
+                <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink> </h2>
                 </div>    
             </form>
           </div>
         
           <div v-show="content == 3">
-                <form  action="">
+                <Form  @submit="onSubmit"  action="">
                     <div class="mb-3 mt-3 list inputbox">
                         <label for="password" class="form-label">Parol <span>*</span></label>
-                        <input  type="password" class="form-control" id="password" placeholder="Yangi parol" name="password"/>
-                    </div> 
+                        <!-- <input  type="password" class="form-control" id="password" placeholder="Yangi parol" name="password"/> -->
+                         <Field name="password" class="form-control" type="password" placeholder="Yangi parol" :rules="validatePassword" />
+                         <ErrorMessage style="color:red" name="password" />
+
+                      </div> 
                     <div class="mb-3 mt-3 list inputbox">
-                        <label for="password" class="form-label">Parol <span>*</span></label>
-                        <input  type="password" class="form-control" id="password" placeholder="yangi parol takrorlan" name="password"/>
+                        <label for="newpassword" class="form-label">Parol <span>*</span></label>
+                        <Field name="newpassword" class="form-control" type="newpassword" placeholder="Yangi parol" :rules="validateNewPassword" />
+                         <ErrorMessage style="color:red" name="newpassword" />
+
                     </div> 
                         <button @click.prevent="preventRefresh">Yangi parolni o'rnatish</button>
                         <div class="bottom">
-                        <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Ro'yxatdan o'tish</NuxtLink> </h2>
+                        <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink> </h2>
                     </div>    
-                </form>
+                </Form>
           </div>
        
         </div>
@@ -74,30 +88,79 @@
     </div>
   </template>
   
-  <script setup>
+  <script >
+  import { ref, onMounted } from 'vue';
+  import { Form, Field, ErrorMessage } from 'vee-validate';
+  export default {
     
-  const content = ref(null)
-  
-  onMounted(() => {
-    content.value = 1;
-  })
+    components: {
+      Form,
+      Field,
+      ErrorMessage,
+    },
+    methods: {
+      onSubmit(values) {
+        console.log(values, null, 2);
+      },
+      validateEmail(value) {
+        if (!value) {
+          return 'ism familyangizni kiritng';
+        }
+    
+        const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+        if (!regex.test(value)) {
+          return "parol noto'g'ri";
+        }
+        // All is good
+        return true;
+      },
+      validateNumber(value) {
+          if(!value){
+            return 'telefon raqamni kiritng kiriting'
+          }
+        },
+        validatePassword(value) {
+          if(!value){
+            return 'Parol kiritng'
+          }
+        },
+        validateNewPassword(value) {
+          if(!value){
+            return 'Yangi parol kiritng kiritng'
+          }
+        },
+        validateCode(value) {
+          if(!value){
+            return 'Sms kod kelmadi'
+          }
+        }
+    },
+    setup() {
+    const content = ref(null);
 
+    onMounted(() => {
+      content.value = 1;
+    });
 
-  const rules = computed(() => {
-  return {
-    email: { required, email },
-    password: { required, minLength: minLength(6) },
-    confirmPassword: { required, sameAs: sameAs(formData.password) },
+    return {
+      content
+    };
+  },
   };
-});
 
 
 
-  const formData = reactive({
-  tel: '',
-  password: '',
-  newPassword: null,
-});
+  // const content = ref(null)
+  
+  // onMounted(() => {
+  //   content.value = 1;
+  // })
+
+
+
+
+
+
   </script>
   
   <style lang="scss" scoped>
@@ -230,4 +293,22 @@
   .NuxtLink{
     color: #1C5793;
   }
+  .li{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .li a{
+    width: 132px;
+    height: 18px;
+    top: 557px;
+    left: 1248px;
+    font-family: Manrope;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0em;
+    text-align: left;
+    color:#41A2DB;
+}
   </style>

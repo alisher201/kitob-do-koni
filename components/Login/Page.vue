@@ -25,31 +25,71 @@
               Tizim kirish va 1280+ kitobga kirish huquqiga ega boʻling
             </h2>
           </div>
-          <form action="">
+          <Form @submit="onSubmit">
             <div class="mb-3 mt-3 list">
               <label for="email" class="form-label">Telefon raqam <span>*</span></label>
-              <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/>
+            
+              <!-- <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/> -->
+              <Field type="number" class="form-control" id="email" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber" />
+              <ErrorMessage style="color:red" name="number" />
+            
             </div>
             <div class="mb-3 mt-3 list inputbox">
               <label for="password" class="form-label">Parol <span>*</span></label>              
-              <input  type="password" class="form-control" id="password" placeholder="parol o'ylab top" name="password"/>
-                <div class="li">
-                    <v-form>parol </v-form>
+              <!-- <input  type="password" class="form-control" id="password" placeholder="parol o'ylab top" name="password"/> -->
+              <Field name="password" class="form-control" type="password" placeholder="parol 8 ta bo'lsin" :rules="validateEmail" />
+              
+              <div class="li">
+                  <ErrorMessage style="color:red" name="password" />
+                    
                     <NuxtLink to="/password" href="">Parolni unutdingizmi?</NuxtLink>
                 </div>
             </div> 
-            <button  @click.prevent="preventRefresh"  @click="$router.push('/')">Login</button>
+            <!-- <button  @click.prevent="preventRefresh"  @click="$router.push('/')">Login</button> -->
+              <button>Login</button>
             <div class="bottom">
               <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink> </h2>
             </div>    
               
-          </form>
+          </Form>
         </div>
       </div>
     </div>
   </template>
   
-  <script setup>
+  <script >
+import { Form, Field, ErrorMessage } from 'vee-validate';
+export default {
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
+  methods: {
+    onSubmit(values) {
+      console.log(values, null, 2);
+    },
+    validateEmail(value) {
+      if (!value) {
+        return 'Parolni kiriting';
+      }
+  
+      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      if (!regex.test(value)) {
+        return "parol noto'g'ri";
+      }
+      // All is good
+      return true;
+    },
+    validateNumber(value) {
+        if(!value){
+          return 'telefon raqamni kiritng kiriting'
+        }
+      }
+  },
+};
+
+
   const content = ref(null)
   
   onMounted(() => {

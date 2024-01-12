@@ -1,6 +1,6 @@
 <template>
     <div >
-      <div class="main">
+      <div class="main ">
         <h1 class="h1">Bildirishnoma</h1>
     
         <div class="main_list" >
@@ -67,14 +67,14 @@
     border-bottom: none;
   }
   .main {
-    width: 948px;
+    width: 920px;
     height: 325px;
     top: 232px;
     left: 479px;
     border-radius: 10px;
     // color: #FAFAFA;
     background-color:#FAFAFA;     
-  //   background-color: red;
+    // background-color: red;
     margin: 60px 121px 283px 40px;
     
   }
@@ -96,7 +96,9 @@
       padding:4px;
       margin:18px 0px 0px 30px;
       gap: 20px;
+      
       display: grid;
+      // background-color: red;
       grid-template-columns: repeat(auto-fit,minmax(300px,2fr));
   }
   .img1{
@@ -111,7 +113,7 @@
       display: flex;
       // color: #1b33e4;
       background-color: #FFFFFF;
-      margin-right: 25px;
+      // margin-right: 25px;
       // background-color: red;
       
   }

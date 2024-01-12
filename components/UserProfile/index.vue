@@ -65,10 +65,11 @@ definePageMeta({
 
 .main {
   background-color: #fafafa;
+  // background-color: red;
   width: 358px;
   height: 392px;
   top: 232px;
-  left: 121px;
+  left: 121px;  
   border-radius: 10px;
   margin-top: 30px;
   margin-bottom: 200px;

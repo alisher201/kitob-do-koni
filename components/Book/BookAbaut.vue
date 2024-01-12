@@ -22,6 +22,10 @@
 <style scoped>
 .about {
   padding: 0 32px 32px 32px;
-  color: #858D96;}
-    
+  color: #858D96;
+}
+p{
+  display: flex;
+  align-items: end;
+}
 </style>
