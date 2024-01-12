@@ -1,7 +1,6 @@
 <template>
   <section class="container mt-5">
-    fffff
-    <div class="row ">
+    <div class="row">
       <div class="col-8 p-0">
         <div
           id="carouselExampleDark"
@@ -9,18 +8,9 @@
           data-bs-ride="carousel"
         >
           <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-              <img src="~/assets/jum1.jpg" class="d-block w-100" alt="..." />
-            </div>
-            <div class="carousel-item" data-bs-interval="2000">
-              <img src="~/assets/jum2.jpg" class="d-block w-100" alt="..." />
-            </div>
-            <div class="carousel-item">
-              <img
-                src="~/assets/carousel1.png"
-                class="d-block w-100"
-                alt="..."
-              />
+            <div v-for="(img, index) in store.baner" :key="index" class="carousel-item" :class="{ active: index === 0 }">
+              <!-- {{img}} -->
+              <img :src="url +'/' + img.banner" class="d-block w-100" :alt="img.alternative_text" />
             </div>
           </div>
           <button
@@ -43,25 +33,28 @@
           </button>
         </div>
       </div>
-      <div class="col-4">
-        <div class="">
-          <img src="~/assets/jumaMuborak.png" alt="" class="advertisement">
-        </div>
-        <div class="mt-3">
-          <img src="~/assets/jumaMuborak.png" alt="" class="advertisement"/>
-        </div>
-      </div>
+<div class="col-4">
+  <div>
+    <img :src="url + '/' + store.banner[0].banner" alt="" class="advertisement" />
+  </div>
+  <div class="mt-3">                            
+    <img src="~/assets/jumaMuborak.png" alt="" class="advertisement" />
+  </div>
+</div>
+
     </div>
   </section>
+  <!-- {{ store.baner }} -->
 </template>
 <script setup>
-const store = useTestTStore()
-
+import { useRuntimeConfig } from "nuxt/app";
+const url= useRuntimeConfig().public.siteUrl
+const store = useTestTStore();
 
 onMounted(() => {
-  console.log('jjjjjj');
-
-})
+  store.fechBanner();
+  console.log(url);
+});
 </script>
 
 <style>
@@ -86,7 +79,8 @@ onMounted(() => {
   height: 300px;
   border-radius: 10px;
 }
-.advertisement {width: 100%;
+.advertisement {
+  width: 100%;
   height: 142px;
   border-radius: 12px;
 }

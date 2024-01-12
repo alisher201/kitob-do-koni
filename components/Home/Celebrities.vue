@@ -61,9 +61,8 @@ const onSwiper = (sw) => {
     <div class="container px-0 mt-5">
       <div class="d-flex justify-content-between mb-3">
         <div class="d-flex">
-          <h4 class="bestText">Bozori chaqqon</h4>
-          <svg
-            class="mt-1"
+          <h4 class="bestText">Mashhurlar</h4>
+          <svg class="mt-1"
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
@@ -102,7 +101,7 @@ const onSwiper = (sw) => {
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
             <img
-              src="../../assets/contact/booklike.png"
+              src="../../assets/contact/.png"
               alt=""
               class="bookLike"
             />
