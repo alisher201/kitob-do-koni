@@ -10,6 +10,8 @@
         </small>
       </div>
       <div v-else>
+
+
         <div class="mt-4 mb-3">
           <span class="basketTitle"> </span>
           <small class="basketCount">3 {{ $t("home.basket.product") }}</small>
@@ -31,11 +33,7 @@
                 <p class="remove">{{ $t("home.basket.delete") }}</p>
               </div>
             </div>
-            <div
-              class="d-flex mt-4"
-              v-for="(item, idx) in basketProduct"
-              :key="idx"
-            >
+            <div class="d-flex mt-4" v-for="(item, idx) in basketProduct">
               <div class="me-3 d-flex align-items-center">
                 <input
                   type="checkbox"
@@ -74,18 +72,8 @@
                             />
                           </svg>
                         </div>
-                        <div class="basketdelate">
-                          <img
-                            src="../../assets/contact/basketdelate.png"
-                            alt=""
-                            class="imgDelate"
-                          />
-                          <img
-                            src="../../assets/contact/basketDelateHover.png"
-                            alt=""
-                            class="basketDelateHover"
-                          />
-                        </div>
+
+
                       </div>
                     </div>
                     <div class="productCount">
@@ -115,8 +103,8 @@
             <div class="yourOrderContainer mt-5">
               <p class="yourOrder">{{ $t("home.basket.order") }}</p>
               <div class="d-flex justify-content-between orderAbout">
-                <p>{{ $t("home.basket.books") }} ({{ totalSum }})</p>
-                <p>{{ totalPrice }} {{ $t("home.basket.sum") }}</p>
+                <p>{{ $t("home.basket.books") }} ({{ basketProduct[1].count }})</p>
+                <p>128.000 {{ $t("home.basket.sum") }}</p>
               </div>
               <div class="d-flex justify-content-between orderAbout my-1">
                 <p>{{ $t("home.basket.delivery") }}</p>
@@ -235,51 +223,6 @@ const basketProduct = ref([
     circleBorder: "#307CCE",
   },
 ]);
-let sum = ref(0);
-
-let totalSum = ref(null);
-let totalPrice = ref(null);
-
-// calulatorProduct
-
-const calulatorProduct = (arry) => {
-  let sum = 0;
-  let priceSum = 0;
-  arry.forEach((product, index) => {
-    sum += product.count;
-    priceSum += product.totalPrice;
-  });
-  totalSum.value = sum;
-  totalPrice.value = priceSum;
-};
-
-onMounted(() => {
-  calulatorProduct(basketProduct.value);
-});
-
-const productAdd = (idx) => {
-  basketProduct.value[idx].count++;
-
-  basketProduct.value[idx].totalPrice =
-    basketProduct.value[idx].count * basketProduct.value[idx].bookPrice;
-};
-const productRemove = (idx) => {
-  basketProduct.value[idx].count--;
-
-  basketProduct.value[idx].totalPrice =
-    basketProduct.value[idx].count * basketProduct.value[idx].bookPrice;
-};
-
-watch(
-  basketProduct,
-  (newVal, oldVal) => {
-    calulatorProduct(newVal);
-    select(newVal);
-  },
-
-  { deep: true }
-);
-
 const empty = ref(false);
 </script>
 

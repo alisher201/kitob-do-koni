@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer_area">
+  <div class="footer_area">
     <div class="container px-0">
       <div class="row">
         <div class="col-3">
@@ -106,7 +106,7 @@
         </div>
       </div>
     </div>
-  </footer>
+  </div>
 </template>
 
 <style scoped lang="scss">
