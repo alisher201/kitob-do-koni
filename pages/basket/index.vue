@@ -19,16 +19,29 @@
           <div class="col-9">
             <div class="d-flex justify-content-between mb-3">
               <div class="d-flex align-items-center">
-                <input type="checkbox" class="basketCheck" />
+                <input
+                  type="checkbox"
+                  class="basketCheck"
+                  v-model="checkAll"
+                  @click="selectAll"
+                />
                 <span class="ms-2">{{ $t("home.basket.select") }}</span>
               </div>
               <div>
                 <p class="remove">{{ $t("home.basket.delete") }}</p>
               </div>
             </div>
-            <div class="d-flex mt-4" v-for="(item, idx) in basketProduct">
+            <div
+              class="d-flex mt-4"
+              v-for="(item, idx) in basketProduct"
+              :key="idx"
+            >
               <div class="me-3 d-flex align-items-center">
-                <input type="checkbox" class="basketCheck" />
+                <input
+                  type="checkbox"
+                  class="basketCheck"
+                  v-model="item.is_check"
+                />
               </div>
               <div class="basketProduts">
                 <div class="d-flex justify-content-between">
@@ -44,10 +57,22 @@
                     <div>
                       <div class="d-flex">
                         <div class="basketLike">
-                          <img
-                            src="../../assets/contact/basketLike.png"
-                            alt=""
-                          />
+                          <svg
+                            @click="toggleColor(idx)"
+                            width="22"
+                            height="22"
+                            viewBox="0 0 22 22"
+                            xmlns="http://www.w3.org/2000/svg"
+                            :style="{ fill: item.circleColor }"
+                          >
+                            <path
+                              d="M20.2996 8.10005C20.2996 5.44938 18.0607 3.30005 15.2991 3.30005C13.2351 3.30005 11.4623 4.50112 10.6996 6.21525C9.93694 4.50112 8.16414 3.30005 6.09908 3.30005C3.33961 3.30005 1.09961 5.44938 1.09961 8.10005C1.09961 15.8014 10.6996 20.9 10.6996 20.9C10.6996 20.9 20.2996 15.8014 20.2996 8.10005Z"
+                              :style="{ stroke: item.circleBorder }"
+                              stroke-width="1.3"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
                         </div>
                         <div class="basketdelate">
                           <img
@@ -64,15 +89,20 @@
                       </div>
                     </div>
                     <div class="productCount">
-                      <button class="btn" @click="item.count--" :disabled="item.count == 1">
+                      <button
+                        class="btn"
+                        @click="productRemove(idx)"
+                        :disabled="item.count == 1"
+                      >
                         <img src="../../assets/contact/minus.png" alt="" />
                       </button>
                       {{ item.count }}
-                      <button class="btn" @click="item.count++" :disabled="item.count == 10">
-                        <img
-                          src="../../assets/contact/plyus.png"
-                          alt=""
-                        />
+                      <button
+                        class="btn"
+                        @click="productAdd(idx)"
+                        :disabled="item.count == 10"
+                      >
+                        <img src="../../assets/contact/plyus.png" alt="" />
                       </button>
                     </div>
                   </div>
@@ -85,10 +115,9 @@
             <div class="yourOrderContainer mt-5">
               <p class="yourOrder">{{ $t("home.basket.order") }}</p>
               <div class="d-flex justify-content-between orderAbout">
-                <p>{{ $t("home.basket.books") }} ({{ basketProduct[1].count }})</p>
-                <p>128.000 {{ $t("home.basket.sum") }}</p>
+                <p>{{ $t("home.basket.books") }} ({{ totalSum }})</p>
+                <p>{{ totalPrice }} {{ $t("home.basket.sum") }}</p>
               </div>
-
               <div class="d-flex justify-content-between orderAbout my-1">
                 <p>{{ $t("home.basket.delivery") }}</p>
                 <p>20.000 {{ $t("home.basket.sum") }}</p>
@@ -102,7 +131,7 @@
 
               <div class="d-flex justify-content-between orderTotal">
                 <p>{{ $t("home.basket.total") }}</p>
-                <p>148000 {{ $t("home.basket.sum") }}</p>
+                <p>{{ totalPrice + 20000 }} {{ $t("home.basket.sum") }}</p>
               </div>
               <div class="mt-2">
                 <button class="w-100 sendOrder mt-3">
@@ -118,43 +147,143 @@
 </template>
 
 <script setup>
+import { useTestStore } from "@/store/test.js";
+
 import bookImg from "../../assets/contact/savat.png";
+
+const useStore = useTestStore();
+
+// const isColor1 = ref(false);
+// const circleColor = ref("white");
+
+const toggleColor = (idx) => {
+  basketProduct.value[idx].favourite = !basketProduct.value[idx].favourite;
+  
+  basketProduct.value[idx].circleColor = basketProduct.value[idx].favourite ? "#FF673D" : "white";
+  
+  basketProduct.value[idx].circleBorder = basketProduct.value[idx].favourite ? "#FF673D" : "#307CCE";
+};
+
+let checkAll = ref(false);
+
+const selectAll = () => {
+  for (let i = 0; i < basketProduct.value.length; i++) {
+    if (checkAll.value == true) {
+      basketProduct.value[i].is_check = !checkAll.value;
+    } else {
+      basketProduct.value[i].is_check = !checkAll.value;
+    }
+  }
+};
+
+const select = (check) => {
+  const allChecked = check.every((item) => item.is_check === true);
+  checkAll.value = allChecked;
+};
 
 const basketProduct = ref([
   {
     Img: bookImg,
     bookName: "Qo'lingdan kelsa, mahv et",
     bookAuthor: "Jeyms Patterson",
-    bookPrice: "4400",
+    bookPrice: 4400,
     count: 1,
+    id: 1,
+    totalPrice: 4400,
+    is_check: false,
+    favourite: false,
+    circleColor: "white",
+    circleBorder: "#307CCE",
   },
   {
     Img: bookImg,
     bookName: "Qo'lingdan kelsa, mahv et",
     bookAuthor: "Jeyms Patterson",
-    bookPrice: "4400",
+    bookPrice: 5000,
     count: 1,
+    id: 2,
+    totalPrice: 5000,
+    is_check: false,
+    favourite: false,
+    circleColor: "white",
+    circleBorder: "#307CCE",
   },
   {
     Img: bookImg,
     bookName: "Qo'lingdan kelsa, mahv et",
     bookAuthor: "Jeyms Patterson",
-    bookPrice: "4400",
+    bookPrice: 6000,
     count: 1,
+    id: 3,
+    totalPrice: 6000,
+    is_check: false,
+    favourite: false,
+    circleColor: "white",
+    circleBorder: "#307CCE",
   },
-  {
+ {
     Img: bookImg,
     bookName: "Qo'lingdan kelsa, mahv et",
     bookAuthor: "Jeyms Patterson",
-    bookPrice: "4400",
+    bookPrice: 3000,
     count: 1,
+    id: 4,
+    totalPrice: 3000,
+    is_check: false,
+    favourite: false,
+    circleColor: "white",
+    circleBorder: "#307CCE",
   },
 ]);
+let sum = ref(0);
+
+let totalSum = ref(null);
+let totalPrice = ref(null);
+
+// calulatorProduct
+
+const calulatorProduct = (arry) => {
+  let sum = 0;
+  let priceSum = 0;
+  arry.forEach((product, index) => {
+    sum += product.count;
+    priceSum += product.totalPrice;
+  });
+  totalSum.value = sum;
+  totalPrice.value = priceSum;
+};
+
+onMounted(() => {
+  calulatorProduct(basketProduct.value);
+});
+
+const productAdd = (idx) => {
+  basketProduct.value[idx].count++;
+
+  basketProduct.value[idx].totalPrice =
+    basketProduct.value[idx].count * basketProduct.value[idx].bookPrice;
+};
+const productRemove = (idx) => {
+  basketProduct.value[idx].count--;
+
+  basketProduct.value[idx].totalPrice =
+    basketProduct.value[idx].count * basketProduct.value[idx].bookPrice;
+};
+
+watch(
+  basketProduct,
+  (newVal, oldVal) => {
+    calulatorProduct(newVal);
+    select(newVal);
+  },
+
+  { deep: true }
+);
+
 const empty = ref(false);
 </script>
 
 <style scoped>
-
 .btn {
   border: none;
 }
