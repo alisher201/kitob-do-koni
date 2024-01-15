@@ -73,8 +73,8 @@
     left: 479px;
     border-radius: 10px;
     // color: #FAFAFA;
-    // background-color:#FAFAFA;     
-    background-color: red;
+    background-color:#FAFAFA;     
+    // background-color: red;
     margin: 60px 121px 283px 40px;
     
   }
