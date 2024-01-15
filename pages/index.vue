@@ -2,10 +2,10 @@
   <main>
     <HomeCarousel />
     <HomePossibilities/>
-    <!-- <HomeMarketFast/> -->
+    <HomeMarketFast/>
     <HomeMobileApp/>
+    
   
-
   </main>
 </template>
 

@@ -16,7 +16,7 @@
       <div style="position: relative; z-index: 4;">
         <div class="input-group" style="width: 479px">
           <input type="text" v-model="searchbooks" class="form-control" style="height: 44px" placeholder="kitob izlash..."
-            @focus="BookSearch" @blur="inputBlur" />
+            @focus="BookSearch" @blur="inputBlur"/>
           <span class="input-group-text d-flex justify-content-center align-items-center"
             style="width: 68px; height: 44px"><img src="~/assets/contact/bx_search-alt-2.png" alt="" /></span>
 
