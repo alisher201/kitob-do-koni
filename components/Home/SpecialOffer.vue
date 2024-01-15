@@ -61,7 +61,7 @@ const onSwiper = (sw) => {
     <div class="container px-0 mt-5">
       <div class="d-flex justify-content-between mb-3">
         <div class="d-flex">
-          <h4 class="bestText">Bozori chaqqon</h4>
+          <h4 class="bestText">Maxsus taklif</h4>
           <svg
             class="mt-1"
             xmlns="http://www.w3.org/2000/svg"
