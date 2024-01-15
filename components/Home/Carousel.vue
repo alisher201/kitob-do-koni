@@ -8,12 +8,14 @@
           data-bs-ride="carousel"
         >
           <div v-if="store.banner" class="carousel-inner">
-            <!-- <pre>{{store}}</pre> -->
-            <div v-for="(img, index) in store.banner" :key="index" class="carousel-item" :class="{ active: index === 0 }">
-              
+            <div v-for="(img, index) in store.banner" :key="index" class="carousel-item" :class="{ active: index === 0 }">              
               <img :src="url +'/' + img?.banner" class="d-block w-100" :alt="img.alternative_text" />
             </div>
           </div>
+          <div v-else class="carousel-inner">
+              <img src="../../assets/carousel1.png" class="d-block w-100" alt="Carusel">
+            <!-- No banner available. -->
+         </div>
           <button
             class="carousel-control-prev"
             type="button"
@@ -44,7 +46,14 @@
           </div>
         </div>
       </div>
-
+      <div v-else class="col-4">
+        <div>
+          <img src="../../assets/jumaMuborak.png" alt="" class="advertisement" />
+        </div>
+        <div class="mt-3">
+          <img src="../../assets/jumaMuborak.png" alt="" class="advertisement" />
+        </div>
+      </div>
     </div>
   </section>
 </template>
