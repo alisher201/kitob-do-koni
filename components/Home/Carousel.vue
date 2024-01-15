@@ -12,10 +12,9 @@
               <img :src="url +'/' + img?.banner" class="d-block w-100" :alt="img.alternative_text" />
             </div>
           </div>
-          <div v-else class="carousel-inner">
+          <!-- <div v-else class="carousel-inner">
               <img src="../../assets/carousel1.png" class="d-block w-100" alt="Carusel">
-            <!-- No banner available. -->
-         </div>
+         </div> -->
           <button
             class="carousel-control-prev"
             type="button"
@@ -46,14 +45,14 @@
           </div>
         </div>
       </div>
-      <div v-else class="col-4">
+      <!-- <div v-else class="col-4">
         <div>
           <img src="../../assets/jumaMuborak.png" alt="" class="advertisement" />
         </div>
         <div class="mt-3">
           <img src="../../assets/jumaMuborak.png" alt="" class="advertisement" />
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
 </template>
