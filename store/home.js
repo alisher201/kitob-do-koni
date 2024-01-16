@@ -6,10 +6,14 @@ export const useTestTStore = defineStore ("home",{
     
     state:() => ({
         url: useRuntimeConfig().public.siteUrl,
-        baner: {
+        banner: {
         },
+        site_bar: {},
         word:{},
     }),
+    // getters: {
+    //     banner_data: (state) => state.banner,
+    //   },
     
     actions: {
         fechData() {

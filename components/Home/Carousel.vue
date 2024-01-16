@@ -7,6 +7,7 @@
           class="carousel carousel-dark slide carouselSize"
           data-bs-ride="carousel"
         >
+
           <div v-if="store.banner" class="carousel-inner">
             <div v-for="(img, index) in store.banner" :key="index" class="carousel-item" :class="{ active: index === 0 }">              
               <img :src="url +'/' + img?.banner" class="d-block w-100" :alt="img.alternative_text" />
@@ -33,8 +34,9 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
-        </div>
+        </div> 
       </div>
+    
       <div  v-if="store.banner"  class="col-4">
         <div v-for="(img, index) in [store.site_bar]" :key="index">
           <div>
@@ -63,7 +65,6 @@ const store = useTestTStore();
 
 onMounted(() => {
   store.fechBanner();
-  console.log(store);
 });
 </script>
 
