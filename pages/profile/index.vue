@@ -1,16 +1,28 @@
 <template>
     <div >
+<<<<<<< HEAD
       <div class="main ">
         <h1 class="h1">Bildirishnoma</h1>
     
         <div class="main_list" >
           <dev class="img1"  v-for="(item,index) in data" :key="index" @click="selectImg(item.id)">
+=======
+      <div class="main">
+        <h1 class="h1">Bildirishnoma</h1>
+    
+        <div class="main_list" >
+          <div    class="img1"  v-for="(item,index) in data" :key="index" @click="selectImg(item.id)">
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
               <img :src="item.img"  alt="">
               <div >
                   <h2>{{item.word}}</h2>
                   <p>{{item.world}}</p>
               </div>
+<<<<<<< HEAD
             </dev>
+=======
+          </div>
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
         </div>
       </div>
     </div>
@@ -57,7 +69,11 @@
         router.push(`/profile/Notification/${id}`)
        }
   </script>
+<<<<<<< HEAD
      
+=======
+  
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
   <style lang="scss" scoped>
   .nuxt-link-exact-active {
     text-decoration: none;
@@ -67,20 +83,32 @@
     border-bottom: none;
   }
   .main {
+<<<<<<< HEAD
     width: 920px;
+=======
+    width: 948px;
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
     height: 325px;
     top: 232px;
     left: 479px;
     border-radius: 10px;
     // color: #FAFAFA;
     background-color:#FAFAFA;     
+<<<<<<< HEAD
     // background-color: red;
+=======
+  //   background-color: red;
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
     margin: 60px 121px 283px 40px;
     
   }
   .h1{
       width: 136px;
+<<<<<<< HEAD
       height: 37px;
+=======
+      height: 27px;
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
       top: 250px;
       left: 509px;
       font-family: Manrope;
@@ -89,14 +117,19 @@
       line-height: 27px;
       letter-spacing: 0.02em;
       text-align: left;
+<<<<<<< HEAD
       margin:0px 0px 0px 30px;
       padding-top:10px;  
+=======
+      margin:18px 0px 0px 30px;
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
   }
   .main_list{
       display:flex;
       padding:4px;
       margin:18px 0px 0px 30px;
       gap: 20px;
+<<<<<<< HEAD
       
       display: grid;
       // background-color: red;
@@ -120,6 +153,11 @@
   }
   
 
+=======
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(300px,2fr));
+  }
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
   h2{
       width: 218px;
       height: 38px;
@@ -160,7 +198,26 @@
       border-radius: 5px;
   
   }
+<<<<<<< HEAD
 
+=======
+  .img1{
+      
+      width: 415px;
+      height: 115px;
+      top: 297px;
+      left: 509px;
+      border-radius: 10px;
+      border:blue;
+      border: 1px solid #A1C4E2;
+      display: flex;
+      // color: #1b33e4;
+      background-color: #FFFFFF;
+      margin-right: 25px;
+      // background-color: red;
+      
+  }
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
   img{
       width: 90px;
       height: 95px;

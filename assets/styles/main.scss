@@ -1,5 +1,6 @@
 // @import url('https://fonts.googleapis.com/css?family=Exo+2');
 @import "bootstrap/scss/bootstrap";
+<<<<<<< HEAD
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&family=Mukta:wght@600&family=Narnoor&family=Nunito:wght@200&family=Roboto+Mono:ital,wght@0,100;1,700&display=swap');
 
   @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&family=Mukta:wght@600&family=Narnoor&family=Nunito:wght@200&family=Oxanium:wght@200&family=Roboto+Mono:ital,wght@0,100;1,700&display=swap');
@@ -11,17 +12,52 @@
     
   //   overflow-x: hidden;
   // }
+=======
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&family=Mukta:wght@600&family=Narnoor&family=Nunito:wght@200&family=Roboto+Mono:ital,wght@0,100;1,700&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&family=Mukta:wght@600&family=Narnoor&family=Nunito:wght@200&family=Oxanium:wght@200&family=Roboto+Mono:ital,wght@0,100;1,700&display=swap');
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination'; 
+
+body {
+  font-family: 'Manrope';
+  overflow-x: hidden;
+}
+
+// * {
+
+//   overflow-x: hidden;
+// }
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
 
 
 .page-enter-active,
 .page-leave-active {
   transition: all 0.5s;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
 .page-enter-from,
 .page-leave-to {
   opacity: 0;
   filter: blur(1rem);
+<<<<<<< HEAD
   }
   h1,h2,h3,h4,h5,h6 {
     overflow: hidden;
   }
+=======
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow: hidden;
+}
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded

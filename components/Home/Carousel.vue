@@ -90,8 +90,7 @@ onMounted(() => {
   height: 300px;
   border-radius: 10px;
 }
-.advertisement {
-  width: 100%;
+.advertisement {width: 100%;
   height: 142px;
   border-radius: 12px;
 }

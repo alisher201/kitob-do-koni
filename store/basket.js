@@ -1,15 +1,15 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
 
-export const useTestStore = defineStore("test", {
+export const useBasketStore = defineStore("test", {
   state: () => ({
     url: useRuntimeConfig().public.siteUrl
   }),
   
   actions: {
-    async fetchData() {
+    async basketData() {
         try {
-          const response = await fetch(`${this.url}/cart`);
+          const response = await $fetch(`${this.url}/cart`);
           const data = await response.json();
           console.log(data);
         } catch (error) {

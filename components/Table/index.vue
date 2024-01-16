@@ -73,7 +73,6 @@ const body = [
 <style lang="scss" scoped>
 table {
   width: 100%;
-  // background-color: red;
   // padding: 10px;
   // border-collapse: separate;
   // border-spacing: 0;

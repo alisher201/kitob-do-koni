@@ -2,6 +2,10 @@
   <div id="app">
     <SeoKit />
     <Header />
+<<<<<<< HEAD
+=======
+    
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
     <slot />
    
     <!-- <Newsletter v-if="route.path != '/contact'" /> -->
@@ -10,7 +14,10 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import useAsset from '~/composables/useAsset';
+=======
+>>>>>>> ee90e53da642864c21b59e8a1fa2637af6fc5ded
 
 const route = useRoute()
 

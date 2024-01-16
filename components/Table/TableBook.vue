@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <div  class="main" v-for="(item,ind) in data" :key="ind"  @click="book(item.id)">
+        <NuxtLink to="/reading" class="main" v-for="(item,ind) in data" :key="ind">
             <img :src="item.img" alt="">
             <h2>{{item.name}}</h2>
             <p class="main_p">{{item.author}}</p>
@@ -10,7 +10,7 @@
                 <img class="main_list_img" style="height:2px;margin-top:8px" :src="item.stecer" alt="">
             </div>
            
-        </div>
+        </NuxtLink>
     </div>
 </template>
 
@@ -24,7 +24,6 @@ import img5 from '../../assets/profile/Zukkolar.png'
 import img6 from '../../assets/profile/Raqamlar.png'
 const data = [
     {
-        id:1,
         img:img1,
         name:'Atom odatlar (yum...',
         author:'Martimer Alder',
@@ -33,7 +32,6 @@ const data = [
         stecer:img3
     },
     {
-        id:2,
         img:img2,
         name:'Kitoblar qanday o’q...',
         author:'Jayms Kir',
@@ -42,7 +40,6 @@ const data = [
         stecer:img3
     },
     {
-        id:3,
         img:img4,
         name:'Ruhiyat parhezi',
         author:'Jayms Kir',
@@ -51,7 +48,6 @@ const data = [
         stecer:img3
     },
     {
-        id:4,
         img:img5,
         name:'Zukkolar va landov...',
         author:'Malkolm Gladuell',
@@ -60,7 +56,6 @@ const data = [
         stecer:img3
     },
     {
-        id:5,
         img:img6,
         name:'Raqamlar uchun ya...',
         author:'Barbara Oukli',
@@ -69,10 +64,6 @@ const data = [
         stecer:img3
     },
 ]
-const book = (id)=>{
-    const router = useRouter()
-    router.push(`/reading/${id}`)
-}
 </script>
 
 <style lang="scss" scoped>
