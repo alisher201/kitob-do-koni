@@ -1,0 +1,1 @@
+export const baseUrll = useRuntimeConfig().public.siteUrl
