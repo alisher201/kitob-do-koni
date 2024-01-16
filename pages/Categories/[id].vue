@@ -21,19 +21,29 @@
           Barchasi 14 <img src="@/assets/contact/arrowDown.png" alt="" />
         </p>
         <hr class="my-4" />
-        <h6><strong>{{ $t("home.format") }}</strong></h6>
+        <h6>
+          <strong>{{ $t("home.format") }}</strong>
+        </h6>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.kinds") }}
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
+            $t("home.kinds")
+          }}
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.elecBook") }}
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
+            $t("home.elecBook")
+          }}
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.audioBook") }}
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
+            $t("home.audioBook")
+          }}
         </p>
         <hr class="my-4" />
 
-        <h6><strong>{{ $t("home.price") }}</strong></h6>
+        <h6>
+          <strong>{{ $t("home.price") }}</strong>
+        </h6>
         <div class="row">
           <div class="col-6">
             <label class="price">{{ $t("home.from") }}</label>
@@ -46,13 +56,17 @@
         </div>
 
         <hr class="my-4" />
-        <h6><strong>{{ $t("home.lang") }}</strong></h6>
+        <h6>
+          <strong>{{ $t("home.lang") }}</strong>
+        </h6>
         <p>
           <input type="checkbox" class="form-check-input me-2 ms-1" />
           {{ $t("home.allLang") }}
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.uzb") }}
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
+            $t("home.uzb")
+          }}
         </p>
         <p>
           <input type="checkbox" class="form-check-input me-2 ms-1" />English
@@ -62,15 +76,21 @@
         </p>
       </div>
 
-      <div class="col-8  ps-4  pe-0">
-        <div class=" d-flex justify-content-between">
-          <h6 class=" p-0">{{ $t("home.catalog") }}</h6>
+      <div class="col-8 ps-4 pe-0">
+        <div class="d-flex justify-content-between">
+          <h6 class="p-0">{{ $t("home.catalog") }}</h6>
           <button class="categoriaAll btn btnColor">
-            {{ $t("home.sorting") }} <img src="@/assets/contact/arrowDown.png" alt="" />
+            {{ $t("home.sorting") }}
+            <img src="@/assets/contact/arrowDown.png" alt="" />
           </button>
         </div>
-        <div class=" bookGrid mt-4">
-          <div class="p-0" v-for="(item, index) in bookImgs" :key="index" @click="selectBook(item.id)">
+        <div class="bookGrid mt-4">
+          <div
+            class="p-0"
+            v-for="(item, index) in bookImgs"
+            :key="index"
+            @click="selectBook(item.id)"
+          >
             <div class="bookData">
               <img :src="item.imgs" alt="" class="categoyImg" />
               <button class="btnBestseller">Bestseller</button>
@@ -86,11 +106,24 @@
                 class="karzinka"
               />
               <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
+
+              <img
+                src="../../assets/contact/bookopen.png"
+                alt=""
+                class="bookopen"
+              />
+              <img
+                src="../../assets/contact/headphone.png"
+                alt=""
+                class="headphone"
+              />
             </div>
             <div class="ps-2">
               <small class="title">{{ item.bookTitle }}</small>
             </div>
-            <div class="ps-2"><small class="author">{{ item.author }}</small></div>
+            <div class="ps-2">
+              <small class="author">{{ item.author }}</small>
+            </div>
             <img src="../../assets/contact/Star.png" alt="" />
             <small class="stats ms-2">5,0</small>
             <span class="starsNumbers">(32)</span>
@@ -105,24 +138,28 @@ import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
 
 const bookImgs = [
-  {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {id:2,
+  { id: 1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+  {
+    id: 2,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
   },
-  {id:3,
+  {
+    id: 3,
     imgs: bookImg,
     bookTitle: "Sharqiy ekspressdagi qotillik",
     author: "Agata Kristi",
   },
-  {id:4,
+  {
+    id: 4,
     imgs: bookImg1,
     bookTitle: "Sharqiy ekspressdagi qotillik",
     author: "Dafna Dyu Morye",
   },
-  { id:5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {id:6,
+  { id: 5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+  {
+    id: 6,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
@@ -137,9 +174,9 @@ const items = [
   { id: 6, name: "Rassomlar" },
 ];
 const selectBook = (id) => {
-  const router =  useRouter()
-  router.push(`/bookSelect/${id}`)
-}
+  const router = useRouter();
+  router.push(`/bookSelect/${id}`);
+};
 </script>
 <style scoped>
 .sideBar {
@@ -223,8 +260,24 @@ const selectBook = (id) => {
   cursor: pointer;
   display: none;
 }
+.bookopen {
+  position: absolute;
+  right: 40px;
+  bottom: 10px;
+  cursor: pointer;
+  display: none;
+}
+.headphone {
+  position: absolute;
+  right: 70px;
+  bottom: 10px;
+  cursor: pointer;
+  display: none;
+}
 .bookData:hover .bookLike,
 .bookData:hover .ebook,
+.bookData:hover .bookopen,
+.bookData:hover .headphone,
 .bookData:hover .karzinka {
   display: block;
 }
@@ -238,7 +291,7 @@ const selectBook = (id) => {
   color: #9196ad;
   font-size: 13px;
 }
-    
+
 .title {
   font-weight: 800;
 }

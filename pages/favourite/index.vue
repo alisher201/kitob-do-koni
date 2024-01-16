@@ -46,6 +46,7 @@
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
 
+
 const bookImgs = [
   {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
   {id:2,
