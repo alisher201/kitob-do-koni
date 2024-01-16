@@ -127,8 +127,8 @@ const onSwiper = (sw) => {
 </template>
 
 <style scoped>
-.swiper-slide {
-}
+/* .swiper-slide {
+} */
 
 .bestText {
   font-size: 22px;
