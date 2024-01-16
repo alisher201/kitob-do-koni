@@ -64,7 +64,7 @@ const url= useRuntimeConfig().public.siteUrl
 const store = useTestTStore();
 
 onMounted(() => {
-  store.fechBanner();
+  // store.fechBanner();
 });
 </script>
 
