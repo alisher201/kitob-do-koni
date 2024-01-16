@@ -148,7 +148,7 @@
 </template>
 
 <script setup>
-import { useTestStore } from "@/store/test.js";
+import { useTestStore } from "@/store/basket.js";
 
 import bookImg from "../../assets/contact/savat.png";
 
@@ -256,8 +256,10 @@ const calulatorProduct = (arry) => {
   let sum = 0;
   let priceSum = 0;
   arry.forEach((product, index) => {
-    sum += product.count;
-    priceSum += product.totalPrice;
+    if (product.is_check == true) {
+      sum += product.count;
+      priceSum += product.totalPrice;
+    }
   });
   totalSum.value = sum;
   totalPrice.value = priceSum;
@@ -272,16 +274,16 @@ const productAdd = (idx) => {
 
   basketProduct.value[idx].totalPrice =
     basketProduct.value[idx].count * basketProduct.value[idx].bookPrice;
-    
-    basketProduct.value[idx].is_check = true
+
+  basketProduct.value[idx].is_check = true;
 };
 const productRemove = (idx) => {
   basketProduct.value[idx].count--;
 
   basketProduct.value[idx].totalPrice =
     basketProduct.value[idx].count * basketProduct.value[idx].bookPrice;
-    
-    basketProduct.value[idx].is_check = true
+
+  basketProduct.value[idx].is_check = true;
 };
 
 watch(

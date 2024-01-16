@@ -14,8 +14,6 @@ export const useTestTStore = defineStore ("home",{
         fechData() {
           $fetch(` ${this.url}/book/category`)
         }
-
-      
     }
 
     
