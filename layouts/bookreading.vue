@@ -1,7 +1,7 @@
 <template>
     <div>
-       <ReadingBookPage />
-        <ReadingBookFooter/>
+       <!-- <ReadingBookPage /> -->
+       <!-- <reading /> -->
         <slot />
     </div>
 </template>

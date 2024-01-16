@@ -12,8 +12,8 @@
       <hr>
       <!-- popular book -->
       <p class="popularBookSearch">Mashhur qidiruvlar</p>
-      <div v-for="(item, idx) in searchBook" :key="idx" class="my-2 bookList">
-        <img src="../../assets/contact/searchIcon.png" alt=""><span class="popularBookName ms-2" @click="popularBook(item.name)">{{ item.name }}</span> 
+      <div v-for="(item, idx) in store.word  " :key="idx" class="my-2 bookList">
+        <img src="../../assets/contact/searchIcon.png" alt=""><span class="popularBookName ms-2" @click="popularBook(item.name)">{{ item.word}}sa</span> 
       </div>
       
     </div>
@@ -26,16 +26,23 @@
 <script setup>
  const emit = defineEmits(['searchEmit'])
 
-const searchBook = [
-  { id: 1, name: 'Sharqiy ekspressdagi qotillik' },
-  { id: 2, name: 'Orziqib kutaman ertani' },
-  { id: 3, name: 'Odamlar o’ynaydigan o’yinlar' },
-  { id: 4, name: '"Al-Karnaku" kemasidagi qotillik' }
-]
+// const searchBook = [
+//   { id: 1, name: 'Sharqiy ekspressdagi qotillik' },
+//   { id: 2, name: 'Orziqib kutaman ertani' },
+//   { id: 3, name: 'Odamlar o’ynaydigan o’yinlar' },
+//   { id: 4, name: '"Al-Karnaku" kemasidagi qotillik' }
+// ]
 const popularBook = (name) => {
   emit('searchEmit', name)
 }
+const store = useTestTStore();
+console.log(store);
 
+onMounted(() => {
+    // store.fechSearch()
+    store.fechSearchTop()
+    // console.log(store);
+});
 </script>
 
 <style scoped>

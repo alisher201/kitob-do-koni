@@ -27,11 +27,12 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .main {
-  width: 920px;
-  height: 226px;
+  width: 930px;
+  height: 100%;
   top: 232px;
   left: 30px;
   background-color: #fafafa;
+  // background-color:red;
   margin: 40px 121px 412px 30px;
 }
 .h1 {

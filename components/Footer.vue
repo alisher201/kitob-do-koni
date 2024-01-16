@@ -1,5 +1,5 @@
 <template>
-  <div class="footer_area">
+  <footer class="footer_area">
     <div class="container px-0">
       <div class="row">
         <div class="col-3">
@@ -14,7 +14,8 @@
             </div>
 
             <small
-              >{{ $t('footer.text') }}</small
+              >Kitobni har kim, har kuni, arzon narxda, qulay tarzda va istalgan
+              joyda o'qishi kerak!</small
             >
             <div>
               <img
@@ -33,16 +34,16 @@
 
         <div class="col-3">
           <div class="footer-widget">
-            <div class="footer-title">{{ $t('footer.blog') }}</div>
+            <div class="footer-title">Blog</div>
             <ul class="list-unstyled">
               <NuxtLink to="/products">
-                <li>{{ $t('footer.project') }}</li>
+                <li>Loyiha haqida</li>
               </NuxtLink>
               <NuxtLink to="/products">
-                <li>{{ $t('footer.authors') }}</li>
+                <li>Mulliflar uchun</li>
               </NuxtLink>
               <NuxtLink to="/products">
-                <li>{{ $t('footer.copyright') }}</li>
+                <li>Mualliflik huquqi</li>
               </NuxtLink>
             </ul>
           </div>
@@ -50,16 +51,16 @@
 
         <div class="col-3">
           <div class="footer-widget">
-            <div class="footer-title">{{ $t('footer.recipes') }}</div>
+            <div class="footer-title">Recipes</div>
             <ul class="list-unstyled">
               <NuxtLink>
-                <li>{{ $t('footer.contact') }}</li>
+                <li>Biz bilan aloqa</li>
               </NuxtLink>
               <NuxtLink>
-                <li>{{ $t('footer.offer') }}</li>
+                <li>Ommaviy offerta</li>
               </NuxtLink>
               <NuxtLink>
-                <li>{{ $t('footer.privacy') }}</li>
+                <li>Maxfiylik siyosati</li>
               </NuxtLink>
             </ul>
           </div>
@@ -67,7 +68,7 @@
 
         <div class="col-3">
           <div class="footer-widget">
-            <div class="footer-title">{{ $t('footer.contacts') }}</div>
+            <div class="footer-title">Contacts</div>
             <p class="contactData">
               <img src="@/assets/contact/footerTelifon.png" alt="" />
               <a class="text-white ms-2" href="tel:+998901237590"
@@ -83,7 +84,7 @@
             </p>
             <p class="contactData">
               <img src="../assets/contact/lacatsi.png" alt="" class="me-1" />
-              {{ $t('footer.address') }}
+              Mirzo-ulug'bek, Navnihol-3 7uy
             </p>
           </div>
         </div>
@@ -95,18 +96,18 @@
         <div class="col-xl-7 col-lg-6 col-md-6 col-sm-6 col-6">
           <div class="tiny-footer">
             <p>
-              {{ $t('footer.rights') }}
+              ©2023 kytab. Mualliflik huquqi va barcha huquqlar himoyalangan.
             </p>
           </div>
         </div>
         <div
           class="col-4 col-xl-4 col-lg-4 col-md-4 col-sm-4 d-flex justify-content-end"
         >
-          <div class="tiny-footer">{{ $t('footer.developer') }}</div>
+          <div class="tiny-footer">Ishlab chiquvchi: Al-raqam</div>
         </div>
       </div>
     </div>
-  </div>
+  </footer>
 </template>
 
 <style scoped lang="scss">

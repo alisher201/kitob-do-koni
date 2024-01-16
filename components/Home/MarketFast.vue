@@ -216,8 +216,8 @@ const onSwiper = (sw) => {
 .nextRight {
   width: 30px;
   height: 30px;
-  background: #F6F6F6;
-  border-radius: 20px  0  0 20px;
+  background: #f6f6f6;
+  border-radius: 20px 0 0 20px;
   cursor: pointer;
   border: none;
 }
