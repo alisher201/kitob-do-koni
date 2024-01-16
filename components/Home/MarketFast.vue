@@ -1,137 +1,130 @@
 <script setup>
+
+
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
 
 const bookImgs = [
-  { id: 1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {
-    id: 2,
+  {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+  {id:2,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
   },
-  {
-    id: 3,
+  {id:3,
     imgs: bookImg,
     bookTitle: "Sharqiy ekspressdagi qotillik",
     author: "Agata Kristi",
   },
-  {
-    id: 4,
+  {id:4,
     imgs: bookImg1,
     bookTitle: "Sharqiy ekspressdagi qotillik",
     author: "Dafna Dyu Morye",
   },
-  { id: 5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {
-    id: 6,
+  { id:5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+  {id:6,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
   },
-  {
-    id: 6,
+  {id:6,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
   },
-  {
-    id: 6,
+  {id:6,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
   },
-  {
-    id: 6,
+  {id:6,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
   },
 ];
 
-let swiper = null;
+let swiper = null
 
 const onSwiper = (sw) => {
-  swiper = sw;
+  swiper = sw
 };
+
 </script>
 
 <template>
   <div>
-    <div class="container px-0 mt-5">
-      <div class="d-flex justify-content-between mb-3">
-        <div class="d-flex">
-          <h4 class="bestText">Bozori chaqqon</h4>
-          <svg
-            class="mt-1"
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <path
-              d="M7 4L13 10L7 16"
-              stroke="#35363D"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
-        <div>
-          <button class="nextRight me-2" @click="swiper.slidePrev()">
-            <img src="@/assets/contact/arrowRight.png" alt="" />
+  <div class="container px-0 mt-5">
+    <div class="d-flex justify-content-between">
+      <h4 class="bestText"> Bozori chaqqon</h4>
+      <div>
+            <button class="nextRight me-2" @click="swiper.slideNext()">
+             <img src="@/assets/contact/arrowRight.png" alt="" />
           </button>
-          <button class="nextLeft" @click="swiper.slideNext()">
-            <img src="@/assets/contact/arrowLeft.png" alt="" />
+          <button class="nextLeft" @click="swiper.slidePrev()">
+             <img src="@/assets/contact/arrowLeft.png" alt="" />
           </button>
-        </div>
-      </div>
-      <Swiper
-        :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
-        :grid="{ rows: 1, fill: 'row' }"
-        :slides-per-view="6"
-        :space-between="10"
-        :pagination="{ clickable: true }"
-        @swiper="onSwiper"
-      >
-        <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx">
-          <div class="bookData">
-            <img :src="item.imgs" alt="" class="categoyImg" />
-            <button class="btnBestseller">Bestseller</button>
-            <button class="newBook">Yangi</button>
-            <img
-              src="../../assets/contact/booklike.png"
-              alt=""
-              class="bookLike"
-            />
-            <img
-              src="../../assets/contact/karzinka.png"
-              alt=""
-              class="karzinka"
-            />
-            <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
           </div>
-          <div class="ps-2">
-            <small class="title">{{ item.bookTitle }}</small>
-          </div>
-          <div class="ps-2">
-            <small class="author">{{ item.author }}</small>
-          </div>
-          <img src="../../assets/contact/Star.png" alt="" />
-          <small class="stats ms-2">5,0</small>
-          <span class="starsNumbers">(32)</span>
-        </SwiperSlide>
-      </Swiper>
+
+
+
+
+
+
+
+      <!-- <div>        
+        <button @click="swiper.slideNext()">Next</button>
+    <button @click="swiper.slidePrev()">Previous</button></div> -->
     </div>
+    
+    
+  
+    <Swiper :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]" 
+      :grid="{ rows: 1, fill: 'row' }" :slides-per-view="6" :space-between="10" :pagination="{ clickable: true }"
+      @swiper="onSwiper">
+      <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx"
+        >
+        <div class="bookData">
+              <img :src="item.imgs" alt="" class="categoyImg" />
+              <button class="btnBestseller">Bestseller</button>
+              <button class="newBook">Yangi</button>
+              <img
+                src="../../assets/contact/booklike.png"
+                alt=""
+                class="bookLike"
+              />
+              <img
+                src="../../assets/contact/karzinka.png"
+                alt=""
+                class="karzinka"
+              />
+              <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
+            </div>
+            <div class="ps-2">
+              <small class="title">{{ item.bookTitle }}</small>
+            </div>
+            <div class="ps-2"><small class="author">{{ item.author }}</small></div>
+            <img src="../../assets/contact/Star.png" alt="" />
+            <small class="stats ms-2">5,0</small>
+            <span class="starsNumbers">(32)</span>
+      </SwiperSlide>
+
+    </Swiper></div>
+    
+
+
   </div>
 </template>
 
 <style scoped>
+.swiper-slide {
+ 
+}
+
 .bestText {
   font-size: 22px;
   font-weight: 700;
+
 }
 
 /* .swiper-wrapper {
@@ -140,8 +133,13 @@ const onSwiper = (sw) => {
 } */
 
 .swiper {
-  height: 430px;
-}
+  height: 332px; 
+} 
+
+
+
+
+
 .bookData {
   position: relative;
   height: 260px;
@@ -176,7 +174,7 @@ const onSwiper = (sw) => {
   color: #9196ad;
   font-size: 13px;
 }
-
+    
 .title {
   font-weight: 800;
 }
@@ -226,8 +224,8 @@ const onSwiper = (sw) => {
 .nextLeft {
   width: 30px;
   height: 30px;
-  background: #f6f6f6;
-  border-radius: 0 20px 20px 0;
+  background: #F6F6F6;
+  border-radius: 0  20px 20px 0 ;
   cursor: pointer;
   border: none;
 }

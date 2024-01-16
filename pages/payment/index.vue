@@ -18,7 +18,7 @@ const submitPeyment = () => {
         <div class="cardImg">
           <div class="cardList">
             <div class="d-flex justify-content-between">
-              <p class="cardNumber">{{ $t("home.cardNum") }}</p>
+              <p class="cardNumber">Karta raqam</p>
               <img src="../../assets/contact/uzcardlogo.png" alt="" />
             </div>
             <div class="cardCode">
@@ -29,45 +29,45 @@ const submitPeyment = () => {
             </div>
             <div class="d-flex justify-content-between">
               <div>
-                <p class="cardNumber">{{ $t("home.cardName") }}</p>
+                <p class="cardNumber">Karta nomi</p>
                 <p class="text-white">
                   <span>###########</span> <span class="ms-2">#######</span>
                 </p>
               </div>
               <div>
-                <p class="cardNumber">{{ $t("home.term") }}</p>
+                <p class="cardNumber">MUDDATI</p>
                 <p class="text-white">OO/YY</p>
               </div>
             </div>
           </div>
         </div>
         <div>
-          <p class="fw-bold mt-3">{{ $t("home.amount") }} 165 000 {{ $t("home.basket.sum") }}</p>
+          <p class="fw-bold mt-3">To'lov miqdori: 165 000 so'm</p>
           <div>
-            <label for="" class="formCard">{{ $t("home.cardNum") }}</label>
+            <label for="" class="formCard">Karta raqam</label>
             <input type="text" class="form-control" placeholder="******************" />
           </div>
           <div class="row">
             <div class="col-7">
-              <label for="" class="formCard">{{ $t("home.cardName") }}</label>
-              <input type="text" class="form-control" :placeholder="$t('home.nameSurname')" />
+              <label for="" class="formCard">Karta nomi</label>
+              <input type="text" class="form-control" placeholder="Ism familiya" />
             </div>
             <div class="col-5">
-              <label for="" class="formCard">{{ $t("home.period") }}</label>
+              <label for="" class="formCard">Amal qilish muddati</label>
               <input type="text" class="form-control" placeholder="OO/YY" />
             </div>
           </div>
           <div class="cardPeymentContainer">
             <button class="w-100 cardPeyment fw-bold text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-              {{ $t("home.pay") }}
+              To'lov qilish
             </button>
           </div>
         </div>
       </div>
       <div class="statusCard mt-2 d-flex justify-content-between">
         <div class="">
-          <p class="">{{ $t("home.remember") }}</p>
-          <small>{{ $t("home.agree") }}</small>
+          <p class="">Kartani eslab qolish</p>
+          <small>Axborotni saqlash shartlariga roziman</small>
         </div>
         <div>
           <div class="form-check form-switch">
@@ -83,23 +83,23 @@ const submitPeyment = () => {
         <div class="modal-dialog">
           <div class="modal-content " style="background-color: transparent !important; border: none;">
             <div class="modalData">
-              <h4>{{ $t("home.confirm") }}</h4>
-              <p class="modalContent">{{ $t("home.oneTime") }}</p>
+              <h4>Tranzaksiyani tasdiqlash</h4>
+              <p class="modalContent">Telefon raqamingizga bir martalik kod yuborildi</p>
               <div class="d-flex justify-content-between mt-2">
-                <p class="modalContent">{{ $t("home.cardNum") }}</p>
+                <p class="modalContent">Karta raqami</p>
                 <p class="modalContent">************1694</p>
               </div>
               <div><img src="../../assets/contact/peymentLine.png" alt="" class="w-100"></div>
               <div class="d-flex justify-content-between mt-2">
-                <p class="modalContent">{{ $t("home.transaction") }}</p>
-                <p class="modalContent">165 000 {{ $t("home.basket.sum") }}</p>
+                <p class="modalContent">Tranzaksiya summasi</p>
+                <p class="modalContent">165 000 so’m</p>
               </div>
-              <div class="mt-4"><input type="text" class="form-control" :placeholder="$t('home.oneTimeCode')" /></div>
+              <div class="mt-4"><input type="text" class="form-control" placeholder="Bir martalik kod" /></div>
               <div class="mt-4">
-                <p class="modalContent text-center">{{ $t("home.resend") }}</p>
+                <p class="modalContent text-center">40 soniya dan so’ng takroran yuborish</p>
               </div>
               <div class="mt-4">
-                <p class="peymentcancel text-center" type="button" data-bs-dismiss="modal">{{ $t("home.cancel") }}</p>
+                <p class="peymentcancel text-center" type="button" data-bs-dismiss="modal">Bekor qilish</p>
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@ const submitPeyment = () => {
 
 .cardImg {
   display: flex;
-  align-items: flex-end;
+  align-items: end;
   height: 230px;
   border-radius: 15px;
   background: url("../../assets/contact/cardBbackground.png");

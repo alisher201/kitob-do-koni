@@ -10,11 +10,11 @@
               <img :src="item.img2" alt="" v-if="item.id > starCount" />
             </span>
           </div>
-          <p class="mt-2">{{ $t("home.votes") }} 23</p>
+          <p class="mt-2">Umumiy ovozlar soni 23</p>
         </div>
         <hr class="mb-0" />
         <div class="p-3">
-          <span>{{ $t("home.rate") }}</span>
+          <span>Baho bering:</span>
           <span v-for="(item, index) in stars" :key="index" class="rate ms-2">
             <img
               :src="item.img"
@@ -35,24 +35,24 @@
               id=""
               rows="6"
               class="rateComments mt-3 w-100"
-              :placeholder="$t('home.think')"
+              placeholder="Kitob haqida qanday fikrdasiz?"
               v-model="comments"
             ></textarea>
           </div>
           <div class="d-flex mt-2">
             <div class="w-50 pe-1">
               <button class="w-100 clearBtn" @click="clearData">
-                {{ $t("home.clear") }}
+                Tozalash
               </button>
             </div>
             <div class="w-50 ps-2">
-              <button class="w-100 submitData">{{ $t("home.sending") }}</button>
+              <button class="w-100 submitData">Yuborish</button>
             </div>
           </div>
         </div>
       </div>
       <div class="comentsData">
-        <h5 class="">{{ $t("home.numComments") }} 1257</h5>
+        <h5 class="">Sharhlar soni 1257 ta</h5>
         <div class="mt-3" v-for="(items, index) in userData" :key="index">
           <div class="d-flex">
             <div>

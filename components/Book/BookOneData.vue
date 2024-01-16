@@ -93,13 +93,13 @@ onMounted(() => {
           <p class="mx-2">|</p>
           <p><img src="../../assets/contact/chat.png" alt="" /></p>
           <p class="commentCount">127</p>
-          <p class="statCount small ">{{ $t("home.review") }}</p>
+          <p class="statCount small ">отзывов</p>
         </div>
         <div>
-          <span class="statCount">{{ $t("home.cost") }}:</span>
+          <span class="statCount">narxi:</span>
           <div class="mb-3">
-            <span class="bookPrice">165000 {{ $t("home.basket.sum") }}</span>
-            <small class="discount ms-3"><del>185 000 {{ $t("home.basket.sum") }}</del></small>
+            <span class="bookPrice">165000 so'm</span>
+            <small class="discount ms-3"><del>185 000 so'm</del></small>
           </div>
         </div>
 
@@ -131,18 +131,20 @@ onMounted(() => {
             <div class="mt-2 row">
               <div class="col-6">
                 <button class="btn border w-100 fragment">
-                  <img src="@/assets/contact/book-open2.png" alt="" />{{ $t("home.reading") }}
+                  <img src="@/assets/contact/book-open2.png" alt="" /> Fragment
+                  o'qish
                 </button>
               </div>
               <div class="col-6">
                 <button class="btn border w-100 fragment">
-                  <img src="@/assets/contact/headphones2.png" alt="" />{{ $t("home.audio") }}
+                  <img src="@/assets/contact/headphones2.png" alt="" /> Audio
+                  eshitish
                 </button>
               </div>
             </div>
 
-            <button class="w-100 basket mt-2">{{ $t("home.addBasket") }}</button>
-            <button class="w-100 buy mt-2" @click="orderItem">{{ $t("home.quickBuy") }}</button>
+            <button class="w-100 basket mt-2">Savatga qo'shish</button>
+            <button class="w-100 buy mt-2" @click="orderItem">Tezkor sotib olish</button>
           </div>
         </div>
       </div>
@@ -151,9 +153,9 @@ onMounted(() => {
       <div class="aboutMenu d-flex">
       
         
-        <div class="" :class="{'aboutBook' : bookcontent == 1}" @click="bookcontent = 1">{{ $t("home.info") }}</div>
-      <div class="ms-3" :class="{'aboutBook' : bookcontent == 2}" @click="bookcontent = 2">{{ $t("home.content") }}</div>
-      <div class="ms-3" :class="{'aboutBook' : bookcontent == 3}" @click="bookcontent = 3">{{ $t("home.reviews") }}</div>
+        <div class="" :class="{'aboutBook' : bookcontent == 1}" @click="bookcontent = 1">M'alumot</div>
+      <div class="ms-3" :class="{'aboutBook' : bookcontent == 2}" @click="bookcontent = 2">Tarkib</div>
+      <div class="ms-3" :class="{'aboutBook' : bookcontent == 3}" @click="bookcontent = 3">Sharhlar</div>
       </div>
       <hr class="mt-0">
       <div v-show="bookcontent == 1"><BookAbaut/></div>
@@ -169,7 +171,7 @@ onMounted(() => {
 
     <div class=" mt-5">
         <div class=" d-flex justify-content-between">
-          <h6 class=" p-0">{{ $t("home.recently") }}</h6>
+          <h6 class=" p-0">Yaqinda ko'rilgan mahsulotlar</h6>
           <div>
             <button class="nextRight me-2">
              <img src="@/assets/contact/arrowRight.png" alt="" />

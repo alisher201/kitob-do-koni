@@ -76,8 +76,6 @@
                             />
                           </svg>
                         </div>
-
-
                       </div>
                     </div>
                     <div class="productCount">
@@ -172,7 +170,6 @@ const select = (check) => {
   const allChecked = check.every((item) => item.is_check === true);
   checkAll.value = allChecked;
 };
-
 const basketProduct = ref([
   {
     Img: bookImg,

@@ -2,7 +2,7 @@
   <div>
     <SeoKit />
     <Header />
-    <div class="d-flex container">
+    <div class="d-flex container px-0" > 
       <UserProfile />
       <slot />
     </div>

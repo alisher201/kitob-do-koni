@@ -5,7 +5,7 @@
                 <img src="../../assets/profile/book.png" alt="">
                 <h2>Bu yerda kitoblaringiz saqlanadi</h2>
                 <p>Bizning do'konimizda kitoblarni tanlang va ularni istalgan qurilmada o'qing</p>
-                <NuxtLink to="">
+                <NuxtLink to="/">
                     <button>Bosh Sahifa</button>
                 </NuxtLink>
             </div>

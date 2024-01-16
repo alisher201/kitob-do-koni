@@ -1,5 +1,6 @@
 <template>
     <div>
+        <NuxtPage />
     </div>
 </template>
 
@@ -12,3 +13,6 @@ definePageMeta({
 <style lang="scss" scoped>
 
 </style>
+
+
+
