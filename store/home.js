@@ -9,6 +9,7 @@ export const useTestTStore = defineStore ("home",{
         baner: {
         },
         word:{},
+        students:{}
     }),
     
     actions: {
@@ -37,5 +38,14 @@ export const useTestTStore = defineStore ("home",{
                 this.word= res
             })
          },
+         async SearchHistory() {
+            return await $fetch(`${this.url}/search-history/create`)
+            .then(res => {
+                // console.log(res);     
+                                    
+                // this.students = res
+            })
+        },
+         
     }
 })

@@ -83,7 +83,7 @@ export default {
     },
     validateNumber(value) {
         if(!value){
-          return 'telefon raqamni kiritng kiriting'
+          return 'telefon raqamni kiriting'
         }
       }
   },
