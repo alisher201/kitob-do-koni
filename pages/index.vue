@@ -6,6 +6,11 @@
     <HomeMarketFast :title="'Mashhurlar'" :bookImgs="store.books.salable" />
     <HomeMarketFast :title="'Maxsus taklif'" :bookImgs="store.books.popular" />
     <HomeMobileApp />
+    <HomePossibilities/>
+    <HomeMarketFast/>
+    <HomeMobileApp/>
+  
+
   </main>
 </template>
  

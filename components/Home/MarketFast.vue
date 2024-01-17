@@ -25,8 +25,8 @@
           <button class="nextRight me-2" @click="swiper.slidePrev()">
             <img src="@/assets/contact/arrowRight.png" alt="" />
           </button>
-          <button class="nextLeft" @click="swiper.slideNext()">
-            <img src="@/assets/contact/arrowLeft.png" alt="" />
+          <button class="nextLeft" @click="swiper.slidePrev()">
+             <img src="@/assets/contact/arrowLeft.png" alt="" />
           </button>
         </div>
       </div>
@@ -65,7 +65,43 @@
         </SwiperSlide>
       </Swiper>
     </div>
-  </div>
+    
+    
+  
+    <Swiper :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]" 
+      :grid="{ rows: 1, fill: 'row' }" :slides-per-view="6" :space-between="10" :pagination="{ clickable: true }"
+      @swiper="onSwiper">
+      <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx"
+        >
+        <div class="bookData">
+              <img :src="item.imgs" alt="" class="categoyImg" />
+              <button class="btnBestseller">Bestseller</button>
+              <button class="newBook">Yangi</button>
+              <img
+                src="../../assets/contact/booklike.png"
+                alt=""
+                class="bookLike"
+              />
+              <img
+                src="../../assets/contact/karzinka.png"
+                alt=""
+                class="karzinka"
+              />
+              <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
+            </div>
+            <div class="ps-2">
+              <small class="title">{{ item.bookTitle }}</small>
+            </div>
+            <div class="ps-2"><small class="author">{{ item.author }}</small></div>
+            <img src="../../assets/contact/Star.png" alt="" />
+            <small class="stats ms-2">5,0</small>
+            <span class="starsNumbers">(32)</span>
+      </SwiperSlide>
+
+    </Swiper></div>
+    
+
+
 </template>
 <script setup>
 import { useRuntimeConfig } from "nuxt/app";
@@ -88,14 +124,24 @@ const onSwiper = (sw) => {
 
 
 <style scoped>
+.swiper-slide {
+ 
+}
+
 .bestText {
   font-size: 22px;
   font-weight: 700;
+
 }
 
 .swiper {
-  height: 430px;
-}
+  height: 332px; 
+} 
+
+
+
+
+
 .bookData {
   position: relative;
   height: 260px;
@@ -130,7 +176,7 @@ const onSwiper = (sw) => {
   color: #9196ad;
   font-size: 13px;
 }
-
+    
 .title {
   font-weight: 800;
 }
@@ -172,16 +218,16 @@ const onSwiper = (sw) => {
 .nextRight {
   width: 30px;
   height: 30px;
-  background: #f6f6f6;
-  border-radius: 20px 0 0 20px;
+  background: #F6F6F6;
+  border-radius: 20px  0  0 20px;
   cursor: pointer;
   border: none;
 }
 .nextLeft {
   width: 30px;
   height: 30px;
-  background: #f6f6f6;
-  border-radius: 0 20px 20px 0;
+  background: #F6F6F6;
+  border-radius: 0  20px 20px 0 ;
   cursor: pointer;
   border: none;
 }

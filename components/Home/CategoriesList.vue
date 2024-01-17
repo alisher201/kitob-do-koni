@@ -3,7 +3,7 @@
     <div class="row py-4">
         <div class="col-3 mb-4" v-for="(categoryData, idx) in store.category" :key="idx">
             <strong>{{ categoryData.label }}</strong>
-            <p class="categorya" v-for="(items, index) in categoryData.children" :key="index" @click="categoryGet(categoryData.id, items.id), close()">
+            <p class="categorya" v-for="(items, index) in categoryData.children" :key="index" @click="categoryGet(categoryData.id, items.id)">
            <small> {{ items.label }}</small>
            </p>
         </div>
@@ -17,11 +17,10 @@ onMounted(() => {
   // console.log(store.category); 
 });
 
-function close() {
-  collapseExample.classList.remove("show")
-}
-
 const categoryGet = (parentId, childId) => {
+  
+  collapseExample.classList.remove("show")
+  
   const router =  useRouter()
   router.push(`/Categories/${childId}`)
 }

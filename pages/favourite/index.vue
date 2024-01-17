@@ -14,7 +14,7 @@
       <button class="btnBestseller">Bestseller</button>
       <button class="newBook">Yangi</button>
       <img
-        src="../../assets/contact/booklike.png"
+        src="../../assets/contact/bookLike2.png"
         alt=""
         class="bookLike"
       />
@@ -24,6 +24,8 @@
         class="karzinka"
       />
       <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
+      <img src="../../assets/contact/bookopen.png" alt="" class="bookopen" />
+      <img src="../../assets/contact/headphone.png" alt="" class="headphone" />
     </div>
     <div class="ps-2">
       <small class="title">{{ item.bookTitle }}</small>
@@ -129,8 +131,24 @@ const bookImgs = [
   cursor: pointer;
   display: none;
 }
+.bookopen {
+  position: absolute;
+  right: 40px;
+  bottom: 10px;
+  cursor: pointer;
+  display: none;
+}
+.headphone {
+  position: absolute;
+  right: 70px;
+  bottom: 10px;
+  cursor: pointer;
+  display: none;
+}
 .bookData:hover .bookLike,
 .bookData:hover .ebook,
+.bookData:hover .bookopen,
+.bookData:hover .headphone,
 .bookData:hover .karzinka {
   display: block;
 }

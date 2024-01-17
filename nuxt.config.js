@@ -1,13 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-
 export default defineNuxtConfig({
 
-  
-  // alias:{
-  //     "assets": "/<rootDir>/assets",
-
-  // },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
@@ -18,7 +12,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["store"],
   },
-  modules: ["@nuxt/devtools", "@pinia/nuxt", 'nuxt-swiper'],
+  modules: ["@nuxt/devtools", "@pinia/nuxt", 'nuxt-swiper','@vee-validate/nuxt',],
   extends: ["nuxt-seo-kit"],
   routeRules: {
     "/**": { robots: "index, follow" },
@@ -33,10 +27,9 @@ export default defineNuxtConfig({
       language: "en-US",
     },
   },
-  plugins: [{ src: "~/plugins/vercel.ts", mode: "client" }, { src: "~/plugins/i18n.js" }],
+  plugins: [{ src: "~/plugins/vercel.ts", mode: "client" }],
   pinia: {
     autoImports: ["defineStore", ["defineStore", "definePiniaStore"]],
-    
   },
   css: ["~/assets/styles/main.scss"],
   render: {
@@ -54,12 +47,7 @@ export default defineNuxtConfig({
   // server: {
   //   port: process.env.PORT || 3000,
   // },
-  i18n: {
-    compilation: {
-      strictMessage: true,
-    },
-  },
-
+  
 
 
 });

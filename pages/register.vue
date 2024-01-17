@@ -6,7 +6,7 @@
 
 <script setup>
 definePageMeta({
-    layout:'bookreading'
+    layout:'register'
 })
 </script>
 
