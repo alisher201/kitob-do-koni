@@ -11,7 +11,11 @@
   </div>
 </template>
 <script setup>
+
 const categoryGet = (parentId, childId) => {
+  
+  collapseExample.classList.remove("show")
+  
   const router =  useRouter()
   router.push(`/Categories/${childId}`)
 }

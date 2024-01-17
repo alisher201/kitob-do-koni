@@ -10,11 +10,11 @@
         </small>
       </div>
       <div v-else>
-
-
         <div class="mt-4 mb-3">
           <span class="basketTitle"> </span>
-          <small class="basketCount">3 {{ $t("home.basket.product") }}</small>
+          <small class="basketCount"
+            >{{ basketProduct.length }} {{ $t("home.basket.product") }}</small
+          >
         </div>
 
         <div class="row mb-5">
@@ -58,9 +58,8 @@
                   <div class="d-flex flex-column justify-content-between">
                     <div>
                       <div class="d-flex">
-                        <div class="basketLike">
+                        <div class="basketLike" @click="toggleColor(idx)">
                           <svg
-                            @click="toggleColor(idx)"
                             width="22"
                             height="22"
                             viewBox="0 0 22 22"
@@ -75,6 +74,18 @@
                               stroke-linejoin="round"
                             />
                           </svg>
+                        </div>
+                        <div class="basketdelate">
+                          <img
+                            class="imgDelate"
+                            src="../../assets/contact/basketdelate.png"
+                            alt=""
+                          />
+                          <img
+                            class="basketDelateHover"
+                            src="../../assets/contact/basketDelateHover.png"
+                            alt=""
+                          />
                         </div>
                       </div>
                     </div>
@@ -105,7 +116,7 @@
             <div class="yourOrderContainer mt-5">
               <p class="yourOrder">{{ $t("home.basket.order") }}</p>
               <div class="d-flex justify-content-between orderAbout">
-                <p>{{ $t("home.basket.books") }} ({{ totalSum }})</p>
+                <p>{{ $t("home.basket.books") }} ({{ count }})</p>
                 <p>{{ totalPrice }} {{ $t("home.basket.sum") }}</p>
               </div>
               <div class="d-flex justify-content-between orderAbout my-1">
@@ -137,24 +148,27 @@
 </template>
 
 <script setup>
-import { useTestStore } from "@/store/test.js";
+import { useBasketStore } from "@/store/basket.js";
 
 import bookImg from "../../assets/contact/savat.png";
 
-const useStore = useTestStore();
+const store = useBasketStore();
 
-// const isColor1 = ref(false);
-// const circleColor = ref("white");
+// console.log(store);
 
 const toggleColor = (idx) => {
   basketProduct.value[idx].favourite = !basketProduct.value[idx].favourite;
-  
-  basketProduct.value[idx].circleColor = basketProduct.value[idx].favourite ? "#FF673D" : "white";
-  
-  basketProduct.value[idx].circleBorder = basketProduct.value[idx].favourite ? "#FF673D" : "#307CCE";
+
+  basketProduct.value[idx].circleColor = basketProduct.value[idx].favourite
+    ? "#FF673D"
+    : "white";
+
+  basketProduct.value[idx].circleBorder = basketProduct.value[idx].favourite
+    ? "#FF673D"
+    : "#307CCE";
 };
 
-let checkAll = ref(false);
+let checkAll = ref(true);
 
 const selectAll = () => {
   for (let i = 0; i < basketProduct.value.length; i++) {
@@ -179,7 +193,7 @@ const basketProduct = ref([
     count: 1,
     id: 1,
     totalPrice: 4400,
-    is_check: false,
+    is_check: true,
     favourite: false,
     circleColor: "white",
     circleBorder: "#307CCE",
@@ -192,7 +206,7 @@ const basketProduct = ref([
     count: 1,
     id: 2,
     totalPrice: 5000,
-    is_check: false,
+    is_check: true,
     favourite: false,
     circleColor: "white",
     circleBorder: "#307CCE",
@@ -205,12 +219,12 @@ const basketProduct = ref([
     count: 1,
     id: 3,
     totalPrice: 6000,
-    is_check: false,
+    is_check: true,
     favourite: false,
     circleColor: "white",
     circleBorder: "#307CCE",
   },
- {
+  {
     Img: bookImg,
     bookName: "Qo'lingdan kelsa, mahv et",
     bookAuthor: "Jeyms Patterson",
@@ -218,12 +232,20 @@ const basketProduct = ref([
     count: 1,
     id: 4,
     totalPrice: 3000,
-    is_check: false,
+    is_check: true,
     favourite: false,
     circleColor: "white",
     circleBorder: "#307CCE",
   },
 ]);
+
+let count = basketProduct.value.length;
+
+const filterItems = (products) => {
+  const checkedItems = products.filter((item) => item.is_check === true);
+  count = checkedItems.length;
+};
+
 let sum = ref(0);
 
 let totalSum = ref(null);
@@ -235,8 +257,10 @@ const calulatorProduct = (arry) => {
   let sum = 0;
   let priceSum = 0;
   arry.forEach((product, index) => {
-    sum += product.count;
-    priceSum += product.totalPrice;
+    if (product.is_check == true) {
+      sum += product.count;
+      priceSum += product.totalPrice;
+    }
   });
   totalSum.value = sum;
   totalPrice.value = priceSum;
@@ -244,6 +268,7 @@ const calulatorProduct = (arry) => {
 
 onMounted(() => {
   calulatorProduct(basketProduct.value);
+  store.basketData()
 });
 
 const productAdd = (idx) => {
@@ -251,12 +276,16 @@ const productAdd = (idx) => {
 
   basketProduct.value[idx].totalPrice =
     basketProduct.value[idx].count * basketProduct.value[idx].bookPrice;
+
+  basketProduct.value[idx].is_check = true;
 };
 const productRemove = (idx) => {
   basketProduct.value[idx].count--;
 
   basketProduct.value[idx].totalPrice =
     basketProduct.value[idx].count * basketProduct.value[idx].bookPrice;
+
+  basketProduct.value[idx].is_check = true;
 };
 
 watch(
@@ -264,6 +293,7 @@ watch(
   (newVal, oldVal) => {
     calulatorProduct(newVal);
     select(newVal);
+    filterItems(newVal);
   },
 
   { deep: true }
@@ -276,6 +306,15 @@ const empty = ref(false);
 .btn {
   border: none;
 }
+
+.mb-5 {
+  justify-content: space-between;
+}
+
+.col-9 {
+  width: 65%;
+}
+
 .basketTitle {
   font-weight: 700;
   color: #35363d;

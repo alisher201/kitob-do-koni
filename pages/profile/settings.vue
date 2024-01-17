@@ -182,7 +182,7 @@ const template = ref(null)
 }
 .button{
     display: flex;
-    justify-content:end;
+    justify-content:flex-end;
 }
 .button button{
     margin:0px 0px 0px 20px;

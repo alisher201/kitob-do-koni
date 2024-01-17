@@ -1,11 +1,12 @@
 <template>
   <main>
+    
     <HomeCarousel />
     <HomePossibilities/>
     <HomeMarketFast/>
     <HomeMobileApp/>
-    
   
+
   </main>
 </template>
 

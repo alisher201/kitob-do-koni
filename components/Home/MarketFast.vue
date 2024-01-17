@@ -1,3 +1,61 @@
+<!-- <script setup>
+
+
+import bookImg from "../../assets/contact/bookimg.png";
+import bookImg1 from "../../assets/contact/bookImg2.png";
+
+const bookImgs = [
+  {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+  {id:2,
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  {id:3,
+    imgs: bookImg,
+    bookTitle: "Sharqiy ekspressdagi qotillik",
+    author: "Agata Kristi",
+  },
+  {id:4,
+    imgs: bookImg1,
+    bookTitle: "Sharqiy ekspressdagi qotillik",
+    author: "Dafna Dyu Morye",
+  },
+  { id:5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+  {id:6,
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  {id:6,
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  {id:6,
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  {id:6,
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+];
+
+let swiper = null
+
+const onSwiper = (sw) => {
+  swiper = sw
+};
+
+</script> -->
+
+
+
+
+
 <script setup>
 
 
@@ -216,8 +274,8 @@ const onSwiper = (sw) => {
 .nextRight {
   width: 30px;
   height: 30px;
-  background: #f6f6f6;
-  border-radius: 20px 0 0 20px;
+  background: #F6F6F6;
+  border-radius: 20px  0  0 20px;
   cursor: pointer;
   border: none;
 }

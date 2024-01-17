@@ -28,15 +28,15 @@
 
       <div class="ms-5 karzinka" @click="$router.push('/basket')">
         <img src="@/assets/contact/karzinka.png" alt="" />
-        <span class="ms-1 forFont">Savatcha</span>
+        <span class="ms-1 forFont">{{ $t('header.basket') }}</span>
       </div>
       <div class="dataCursor" @click="$router.push('/favourite')">
         <img src="@/assets/contact/like.png" alt="" />
-        <span class="ms-1 forFont">Sevimlilar</span>
+        <span class="ms-1 forFont">{{ $t('header.favorites') }}</span>
       </div>
       <div class="dataCursor" @click="$router.push('/profile')">
         <img src="@/assets/contact/user.png" alt="" />
-        <span class="ms-1 forFont">Profile</span>
+        <span class="ms-1 forFont">{{ $t('header.profile') }}</span>
       </div>
     </div>
   </div>
@@ -80,6 +80,10 @@ const selectData = (data) => {
 }
 
 onMounted(() => {
+  // store.fechData()
+
+
+
 })
 </script>
 
