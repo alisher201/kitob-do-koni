@@ -1,16 +1,21 @@
 <template>
   <div class="container px-0">
     <div class="row py-4">
-        <div class="col-3 mb-4" v-for="(categoryData, idx) in category" :key="idx">
-            <strong>{{ categoryData.categorya }}</strong>
-            <p class="categorya" v-for="(items, index) in categoryData.items" :key="index" @click="categoryGet(categoryData.id, items.id), close()">
-           <small> {{ items.name }}</small></p>
-
+        <div class="col-3 mb-4" v-for="(categoryData, idx) in store.category" :key="idx">
+            <strong>{{ categoryData.label }}</strong>
+            <p class="categorya" v-for="(items, index) in categoryData.children" :key="index" @click="categoryGet(categoryData.id, items.id), close()">
+           <small> {{ items.label }}</small>
+           </p>
         </div>
     </div>
   </div>
 </template>
 <script setup>
+const store = useTestTStore();
+onMounted(() => {
+  store.fechData()
+  // console.log(store.category); 
+});
 
 function close() {
   collapseExample.classList.remove("show")
@@ -29,9 +34,6 @@ const category = [
   { id: 5, name: "Grafik dizayn" },
   { id: 6, name: "Rassomlar" },] },
 
-
-
-
   { id: 2, categorya: "categories", 
   items: [{ id: 1, name: "Arxitektura" },
   { id: 2, name: "Arxitektura" },
@@ -39,7 +41,6 @@ const category = [
   { id: 4, name: "Dizayn dekorativ san'at va chizmachilik" },
   { id: 5, name: "Grafik dizayn" },
   { id: 6, name: "Rassomlar" },] },
-
 
   { id: 3, categorya: "categories", 
   items: [{ id: 1, name: "Arxitektura" },
@@ -54,7 +55,6 @@ const category = [
   { id: 10, name: "Grafik dizayn" },
   { id: 11, name: "Rassomlar" },] },
 
-
   { id: 4, categorya: "categories", 
   items: [{ id: 1, name: "Arxitektura" },
   { id: 2, name: "Arxitektura" },
@@ -62,7 +62,6 @@ const category = [
   { id: 4, name: "Dizayn dekorativ san'at va chizmachilik" },
   { id: 5, name: "Grafik dizayn" },
   { id: 6, name: "Rassomlar" },] },
-
 
   { id: 5, categorya: "categories", 
   items: [{ id: 1, name: "Arxitektura" },

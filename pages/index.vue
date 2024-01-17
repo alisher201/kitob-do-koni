@@ -1,20 +1,19 @@
 <template>
   <main>
-    
     <HomeCarousel />
-    <HomePossibilities/>
-    <HomeMarketFast/>
-    <HomeMarketFast/>
-    <HomeMarketFast/>
-    <!-- <HomeCelebrities/> -->
-    <!-- <HomeSpecialOffer/> -->
-    <HomeMobileApp/>
-  
+    <HomePossibilities />
+    <HomeMarketFast :title="'Bozori chaqqon'" :bookImgs="store.books.special_offer" />
+    <HomeMarketFast :title="'Mashhurlar'" :bookImgs="store.books.salable" />
+    <HomeMarketFast :title="'Maxsus taklif'" :bookImgs="store.books.popular" />
+    <HomeMobileApp />
   </main>
 </template>
-
+ 
 <script setup>
-definePageMeta({
-  title: 'Home'
-})
+const store = useTestTStore();
+onMounted(() => {
+  store.fechBooks().then((a) => {
+    console.log(store.books);
+  });
+});
 </script>
