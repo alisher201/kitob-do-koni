@@ -67,7 +67,7 @@
     </div>
     
     
-  
+<!--   
     <Swiper :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]" 
       :grid="{ rows: 1, fill: 'row' }" :slides-per-view="6" :space-between="10" :pagination="{ clickable: true }"
       @swiper="onSwiper">
@@ -98,10 +98,11 @@
             <span class="starsNumbers">(32)</span>
       </SwiperSlide>
 
-    </Swiper></div>
+    </Swiper></div> -->
     
 
 
+  </div>
 </template>
 <script setup>
 import { useRuntimeConfig } from "nuxt/app";
