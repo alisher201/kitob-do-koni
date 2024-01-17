@@ -1,7 +1,7 @@
 <template>
     <div>
         <LoginPage />
-        salomat
+    
         <!-- <slot /> -->
     </div>
 </template>

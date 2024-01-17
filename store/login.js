@@ -11,9 +11,12 @@ export const useLogin = defineStore ("login",{
   
     
     actions: {
-        async loginRegistr() {
+        async loginRegistr(data) {
             await $fetch(`${this.url}/login`, {
-                method: Post
+                method: 'Post',
+                body: {
+                  data
+                  }
             })
         }
        
