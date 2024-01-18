@@ -1,140 +1,53 @@
-<!-- <script setup>
-
-
-import bookImg from "../../assets/contact/bookimg.png";
-import bookImg1 from "../../assets/contact/bookImg2.png";
-
-const bookImgs = [
-  {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {id:2,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:3,
-    imgs: bookImg,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Agata Kristi",
-  },
-  {id:4,
-    imgs: bookImg1,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Dafna Dyu Morye",
-  },
-  { id:5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-];
-
-let swiper = null
-
-const onSwiper = (sw) => {
-  swiper = sw
-};
-
-</script> -->
-
-
-
-
-
 <script setup>
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
 
 const bookImgs = [
-  {
-    id: 1,
-    imgs: bookImg,
-    bookTitle: "Rebekka",
-    author: "Jon Duglas",
-    like: false,
-  },
+  { id: 1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
   {
     id: 2,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
-    like: false,
   },
   {
     id: 3,
     imgs: bookImg,
     bookTitle: "Sharqiy ekspressdagi qotillik",
     author: "Agata Kristi",
-    like: false,
   },
   {
     id: 4,
     imgs: bookImg1,
     bookTitle: "Sharqiy ekspressdagi qotillik",
     author: "Dafna Dyu Morye",
-    like: false,
   },
+  { id: 5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
   {
-    id: 5,
-    imgs: bookImg,
-    bookTitle: "Rebekka",
-    author: "Jon Duglas",
-    like: false,
+    id: 6,
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
   },
   {
     id: 6,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
-    like: false,
   },
   {
     id: 6,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
-    like: false,
   },
   {
     id: 6,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
-    like: false,
-  },
-  {
-    id: 6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-    like: false,
   },
 ];
-
-const favourite = (idx) => {
-  let likeDislike = (bookImgs[idx].like = !bookImgs[idx].like);
-
-  if (likeDislike == true) {
-    bookLike[idx].style.width = "0";
-  } else {
-    bookLike[idx].style.width = "";
-  }
-};
 
 let swiper = null;
 
@@ -146,22 +59,34 @@ const onSwiper = (sw) => {
 <template>
   <div>
     <div class="container px-0 mt-5">
-      <div class="d-flex justify-content-between">
-        <h4 class="bestText">Bozori chaqqon</h4>
+      <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex">
+          <h4 class="bestText">Mashhurlar</h4>
+          <svg class="mt-1"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M7 4L13 10L7 16"
+              stroke="#35363D"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
         <div>
-          <button class="nextRight me-2" @click="swiper.slideNext()">
+          <button class="nextRight me-2" @click="swiper.slidePrev()">
             <img src="@/assets/contact/arrowRight.png" alt="" />
           </button>
-          <button class="nextLeft" @click="swiper.slidePrev()">
+          <button class="nextLeft" @click="swiper.slideNext()">
             <img src="@/assets/contact/arrowLeft.png" alt="" />
           </button>
         </div>
-
-        <!-- <div>        
-        <button @click="swiper.slideNext()">Next</button>
-    <button @click="swiper.slidePrev()">Previous</button></div> -->
       </div>
-
       <Swiper
         :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
         :grid="{ rows: 1, fill: 'row' }"
@@ -175,36 +100,17 @@ const onSwiper = (sw) => {
             <img :src="item.imgs" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
-            <div class="likeBox" @click="favourite(idx)">
-              <img
-                src="../../assets/contact/bookLike2.png"
-                alt=""
-                class="bookLike2"
-              />
-              <img
-                src="../../assets/contact/booklike.png"
-                alt=""
-                class="bookLike"
-                id="bookLike"
-              />
-            </div>
-            <!-- <img
+            <img
+              src="../../assets/contact/.png"
+              alt=""
+              class="bookLike"
+            />
+            <img
               src="../../assets/contact/karzinka.png"
               alt=""
               class="karzinka"
-            /> -->
+            />
             <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
-
-            <img
-              src="../../assets/contact/bookopen.png"
-              alt=""
-              class="bookopen"
-            />
-            <img
-              src="../../assets/contact/headphone.png"
-              alt=""
-              class="headphone"
-            />
           </div>
           <div class="ps-2">
             <small class="title">{{ item.bookTitle }}</small>
@@ -222,9 +128,6 @@ const onSwiper = (sw) => {
 </template>
 
 <style scoped>
-/* .swiper-slide {
-} */
-
 .bestText {
   font-size: 22px;
   font-weight: 700;
@@ -236,21 +139,13 @@ const onSwiper = (sw) => {
 } */
 
 .swiper {
-  height: 332px;
+  height: 430px;
 }
-
 .bookData {
   position: relative;
   height: 260px;
 }
 .bookLike {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  cursor: pointer;
-  display: none;
-}
-.bookLike2 {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -271,26 +166,8 @@ const onSwiper = (sw) => {
   cursor: pointer;
   display: none;
 }
-
-.bookopen {
-  position: absolute;
-  right: 40px;
-  bottom: 10px;
-  cursor: pointer;
-  display: none;
-}
-.headphone {
-  position: absolute;
-  right: 70px;
-  bottom: 10px;
-  cursor: pointer;
-  display: none;
-}
 .bookData:hover .bookLike,
-.bookData:hover .bookLike2,
 .bookData:hover .ebook,
-.bookData:hover .bookopen,
-.bookData:hover .headphone,
 .bookData:hover .karzinka {
   display: block;
 }

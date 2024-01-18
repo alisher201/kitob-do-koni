@@ -1,27 +1,21 @@
 <template>
   <section class="container mt-5">
-    <div class="row ">
+    <div class="row">
       <div class="col-8 p-0">
         <div
           id="carouselExampleDark"
           class="carousel carousel-dark slide carouselSize"
           data-bs-ride="carousel"
         >
-          <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="10000">
-              <img src="~/assets/jum1.jpg" class="d-block w-100" alt="..." />
-            </div>
-            <div class="carousel-item" data-bs-interval="2000">
-              <img src="~/assets/jum2.jpg" class="d-block w-100" alt="..." />
-            </div>
-            <div class="carousel-item">
-              <img
-                src="~/assets/carousel1.png"
-                class="d-block w-100"
-                alt="..."
-              />
+
+          <div v-if="store.banner" class="carousel-inner">
+            <div v-for="(img, index) in store.banner" :key="index" class="carousel-item" :class="{ active: index === 0 }">              
+              <img :src="url +'/' + img?.banner" class="d-block w-100" :alt="img.alternative_text" />
             </div>
           </div>
+          <!-- <div v-else class="carousel-inner">
+              <img src="../../assets/carousel1.png" class="d-block w-100" alt="Carusel">
+         </div> -->
           <button
             class="carousel-control-prev"
             type="button"
@@ -40,19 +34,60 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
+        </div> 
+      </div>
+    
+      <div  v-if="store.banner"  class="col-4">
+        <div v-for="(img, index) in [store.site_bar]" :key="index">
+          <div>
+            <img :src="url + img[0]?.banner" alt="" class="advertisement" />
+          </div>
+          <div class="mt-3">
+            <img :src="url + '/' + img[0]?.banner" alt="" class="advertisement" />
+          </div>
         </div>
       </div>
-      <div class="col-4">
-        <div class="">
-          <img src="~/assets/jumaMuborak.png" alt="" class="advertisement">
+      <!-- <div v-else class="col-4">
+        <div>
+          <img src="../../assets/jumaMuborak.png" alt="" class="advertisement" />
         </div>
         <div class="mt-3">
-          <img src="~/assets/jumaMuborak.png" alt="" class="advertisement"/>
+          <img src="../../assets/jumaMuborak.png" alt="" class="advertisement" />
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
 </template>
+<script setup>
+import { useRuntimeConfig } from "nuxt/app";
+const url= useRuntimeConfig().public.siteUrl
+const store = useTestTStore();
+let user = {
+  login: 'mirlaziz',
+  phone: 998936284882
+}
+
+
+
+
+
+
+
+
+
+
+
+
+onMounted(() => {
+ 
+  store.placeholder()
+  store.dataFetchfor(user)
+  store.delateUser(201)
+  store.getUserData(1)
+ 
+  // store.fechBanner();
+});
+</script>
 
 <style>
 .img-fluid {

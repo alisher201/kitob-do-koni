@@ -1,18 +1,15 @@
 <template>
     <div>
-        <NuxtPage />
+        <LoginPage />
+    
+        <!-- <slot /> -->
     </div>
 </template>
 
 <script setup>
-definePageMeta({
-    layout:'bookreading'
-})
+
 </script>
 
 <style lang="scss" scoped>
 
 </style>
-
-
-
