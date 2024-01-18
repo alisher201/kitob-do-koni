@@ -3,51 +3,80 @@ import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
 
 const bookImgs = [
-  { id: 1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+  {
+    id: 1,
+    imgs: bookImg,
+    bookTitle: "Rebekka",
+    author: "Jon Duglas",
+    like: false,
+  },
   {
     id: 2,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
+    like: false,
   },
   {
     id: 3,
     imgs: bookImg,
     bookTitle: "Sharqiy ekspressdagi qotillik",
     author: "Agata Kristi",
+    like: false,
   },
   {
     id: 4,
     imgs: bookImg1,
     bookTitle: "Sharqiy ekspressdagi qotillik",
     author: "Dafna Dyu Morye",
-  },
-  { id: 5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {
-    id: 6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
+    like: false,
   },
   {
-    id: 6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
+    id: 5,
+    imgs: bookImg,
+    bookTitle: "Rebekka",
+    author: "Jon Duglas",
+    like: false,
   },
   {
     id: 6,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
+    like: false,
   },
   {
     id: 6,
     imgs: bookImg1,
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
+    like: false,
+  },
+  {
+    id: 6,
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+    like: false,
+  },
+  {
+    id: 6,
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+    like: false,
   },
 ];
+
+const favourite = (idx) => {
+  let likeDislike = (bookImgs[idx].like = !bookImgs[idx].like);
+
+  if (likeDislike == true) {
+    bookLike[idx].style.width = "0";
+  } else {
+    bookLike[idx].style.width = "";
+  }
+};
 
 let swiper = null;
 
@@ -88,16 +117,24 @@ const onSwiper = (sw) => {
             <img :src="item.imgs" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
-            <img
-              src="../../assets/contact/booklike.png"
-              alt=""
-              class="bookLike"
-            />
-            <img
+            <div class="likeBox" @click="favourite(idx)">
+              <img
+                src="../../assets/contact/bookLike2.png"
+                alt=""
+                class="bookLike2"
+              />
+              <img
+                src="../../assets/contact/booklike.png"
+                alt=""
+                class="bookLike"
+                id="bookLike"
+              />
+            </div>
+            <!-- <img
               src="../../assets/contact/karzinka.png"
               alt=""
               class="karzinka"
-            />
+            /> -->
             <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
 
             <img
@@ -155,6 +192,13 @@ const onSwiper = (sw) => {
   cursor: pointer;
   display: none;
 }
+.bookLike2 {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  display: none;
+}
 .karzinka {
   position: absolute;
   right: 10px;
@@ -185,6 +229,7 @@ const onSwiper = (sw) => {
   display: none;
 }
 .bookData:hover .bookLike,
+.bookData:hover .bookLike2,
 .bookData:hover .ebook,
 .bookData:hover .bookopen,
 .bookData:hover .headphone,
