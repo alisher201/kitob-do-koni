@@ -92,7 +92,7 @@ export default {
             <label for="email" class="form-label">Ism familiya <span>*</span></label>
 
             <!-- <input type="email" class="form-control" id="email" placeholder="Ism familiyangizni kiriting" name="email"/> -->
-            <Field name="string" type="string" placeholder="Ism familiyangizni kiriting" class="form-control" :rules="validateEmail"/>
+            <Field v-model="userRegister.full_name" name="string" type="string" placeholder="Ism familiyangizni kiriting" class="form-control" :rules="validateEmail"/>
             <ErrorMessage style="color:red" name="string" />
 
             
@@ -100,7 +100,7 @@ export default {
           <div class="mb-3 mt-3 list">
             <label for="email" class="form-label">Telefon raqam <span>*</span></label>
             <!-- <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/> -->
-            <Field type="number" class="form-control" id="number" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber"/>
+            <Field v-model="userRegister.phone" type="string" class="form-control" id="number" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber"/>
             <ErrorMessage style="color:red" name="number" />
 
 
@@ -110,12 +110,12 @@ export default {
             <box-icon type='solid' name='user-circle'></box-icon>
             
             <!-- <input  type="password" class="form-control" id="password" placeholder="parol o'ylab top" name="password"/> -->
-            <Field type="password" class="form-control" id="password" placeholder="parol o'ylab top"  name="password" :rules="validatePassword"/>
+            <Field  v-model="userRegister.password" type="password" class="form-control" id="password" placeholder="parol o'ylab top"  name="password" :rules="validatePassword"/>
             <ErrorMessage style="color:red" name="password" />
             
           </div> 
           <!-- <button  @click.prevent="preventRefresh"  @click="$router.push('/')" >Ro'yxatdan o'tish</button> -->
-          <button>Ro'yxatdan o'tish</button>
+          <button @click="senDataUser">Ro'yxatdan o'tish</button>
           <div class="bottom">
             <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Tizimga kirish</NuxtLink> </h2>
           </div>    
@@ -136,11 +136,23 @@ export default {
 
 <script >
 import { Form, Field, ErrorMessage } from 'vee-validate';
+import {useTestTStore} from '../../store/home'
 export default {
   components: {
     Form,
     Field,
     ErrorMessage,
+    useTestTStore
+  },
+  data() {
+    return {
+      userRegister: {
+        full_name: null,
+        phone: null,
+        password: null
+      }
+
+    }
   },
   methods: {
     onSubmit(values) {
@@ -167,17 +179,16 @@ export default {
         if(!value){
           return 'Parol kiritng'
         }
+      },
+      senDataUser() {
+        useTestTStore().registerUser(this.userRegister);
+        
       }
+      
   },
 };
 
 
-
-const content = ref(null)
-
-onMounted(() => {
-  content.value = 1;
-})
 
 </script>
 

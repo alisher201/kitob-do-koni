@@ -35,7 +35,7 @@
         <img src="@/assets/contact/like.png" alt="" />
         <span class="ms-1 forFont">{{ $t('header.favorites') }}</span>
       </div>
-      <div class="dataCursor" @click="$router.push('/profile')">
+      <div class="dataCursor" @click="profile">
         <img src="@/assets/contact/user.png" alt="" />
         <span class="ms-1 forFont">{{ $t('header.profile') }}</span>
       </div>
@@ -57,7 +57,6 @@ const router = useRouter()
 const searchbooks = ref(null)
 const inputFocus = ref(false)
  const store = useTestTStore();
-// console.log(store.fechData());
 
 
 const BookSearch = () => {
@@ -78,10 +77,17 @@ const selectData = (data) => {
   router.push('/SearchBook')
 
 }
-
+const profile = () => {
+  let user = false
+if(user) {
+  router.push('/profile')
+}
+else {
+  router.push('/register')
+}
+}
+ 
 onMounted(() => {
-  store.fechData()
-
 
 
 })
