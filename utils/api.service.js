@@ -1,6 +1,6 @@
-// const url = 'https://kytabshop.al-raqam.com'
+const url = 'https://kytabshop.al-raqam.com'
 // const url = 'http://192.168.100.167:8060'
-const url = 'https://jsonplaceholder.typicode.com'
+// const url = 'https://jsonplaceholder.typicode.com'
 
 export class FechData {
   constructor(api) {
