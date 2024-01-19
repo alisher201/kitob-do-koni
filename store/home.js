@@ -34,14 +34,8 @@ export const useTestTStore = defineStore("home", {
     async registerUser(data) {
       return await register.create(data)
         .then(res => {
-          console.log(res);
-
-
-        // bu yerda res dan kelayotgan ma'lumotlarni locaalStorage to'girlab qo'yasan 
-
-        
-          // localStorage.setItem('jwtToken', res.token)
-          // localStorage.setItem('userFullName', res.full_name)
+          localStorage.setItem('jwtToken', res.result.token)
+          localStorage.setItem('userFullName', res.result.full_name)
 
 
 
