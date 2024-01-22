@@ -1,27 +1,27 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
 import { register } from "../utils/home"
-// import {jwtAuth} from "../utils/authServece"
 
-// console.log(config.public.siteUrl);
-export const useTestTStore = defineStore ("home",{
-    
-    state:() => ({
-        url: useRuntimeConfig().public.siteUrl,
-        banner: {
-        },
-        site_bar: {},
-        word:{},
-        students:{}
-    }),
-    // getters: {
-    //     banner_data: (state) => state.banner,
-    //   },
+
+
+export const useTestTStore = defineStore("home", {
+
+  state: () => ({
+    url: useRuntimeConfig().public.siteUrl,
+    banner: {
+    },
+    site_bar: {},
+    word: {},
+    token: 'tokenbor'
+  }),
+
+
     
     actions: {
         fechData() {
           $fetch(` ${this.url}/book/category`)
         },
+    
         async fechBanner(){
            return await $fetch(`${this.url}/blog`)
            .then(res => {
@@ -57,9 +57,13 @@ export const useTestTStore = defineStore ("home",{
             .then(res => {
               localStorage.setItem('jwtToken', res.result.token)
               localStorage.setItem('userFullName', res.result.full_name)
+    
+    
+    
+    
             })
         }
          
     }
     
-})
+  })
