@@ -40,14 +40,14 @@
       {
           id:3,
            img:  img3  ,
-           word:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur, consequatur! Ullam provident hic quisquam. Molestias qui doloremque, magni consequuntur quo id voluptates omnis quibusdam possimus officia et, quam, ex hic.",
+           word:"Lorem ipsum dolor sit, amet consectetur adipisicing elit..",
            world:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus  "
   
        },
        {
           id:4,
            img: img4,
-           word:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur, consequatur! Ullam provident hic quisquam. Molestias qui doloremque, magni consequuntur quo id voluptates omnis quibusdam possimus officia et, quam, ex hic.",
+           word:"Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
            world:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus  "
   
        }

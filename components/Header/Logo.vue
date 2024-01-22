@@ -15,11 +15,10 @@
       </button>
       <div style="position: relative; z-index: 4;">
         <div class="input-group" style="width: 479px">
-          <input type="text" v-model="searchbooks" class="form-control" style="height: 44px" :placeholder="$t('header.search')"
+          <input type="text" @change="result" v-model="searchbooks" class="form-control" style="height: 44px" placeholder="kitob izlash..."
             @focus="BookSearch" @blur="inputBlur" />
           <span class="input-group-text d-flex justify-content-center align-items-center"
             style="width: 68px; height: 44px"><img src="~/assets/contact/bx_search-alt-2.png" alt="" /></span>
-
         </div>
         <div class="mt-2" style="position: absolute; z-index: 999; width: 100%;" v-if="inputFocus">
           <HeaderSearchData @searchEmit="selectData" />
@@ -58,6 +57,9 @@ const searchbooks = ref(null)
 const inputFocus = ref(false)
  const store = useTestTStore();
 
+// const words = ["salom", "dunyo", "xabar"];
+// const result = words.map(word => word.substring(0, 3));                                      
+// console.log(result);
 
 const BookSearch = () => {
   document.body.style.overflow = 'hidden'
@@ -88,6 +90,8 @@ else {
 }
  
 onMounted(() => {
+  // store.fechData()
+
 
 
 })
