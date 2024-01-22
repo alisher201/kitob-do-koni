@@ -1,142 +1,73 @@
-<!-- <script setup>
-
-
-import bookImg from "../../assets/contact/bookimg.png";
-import bookImg1 from "../../assets/contact/bookImg2.png";
-
-const bookImgs = [
-  {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {id:2,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:3,
-    imgs: bookImg,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Agata Kristi",
-  },
-  {id:4,
-    imgs: bookImg1,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Dafna Dyu Morye",
-  },
-  { id:5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-];
-
-let swiper = null
-
-const onSwiper = (sw) => {
-  swiper = sw
-};
-
-</script> -->
-
-
-
-
-
-<script setup>
-
-
-import bookImg from "../../assets/contact/bookimg.png";
-import bookImg1 from "../../assets/contact/bookImg2.png";
-
-const bookImgs = [
-  {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {id:2,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:3,
-    imgs: bookImg,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Agata Kristi",
-  },
-  {id:4,
-    imgs: bookImg1,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Dafna Dyu Morye",
-  },
-  { id:5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-];
-
-let swiper = null
-
-const onSwiper = (sw) => {
-  swiper = sw
-};
-
-</script>
-
 <template>
   <div>
-  <div class="container px-0 mt-5">
-    <div class="d-flex justify-content-between">
-      <h4 class="bestText"> Bozori chaqqon</h4>
-      <div>
-            <button class="nextRight me-2" @click="swiper.slideNext()">
-             <img src="@/assets/contact/arrowRight.png" alt="" />
+    <div class="container px-0 mt-5">
+      <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex">
+          <h4 class="bestText">{{title}}</h4>
+          <svg
+            class="mt-1"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M7 4L13 10L7 16"
+              stroke="#35363D"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <div>
+          <button class="nextRight me-2" @click="swiper.slidePrev()">
+            <img src="@/assets/contact/arrowRight.png" alt="" />
           </button>
           <button class="nextLeft" @click="swiper.slidePrev()">
              <img src="@/assets/contact/arrowLeft.png" alt="" />
           </button>
+        </div>
+      </div>
+      <Swiper
+        :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
+        :grid="{ rows: 1, fill: 'row' }"
+        :slides-per-view="6"
+        :space-between="10"
+        :pagination="{ clickable: true }"
+        @swiper="onSwiper"
+      >
+        <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx">
+          <!-- <pre>{{ item }}</pre> -->
+          <div class="bookData">
+            <img src="../../assets/contact/bookimg2.png" alt="" class="categoyImg" />
+            <button class="btnBestseller">Bestseller</button>
+            <button class="newBook">Yangi</button>
+            <img
+              src="../../assets/contact/booklike.png"
+              alt=""
+              class="bookLike"
+            />
+            <img
+                src="../../assets/contact/karzinka.png"
+                alt=""
+                class="karzinka"
+              />
+              <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
           </div>
-
-
-
-
-
-
-
-      <!-- <div>        
-        <button @click="swiper.slideNext()">Next</button>
-    <button @click="swiper.slidePrev()">Previous</button></div> -->
+          <div class="ps-2">
+              <small class="title">{{ item.description }}</small>
+            </div>
+            <div class="ps-2"><small class="author">{{ item.creator }}</small></div> 
+          <small class="stats ms-2">5,0</small>
+          <span class="starsNumbers">(32)</span>
+        </SwiperSlide>
+      </Swiper>
     </div>
     
     
-  
+<!--   
     <Swiper :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]" 
       :grid="{ rows: 1, fill: 'row' }" :slides-per-view="6" :space-between="10" :pagination="{ clickable: true }"
       @swiper="onSwiper">
@@ -167,12 +98,31 @@ const onSwiper = (sw) => {
             <span class="starsNumbers">(32)</span>
       </SwiperSlide>
 
-    </Swiper></div>
+    </Swiper></div> -->
     
 
 
   </div>
 </template>
+<script setup>
+import { useRuntimeConfig } from "nuxt/app";
+const url= useRuntimeConfig().public.siteUrl
+const props = defineProps ({
+  title:String,
+  bookImgs: {
+    type: Array,
+    default: () => []
+  }
+})
+// console.log(bookImgs);
+
+let swiper = null;
+  
+const onSwiper = (sw) => {
+  swiper = sw;
+};
+</script>
+
 
 <style scoped>
 .swiper-slide {
@@ -184,11 +134,6 @@ const onSwiper = (sw) => {
   font-weight: 700;
 
 }
-
-/* .swiper-wrapper {
-  min-width: 100vh;
-  width: 100vh;
-} */
 
 .swiper {
   height: 332px; 
