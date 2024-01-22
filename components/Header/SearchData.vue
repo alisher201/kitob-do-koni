@@ -20,6 +20,7 @@
 
 
 
+
   </div>
 </template>
 
@@ -41,7 +42,7 @@ console.log(store);
 onMounted(() => {
     // store.fechSearch()
     store.fechSearchTop()
-    // console.log(store);
+    console.log(store);
 });
 </script>
 

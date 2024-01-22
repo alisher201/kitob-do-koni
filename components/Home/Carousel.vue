@@ -59,11 +59,35 @@
   </section>
 </template>
 <script setup>
+
+import { ofetch } from 'ofetch'
+
 import { useRuntimeConfig } from "nuxt/app";
 const url= useRuntimeConfig().public.siteUrl
 const store = useTestTStore();
+let user = {
+  login: 'mirlaziz',
+  phone: 998936284882
+}
+
+
+
+
+
+
+
+
+
+
+
 
 onMounted(() => {
+
+  store.placeholder()
+  // store.dataFetchfor(user)
+  // store.delateUser(201)
+  // store.getUserData(1)
+ 
   // store.fechBanner();
 });
 </script>

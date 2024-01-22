@@ -1,43 +1,3 @@
-<!-- <template>
-  <div id="app">
-    <Form @submit="onSubmit">
-      <Field name="email" type="email" :rules="validateEmail" />
-      <ErrorMessage name="email" />
-      <button>Sign up</button>
-    </Form>
-  </div>
-</template>
-<script>
-import { Form, Field, ErrorMessage } from 'vee-validate';
-export default {
-  components: {
-    Form,
-    Field,
-    ErrorMessage,
-  },
-  methods: {
-    onSubmit(values) {
-      console.log(values, null, 2);
-    },
-    validateEmail(value) {
-      // if the field is empty
-      if (!value) {
-        return 'This field is required';
-      }
-      // if the field is not a valid email
-      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-      if (!regex.test(value)) {
-        return 'This field must be a valid email';
-      }
-      // All is good
-      return true;
-    },
-  },
-};
-</script> -->
-
-
-
 <template>
   <div class="d-flex">
     <div class="main">
@@ -92,15 +52,15 @@ export default {
             <label for="email" class="form-label">Ism familiya <span>*</span></label>
 
             <!-- <input type="email" class="form-control" id="email" placeholder="Ism familiyangizni kiriting" name="email"/> -->
-            <Field name="string" type="string" placeholder="Ism familiyangizni kiriting" class="form-control" :rules="validateEmail"/>
-            <ErrorMessage style="color:red" name="string" />
+            <Field v-model="userRegister.full_name" name="string" type="string" placeholder="Ism familiyangizni kiriting" class="form-control" :rules="validateEmail"/>
+            <ErrorMessage style="color:red" name="full_name" />
 
             
           </div>
           <div class="mb-3 mt-3 list">
             <label for="email" class="form-label">Telefon raqam <span>*</span></label>
             <!-- <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/> -->
-            <Field type="number" class="form-control" id="number" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber"/>
+            <Field v-model="userRegister.phone" type="number" class="form-control" id="number" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber"/>
             <ErrorMessage style="color:red" name="number" />
 
 
@@ -110,12 +70,12 @@ export default {
             <box-icon type='solid' name='user-circle'></box-icon>
             
             <!-- <input  type="password" class="form-control" id="password" placeholder="parol o'ylab top" name="password"/> -->
-            <Field type="password" class="form-control" id="password" placeholder="parol o'ylab top"  name="password" :rules="validatePassword"/>
+            <Field  v-model="userRegister.password" type="password" class="form-control" id="password" placeholder="parol o'ylab top"  name="password" :rules="validatePassword"/>
             <ErrorMessage style="color:red" name="password" />
             
           </div> 
           <!-- <button  @click.prevent="preventRefresh"  @click="$router.push('/')" >Ro'yxatdan o'tish</button> -->
-          <button>Ro'yxatdan o'tish</button>
+          <button @click="senDataUser">Ro'yxatdan o'tish</button>
           <div class="bottom">
             <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Tizimga kirish</NuxtLink> </h2>
           </div>    
@@ -136,11 +96,23 @@ export default {
 
 <script >
 import { Form, Field, ErrorMessage } from 'vee-validate';
+import {useTestTStore} from '../../store/home'
 export default {
   components: {
     Form,
     Field,
     ErrorMessage,
+    useTestTStore
+  },
+  data() {
+    return {    
+      userRegister: {
+        full_name: null,
+        phone: null,
+        password: null
+      }
+
+    }
   },
   methods: {
     onSubmit(values) {
@@ -151,12 +123,12 @@ export default {
         return 'ism familyangizni kiritng';
       }
   
-      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-      if (!regex.test(value)) {
-        return "parol noto'g'ri";
-      }
+      // const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      // if (!regex.test(value)) {
+      //   return "parol noto'g'ri";
+      // }
       // All is good
-      return true;
+      // return true;
     },
     validateNumber(value) {
         if(!value){
@@ -167,17 +139,16 @@ export default {
         if(!value){
           return 'Parol kiritng'
         }
+      },
+      senDataUser() {
+        useTestTStore().registerUser(this.userRegister);
+        
       }
+      
   },
 };
 
 
-
-const content = ref(null)
-
-onMounted(() => {
-  content.value = 1;
-})
 
 </script>
 

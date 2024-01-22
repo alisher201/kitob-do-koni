@@ -1,25 +1,30 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
+import { register } from "../utils/home"
 
-// console.log(config.public.siteUrl);
-export const useTestTStore = defineStore ("home",{
-    
-    state:() => ({
-        url: useRuntimeConfig().public.siteUrl,
-        banner: {
-        },
-        site_bar: {},
-        word:{},
-        students:{}
-    }),
-    // getters: {
-    //     banner_data: (state) => state.banner,
-    //   },
+
+
+export const useTestTStore = defineStore("home", {
+
+  state: () => ({
+    url: useRuntimeConfig().public.siteUrl,
+    banner: {
+    },
+    site_bar: {},
+    word: {},
+    token: 'tokenbor'
+  }),
+
+
     
     actions: {
         fechData() {
           $fetch(` ${this.url}/book/category`)
         },
+        placeholder() {
+          return $fetch(`${this.url}/todos`)
+        },
+    
         async fechBanner(){
            return await $fetch(`${this.url}/blog`)
            .then(res => {
@@ -50,7 +55,18 @@ export const useTestTStore = defineStore ("home",{
                 // this.students = res
             })
         },
+        async registerUser(data) {
+          return await register.create(data)
+            .then(res => {
+              localStorage.setItem('jwtToken', res.result.token)
+              localStorage.setItem('userFullName', res.result.full_name)
+    
+    
+    
+    
+            })
+        }
          
     }
     
-})
+  })
