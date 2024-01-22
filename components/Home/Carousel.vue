@@ -64,7 +64,9 @@ const store = useTestTStore();
 
 onMounted(() => {
   store.fechBanner()
-console.log(store.banner);
+ 
+ 
+  // store.fechBanner();
 });
 </script>
 

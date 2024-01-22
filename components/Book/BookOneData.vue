@@ -42,7 +42,7 @@ onMounted(() => {
 <template>
   <div class="container mb-5 pb-5 px-0">
     <div class="my-3"><small class="mt-5">
-      Bosh sahifa / Katalog / San'at va Suratkashlik / Atom odatlari (Jeyms
+      Bosh sahifa / Katalog / San'at va Suratkashlikk / Atom odatlari (Jeyms
       Klir)
     </small></div>
     

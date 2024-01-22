@@ -41,7 +41,7 @@
         <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx">
           <!-- <pre>{{ item }}</pre> -->
           <div class="bookData">
-            <img src="../../assets/contact/bookimg2.png" alt="" class="categoyImg" />
+            <img :src="url + item?.image"  alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
             <img
@@ -65,43 +65,6 @@
         </SwiperSlide>
       </Swiper>
     </div>
-    
-    
-<!--   
-    <Swiper :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]" 
-      :grid="{ rows: 1, fill: 'row' }" :slides-per-view="6" :space-between="10" :pagination="{ clickable: true }"
-      @swiper="onSwiper">
-      <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx"
-        >
-        <div class="bookData">
-              <img :src="item.imgs" alt="" class="categoyImg" />
-              <button class="btnBestseller">Bestseller</button>
-              <button class="newBook">Yangi</button>
-              <img
-                src="../../assets/contact/booklike.png"
-                alt=""
-                class="bookLike"
-              />
-              <img
-                src="../../assets/contact/karzinka.png"
-                alt=""
-                class="karzinka"
-              />
-              <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
-            </div>
-            <div class="ps-2">
-              <small class="title">{{ item.bookTitle }}</small>
-            </div>
-            <div class="ps-2"><small class="author">{{ item.author }}</small></div>
-            <img src="../../assets/contact/Star.png" alt="" />
-            <small class="stats ms-2">5,0</small>
-            <span class="starsNumbers">(32)</span>
-      </SwiperSlide>
-
-    </Swiper></div> -->
-    
-
-
   </div>
 </template>
 <script setup>
@@ -125,9 +88,7 @@ const onSwiper = (sw) => {
 
 
 <style scoped>
-.swiper-slide {
- 
-}
+
 
 .bestText {
   font-size: 22px;
