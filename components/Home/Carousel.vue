@@ -65,6 +65,11 @@ const store = useTestTStore();
 onMounted(() => {
   store.fechBanner()
  
+
+  // store.placeholder()
+  // store.dataFetchfor(user)
+  // store.delateUser(201)
+  // store.getUserData(1)
  
   // store.fechBanner();
 });
