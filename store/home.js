@@ -21,9 +21,6 @@ export const useTestTStore = defineStore("home", {
         fechData() {
           $fetch(` ${this.url}/book/category`)
         },
-        placeholder() {
-          return $fetch(`${this.url}/todos`)
-        },
     
         async fechBanner(){
            return await $fetch(`${this.url}/blog`)

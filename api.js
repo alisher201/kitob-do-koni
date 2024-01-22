@@ -15,6 +15,6 @@ class FechData {
 
     }
   }
- export const getData = new FechData('todos')
+//  export const getData = new FechData('todos')
 
  
