@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div>{{ store?.serchResult }}
 
     <div style="position: absolute; background: #31313159; width: 100%; height: 130vh; z-index: 4; "
       :style="{ display: inputFocus ? 'block' : 'none' }">
@@ -99,10 +99,24 @@ watch(searchbooks, (newVal) => {
   }
 });
 
-// Bekinga so'rovni yuborish funktsiyasi
+// Bekintga so'rovni yuborish funktsiyasi
 const sendRequest = () => {
-  // Bu joyda bekinga so'rovni yuborish loyihasi yoziladi
-  console.log('So\'rov yuborildi:', searchbooks.value);
+  // Bu joyda bekintga so'rovni yuborish loyihasi yoziladi
+  store.searchData(searchbooks.value)
+  .then((res) => {
+   store.serchResult = res
+    console.log(res);
+    
+
+    if(res.success) {
+      router.push('/SearchBook')
+  
+      console.log('So\'rov yuborildi:', searchbooks.value);
+  
+    }
+
+  })
+
 };
 
 onMounted(() => {

@@ -9,6 +9,8 @@ export const useTestTStore = defineStore("home", {
     word: {},
     category: {},
     books: {},
+    serchResult: null
+
   }),
   actions: {
     async fechData() {
@@ -39,10 +41,10 @@ export const useTestTStore = defineStore("home", {
           localStorage.setItem('userFullName', res.result.full_name)
         })
     },
-    // async fechSearchTop() {
-    //   return await 
+    async fechSearchTop(data) {
+      return await search.create(data)
 
-    // }
+    },
 
     async fechSearchTop(){
       return await searchTop.get()
@@ -52,11 +54,9 @@ export const useTestTStore = defineStore("home", {
       })
    },
 
-  async searchData() {
-   return await search.create(data)
-   .then(res => {
-    console.log(res);
-   })
+  async searchData(data) {
+   return await $fetch(`${this.url}/product/search?name=${data}`)
+
   }
   //  async SearchHistory() {
   //     return await $fetch(${this.url}/search-history/create)

@@ -1,5 +1,6 @@
 <template>
     <div>
+      {{ store?.serchResult }}
         
         <div class="container px-0">
             <div class="text-center my-5" >
@@ -53,6 +54,8 @@
 
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
+
+const store = useTestTStore()
 
 const bookImgs = [
   {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
