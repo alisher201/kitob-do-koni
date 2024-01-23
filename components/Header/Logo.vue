@@ -1,6 +1,5 @@
 <template>
   <div>
-   route: {{ $route.path }}
     <div
       style="
         position: absolute;
@@ -109,7 +108,7 @@
           </svg>
           <span class="ms-1 forFont">{{ $t("header.favorites") }}</span>
         </div>
-        <div class="dataCursor" @click="handleLinkClick('/profile')">
+        <div class="dataCursor" @click="profile">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -130,11 +129,11 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="collapse colapseContainer" id="collapseExample">
-      <div class="" style="min-height: 100vh">
-        <HomeCategoriesList />
-      </div>
+  <div class="collapse colapseContainer" id="collapseExample">
+    <div class="" style="min-height: 100vh">
+      <HomeCategoriesList />
     </div>
   </div>
 </template>
@@ -148,21 +147,28 @@ const store = useTestTStore();
 
 
 const handleLinkClick = (route) => {
-  router.push(route);
+  
+  router.push(route)
 
-  if (route == "/basket") {
+  // Access the updated path directly from $router
+  const newPath = router.currentRoute.value.path;
+  console.log(newPath);
+
+  if (newPath === "/basket") {
     karzinka.style.display = "none";
     karzinka2.style.display = "block";
   } else {
     karzinka.style.display = "block";
     karzinka2.style.display = "none";
   }
-  if (route == "/favourite") {
+
+  if (newPath === "/favourite") {
     dataCursor.classList.add("active");
   } else {
     dataCursor.classList.remove("active");
   }
-  if (route == "/profile") {
+
+  if (newPath === "/profile") {
     dataCursor2.classList.add("active");
   } else {
     dataCursor2.classList.remove("active");
@@ -185,11 +191,25 @@ const selectData = (data) => {
   router.push("/SearchBook");
 };
 
-
 onMounted(() => {
-  store.fechData();
+  // store.fechData();
 });
 
+watch(
+  () => router.currentRoute.path,
+  (newPath) => {
+    console.log(newPath);
+  }
+);
+
+const profile = () => {
+  let user = false;
+  if (user) {
+    router.push("/profile");
+  } else {
+    router.push("/register");
+  }
+};
 </script>
 
 <style scoped>

@@ -241,13 +241,6 @@ export default {
     line-height: 19px;
     letter-spacing: 0.02em;
     text-align: center;
-  
-    font-family: TT Commons;
-    font-size: 14px;
-    line-height: 16px;
-    letter-spacing: 0.02em;
-    text-align: center;
-    // color: #35363D
   }
   .NuxtLink{
     color: #1C5793;

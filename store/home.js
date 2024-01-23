@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
-// import {getData} from '../api'
-import { getData, createData, delateJson, getUserId } from "../utils/home"
+import { register } from "../utils/home"
+// import {jwtAuth} from "../utils/authServece"
 
-// console.log(config.public.siteUrl);
+
+
 export const useTestTStore = defineStore("home", {
 
   state: () => ({
@@ -12,29 +13,36 @@ export const useTestTStore = defineStore("home", {
     },
     site_bar: {},
     word: {},
+    token: 'tokenbor'
+    
   }),
-  // getters: {
-  //     banner_data: (state) => state.banner,
-  //   },
+
 
   actions: {
     fechData() {
       $fetch(` ${this.url}/book/category`)
     },
 
-    async placeholder() {
-      return await getData.get()
+    placeholder() {
+      return $fetch(`${this.url}/todos`)
     },
 
-    async dataFetchfor(data) {
-      return await createData.create(data)
-    },
-    async delateUser(id) {
-      return await delateJson.delate(id)
-    },
-    async getUserData(id) {
-      return getUserId.getOne(id)
+
+
+
+
+    async registerUser(data) {
+      return await register.create(data)
+        .then(res => {
+          localStorage.setItem('jwtToken', res.result.token)
+          localStorage.setItem('userFullName', res.result.full_name)
+
+
+
+
+        })
     }
+
 
 
 
