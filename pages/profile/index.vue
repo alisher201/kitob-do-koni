@@ -40,14 +40,14 @@
       {
           id:3,
            img:  img3  ,
-           word:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur, consequatur! Ullam provident hic quisquam. Molestias qui doloremque, magni consequuntur quo id voluptates omnis quibusdam possimus officia et, quam, ex hic.",
+           word:"Lorem ipsum dolor sit, amet consectetur adipisicing elit..",
            world:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus  "
   
        },
        {
           id:4,
            img: img4,
-           word:"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Pariatur, consequatur! Ullam provident hic quisquam. Molestias qui doloremque, magni consequuntur quo id voluptates omnis quibusdam possimus officia et, quam, ex hic.",
+           word:"Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
            world:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus  "
   
        }
@@ -96,7 +96,6 @@
       padding:4px;
       margin:18px 0px 0px 30px;
       gap: 20px;
-      display: grid;
       grid-template-columns: repeat(auto-fit,minmax(300px,2fr));
   }
   h2{
@@ -146,7 +145,6 @@
       top: 297px;
       left: 509px;
       border-radius: 10px;
-      border:blue;
       border: 1px solid #A1C4E2;
       display: flex;
       // color: #1b33e4;

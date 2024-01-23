@@ -12,8 +12,7 @@
     ></div>
     <div class="containerLogo d-flex align-items-center">
       <div
-        class="container d-flex align-items-center justify-content-between px-0"
-      >
+        class="container d-flex align-items-center justify-content-between px-0">
         <span class="py-0 pl-5">
           <img src="~/assets/kytabLogo.png" alt="site-logo" title="site-logo" />
         </span>
@@ -32,13 +31,15 @@
           <div class="input-group" style="width: 479px">
             <input
               type="text"
+              @change="result"
               v-model="searchbooks"
               class="form-control"
               style="height: 44px"
-              :placeholder="$t('header.search')"
+              placeholder="kitob izlash..."
               @focus="BookSearch"
               @blur="inputBlur"
             />
+
             <span
               class="input-group-text d-flex justify-content-center align-items-center"
               style="width: 68px; height: 44px"
@@ -129,11 +130,11 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="collapse colapseContainer" id="collapseExample">
-    <div class="" style="min-height: 100vh">
-      <HomeCategoriesList />
+    <div class="collapse colapseContainer" id="collapseExample">
+      <div class="" style="min-height: 100vh">
+        <HomeCategoriesList />
+      </div>
     </div>
   </div>
 </template>
@@ -145,10 +146,12 @@ const inputFocus = ref(false);
 const store = useTestTStore();
 // console.log(store.fechData());
 
+// const words = ["salom", "dunyo", "xabar"];
+// const result = words.map(word => word.substring(0, 3));
+// console.log(result);
 
 const handleLinkClick = (route) => {
-  
-  router.push(route)
+  router.push(route);
 
   // Access the updated path directly from $router
   const newPath = router.currentRoute.value.path;
@@ -191,17 +194,6 @@ const selectData = (data) => {
   router.push("/SearchBook");
 };
 
-onMounted(() => {
-  // store.fechData();
-});
-
-watch(
-  () => router.currentRoute.path,
-  (newPath) => {
-    console.log(newPath);
-  }
-);
-
 const profile = () => {
   let user = false;
   if (user) {
@@ -210,6 +202,10 @@ const profile = () => {
     router.push("/register");
   }
 };
+
+onMounted(() => {
+  // store.fechData();
+});
 </script>
 
 <style scoped>

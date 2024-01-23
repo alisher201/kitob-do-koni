@@ -54,48 +54,25 @@
     </div>
   </template>
   
-  <script >
-import { Form, Field, ErrorMessage } from 'vee-validate';
-export default {
-  components: {
-    Form,
-    Field,
-    ErrorMessage,
-  },
-  data() {
-    return {
-      userLogin: {
-        phone: null,
-        password: null
-
-      }
-
-    }
-  },
-  methods: {
-    onSubmit(values) {
-      console.log(values, null, 2);
-    },
-    validateEmail(value) {
-      if (!value) {
-        return 'Parolni kiriting';
-      }
-  
-      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-      if (!regex.test(value)) {
-        return "parol noto'g'ri";
-      }
-      // All is good
-      return true;
-    },
-    validateNumber(value) {
-        if(!value){
-          return 'telefon raqamni kiritng kiriting'
-        }
-      }
-  },
-};
-
+  <script>
+// export default defineNuxtConfig({
+//   // ...
+//   modules: [
+//     //...
+//     '@vee-validate/nuxt',
+//   ],
+//   veeValidate: {
+//     // disable or enable auto imports
+//     autoImports: true,
+//     // Use different names for components
+//     componentNames: {
+//       Form: 'VeeForm',
+//       Field: 'VeeField',
+//       FieldArray: 'VeeFieldArray',
+//       ErrorMessage: 'VeeErrorMessage',
+//     },
+//   },
+// });
 
   const content = ref(null)
   
