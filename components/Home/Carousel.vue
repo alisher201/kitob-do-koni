@@ -61,25 +61,9 @@
 import { useRuntimeConfig } from "nuxt/app";
 const url= useRuntimeConfig().public.siteUrl
 const store = useTestTStore();
-let user = {
-  login: 'mirlaziz',
-  phone: 998936284882
-}
-
-
-
-
-
-
-
-
-
-
-
 
 onMounted(() => {
   store.fechBanner()
-console.log(store.banner);
 });
 </script>
 

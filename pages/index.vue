@@ -14,7 +14,7 @@
 const store = useTestTStore();
 onMounted(() => {
   store.fechBooks().then((a) => {
-    console.log(store.books);
+    // console.log(store.books);
   });
 });
 </script>

@@ -60,7 +60,7 @@
           <div class="mb-3 mt-3 list">
             <label for="email" class="form-label">Telefon raqam <span>*</span></label>
             <!-- <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/> -->
-            <Field v-model="userRegister.phone" type="number" class="form-control" id="number" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber"/>
+            <Field v-model="userRegister.phone" type="string" class="form-control" id="number" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber"/>
             <ErrorMessage style="color:red" name="number" />
 
 

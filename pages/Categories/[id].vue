@@ -1,11 +1,17 @@
-<template>
+[<template>
   <div class="container px-0 my-3">
-    <small
-      >Bosh sahifa / Katalog / San'at va Suratkashlik / To'plamlar, kataloglar
-      va ko'rgazmalar</small
-    >
+    <div class="flex">
+      <small class="container-item"
+        >Bosh sahifa / Katalog /</small
+      > 
+      <small  v-for="(katalog, index) in store.category" :key="index" >
+          <!-- {{ store.category.find((value) => {value.id === ($route.path).split('/').pop()}) }} -->
+        <pre>{{ katalog }}</pre>
+        <!-- {{ katalog.children.id[4]}} -->
+        {{ ($route.path).split('/').pop() }}</small>
+    </div>
     <div class="row mx-0 mt-3">
-      <div class="col-4 sideBar p-4">
+      <div class="col-4 sideBar p-4"> 
         <h6><strong>Katalog</strong></h6>
         <p class="ms-2">
           <strong style="font-size: 15px">San'at va Suratkashlik</strong>
@@ -104,6 +110,16 @@
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
 
+// const katalogid = $route.path 
+// console.log(katalogid)
+const store = useCategory();
+onMounted(() => {
+  // store.fechCategory()
+});
+
+// let el = store.category.find((value) => {value.id === ($route.path).split('/').pop()})
+// console.log(el);
+
 const bookImgs = [
   {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
   {id:2,
@@ -146,6 +162,9 @@ const selectBook = (id) => {
   height: auto;
   border-radius: 10px;
   background: #fafafa;
+}
+.container-item{
+  cursor: pointer;
 }
 .sideBar h6 {
   font-size: 18px;
@@ -246,3 +265,4 @@ const selectBook = (id) => {
   color: #9196ad;
 }
 </style>
+]
