@@ -1,8 +1,8 @@
 <template>
-  <div>{{ store?.serchResult }}
+  <div>
 
     <div style="position: absolute; background: #31313159; width: 100%; height: 130vh; z-index: 4; "
-      :style="{ display: inputFocus ? 'block' : 'none' }">
+      :style="{ display: inputFocus ? 'block' : 'none' }" @click="focusNone">
     </div>
     <div class="containerLogo d-flex align-items-center">
       <div class="container d-flex align-items-center justify-content-between px-0">
@@ -14,23 +14,26 @@
           aria-expanded="false" aria-controls="collapseExample">
           <img src="~/assets/contact/category.png" alt="" /> Katalog
         </button>
+        <!-- {{ inputFocus }}
+        {{ searchList }} -->
         <div style="position: relative; z-index: 4;">
           <div class="input-group" style="width: 479px">
 
 
             <input type="text" @change="result" v-model="searchbooks" class="form-control" style="height: 44px"
-              placeholder="kitob izlash..." @focus="BookSearch" @blur="inputBlur" />
-
+              placeholder="kitob izlash..." @focus="BookSearch" @keydown.enter="searchProduct" />
 
 
             <span class="input-group-text d-flex justify-content-center align-items-center"
-              style="width: 68px; height: 44px"><img src="~/assets/contact/bx_search-alt-2.png" alt="" /></span>
+              style="width: 68px; height: 44px" @click="searchProduct"><img src="~/assets/contact/bx_search-alt-2.png"
+                alt="" /></span>
           </div>
-          <div class="mt-2" style="position: absolute; z-index: 999; width: 100%;" v-if="inputFocus">
+          <div class="mt-2" style="position: absolute; z-index: 999; width: 100%;" v-if="inputFocus && searchList">
             <HeaderSearchData @searchEmit="selectData" />
           </div>
 
         </div>
+
 
         <div class="ms-5 karzinka" @click="$router.push('/basket')">
           <img src="@/assets/contact/karzinka.png" alt="" />
@@ -60,27 +63,25 @@ const router = useRouter()
 const searchbooks = ref(null)
 let inputFocus = ref(false)
 const store = useTestTStore();
+let searchList = ref(true)
 
-// const words = ["salom", "dunyo", "xabar"];
-// const result = words.map(word => word.substring(0, 3));                                      
-// console.log(result);
+
 
 const BookSearch = () => {
   document.body.style.overflow = 'hidden'
   inputFocus.value = true
+  store.searchValue = null
+  store.searchValue = searchbooks.value
 }
-const inputBlur = () => {
-  setTimeout(() => {
-    document.body.style.overflow = 'visible'
-    inputFocus.value = false
 
-  }, 1000);
-
-}
 
 const selectData = (data) => {
+  // store.serchResult = null
   searchbooks.value = data
-  router.push('/SearchBook')
+  store.searchValue = null
+
+  searchProduct()
+
 
 }
 const profile = () => {
@@ -94,30 +95,81 @@ const profile = () => {
 }
 
 watch(searchbooks, (newVal) => {
-  if (newVal.length > 3) {    
-    sendRequest(); 
-  }
+  // store.searchValue = searchbooks.value
+  sendRequest();
+
+
 });
 
 // Bekintga so'rovni yuborish funktsiyasi
 const sendRequest = () => {
-  // Bu joyda bekintga so'rovni yuborish loyihasi yoziladi
+  // store.fechSearchTop()
+
   store.searchData(searchbooks.value)
-  .then((res) => {
-   store.serchResult = res
-    console.log(res);
-    
 
-    if(res.success) {
-      router.push('/SearchBook')
-  
-      console.log('So\'rov yuborildi:', searchbooks.value);
-  
-    }
+    .then(() => {
+      // console.log(store.productSearch.result.length > 0 ? true : false);
+      // store.serchResult = res
+      if (store.productSearch.result.length == 0) {
+        // searchList.value = false
+        searchList.value = false
+        store.searchValue = searchbooks.value
+        console.log('gag');
 
-  })
+      }
+      else {
+        store.searchValue = searchbooks.value
+        searchList.value = true
+
+
+        if (!searchbooks.value) {
+          store.productSearch = null
+
+
+        }
+
+
+      }
+
+    })
+
 
 };
+const searchProduct = () => {
+  focusNone()
+  if (searchbooks.value?.length > 3) {
+    // qidruvlarni tarixia uchun qidirilgan productlarni  post qiib becendga jo'natish
+    store.createHistoryBook({ word: searchbooks.value })
+    // book apisidan ma'lumot izlash
+    store.fetchBookSearch(searchbooks.value)
+      .then(() => {
+        // product apisidan ma'lumotlar izlash 
+        store.searchProductData(searchbooks.value)
+
+          .then(() => {
+            if (store.productSearch?.result) {
+              // store.serchResult = null
+              searchList.value = false
+              store.searchValue = null
+              // store.serchResult = res
+              // console.log('dfadfsa');
+              router.push('/search')
+            }
+          })
+
+      })
+
+
+
+  }
+
+
+}
+const focusNone = () => {
+  document.body.style.overflow = 'visible'
+  inputFocus.value = false
+}
+
 
 onMounted(() => {
 

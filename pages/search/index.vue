@@ -1,12 +1,15 @@
 <template>
-    <div>
-      {{ store?.serchResult }}
-        
+    <div>        
         <div class="container px-0">
             <div class="text-center my-5" >
                 <!-- {{ a }} -->
                 <h1 class="notFound">Hech narsa topilmadi</h1>
                 <p class="request">So'rovingizni o'zgartirib ko'ring</p>
+                <pre> {{ store.serchResult }}
+                  {{ store.bookSearchdata }}
+                  
+
+                </pre>
 
             </div>
             <hr>

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
-import { register, book_category,searchTop, search } from "../utils/home"
+import { register, book_category, searchTop, search } from "../utils/home"
 export const useTestTStore = defineStore("home", {
   state: () => ({
     url: useRuntimeConfig().public.siteUrl,
@@ -9,7 +9,11 @@ export const useTestTStore = defineStore("home", {
     word: {},
     category: {},
     books: {},
-    serchResult: null
+    serchResult: null,
+    searchValue: null,
+    Searchhistory: null,
+    bookSearchdata: null,
+    productSearch: null
 
   }),
   actions: {
@@ -41,30 +45,53 @@ export const useTestTStore = defineStore("home", {
           localStorage.setItem('userFullName', res.result.full_name)
         })
     },
-    async fechSearchTop(data) {
-      return await search.create(data)
-
+    async fechSearchTop() {
+      return await searchTop.get()
+        .then(res => {
+          // console.log(res);    
+          this.word = res
+        })
     },
 
-    async fechSearchTop(){
-      return await searchTop.get()
-      .then(res => {
-          // console.log(res);    
-          this.word= res
-      })
-   },
+    async searchData(data) {
+      return await $fetch(`${this.url}/product/search?name=${data}`)
+        .then(res => {
+          this.productSearch = res
+        })
 
-  async searchData(data) {
-   return await $fetch(`${this.url}/product/search?name=${data}`)
+    },
+    async searchProductData(data) {
+      return await $fetch(`${this.url}/product/search?name=${data}`)
+        .then(res => {
+          this.serchResult = res
+        })
 
-  }
-  //  async SearchHistory() {
-  //     return await $fetch(${this.url}/search-history/create)
-  //     .then(res => {
-  //         // console.log(res);     
-                              
-  //         // this.students = res
-  //     })
-  // },
+
+    },
+    async SearchHistoryBook() {
+      return await search.get()
+        .then(res => {
+          if (res.success) {
+            this.Searchhistory = res
+
+          }
+        })
+    },
+    async createHistoryBook(data) {
+      return await search.create(data)
+    },
+    async dealteSearch(id) {
+      return await search.delate(id)
+    },
+    async fetchBookSearch(data) {
+      return await $fetch(`${this.url}/book/search?name=${data}`)
+        .then(res => {
+          if (res.success) {
+            this.bookSearchdata = res
+            console.log(res);
+
+          }
+        })
+    }
   }
 })
