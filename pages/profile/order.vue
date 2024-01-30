@@ -1,23 +1,21 @@
 <template>
   <div>
-    <div class="main">
-      <h1 class="h1">Buyurtmalar tarixi</h1>
-      <div class="main_div">
-        <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">Muddatli to'lov</div>
-        <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">Yetkazib berilgan</div>
-        <div  class="main_p" :class="{'price' :content == 3}" @click="content = 3">Naqd to'lov</div>
+      <div class="main">
+        <h1 class="h1">Buyurtmalar tarixi</h1>
+        <div class="main_div">
+          <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">Muddatli to'lov</div>
+          <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">Yetkazib berilgan</div>
+          <div  class="main_p" :class="{'price' :content == 3}" @click="content = 3">Naqd to'lov</div>
+        </div>
+        <div v-show="content == 1"><Table/></div>
+        <div v-show="content == 2"><TablePrice/></div>
+        <div v-show="content == 3"><TablePay/></div>
       </div>
-      <div v-show="content == 1"><Table/></div>
-      <div v-show="content == 2"><TablePrice/></div>
-      <div v-show="content == 3"><TablePay/></div>
-    </div>
   </div>
 </template>
 
 <script setup>
-
 const content = ref(null)
-
 
 onMounted(() => {
   content.value = 1;

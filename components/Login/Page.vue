@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex">
+    <!-- <div class="d-flex">
       <div class="main">
         <img class="main_img" src="../../assets/register/kytab.png" alt="" />
         <img class="main_imgs" src="../../assets/register/login.png" alt="" />
@@ -26,14 +26,12 @@
             <div class="mb-3 mt-3 list">
               <label for="email" class="form-label">Telefon raqam <span>*</span></label>
             
-              <!-- <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/> -->
               <Field v-model="userLogin.phone" type="number" class="form-control" id="email" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber" />
               <ErrorMessage style="color:red" name="number" />
             
             </div>
             <div class="mb-3 mt-3 list inputbox">
               <label for="password" class="form-label">Parol <span>*</span></label>              
-              <!-- <input  type="password" class="form-control" id="password" placeholder="parol o'ylab top" name="password"/> -->
               <Field v-model="userLogin.password" name="password" class="form-control" type="password" placeholder="parol 8 ta bo'lsin" :rules="validateEmail" />
               
               <div class="li">
@@ -42,7 +40,6 @@
                     <NuxtLink to="/password" href="">Parolni unutdingizmi?</NuxtLink>
                 </div>
             </div> 
-            <!-- <button  @click.prevent="preventRefresh"  @click="$router.push('/')">Login</button> -->
               <button>Login</button>
             <div class="bottom">
               <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink> </h2>
@@ -51,34 +48,54 @@
           </Form>
         </div>
       </div>
-    </div>
+    </div> -->
+    <div id="error"></div>
+    <form action="" method="GET">
+      <div>
+        <label for="name" >Name</label>
+        <input type="text" id="name" name="" required>
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input type="password" name="password">
+      </div>
+      <button type="submit">Submit</button>
+    </form>
   </template>
   
   <script>
-// export default defineNuxtConfig({
-//   // ...
-//   modules: [
-//     //...
-//     '@vee-validate/nuxt',
-//   ],
-//   veeValidate: {
-//     // disable or enable auto imports
-//     autoImports: true,
-//     // Use different names for components
-//     componentNames: {
-//       Form: 'VeeForm',
-//       Field: 'VeeField',
-//       FieldArray: 'VeeFieldArray',
-//       ErrorMessage: 'VeeErrorMessage',
-//     },
-//   },
-// });
+  // const namee = document.getElementById('name')
+  // const password = document.getElementById('password')
+  // const form = document.getElementById('form')
+  // const errorElement = document.getElementById('error')
 
-  const content = ref(null)
-  
-  onMounted(() => {
-    content.value = 1;
-  })
+  // form.addEventListener('submit', (e) =>{
+  //   let messages  = []
+  //   if( namee.value === '' || namee.value == null){
+  //     messages.push('Name i s required')
+  //   }
+
+  //   if(password.value.length <= 6){
+  //     messages.push('Password must be  longer than 6 characters')
+  //   }
+  //   if(password.value.length >= 20){
+  //     messages.push('Password must be at than 20 characters')
+  //   }
+
+  //   if(password.value === 'password'){
+  //     messages.push('Password cannot be passwwod')
+  //   }
+
+  //   if(messages.length > 0){
+  //     e.preventDefault()
+  //     errorElement.innerText = messages.join(', ')
+  //   }
+  // })
+
+  // const content = null
+  // onMounted(() => {
+  //   content.value = 1;
+  // })
   
   </script>
   

@@ -92,7 +92,7 @@
       </div>
     </div>
   </div>
-</template>
+</template >
 
 <script >
 import { Form, Field, ErrorMessage } from 'vee-validate';
@@ -122,13 +122,6 @@ export default {
       if (!value) {
         return 'ism familyangizni kiritng';
       }
-  
-      // const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-      // if (!regex.test(value)) {
-      //   return "parol noto'g'ri";
-      // }
-      // All is good
-      // return true;
     },
     validateNumber(value) {
         if(!value){
