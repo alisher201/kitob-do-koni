@@ -1,45 +1,57 @@
-[<template>
+<template>
   <div class="container px-0 my-3">
     <div class="flex">
-      <small class="container-item"
-        >Bosh sahifa / Katalog /</small
-      > 
-      <small  v-for="(katalog, index) in store.category" :key="index" >
-          <!-- {{ store.category.find((value) => {value.id === ($route.path).split('/').pop()}) }} -->
-        <pre>{{ katalog }}</pre>
-        <!-- {{ katalog.children.id[4]}} -->
-        {{ ($route.path).split('/').pop() }}</small>
+      <small class="container-item">Bosh sahifa / Katalog / </small>
+      <small v-for="(katalog, index) in store.category" :key="index">
+        <a v-for="(item, inde) in katalog.children" :key="inde">
+          <a v-if="item.id === parseInt($route.path.split('/').pop())">
+            {{ store.katalog.name_oz }} /
+            {{ item.label }}
+          </a>
+        </a>
+      </small>
     </div>
     <div class="row mx-0 mt-3">
-      <div class="col-4 sideBar p-4"> 
+      <div class="col-4 sideBar p-4">
         <h6><strong>Katalog</strong></h6>
         <p class="ms-2">
-          <strong style="font-size: 15px">San'at va Suratkashlik</strong>
+          <strong style="font-size: 15px">{{ store.katalog.name_oz }}</strong>
         </p>
         <p
-          v-for="(item, index) in items"
+          v-for="(item, index) in store.katalog.childrens"
           :key="index"
           class="categoriaData ms-3"
         >
-          {{ item.name }}
+          {{ item.name_oz }}
         </p>
         <p class="categoriaAll ms-3">
-          Barchasi 14 <img src="@/assets/contact/arrowDown.png" alt="" />
+          Barchasi {{ store.katalog.childrens?.length }}
+          <img src="@/assets/contact/arrowDown.png" alt="" />
         </p>
         <hr class="my-4" />
-        <h6><strong>{{ $t("home.format") }}</strong></h6>
+        <h6>
+          <strong>{{ $t("home.format") }}</strong>
+        </h6>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.kinds") }}
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
+            $t("home.kinds")
+          }}
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.elecBook") }}
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
+            $t("home.elecBook")
+          }}
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.audioBook") }}
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
+            $t("home.audioBook")
+          }}
         </p>
         <hr class="my-4" />
 
-        <h6><strong>{{ $t("home.price") }}</strong></h6>
+        <h6>
+          <strong>{{ $t("home.price") }}</strong>
+        </h6>
         <div class="row">
           <div class="col-6">
             <label class="price">{{ $t("home.from") }}</label>
@@ -50,15 +62,21 @@
             ><input type="text" class="form-control" />
           </div>
         </div>
-
+        <div>
+          <!-- <vue-slider/> -->
+        </div>
         <hr class="my-4" />
-        <h6><strong>{{ $t("home.lang") }}</strong></h6>
+        <h6>
+          <strong>{{ $t("home.lang") }}</strong>
+        </h6>
         <p>
           <input type="checkbox" class="form-check-input me-2 ms-1" />
           {{ $t("home.allLang") }}
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{ $t("home.uzb") }}
+          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
+            $t("home.uzb")
+          }}  
         </p>
         <p>
           <input type="checkbox" class="form-check-input me-2 ms-1" />English
@@ -68,19 +86,26 @@
         </p>
       </div>
 
-      <div class="col-8  ps-4  pe-0">
-        <div class=" d-flex justify-content-between">
-          <h6 class=" p-0">{{ $t("home.catalog") }}</h6>
+      <div class="col-8 ps-4 pe-0">
+        <div class="d-flex justify-content-between">
+          <h6 class="p-0">{{ $t("home.catalog") }}</h6>
           <button class="categoriaAll btn btnColor">
-            {{ $t("home.sorting") }} <img src="@/assets/contact/arrowDown.png" alt="" />
+            <!-- {{ $t("home.sorting") }} -->
+            <img src="@/assets/contact/arrowDown.png" alt="" />
           </button>
         </div>
-        <div class=" bookGrid mt-4">
-          <div class="p-0" v-for="(item, index) in bookImgs" :key="index" @click="selectBook(item.id)">
+
+        <div class="bookGrid mt-4">
+          <div
+            class="p-0"
+            v-for="(item, index) in store.katalogpic"
+            :key="index"
+            @click="selectBook(item.id)"
+            >
             <div class="bookData">
-              <img :src="item.imgs" alt="" class="categoyImg" />
+              <img :src="item.image" alt="" class="categoyImg" />
               <button class="btnBestseller">Bestseller</button>
-              <button class="newBook">Yangi</button>
+              <button class="newBook">Yangi</button>  
               <img
                 src="../../assets/contact/booklike.png"
                 alt=""
@@ -94,9 +119,11 @@
               <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
             </div>
             <div class="ps-2">
-              <small class="title">{{ item.bookTitle }}</small>
+              <small class="title">{{ item.description }}</small>
             </div>
-            <div class="ps-2"><small class="author">{{ item.author }}</small></div>
+            <div class="ps-2">
+              <small class="author">{{ item.name }}</small>
+            </div>
             <img src="../../assets/contact/Star.png" alt="" />
             <small class="stats ms-2">5,0</small>
             <span class="starsNumbers">(32)</span>
@@ -109,41 +136,52 @@
 <script setup>
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
+import { useRoute } from "vue-router";
+// import RangeSlider from "vue-range-slider";
+// import VueSlider from "vue-slider-component";
 
-// const katalogid = $route.path 
-// console.log(katalogid)
+// Get ID
+const route = useRoute();
+const katalogid = parseInt(route.params.id);
+
+// Get Data from category.js
 const store = useCategory();
 onMounted(() => {
+  store.fetchCategory(),
+    store.fetchKatalog(katalogid),
+    store.fetchKatalogPic(1);
   // store.fechCategory()
 });
+console.log(store.katalogpic);
 
-// let el = store.category.find((value) => {value.id === ($route.path).split('/').pop()})
-// console.log(el);
-
-const bookImgs = [
-  {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {id:2,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-  {id:3,
-    imgs: bookImg,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Agata Kristi",
-  },
-  {id:4,
-    imgs: bookImg1,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Dafna Dyu Morye",
-  },
-  { id:5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-  {id:6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-  },
-];
+// const bookImgs = [
+//   { id: 1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+//   {
+//     id: 2,
+//     imgs: bookImg1,
+//     bookTitle: "Kitoblar qanday o'qiladi",
+//     author: "Sidni Sheldon",
+//   },
+//   {
+//     id: 3,
+//     imgs: bookImg,
+//     bookTitle: "Sharqiy ekspressdagi qotillik",
+//     author: "Agata Kristi",
+//   },
+//   {
+//     id: 4,
+//     imgs: bookImg1,
+//     bookTitle: "Sharqiy ekspressdagi qotillik",
+//     author: "Dafna Dyu Morye",
+//   },
+//   { id: 5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
+//   {
+//     id: 6,
+//     imgs: bookImg1,
+//     bookTitle: "Kitoblar qanday o'qiladi",
+//     author: "Sidni Sheldon",
+//   },
+// ];
 const items = [
   { id: 1, name: "Arxitektura" },
   { id: 2, name: "Arxitektura" },
@@ -153,9 +191,9 @@ const items = [
   { id: 6, name: "Rassomlar" },
 ];
 const selectBook = (id) => {
-  const router =  useRouter()
-  router.push(`/bookSelect/${id}`)
-}
+  const router = useRouter();
+  router.push(`/book/${id}`);
+};
 </script>
 <style scoped>
 .sideBar {
@@ -163,7 +201,7 @@ const selectBook = (id) => {
   border-radius: 10px;
   background: #fafafa;
 }
-.container-item{
+.container-item {
   cursor: pointer;
 }
 .sideBar h6 {
@@ -257,7 +295,7 @@ const selectBook = (id) => {
   color: #9196ad;
   font-size: 13px;
 }
-    
+
 .title {
   font-weight: 800;
 }
@@ -265,4 +303,3 @@ const selectBook = (id) => {
   color: #9196ad;
 }
 </style>
-]

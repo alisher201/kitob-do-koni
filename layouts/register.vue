@@ -16,7 +16,7 @@ useHead({
   link: [
     { rel: 'canonical', href: process.env.NUXT_PUBLIC_SITE_URL},
     { rel: 'icon', type: 'image/x-icon', href: '/fi(1).ico' }],
-  htmlAttrs: { lang: 'en-US' },
+  htmlAttrs: { lang: 'uz' },
 })
 
 </script>

@@ -3,8 +3,8 @@
     <div class="row py-4">
         <div class="col-3 mb-4" v-for="(categoryData, idx) in store.category" :key="idx">
             <strong>{{ categoryData.label }}</strong>
-            <p class="categorya" v-for="(items, index) in categoryData.children" :key="index" @click="categoryGet(categoryData.label, items.id)">
-           <small> {{ items.label }}</small>
+            <p class="categorya" v-for="(items, index) in categoryData.children" :key="index" @click="categoryGet(items.parent_id, items.id)">
+           <small> {{ items.label}}</small>
            </p>
         </div>
     </div>
@@ -16,7 +16,8 @@ onMounted(() => {
   store.fechData()
 });
 
-const categoryGet = (label, childId) => {
+const categoryGet = (parent_id, childId) => {
+  // console.log(parent_id);
   
   collapseExample.classList.remove("show")
   
