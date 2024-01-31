@@ -39,7 +39,6 @@
         @swiper="onSwiper"
       >
         <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx">
-          <!-- <pre>{{ item }}</pre> -->
           <div class="bookData">
             <img :src="url + item?.image"  alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
