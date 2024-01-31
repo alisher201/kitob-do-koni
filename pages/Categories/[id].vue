@@ -192,7 +192,7 @@ const items = [
 ];
 const selectBook = (id) => {
   const router = useRouter();
-  router.push(`/bookSelect/${id}`);
+  router.push(`/book/${id}`);
 };
 </script>
 <style scoped>
