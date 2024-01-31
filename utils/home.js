@@ -1,6 +1,7 @@
 import {FechData} from './api.service'
 
 export const book_category = new FechData('book/category')
+
 export const  register = new FechData('clientRegister')
 export const searchTop = new FechData('search/top')
 export const search = new FechData('search')
