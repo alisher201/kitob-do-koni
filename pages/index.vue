@@ -1,5 +1,6 @@
 <template>
   <main>
+    {{ dataa }}
     <HomeCarousel />
     <HomePossibilities />
     <HomeMarketFast :title="'Bozori chaqqon'" :bookImgs="store?.books?.special_offer" />
@@ -11,10 +12,18 @@
 </template>
  
 <script setup>
+let dataa = ref('')
 const store = useTestTStore();
 onMounted(() => {
   store.fechBooks().then((a) => {
-    // console.log(store.books);
   });
+  const jwtToken = localStorage.getItem('jwtToken')
+  if(!jwtToken) {
+    store.uuIdPost({
+    uuid: String(new Date().getTime()),
+    model: navigator.userAgent
+  })
+  }
+  
 });
 </script>

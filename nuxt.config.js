@@ -24,7 +24,7 @@ export default defineNuxtConfig({
       siteName: "Kitob",
       siteDescription:
         "A Full StoreFront built with Nuxt 3 + Pinia 2 + Bootstrap 5....",
-      language: "en-US",
+      language: "uz",
     },
   },
   plugins: [{ src: "~/plugins/vercel.ts", mode: "client" }],
