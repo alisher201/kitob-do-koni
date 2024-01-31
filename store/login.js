@@ -18,10 +18,6 @@ export const useLogin = defineStore ("login",{
                   data
                   }
             })
-        }
-       
-      
-      
-      
+        }      
     }
 })

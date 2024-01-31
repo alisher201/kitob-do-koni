@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
-import { register } from "../utils/home"
-import { book_category } from "../utils/home"
+import { register, book_category, searchTop, search } from "../utils/home"
 export const useTestTStore = defineStore("home", {
   state: () => ({
     url: useRuntimeConfig().public.siteUrl,
@@ -10,6 +9,12 @@ export const useTestTStore = defineStore("home", {
     word: {},
     category: {},
     books: {},
+    serchResult: null,
+    searchValue: null,
+    Searchhistory: null,
+    bookSearchdata: null,
+    productSearch: null
+
   }),
   actions: {
     async fechData() {
@@ -38,6 +43,54 @@ export const useTestTStore = defineStore("home", {
         .then(res => {
           localStorage.setItem('jwtToken', res.result.token)
           localStorage.setItem('userFullName', res.result.full_name)
+        })
+    },
+    async fechSearchTop() {
+      return await searchTop.get()
+        .then(res => {
+          // console.log(res);    
+          this.word = res
+        })
+    },
+
+    async searchData(data) {
+      return await $fetch(`${this.url}/product/search?name=${data}`)
+        .then(res => {
+          this.productSearch = res
+        })
+
+    },
+    async searchProductData(data) {
+      return await $fetch(`${this.url}/product/search?name=${data}`)
+        .then(res => {
+          this.serchResult = res
+        })
+
+
+    },
+    async SearchHistoryBook() {
+      return await search.get()
+        .then(res => {
+          if (res.success) {
+            this.Searchhistory = res
+
+          }
+        })
+    },
+    async createHistoryBook(data) {
+      return await search.create(data)
+    },
+    async dealteSearch(id) {
+      return await search.delate(id)
+    },
+    async fetchBookSearch(data) {
+      return await $fetch(`${this.url}/book/search?name=${data}`)
+        .then(res => {
+          if (res.success) {
+            this.bookSearchdata = res
+            console.log(res);
+
+          }
         })
     }
   }

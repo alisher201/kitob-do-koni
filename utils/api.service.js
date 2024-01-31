@@ -32,9 +32,6 @@ export class FechData {
   getOne = (id) => {
     return $fetch(`${url}/${this.api}/${id}`)
   }
-
-
-
 }
 
 

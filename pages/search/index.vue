@@ -1,11 +1,15 @@
 <template>
-    <div>
-        
+    <div>        
         <div class="container px-0">
             <div class="text-center my-5" >
                 <!-- {{ a }} -->
                 <h1 class="notFound">Hech narsa topilmadi</h1>
                 <p class="request">So'rovingizni o'zgartirib ko'ring</p>
+                <pre> {{ store.serchResult }}
+                  {{ store.bookSearchdata }}
+                  
+
+                </pre>
 
             </div>
             <hr>
@@ -53,6 +57,8 @@
 
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
+
+const store = useTestTStore()
 
 const bookImgs = [
   {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },

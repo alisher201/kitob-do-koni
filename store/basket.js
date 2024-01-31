@@ -7,14 +7,14 @@ export const useBasketStore = defineStore("test", {
   }),
   
   actions: {
-    async basketData() {
-        try {
-          const response = await $fetch(`${this.url}/cart`);
-          const data = await response.json();
-          console.log(data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
+    // async basketData() {
+    //     try {
+    //       const response = await $fetch(`${this.url}/cart`);
+    //       const data = await response.json();
+    //       console.log(data);
+    //     } catch (error) {
+    //       console.error("Error fetching data:", error);
+    //     }
+    //   }
   }
 });

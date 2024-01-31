@@ -150,6 +150,7 @@ onMounted(() => {
   store.fetchCategory(),
     store.fetchKatalog(katalogid),
     store.fetchKatalogPic(1);
+  // store.fechCategory()
 });
 console.log(store.katalogpic);
 

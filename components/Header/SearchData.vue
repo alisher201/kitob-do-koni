@@ -1,22 +1,46 @@
 <template>
   <div>
+    <!-- {{ store.productSearch.result }} -->
     <div class="searchData">
-  
-        <!-- search history -->
-      <p class="popularBookSearch">Qidiruv tarixi</p>
-      <div v-for="(item, idx) in searchBook" :key="idx" class="my-2 bookList d-flex justify-content-between align-items-center">
-        <div> <img src="../../assets/contact/againIcon.png" alt=""><span class="popularBookName ms-2" @click="popularBook(item.name)">{{ item.name }}</span> </div>
-        <img src="../../assets/contact/delateSearch.png" alt="">
-       
+      <div v-if="store.searchValue">
+        <div v-for="(item, idx) in store.productSearch?.result" :key="idx"
+          class="my-2 bookList d-flex justify-content-between align-items-center">
+          <div> <img src="../../assets/contact/searchIcon.png"/><span class="popularBookName ms-2"
+              @click="popularBook(item.name_uz)">{{ $i18n.locale == 'uz'? item.name_uz : item.name_ru }}</span> </div>
+
+        </div>
       </div>
-      <hr>
-      <!-- popular book -->
-      <p class="popularBookSearch">Mashhur qidiruvlar</p>
-      <div v-for="(item, idx) in store.word  " :key="idx" class="my-2 bookList">
-        <img src="../../assets/contact/searchIcon.png" alt=""><span class="popularBookName ms-2" @click="popularBook(item.name)">{{ item.word}}sa</span> 
+
+      <!-- search history -->
+      <div v-else>
+        <p class="popularBookSearch">Qidiruv tarixi</p>
+        <div v-for="(item, idx) in store.Searchhistory?.result" :key="idx"   
+          class="my-2 bookList d-flex justify-content-between align-items-center">
+          <div @click="popularBook(item.word)" class="popularBookName w-75"> <img src="../../assets/contact/againIcon.png" alt=""><span class="ms-2"
+            >{{ item.word}}</span> </div>
+            <div class="w-25 d-flex justify-content-end delateHistory" @click="delateHistory(item.id)">
+              <img src="../../assets/contact/delateSearch.png" alt="">
+
+
+            </div>
+
+        </div>
+        <hr>
+        <!-- popular book -->
+        <!-- {{ store.word }} -->
+        <p class="popularBookSearch">Mashhur qidiruvlar</p>
+        <div v-for="(item, idx) in store.word.result  " :key="idx" class="my-2 bookList">
+          <div class="popularBookName w-100">
+            <img src="../../assets/contact/searchIcon.png" alt=""><span class=" ms-2"
+              @click="popularBook(item.word)">{{ item.word }}</span>
+
+          </div>
+        </div>
       </div>
-      
+
+
     </div>
+
 
 
 
@@ -24,24 +48,24 @@
 </template>
 
 <script setup>
- const emit = defineEmits(['searchEmit'])
+const emit = defineEmits(['searchEmit'])
 
-// const searchBook = [
-//   { id: 1, name: 'Sharqiy ekspressdagi qotillik' },
-//   { id: 2, name: 'Orziqib kutaman ertani' },
-//   { id: 3, name: 'Odamlar o’ynaydigan o’yinlar' },
-//   { id: 4, name: '"Al-Karnaku" kemasidagi qotillik' }
-// ]
+
 const popularBook = (name) => {
   emit('searchEmit', name)
 }
 const store = useTestTStore();
-console.log(store);
+const delateHistory = (id) => {
+  store.dealteSearch(id)
+  .then(() => {
+    store.SearchHistoryBook()
+  })
+
+} 
 
 onMounted(() => {
-    // store.fechSearch()
-    store.fechSearchTop()
-    // console.log(store);
+  store.fechSearchTop()
+  store.SearchHistoryBook()
 });
 </script>
 
@@ -59,11 +83,17 @@ onMounted(() => {
   color: #9196AD;
   letter-spacing: 4%;
 }
+
 .popularBookName {
   font-size: 15px;
   color: #35363D;
 }
-.bookList:hover .popularBookName{
+
+.bookList:hover  {
+  cursor: pointer;
+  background:#F9F9F9 !important ;
+}
+.delateHistory:hover {
   cursor: pointer;
 }
 </style>

@@ -1,43 +1,3 @@
-<!-- <template>
-  <div id="app">
-    <Form @submit="onSubmit">
-      <Field name="email" type="email" :rules="validateEmail" />
-      <ErrorMessage name="email" />
-      <button>Sign up</button>
-    </Form>
-  </div>
-</template>
-<script>
-import { Form, Field, ErrorMessage } from 'vee-validate';
-export default {
-  components: {
-    Form,
-    Field,
-    ErrorMessage,
-  },
-  methods: {
-    onSubmit(values) {
-      console.log(values, null, 2);
-    },
-    validateEmail(value) {
-      // if the field is empty
-      if (!value) {
-        return 'This field is required';
-      }
-      // if the field is not a valid email
-      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-      if (!regex.test(value)) {
-        return 'This field must be a valid email';
-      }
-      // All is good
-      return true;
-    },
-  },
-};
-</script> -->
-
-
-
 <template>
   <div class="d-flex">
     <div class="main">
@@ -93,7 +53,7 @@ export default {
 
             <!-- <input type="email" class="form-control" id="email" placeholder="Ism familiyangizni kiriting" name="email"/> -->
             <Field v-model="userRegister.full_name" name="string" type="string" placeholder="Ism familiyangizni kiriting" class="form-control" :rules="validateEmail"/>
-            <ErrorMessage style="color:red" name="string" />
+            <ErrorMessage style="color:red" name="full_name" />
 
             
           </div>
@@ -145,7 +105,7 @@ export default {
     useTestTStore
   },
   data() {
-    return {
+    return {    
       userRegister: {
         full_name: null,
         phone: null,
@@ -163,12 +123,12 @@ export default {
         return 'ism familyangizni kiritng';
       }
   
-      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-      if (!regex.test(value)) {
-        return "parol noto'g'ri";
-      }
+      // const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      // if (!regex.test(value)) {
+      //   return "parol noto'g'ri";
+      // }
       // All is good
-      return true;
+      // return true;
     },
     validateNumber(value) {
         if(!value){
