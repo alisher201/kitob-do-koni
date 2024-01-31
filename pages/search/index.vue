@@ -1,11 +1,23 @@
 <template>
-    <div>
-        
+    <div>        
         <div class="container px-0">
             <div class="text-center my-5" >
                 <!-- {{ a }} -->
-                <h1 class="notFound">Hech narsa topilmadi</h1>
-                <p class="request">So'rovingizni o'zgartirib ko'ring</p>
+                <!-- <h1 class="notFound">Hech narsa topilmadi</h1>
+                <p class="request">So'rovingizni o'zgartirib ko'ring</p> -->
+                <pre> {{ store.serchResult }}
+                  <div v-for="(item,index) in store.serchResult?.result" :key="index">
+                    <div>
+                        <img :src="'httpa://beta.kytab.uz'+item.img" alt="" aria-placeholder="">
+                    </div>
+                  
+                    <p class="text-2xl">{{ item.name_uz }}</p>
+                    <p>{{ item.description_uz  }}</p>
+                    <p>{{ item.price }}</p>
+                    <p>{{ item.quantity }}</p>
+                  </div>
+                </pre>
+                <!-- <pre>{{ store.bookSearchdata }}</pre> -->
 
             </div>
             <hr>
@@ -53,6 +65,8 @@
 
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
+
+const store = useTestTStore()
 
 const bookImgs = [
   {id:1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },

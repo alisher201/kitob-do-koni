@@ -6,11 +6,13 @@ export class FechData {
   constructor(api) {
     this.api = api
   }
+  // Get
   get = () => {
     return $fetch(`${url}/${this.api}`, {
     })
 
   }
+  // Create
   create = (data, id) => {
     return $fetch(`${url}/${this.api}${id ? '/' : ''}${id ? id : ''}`,
       {
@@ -20,17 +22,16 @@ export class FechData {
         }
       })
   }
+  // Delete
   delate = (id) => {
     return $fetch(`${url}/${this.api}/${id}`, {
       method: 'DELETE',
     })
   }
+  // GetOneById
   getOne = (id) => {
     return $fetch(`${url}/${this.api}/${id}`)
   }
-
-
-
 }
 
 

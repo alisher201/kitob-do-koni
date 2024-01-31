@@ -268,7 +268,7 @@ const calulatorProduct = (arry) => {
 
 onMounted(() => {
   calulatorProduct(basketProduct.value);
-  store.basketData()
+  // store.basketData()
 });
 
 const productAdd = (idx) => {
