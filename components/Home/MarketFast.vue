@@ -41,7 +41,7 @@
         <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx">
           <!-- <pre>{{ item }}</pre> -->
           <div class="bookData">
-            <img :src="url + item?.image"  alt="" class="categoyImg" />
+            <img :src="urlimg +'/'+ item?.image"  alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
             <img
@@ -60,7 +60,7 @@
           <div class="ps-2">
               <small class="title">{{ item.description }}</small>
             </div>
-            <div class="ps-2"><small class="author">{{ item.creator }}</small></div> 
+            <div class="ps-2"><small class="author">{{ item.creator }}</small></div>
           <small class="stats ms-2">5,0</small>
           <span class="starsNumbers">(32)</span>
         </SwiperSlide>
@@ -73,7 +73,8 @@ import { useRuntimeConfig } from "nuxt/app";
 
 const store = useBasketStore()
 
-const url= useRuntimeConfig().public.siteUrl
+const url = useRuntimeConfig().public.siteUrl
+const urlimg = useRuntimeConfig().public.bookUrl
 const props = defineProps ({
   title:String,
   bookImgs: {
@@ -89,7 +90,7 @@ const onSwiper = (sw) => {
   swiper = sw;
 };
 const addBasket = (id, bookId) => {
-  store.basketAdd({product_id: id, type: bookId ? 'book': 'product'})
+  store.basketAdd({product_id: id, type: bookId ? 'book': 'other'})
 }
 
 onMounted (() => {
