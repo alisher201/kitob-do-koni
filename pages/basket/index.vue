@@ -148,13 +148,11 @@
 </template>
 
 <script setup>
-import { useBasketStore } from "@/store/basket.js";
 
 import bookImg from "../../assets/contact/savat.png";
 
 const store = useBasketStore();
 
-// console.log(store);
 
 const toggleColor = (idx) => {
   basketProduct.value[idx].favourite = !basketProduct.value[idx].favourite;
@@ -268,7 +266,7 @@ const calulatorProduct = (arry) => {
 
 onMounted(() => {
   calulatorProduct(basketProduct.value);
-  store.basketData()
+  store.basketGet()
 });
 
 const productAdd = (idx) => {

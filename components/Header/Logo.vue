@@ -12,7 +12,8 @@
     ></div>
     <div class="containerLogo d-flex align-items-center">
       <div
-        class="container d-flex align-items-center justify-content-between px-0">
+        class="container d-flex align-items-center justify-content-between px-0"
+      >
         <span class="py-0 pl-5">
           <img src="~/assets/kytabLogo.png" alt="site-logo" title="site-logo" />
         </span>
@@ -55,7 +56,7 @@
           </div>
         </div>
 
-        <div class="ms-5 karzinka" @click="handleLinkClick('/basket')">
+        <div class="ms-5 karzinka" @click="router.push('/basket')">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -90,7 +91,7 @@
           </svg>
           <span class="ms-1 forFont">{{ $t("header.basket") }}</span>
         </div>
-        <div class="dataCursor" @click="handleLinkClick('/favourite')">
+        <div class="dataCursor" @click="router.push('/favourite')">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -116,7 +117,7 @@
             height="20"
             viewBox="0 0 20 20"
             fill="none"
-            id="dataCursor2"
+            id="dataProfile"
           >
             <path
               d="M13.7504 5.26923C13.7504 6.13628 13.408 6.96782 12.7984 7.58092C12.1888 8.19402 11.3621 8.53846 10.5 8.53846C9.63793 8.53846 8.81117 8.19402 8.2016 7.58092C7.59202 6.96782 7.24957 6.13628 7.24957 5.26923C7.24957 4.40217 7.59202 3.57063 8.2016 2.95753C8.81117 2.34444 9.63793 2 10.5 2C11.3621 2 12.1888 2.34444 12.7984 2.95753C13.408 3.57063 13.7504 4.40217 13.7504 5.26923ZM4 17.5772C4.02785 15.8618 4.72492 14.2262 5.94088 13.023C7.15684 11.8198 8.79425 11.1455 10.5 11.1455C12.2058 11.1455 13.8432 11.8198 15.0591 13.023C16.2751 14.2262 16.9721 15.8618 17 17.5772C14.9608 18.5177 12.7434 19.003 10.5 19C8.18049 19 5.97886 18.4909 4 17.5772Z"
@@ -142,41 +143,13 @@
 <script setup>
 const router = useRouter();
 const searchbooks = ref(null);
-const inputFocus = ref(false);
+const watchedValue = ref();
+let inputFocus = ref(false);
 const store = useTestTStore();
-// console.log(store.fechData());
 
 // const words = ["salom", "dunyo", "xabar"];
 // const result = words.map(word => word.substring(0, 3));
 // console.log(result);
-
-const handleLinkClick = (route) => {
-  router.push(route);
-
-  // Access the updated path directly from $router
-  const newPath = router.currentRoute.value.path;
-  console.log(newPath);
-
-  if (newPath === "/basket") {
-    karzinka.style.display = "none";
-    karzinka2.style.display = "block";
-  } else {
-    karzinka.style.display = "block";
-    karzinka2.style.display = "none";
-  }
-
-  if (newPath === "/favourite") {
-    dataCursor.classList.add("active");
-  } else {
-    dataCursor.classList.remove("active");
-  }
-
-  if (newPath === "/profile") {
-    dataCursor2.classList.add("active");
-  } else {
-    dataCursor2.classList.remove("active");
-  }
-};
 
 const BookSearch = () => {
   document.body.style.overflow = "hidden";
@@ -203,9 +176,54 @@ const profile = () => {
   }
 };
 
-onMounted(() => {
-  // store.fechData();
+const unwatch = watch(
+  () => router.currentRoute.value.path,
+  (newVal) => {
+    // console.log(newVal);
+
+    watchedValue.value = newVal;
+
+    if (watchedValue.value === "/basket") {
+      karzinka.style.display = "none";
+      karzinka2.style.display = "block";
+    } else {
+      karzinka.style.display = "block";
+      karzinka2.style.display = "none";
+    }
+
+    if (watchedValue.value === "/favourite") {
+      dataCursor.classList.add("active");
+    } else {
+      dataCursor.classList.remove("active");
+    }
+
+    if (watchedValue.value === "/profile") {
+      dataProfile.classList.add("active");
+    } else {
+      dataProfile.classList.remove("active");
+    }
+  }
+);
+
+watch(searchbooks, (newVal) => {
+  if (newVal.length > 3) {
+    sendRequest();
+  }
 });
+
+onUnmounted(() => {
+  unwatch();
+});
+
+// Bekinga so'rovni yuborish funktsiyasi
+const sendRequest = () => {
+  // Bu joyda bekinga so'rovni yuborish loyihasi yoziladi
+  console.log("So'rov yuborildi:", searchbooks.value);
+};
+
+// onMounted(() => {
+//   // store.fechData();
+// });
 </script>
 
 <style scoped>

@@ -41,8 +41,8 @@ console.log(store);
 
 onMounted(() => {
     // store.fechSearch()
-    store.fechSearchTop()
-    console.log(store);
+    store?.fechSearchTop()
+    // console.log(store);
 });
 </script>
 
