@@ -91,7 +91,7 @@ export const useTestTStore = defineStore("home", {
     async createHistoryBook(data) {
       return await search.create(data)
     },
-
+        
     // delate history
     async dealteSearch(id) {
       return await search.delate(id)

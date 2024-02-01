@@ -85,7 +85,7 @@ onMounted(() => {
         </div>
 
         <div class="showImgs">
-          <div class="showImg" v-for="item in store.book?.gallery">
+          <div class="showImg" v-for="item in store.book?.gallery" :key="item.id">
             <img :src="url + '/' +  item.path" alt="" />
           </div>
 
