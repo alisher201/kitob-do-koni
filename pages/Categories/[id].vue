@@ -33,7 +33,7 @@
           <strong>{{ $t("home.format") }}</strong>
         </h6>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
+          <input type="checkbox" class="form-check-input me-2 ms-1" onclick="handleCheckboxClick()"/>{{
             $t("home.kinds")
           }}
         </p>
@@ -151,8 +151,13 @@ onMounted(() => {
     store.fetchKatalog(katalogid),
     store.fetchKatalogPic(1);
   // store.fechCategory()
+  handleCheckboxClick()
 });
 console.log(store.katalogpic);
+
+function handleCheckboxClick(){
+  console.log("saaaaaaaaaaaaalom chekbox");
+}
 
 // const bookImgs = [
 //   { id: 1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
