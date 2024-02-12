@@ -127,7 +127,7 @@
       </div>
     </div>
 
-    <div class="collapse colapseContainer" id="collapseExample">
+    <div class="collapse colapseContainer" id="collapseExample">  
       <div class="" style="min-height: 100vh">
         <HomeCategoriesList />
       </div>

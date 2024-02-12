@@ -18,34 +18,48 @@
           <strong style="font-size: 15px">{{ store.katalog.name_oz }}</strong>
         </p>
         <p
-          v-for="(item, index) in store.katalog.childrens"
+          v-for="(item, index) in store.katalog?.childrens?.slice(0, alld) ||
+          []"
           :key="index"
           class="categoriaData ms-3"
         >
+          <!-- {{ item }} -->
           {{ item.name_oz }}
         </p>
-        <p class="categoriaAll ms-3">
+        <p
+          v-if="alld == 5"
+          @click="alld = store.katalog?.childrens?.length"
+          class="categoriaAll ms-3"
+        >
           Barchasi {{ store.katalog.childrens?.length }}
           <img src="@/assets/contact/arrowDown.png" alt="" />
         </p>
+        <p v-else @click="alld = 5" class="categoriaAll ms-3l">yopish</p>
         <hr class="my-4" />
         <h6>
           <strong>{{ $t("home.format") }}</strong>
         </h6>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
-            $t("home.kinds")
-          }}
+          <input
+            type="checkbox"
+            class="form-check-input me-2 ms-1"
+          @click="booktype=ebook"
+            />{{ $t("home.kinds") }}
+          
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
-            $t("home.elecBook")
-          }}
+          <input
+            type="checkbox"
+            class="form-check-input me-2 ms-1"
+            @click="format(ebook)"
+          />{{ $t("home.elecBook") }}
         </p>
         <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
-            $t("home.audioBook")
-          }}
+          <input
+            type="checkbox"
+            class="form-check-input me-2 ms-1"
+            @click="format(audio)"
+          />{{ $t("home.audioBook") }}
         </p>
         <hr class="my-4" />
 
@@ -76,7 +90,7 @@
         <p>
           <input type="checkbox" class="form-check-input me-2 ms-1" />{{
             $t("home.uzb")
-          }}  
+          }}
         </p>
         <p>
           <input type="checkbox" class="form-check-input me-2 ms-1" />English
@@ -101,11 +115,14 @@
             v-for="(item, index) in store.katalogpic"
             :key="index"
             @click="selectBook(item.id)"
-            >
+          >
+            <!-- <div v-for="(item, index) in store.katalogtypep" :key="index">
+              <pre>{{ item }}</pre>
+            </div> -->
             <div class="bookData">
-              <img :src="item.image" alt="" class="categoyImg" />
+              <img :src="url + '/' + item?.image" class="categoyImg" />
               <button class="btnBestseller">Bestseller</button>
-              <button class="newBook">Yangi</button>  
+              <button class="newBook">Yangi</button>
               <img
                 src="../../assets/contact/booklike.png"
                 alt=""
@@ -130,10 +147,10 @@
               />
             </div>
             <div class="ps-2">
-              <small class="title">{{ item.description }}</small>
+              <small class="title">{{ item.name }}</small>
             </div>
             <div class="ps-2">
-              <small class="author">{{ item.name }}</small>
+              <small class="author">{{ item.description }}</small>
             </div>
             <img src="../../assets/contact/Star.png" alt="" />
             <small class="stats ms-2">5,0</small>
@@ -145,12 +162,9 @@
   </div>
 </template>
 <script setup>
-import bookImg from "../../assets/contact/bookimg.png";
-import bookImg1 from "../../assets/contact/bookImg2.png";
 import { useRoute } from "vue-router";
-// import RangeSlider from "vue-range-slider";
-// import VueSlider from "vue-slider-component";
-
+const url = useRuntimeConfig().public.bookUrl;
+const alld = ref(5);
 // Get ID
 const route = useRoute();
 const katalogid = parseInt(route.params.id);
@@ -160,10 +174,11 @@ const store = useCategory();
 onMounted(() => {
   store.fetchCategory(),
     store.fetchKatalog(katalogid),
-    store.fetchKatalogPic(1);
-  // store.fechCategory()
+    store.fetchKatalogPic(1),
+    store.fetchKatalogTypee();
+    store.fetchKatalogTypep();
+    store.fetchKatalogTypea();
 });
-console.log(store.katalogpic);
 
 // const bookImgs = [
 //   { id: 1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
@@ -193,14 +208,14 @@ console.log(store.katalogpic);
 //     author: "Sidni Sheldon",
 //   },
 // ];
-const items = [
-  { id: 1, name: "Arxitektura" },
-  { id: 2, name: "Arxitektura" },
-  { id: 3, name: "To'plamlar,kataloglar va ko'rgazmalar" },
-  { id: 4, name: "Dizayn dekorativ san'at va chizmachilik" },
-  { id: 5, name: "Grafik dizayn" },
-  { id: 6, name: "Rassomlar" },
-];
+// const items = [
+//   { id: 1, name: "Arxitektura" },
+//   { id: 2, name: "Arxitektura" },
+//   { id: 3, name: "To'plamlar,kataloglar va ko'rgazmalar" },
+//   { id: 4, name: "Dizayn dekorativ san'at va chizmachilik" },
+//   { id: 5, name: "Grafik dizayn" },
+//   { id: 6, name: "Rassomlar" },
+// ];
 const selectBook = (id) => {
   const router = useRouter();
   router.push(`/book/${id}`);
@@ -330,3 +345,8 @@ const selectBook = (id) => {
   color: #9196ad;
 }
 </style>
+
+
+?type=paper
+?type=ebook
+?type=audio
