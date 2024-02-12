@@ -8,6 +8,9 @@ export const useCategory = defineStore("category", {
     category: {},
     katalog: {},
     katalogpic: {},
+    katalogtypep: {},
+    katalogtypea: {},
+    katalogtypea: {},
   }),
   actions: {
     async fetchCategory() {
@@ -27,6 +30,27 @@ export const useCategory = defineStore("category", {
        $fetch(`${this.url}/category/books/${id}`)
         .then((res) => {
           this.katalogpic = res.result;
+          // console.log(res);
+        })
+    },
+     fetchKatalogTypep() {
+       $fetch(`${this.url}/category/books/1?type=paper`)
+        .then((res) => {
+          this.katalogtypep  = res.result;
+          console.log(res);
+        })
+    },
+     fetchKatalogTypee() {
+       $fetch(`${this.url}/category/books/1?type=ebook`)
+        .then((res) => {
+          this.katalogtype  = res.result;
+          console.log(res);
+        })
+    },
+     fetchKatalogTypea() {
+       $fetch(`${this.url}/category/books/1?type=audio`)
+        .then((res) => {
+          this.katalogtypea = res.result;
           console.log(res);
         })
     },

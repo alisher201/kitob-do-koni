@@ -11,11 +11,14 @@ if (process.client) {
   }
 }
 
+
 export default defineNuxtPlugin(({ vueApp }) => {
   const i18n = createI18n({
     legacy: false,
     globalInjection: true,
-    locale:langData,
+    locale: 'uz',
+    fallbackLocale: 'uz',
+    formatFallbackMessages:true,
     messages: {
       uz,
       ru,
