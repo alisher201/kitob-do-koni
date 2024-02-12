@@ -26,7 +26,7 @@
             <img src="@/assets/contact/arrowRight.png" alt="" />
           </button>
           <button class="nextLeft" @click="swiper.slidePrev()">
-             <img src="@/assets/contact/arrowLeft.png" alt="" />
+            <img src="@/assets/contact/arrowLeft.png" alt="" />
           </button>
         </div>
       </div>
@@ -52,6 +52,7 @@
                 src="../../assets/contact/karzinka.png"
                 alt=""
                 class="karzinka"
+                @click="addBasket(item.id, item.book_id)"
               />
               <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
           </div>
@@ -68,6 +69,9 @@
 </template>
 <script setup>
 import { useRuntimeConfig } from "nuxt/app";
+
+const store = useBasketStore()
+
 const url= useRuntimeConfig().public.siteUrl
 const props = defineProps ({
   title:String,
@@ -83,31 +87,40 @@ let swiper = null;
 const onSwiper = (sw) => {
   swiper = sw;
 };
+const addBasket = (id, bookId) => {
+  store.basketAdd({product_id: id, type: bookId ? 'book': 'product'})
+}
+
+onMounted (() => {
+})
+  
+
 </script>
 
 
 <style scoped>
 
-
 .bestText {
   font-size: 22px;
   font-weight: 700;
-
 }
 
 .swiper {
-  height: 332px; 
-} 
-
-
-
-
+  height: 332px;
+}
 
 .bookData {
   position: relative;
   height: 260px;
 }
 .bookLike {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  display: none;
+}
+.bookLike2 {
   position: absolute;
   right: 10px;
   top: 10px;
@@ -128,8 +141,26 @@ const onSwiper = (sw) => {
   cursor: pointer;
   display: none;
 }
+
+.bookopen {
+  position: absolute;
+  right: 40px;
+  bottom: 10px;
+  cursor: pointer;
+  display: none;
+}
+.headphone {
+  position: absolute;
+  right: 70px;
+  bottom: 10px;
+  cursor: pointer;
+  display: none;
+}
 .bookData:hover .bookLike,
+.bookData:hover .bookLike2,
 .bookData:hover .ebook,
+.bookData:hover .bookopen,
+.bookData:hover .headphone,
 .bookData:hover .karzinka {
   display: block;
 }
@@ -137,7 +168,7 @@ const onSwiper = (sw) => {
   color: #9196ad;
   font-size: 13px;
 }
-    
+
 .title {
   font-weight: 800;
 }
@@ -179,16 +210,16 @@ const onSwiper = (sw) => {
 .nextRight {
   width: 30px;
   height: 30px;
-  background: #F6F6F6;
-  border-radius: 20px  0  0 20px;
+  background: #f6f6f6;
+  border-radius: 20px 0 0 20px;
   cursor: pointer;
   border: none;
 }
 .nextLeft {
   width: 30px;
   height: 30px;
-  background: #F6F6F6;
-  border-radius: 0  20px 20px 0 ;
+  background: #f6f6f6;
+  border-radius: 0 20px 20px 0;
   cursor: pointer;
   border: none;
 }

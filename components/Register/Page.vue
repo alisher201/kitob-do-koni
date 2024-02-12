@@ -290,13 +290,6 @@ export default {
   line-height: 19px;
   letter-spacing: 0.02em;
   text-align: left;
-
-  font-family: Manrope;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 19px;
-  letter-spacing: 0.02em;
-  text-align: left;
   color: #323232;
   margin: 0px 48px 12px 15px;
   padding: 12px;
@@ -346,13 +339,6 @@ button{
   height: 19px;
   top: 770px;
   left: 832px;
-  font-family: Manrope;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 19px;
-  letter-spacing: 0.02em;
-  text-align: center;
-
   font-family: TT Commons;
   font-size: 14px;
   line-height: 16px;
