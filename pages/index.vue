@@ -17,13 +17,7 @@ const store = useTestTStore();
 onMounted(() => {
   store.fechBooks().then((a) => {
   });
-  const jwtToken = localStorage.getItem('jwtToken')
-  if(!jwtToken) {
-    store.uuIdPost({
-    uuid: String(new Date().getTime()),
-    model: navigator.userAgent
-  })
-  }
+
   
 });
 </script>

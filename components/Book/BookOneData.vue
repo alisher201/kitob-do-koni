@@ -8,9 +8,13 @@ const route = useRoute()
 const url = useRuntimeConfig().public.bookUrl
 let comitCount = ref(0)
 let ratings = ref(0)
+let type = ref([])
+const storeBasket = useBasketStore()
+let bookType = ref(1)
+let is_book = ref(false)
 
 
-const bookcontent = ref(null)
+let bookcontent = ref(1)
 const bookImgs = [
   { imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
   {
@@ -41,39 +45,50 @@ const ordrItem = () => {
   const router = useRouter()
   router.push('/OrderItem')
 }
+
+const basketAdd = (id, type) => {
+  storeBasket.basketAdd({ product_id: id, type: type.length ? 'book' : 'product' })
+}
+
 onMounted(() => {
   store.fetch_book_one(route.params.id)
-  .then(() => {
-    let elementLength = store.book?.reviews.length
-    let sum = 0
-    
-    store.book?.reviews.forEach(element => {
-      let ratingData = element.rating
-      sum += ratingData
-      
-      
-    })
-    ratings.value = sum / elementLength
-    comitCount.value= elementLength
+    .then(() => {
+      let elementLength = store.book?.reviews.length
+      let sum = 0
+      if (store.book && store.book.reviews && store.book.reviews.length > 0) {
+        store.book?.reviews.forEach(element => {
+          let ratingData = element.rating
+          sum += ratingData
+        })
+        ratings.value = sum / elementLength
+        comitCount.value = elementLength
+      }
 
-  })
-  .catch(error => {
-    console.error('Error fetching book:', error);
-  });
+
+      if (store.book && store.book.type) {
+        store.book.type.forEach(item => {
+          type.value.push(item.type)
+          if(item.type) {
+            is_book.value = true
+          }
+        })
+      }
+
+
+    })
+    .catch(error => {
+      console.error('Error fetching book:', error);
+    });
 })
 </script>
 
 <template>
   <div class="container mb-5 pb-5 px-0">
-    <pre>
-      {{ ratings }}
-
-    </pre>
     <div class="my-3"><small class="mt-5">
-        Bosh sahifa/ 
-        <span>{{$i18n.locale == 'uz' ? store.book?.category[0].name_oz : store.book?.category[0].name_ru}}</span>
+        Bosh sahifa/
+        <span>{{ $i18n.locale == 'uz' ? store.book?.category[0]?.name_oz : store.book?.category[0]?.name_ru }}</span>
         <span>
-          / {{  store.book?.name }} ({{ store.book?.author[0].fio}})
+          / {{ store.book?.name }} ({{ store.book?.author[0].fio }})
         </span>
       </small></div>
 
@@ -85,19 +100,11 @@ onMounted(() => {
         </div>
 
         <div class="showImgs">
-          <div class="showImg" v-for="item in store.book?.gallery" :key="item.id">
+          <div class="showImg" v-for="item in store.book?.gallery">
             <img :src="url + '/' +  item.path" alt="" />
           </div>
 
-          <!-- <div class="showImg">
-            <img src="../../assets/contact/image 1962.png" alt="" />
-          </div>
-          <div class="showImg">
-            <img src="../../assets/contact/image 1962.png" alt="" />
-          </div>
-          <div class="showImg">
-            <img src="../../assets/contact/image 1962.png" alt="" />
-          </div> -->
+
         </div>
       </div>
       <div class="col-8">
@@ -120,13 +127,13 @@ onMounted(() => {
           <p class="star">{{ ratings.toFixed(1) }}</p> <small class="statCount">({{ comitCount }})</small>
           <p class="mx-2">|</p>
           <p><img src="../../assets/contact/chat.png" alt="" /></p>
-          <p class="commentCount">{{  comitCount}}</p>
+          <p class="commentCount">{{ comitCount }}</p>
           <p class="statCount small ">{{ $t("home.review") }}</p>
         </div>
         <div>
           <span class="statCount">{{ $t("home.cost") }}:</span>
           <div class="mb-3">
-            <span class="bookPrice">{{ store.book?.type?.price}} {{ $t("home.basket.sum") }}</span>
+            <span class="bookPrice">{{ store.book?.type?.price }} {{ $t("home.basket.sum") }}</span>
             <small class="discount ms-3"><del>185 000 {{ $t("home.basket.sum") }}</del></small>
           </div>
         </div>
@@ -136,13 +143,18 @@ onMounted(() => {
             <!-- booktype -->
 
             <div class="d-flex justify-content-between">
-              <button class="booktype btn border px-3">
+              <button class="booktype btn border px-3" v-if="type.includes('paper')"
+                :class="{ 'bookTypeActive': bookType == 1 }">
                 <img src="@/assets/contact/book-open.png" alt="" /><small class="ms-2">Book</small>
               </button>
-              <button class="btn border px-4 booktype">
+
+              <button class="btn border px-4 booktype" v-if="type.includes('audio')"
+                :class="{ 'abobookTypeActiveutBook': bookType == 2 }">
                 <img src="@/assets/contact/headphones.png" alt="" /><small class="ms-2">Audio</small>
               </button>
-              <button class="btn border px-3 booktype">
+
+              <button class="btn border px-3 booktype" v-if="type.includes('ebook')"
+                :class="{ 'bookTypeActive': bookType == 3 }">
                 <img src="@/assets/contact/ebookk.png" alt="" /><small class="ms-2">eBook</small>
               </button>
             </div>
@@ -160,8 +172,12 @@ onMounted(() => {
               </div>
             </div>
 
-            <button class="w-100 basket mt-2">{{ $t("home.addBasket") }}</button>
-            <button class="w-100 buy mt-2" @click="orderItem">{{ $t("home.quickBuy") }}</button>
+            <!-- basket -->
+            <button class="w-100 basket mt-2" @click="basketAdd(store.book.id, store.book.type)">{{ $t("home.addBasket")
+            }}</button>
+
+            <!-- prompt payment -->
+            <button class="w-100 buy mt-2" @click="ordrItem">{{ $t("home.quickBuy") }}</button>
           </div>
         </div>
       </div>
@@ -170,10 +186,16 @@ onMounted(() => {
       <div class="aboutMenu d-flex">
 
 
-        <div class="" :class="{ 'aboutBook': bookcontent == 1 }" @click="bookcontent = 1">{{ $t("home.info") }}</div>
-        <div class="ms-3" :class="{ 'aboutBook': bookcontent == 2 }" @click="bookcontent = 2">{{ $t("home.content") }}
+        <div class=""
+          :style="{ 'border-bottom': bookcontent === 1 ? '2px solid #307cce' : 'none', 'padding-bottom': bookcontent === 1 ? '8px' : '0', 'color': bookcontent === 1 ? '#307cce' : 'initial' }"
+          @click="bookcontent = 1">{{ $t("home.info") }}</div>
+        <div class="ms-3"
+          :style="{ 'border-bottom': bookcontent === 2 ? '2px solid #307cce' : 'none', 'padding-bottom': bookcontent === 2 ? '8px' : '0', 'color': bookcontent === 2 ? '#307cce' : 'initial' }"
+          @click="bookcontent = 2">{{ $t("home.content") }}
         </div>
-        <div class="ms-3" :class="{ 'aboutBook': bookcontent == 3 }" @click="bookcontent = 3">{{ $t("home.reviews") }}
+        <div class="ms-3"
+          :style="{ 'border-bottom': bookcontent === 3 ? '2px solid #307cce' : 'none', 'padding-bottom': bookcontent === 3 ? '8px' : '0', 'color': bookcontent === 3 ? '#307cce' : 'initial' }"
+          @click="bookcontent = 3">{{ $t("home.reviews") }}
         </div>
       </div>
       <hr class="mt-0">
@@ -185,7 +207,14 @@ onMounted(() => {
       </div>
 
       <div class="comments" v-if="bookcontent == 3">
-        <BookComments />
+        <BookComments
+         :comments="store.book?.reviews"
+         :ratings="ratings.toFixed(1)"
+         :commitCount="comitCount"
+         :is_book="is_book"
+
+          />
+          
       </div>
 
     </div>
@@ -283,7 +312,7 @@ onMounted(() => {
 }
 
 .booktype {
-  width: 112px;
+  width: 30%;
 }
 
 .fragment {
@@ -469,5 +498,9 @@ onMounted(() => {
 .aboutMenu div:hover {
   cursor: pointer;
   font-weight: 500;
+}
 
+.bookTypeActive {
+  border: 1px solid #41A2DB !important;
+  color: #41A2DB !important;
 }</style>

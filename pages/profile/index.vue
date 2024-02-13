@@ -99,7 +99,6 @@ console.log(store.OrderHistory());
       padding:4px;
       margin:18px 0px 0px 30px;
       gap: 20px;
-      display: grid;
       grid-template-columns: repeat(auto-fit,minmax(300px,2fr));
   }
   h2{
@@ -149,7 +148,6 @@ console.log(store.OrderHistory());
       top: 297px;
       left: 509px;
       border-radius: 10px;
-      border:blue;
       border: 1px solid #A1C4E2;
       display: flex;
       // color: #1b33e4;

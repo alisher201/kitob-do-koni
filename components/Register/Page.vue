@@ -109,7 +109,7 @@ export default {
         full_name: null,
         phone: null,
         password: null,
-      
+        type: 'client'
       }
 
     }
