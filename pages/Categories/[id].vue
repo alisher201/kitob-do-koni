@@ -1,15 +1,14 @@
 <template>
   <div class="container px-0 my-3">
+
+    <!-- catoologlar sidebar -->
     <div class="flex">
-      <small class="container-item">Bosh sahifa / Katalog / </small>
-      <small v-for="(katalog, index) in store.category" :key="index">
-        <a v-for="(item, inde) in katalog.children" :key="inde">
-          <a v-if="item.id === parseInt($route.path.split('/').pop())">
-            {{ store.katalog.name_oz }} /
-            {{ item.label }}
-          </a>
-        </a>
-      </small>
+      <pre>
+        <!-- {{ $i18n.locale == 'uz' ? store?.katalog?.name_oz : store?.katalog?.name_ru }} -->
+{{catologChild?.id }}
+      </pre>
+      <small class="container-item">Bosh sahifa / Katalog /{{ $i18n.locale == 'uz' ? catologChild : catologChild?.name_ru
+      }} </small>
     </div>
     <div class="row mx-0 mt-3">
       <div class="col-4 sideBar p-4">
@@ -17,20 +16,16 @@
         <p class="ms-2">
           <strong style="font-size: 15px">{{ store.katalog.name_oz }}</strong>
         </p>
-        <p
-          v-for="(item, index) in store.katalog?.childrens?.slice(0, alld) ||
-          []"
-          :key="index"
-          class="categoriaData ms-3"
-        >
+        <p v-for="(item, index) in store.katalog?.childrens?.slice(0, alld) ||
+          []" :key="index" class="categoriaData ms-3" @click="activeCatolog(item.id)"
+          :class="{ activeCategory: item?.id == catologChild?.id }">
           <!-- {{ item }} -->
-          {{ item.name_oz }}
+
+          {{ $i18n.locale == 'uz' ? item.name_oz : item.name_ru }}
+
         </p>
-        <p
-          v-if="alld == 5"
-          @click="alld = store.katalog?.childrens?.length"
-          class="categoriaAll ms-3"
-        >
+
+        <p v-if="alld == 5" @click="alld = store.katalog?.childrens?.length" class="categoriaAll ms-3">
           Barchasi {{ store.katalog.childrens?.length }}
           <img src="@/assets/contact/arrowDown.png" alt="" />
         </p>
@@ -40,26 +35,14 @@
           <strong>{{ $t("home.format") }}</strong>
         </h6>
         <p>
-          <input
-            type="checkbox"
-            class="form-check-input me-2 ms-1"
-          @click="booktype=ebook"
-            />{{ $t("home.kinds") }}
-          
+          <input type="checkbox" class="form-check-input me-2 ms-1" @click="booktype = ebook" />{{ $t("home.kinds") }}
+
         </p>
         <p>
-          <input
-            type="checkbox"
-            class="form-check-input me-2 ms-1"
-            @click="format(ebook)"
-          />{{ $t("home.elecBook") }}
+          <input type="checkbox" class="form-check-input me-2 ms-1" @click="format(ebook)" />{{ $t("home.elecBook") }}
         </p>
         <p>
-          <input
-            type="checkbox"
-            class="form-check-input me-2 ms-1"
-            @click="format(audio)"
-          />{{ $t("home.audioBook") }}
+          <input type="checkbox" class="form-check-input me-2 ms-1" @click="format(audio)" />{{ $t("home.audioBook") }}
         </p>
         <hr class="my-4" />
 
@@ -72,8 +55,7 @@
             <input type="text" class="form-control mb-1" />
           </div>
           <div class="col-6">
-            <label class="price">{{ $t("home.upTo") }}</label
-            ><input type="text" class="form-control" />
+            <label class="price">{{ $t("home.upTo") }}</label><input type="text" class="form-control" />
           </div>
         </div>
         <div>
@@ -110,12 +92,7 @@
         </div>
 
         <div class="bookGrid mt-4">
-          <div
-            class="p-0"
-            v-for="(item, index) in store.katalogpic"
-            :key="index"
-            @click="selectBook(item.id)"
-          >
+          <div class="p-0" v-for="(item, index) in store.katalogpic" :key="index" @click="selectBook(item.id)">
             <!-- <div v-for="(item, index) in store.katalogtypep" :key="index">
               <pre>{{ item }}</pre>
             </div> -->
@@ -123,28 +100,12 @@
               <img :src="url + '/' + item?.image" class="categoyImg" />
               <button class="btnBestseller">Bestseller</button>
               <button class="newBook">Yangi</button>
-              <img
-                src="../../assets/contact/booklike.png"
-                alt=""
-                class="bookLike"
-              />
-              <img
-                src="../../assets/contact/karzinka.png"
-                alt=""
-                class="karzinka"
-              />
+              <img src="../../assets/contact/booklike.png" alt="" class="bookLike" />
+              <img src="../../assets/contact/karzinka.png" alt="" class="karzinka" />
               <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
 
-              <img
-                src="../../assets/contact/bookopen.png"
-                alt=""
-                class="bookopen"
-              />
-              <img
-                src="../../assets/contact/headphone.png"
-                alt=""
-                class="headphone"
-              />
+              <img src="../../assets/contact/bookopen.png" alt="" class="bookopen" />
+              <img src="../../assets/contact/headphone.png" alt="" class="headphone" />
             </div>
             <div class="ps-2">
               <small class="title">{{ item.name }}</small>
@@ -162,60 +123,39 @@
   </div>
 </template>
 <script setup>
-import { useRoute } from "vue-router";
 const url = useRuntimeConfig().public.bookUrl;
 const alld = ref(5);
 // Get ID
 const route = useRoute();
-const katalogid = parseInt(route.params.id);
+let catologChild = ref(null)
+
+const activeCatolog = (id) => {
+  if (store.katalog.childrens) {
+    let findCatolog = store.katalog.childrens.find(item => item.id == id)
+    catologChild.value = findCatolog
+
+  }
+  else {
+    catologChild = {
+      id: Number(route.params.id)
+    }
+  }
+}
 
 // Get Data from category.js
 const store = useCategory();
 onMounted(() => {
-  store.fetchCategory(),
-    store.fetchKatalog(katalogid),
+    activeCatolog(route.params.id)
+
+  
+  // store.fetchCategory(),
+  store.fetchKatalog(route.params.id),
     store.fetchKatalogPic(1),
-    store.fetchKatalogTypee();
-    store.fetchKatalogTypep();
-    store.fetchKatalogTypea();
+    store.fetchCategoryType(2, 'paper')
+
 });
 
-// const bookImgs = [
-//   { id: 1, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-//   {
-//     id: 2,
-//     imgs: bookImg1,
-//     bookTitle: "Kitoblar qanday o'qiladi",
-//     author: "Sidni Sheldon",
-//   },
-//   {
-//     id: 3,
-//     imgs: bookImg,
-//     bookTitle: "Sharqiy ekspressdagi qotillik",
-//     author: "Agata Kristi",
-//   },
-//   {
-//     id: 4,
-//     imgs: bookImg1,
-//     bookTitle: "Sharqiy ekspressdagi qotillik",
-//     author: "Dafna Dyu Morye",
-//   },
-//   { id: 5, imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
-//   {
-//     id: 6,
-//     imgs: bookImg1,
-//     bookTitle: "Kitoblar qanday o'qiladi",
-//     author: "Sidni Sheldon",
-//   },
-// ];
-// const items = [
-//   { id: 1, name: "Arxitektura" },
-//   { id: 2, name: "Arxitektura" },
-//   { id: 3, name: "To'plamlar,kataloglar va ko'rgazmalar" },
-//   { id: 4, name: "Dizayn dekorativ san'at va chizmachilik" },
-//   { id: 5, name: "Grafik dizayn" },
-//   { id: 6, name: "Rassomlar" },
-// ];
+
 const selectBook = (id) => {
   const router = useRouter();
   router.push(`/book/${id}`);
@@ -227,33 +167,41 @@ const selectBook = (id) => {
   border-radius: 10px;
   background: #fafafa;
 }
+
 .container-item {
   cursor: pointer;
 }
+
 .sideBar h6 {
   font-size: 18px;
   font-weight: 400;
 }
+
 .categoriaData {
   font-size: 14px;
 }
+
 .categoriaAll {
   font-size: 14px;
   color: #9196ad;
   cursor: pointer;
 }
+
 .price {
   color: #8f8e8e;
   font-size: 13px;
 }
+
 .btnColor {
   background: #fafafa;
 }
+
 .categoyImg {
   width: 100%;
   height: 100%;
   border-radius: 7px;
 }
+
 .btnBestseller {
   background: #67c926;
   position: absolute;
@@ -268,6 +216,7 @@ const selectBook = (id) => {
   width: 78px;
   height: 23px;
 }
+
 .newBook {
   background: #ff673d;
   position: absolute;
@@ -281,10 +230,12 @@ const selectBook = (id) => {
   width: 49px;
   height: 23px;
 }
+
 .bookData {
   position: relative;
   height: 260px;
 }
+
 .bookLike {
   position: absolute;
   right: 10px;
@@ -292,6 +243,7 @@ const selectBook = (id) => {
   cursor: pointer;
   display: none;
 }
+
 .karzinka {
   position: absolute;
   right: 10px;
@@ -299,6 +251,7 @@ const selectBook = (id) => {
   cursor: pointer;
   display: none;
 }
+
 .ebook {
   position: absolute;
   right: 10px;
@@ -306,6 +259,7 @@ const selectBook = (id) => {
   cursor: pointer;
   display: none;
 }
+
 .bookopen {
   position: absolute;
   right: 40px;
@@ -313,6 +267,7 @@ const selectBook = (id) => {
   cursor: pointer;
   display: none;
 }
+
 .headphone {
   position: absolute;
   right: 70px;
@@ -320,6 +275,7 @@ const selectBook = (id) => {
   cursor: pointer;
   display: none;
 }
+
 .bookData:hover .bookLike,
 .bookData:hover .ebook,
 .bookData:hover .bookopen,
@@ -327,12 +283,14 @@ const selectBook = (id) => {
 .bookData:hover .karzinka {
   display: block;
 }
+
 .bookGrid {
   width: 100%;
   display: grid;
   grid-template-columns: 23.5% 23.5% 23.5% 23.5%;
   gap: 15px;
 }
+
 .starsNumbers {
   color: #9196ad;
   font-size: 13px;
@@ -341,12 +299,14 @@ const selectBook = (id) => {
 .title {
   font-weight: 800;
 }
+
 .author {
   color: #9196ad;
+}
+
+.activeCategory {
+  background: #000;
 }
 </style>
 
 
-?type=paper
-?type=ebook
-?type=audio

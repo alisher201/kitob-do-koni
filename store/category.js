@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
 import { book_category } from "../utils/home"
+import { categoryParent } from '@/utils/category'
 export const useCategory = defineStore("category", {
 
   state: () => ({
@@ -8,9 +9,8 @@ export const useCategory = defineStore("category", {
     category: {},
     katalog: {},
     katalogpic: {},
-    katalogtypep: {},
-    katalogtypea: {},
-    katalogtypea: {},
+    catologType: null,
+
   }),
   actions: {
     async fetchCategory() {
@@ -19,40 +19,30 @@ export const useCategory = defineStore("category", {
           this.category = res.result.result;
         })
     },
-     fetchKatalog(id) {
-       $fetch(`${this.url}/category/parent/kytab/${id}`)
+
+
+    async fetchKatalog(id) {
+      return await categoryParent.getOne(id)
         .then((res) => {
           this.katalog = res;
-          // console.log(res);
         })
     },
-     fetchKatalogPic(id) {
-       $fetch(`${this.url}/category/books/${id}`)
+
+
+
+    fetchKatalogPic(id) {
+      $fetch(`${this.url}/category/books/${id}`)
         .then((res) => {
           this.katalogpic = res.result;
-          // console.log(res);
         })
     },
-     fetchKatalogTypep() {
-       $fetch(`${this.url}/category/books/1?type=paper`)
+    
+    fetchCategoryType(id, type) {
+      $fetch(`${this.url}/category/books/${id}?type=${type}`)
         .then((res) => {
-          this.katalogtypep  = res.result;
-          console.log(res);
+          this.catologType = res.result;
         })
     },
-     fetchKatalogTypee() {
-       $fetch(`${this.url}/category/books/1?type=ebook`)
-        .then((res) => {
-          this.katalogtype  = res.result;
-          console.log(res);
-        })
-    },
-     fetchKatalogTypea() {
-       $fetch(`${this.url}/category/books/1?type=audio`)
-        .then((res) => {
-          this.katalogtypea = res.result;
-          console.log(res);
-        })
-    },
+
   }
 })
