@@ -22,5 +22,15 @@ export const useBasketStore = defineStore("basket", {
         console.log(res);
       })
      }
+
+    // async basketData() {
+    //     try {
+    //       const response = await $fetch(`${this.url}/cart`);
+    //       const data = await response.json();
+    //       console.log(data);
+    //     } catch (error) {
+    //       console.error("Error fetching data:", error);
+    //     }
+    //   }
   }
 });

@@ -39,7 +39,7 @@
       <div  v-if="store.banner"  class="col-4">
         <div v-for="(img, index) in [store.site_bar]" :key="index">
           <div>
-            <img :src="url + img[0]?.banner" alt="" class="advertisement" />
+            <img :src="url +'/'+ img[0]?.banner" alt="" class="advertisement" />
           </div>
           <div class="mt-3">
             <img :src="url + '/' + img[0]?.banner" alt="" class="advertisement" />

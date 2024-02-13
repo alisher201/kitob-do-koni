@@ -9,6 +9,7 @@
         z-index: 4;
       "
       :style="{ display: inputFocus ? 'block' : 'none' }"
+      @click="focusNone"
     ></div>
     <div class="containerLogo d-flex align-items-center">
       <div
@@ -28,6 +29,8 @@
         >
           <img src="~/assets/contact/category.png" alt="" /> Katalog
         </button>
+        <!-- {{ inputFocus }}
+        {{ searchList }} -->
         <div style="position: relative; z-index: 4">
           <div class="input-group" style="width: 479px">
             <input
@@ -38,19 +41,20 @@
               style="height: 44px"
               placeholder="kitob izlash..."
               @focus="BookSearch"
-              @blur="inputBlur"
+              @keydown.enter="searchProduct"
             />
 
             <span
               class="input-group-text d-flex justify-content-center align-items-center"
               style="width: 68px; height: 44px"
+              @click="searchProduct"
               ><img src="~/assets/contact/bx_search-alt-2.png" alt=""
             /></span>
           </div>
           <div
             class="mt-2"
             style="position: absolute; z-index: 999; width: 100%"
-            v-if="inputFocus"
+            v-if="inputFocus && searchList"
           >
             <HeaderSearchData @searchEmit="selectData" />
           </div>
@@ -146,25 +150,21 @@ const searchbooks = ref(null);
 const watchedValue = ref();
 let inputFocus = ref(false);
 const store = useTestTStore();
-
-// const words = ["salom", "dunyo", "xabar"];
-// const result = words.map(word => word.substring(0, 3));
-// console.log(result);
+let searchList = ref(true);
 
 const BookSearch = () => {
   document.body.style.overflow = "hidden";
   inputFocus.value = true;
-};
-const inputBlur = () => {
-  setTimeout(() => {
-    document.body.style.overflow = "visible";
-    inputFocus.value = false;
-  }, 1000);
+  store.searchValue = null;
+  store.searchValue = searchbooks.value;
 };
 
 const selectData = (data) => {
+  // store.serchResult = null
   searchbooks.value = data;
-  router.push("/SearchBook");
+  store.searchValue = null;
+
+  searchProduct();
 };
 
 const profile = () => {
@@ -206,19 +206,62 @@ const unwatch = watch(
 );
 
 watch(searchbooks, (newVal) => {
-  if (newVal.length > 3) {
-    sendRequest();
-  }
+  // store.searchValue = searchbooks.value
+  sendRequest();
 });
 
-onUnmounted(() => {
-  unwatch();
-});
-
-// Bekinga so'rovni yuborish funktsiyasi
+// Bekintga so'rovni yuborish funktsiyasi
 const sendRequest = () => {
-  // Bu joyda bekinga so'rovni yuborish loyihasi yoziladi
-  console.log("So'rov yuborildi:", searchbooks.value);
+  // store.fechSearchTop()
+
+  store
+    .searchData(searchbooks.value)
+
+    .then(() => {
+      // console.log(store.productSearch.result.length > 0 ? true : false);
+      // store.serchResult = res
+      if (store.productSearch.result.length == 0) {
+        // searchList.value = false
+        searchList.value = false;
+        store.searchValue = searchbooks.value;
+        console.log("gag");
+      } else {
+        store.searchValue = searchbooks.value;
+        searchList.value = true;
+
+        if (!searchbooks.value) {
+          store.productSearch = null;
+        }
+      }
+    });
+};
+const searchProduct = () => {
+  focusNone();
+  if (searchbooks.value?.length > 3) {
+    // qidruvlarni tarixia uchun qidirilgan productlarni  post qiib becendga jo'natish
+    store.createHistoryBook({ word: searchbooks.value });
+    // book apisidan ma'lumot izlash
+    store.fetchBookSearch(searchbooks.value).then(() => {
+      // product apisidan ma'lumotlar izlash
+      store
+        .searchProductData(searchbooks.value)
+
+        .then(() => {
+          if (store.productSearch?.result) {
+            // store.serchResult = null
+            searchList.value = false;
+            store.searchValue = null;
+            // store.serchResult = res
+            // console.log('dfadfsa');
+            router.push("/search");
+          }
+        });
+    });
+  }
+};
+const focusNone = () => {
+  document.body.style.overflow = "visible";
+  inputFocus.value = false;
 };
 
 // onMounted(() => {
