@@ -16,12 +16,15 @@
     </div>
   </template>
   <script setup>
+const store = PtofileHistory()
+console.log(store.OrderHistory());
+
   import img1 from  "../../assets/profile/img1.svg";
   import img2 from "../../assets/profile/image2.svg";
   import img3 from "../../assets/profile/image3.svg";
   import img4 from "../../assets/profile/image4.svg";
   
-                        // 
+                        
   const data = [
       {
           id:1,

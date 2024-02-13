@@ -62,8 +62,6 @@
             <!-- <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/> -->
             <Field v-model="userRegister.phone" type="string" class="form-control" id="number" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber"/>
             <ErrorMessage style="color:red" name="number" />
-
-
           </div>
           <div class="mb-3 mt-3 list inputbox">
             <label for="password" class="form-label">Parol <span>*</span></label>
@@ -92,9 +90,10 @@
       </div>
     </div>
   </div>
-</template >
+</template>
 
 <script >
+
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import {useTestTStore} from '../../store/home'
 export default {
@@ -109,7 +108,8 @@ export default {
       userRegister: {
         full_name: null,
         phone: null,
-        password: null
+        password: null,
+      
       }
 
     }
@@ -122,6 +122,13 @@ export default {
       if (!value) {
         return 'ism familyangizni kiritng';
       }
+  
+      // const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      // if (!regex.test(value)) {
+      //   return "parol noto'g'ri";
+      // }
+      // All is good
+      // return true;
     },
     validateNumber(value) {
         if(!value){
@@ -216,7 +223,6 @@ export default {
 //   display: flex;
 //   justify-content: space-between;
 // }
-
 .section_check {
   background-color: #fafafa;
   border: 01px solid #a3acb5;
@@ -283,13 +289,6 @@ export default {
   line-height: 19px;
   letter-spacing: 0.02em;
   text-align: left;
-
-  font-family: Manrope;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 19px;
-  letter-spacing: 0.02em;
-  text-align: left;
   color: #323232;
   margin: 0px 48px 12px 15px;
   padding: 12px;
@@ -339,13 +338,6 @@ button{
   height: 19px;
   top: 770px;
   left: 832px;
-  font-family: Manrope;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 19px;
-  letter-spacing: 0.02em;
-  text-align: center;
-
   font-family: TT Commons;
   font-size: 14px;
   line-height: 16px;

@@ -85,12 +85,13 @@ const selectData = (data) => {
 
 }
 const profile = () => {
-  let user = false
-  if (user) {
-    router.push('/profile')
+  let user = true
+  let get = localStorage.getItem("type")  
+  if (get =="guest") {
+    router.push('/register')
   }
   else {
-    router.push('/register')
+    router.push('/profile')
   }
 }
 

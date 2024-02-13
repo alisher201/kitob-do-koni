@@ -1,21 +1,14 @@
 import { defineStore } from "pinia";
-import { useRuntimeConfig } from "nuxt/app";
+import {profile_history} from '../utils/profile'
 
-export const useBasketStore = defineStore("test", {
+export const PtofileHistory = defineStore("test", {
   state: () => ({
-    url: useRuntimeConfig().public.siteUrl,
     
   }),
   
   actions: {
-    async basketData() {
-        try {
-          const response = await $fetch(`${this.url}/cart`);
-          const data = await response.json();
-          console.log(data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      }
+    async  OrderHistory() {
+    return  await profile_history.get()
+    }
   }
 });
