@@ -46,7 +46,7 @@ export const useCategory = defineStore("category", {
           this.catologType = res.result;
         })
         .catch(error => {
-          if (error.response.status == 404) {
+          if (error.response?.status == 404) {
             this.errorCategory = error.response.status
           }
           else {
