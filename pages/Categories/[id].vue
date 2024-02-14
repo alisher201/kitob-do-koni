@@ -3,19 +3,17 @@
 
     <!-- catoologlar sidebar -->
     <div class="flex">
-      <pre>
-        <!-- {{ $i18n.locale == 'uz' ? store?.katalog?.name_oz : store?.katalog?.name_ru }} -->
-{{catologChild?.id }}
-      </pre>
-      <small class="container-item">Bosh sahifa / Katalog /{{ $i18n.locale == 'uz' ? catologChild : catologChild?.name_ru
+      <small class="container-item">Bosh sahifa / Katalog /{{$i18n.locale == 'uz' ? store.katalog?.name_oz : store.katalog?.name_ru }}/{{ $i18n.locale == 'uz' ? catologChild?.name_oz : catologChild?.name_ru
       }} </small>
     </div>
+
     <div class="row mx-0 mt-3">
       <div class="col-4 sideBar p-4">
         <h6><strong>Katalog</strong></h6>
         <p class="ms-2">
-          <strong style="font-size: 15px">{{ store.katalog.name_oz }}</strong>
+          <strong style="font-size: 15px">{{$i18n.locale == 'uz' ? store.katalog?.name_oz : store.katalog?.name_ru }}</strong>
         </p>
+        <!-- categorys item name -->
         <p v-for="(item, index) in store.katalog?.childrens?.slice(0, alld) ||
           []" :key="index" class="categoriaData ms-3" @click="activeCatolog(item.id)"
           :class="{ activeCategory: item?.id == catologChild?.id }">
@@ -25,6 +23,8 @@
 
         </p>
 
+
+        <!-- category all items -->
         <p v-if="alld == 5" @click="alld = store.katalog?.childrens?.length" class="categoriaAll ms-3">
           Barchasi {{ store.katalog.childrens?.length }}
           <img src="@/assets/contact/arrowDown.png" alt="" />
@@ -32,17 +32,21 @@
         <p v-else @click="alld = 5" class="categoriaAll ms-3l">yopish</p>
         <hr class="my-4" />
         <h6>
+
           <strong>{{ $t("home.format") }}</strong>
         </h6>
-        <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" @click="booktype = ebook" />{{ $t("home.kinds") }}
+        <p @click="requestBookType('all')">
+          <input type="checkbox" class="form-check-input me-2 ms-1"   v-model="typeBook.all"/>{{ $t("home.kinds") }}
 
         </p>
-        <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" @click="format(ebook)" />{{ $t("home.elecBook") }}
+        <p @click="requestBookType('ebook')">
+          <input type="checkbox" class="form-check-input me-2 ms-1" v-model="typeBook.ebook" />{{ $t("home.elecBook") }}
         </p>
-        <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" @click="format(audio)" />{{ $t("home.audioBook") }}
+        <p @click="requestBookType('audio')">
+          <input type="checkbox" class="form-check-input me-2 ms-1" v-model="typeBook.audio" />{{ $t("home.audioBook") }}
+        </p>
+        <p @click="requestBookType('paper')">
+          <input type="checkbox" class="form-check-input me-2 ms-1" v-model="typeBook.paper" /> paper
         </p>
         <hr class="my-4" />
 
@@ -91,7 +95,7 @@
           </button>
         </div>
 
-        <div class="bookGrid mt-4">
+        <div class="bookGrid mt-4" v-if="!store.errorCategory">
           <div class="p-0" v-for="(item, index) in store.katalogpic" :key="index" @click="selectBook(item.id)">
             <!-- <div v-for="(item, index) in store.katalogtypep" :key="index">
               <pre>{{ item }}</pre>
@@ -118,13 +122,26 @@
             <span class="starsNumbers">(32)</span>
           </div>
         </div>
+        <div v-else class="d-flex justify-content-center align-items-center">
+          <h1 style="color: red ;">
+            {{ store.errorCategory }}
+          </h1>
+          
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+const store = useCategory();
 const url = useRuntimeConfig().public.bookUrl;
 const alld = ref(5);
+const typeBook = ref({
+  all: false,
+  paper: false,
+  ebook: false,
+  audio: false
+})
 // Get ID
 const route = useRoute();
 let catologChild = ref(null)
@@ -135,24 +152,32 @@ const activeCatolog = (id) => {
     catologChild.value = findCatolog
 
   }
-  else {
-    catologChild = {
-      id: Number(route.params.id)
-    }
-  }
 }
+const requestBookType = (type) => {
+  const bookType = typeBook.value;
+  
+  for (let key in bookType) {
+    bookType[key] = (key === type);
+  }
+  
+  store.fetchCategoryType(route.params.id, type)
+};
 
 // Get Data from category.js
-const store = useCategory();
 onMounted(() => {
-    activeCatolog(route.params.id)
 
   
-  // store.fetchCategory(),
-  store.fetchKatalog(route.params.id),
-    store.fetchKatalogPic(1),
-    store.fetchCategoryType(2, 'paper')
+  
+  // bitta category ni chaqirish uchun get method
+  store.fetchKatalog(route.params.id)
+  .then(() => {
+    activeCatolog(route.params.id)
 
+  })
+    store.fetchKatalogPic(1)
+
+    // kitobni type bo'ycha  so'rov
+    requestBookType('all')
 });
 
 
@@ -179,8 +204,12 @@ const selectBook = (id) => {
 
 .categoriaData {
   font-size: 14px;
+  font-weight: 500;
+  color: #35363D;
 }
-
+.categoriaData:hover {
+cursor: pointer;
+}
 .categoriaAll {
   font-size: 14px;
   color: #9196ad;
@@ -304,8 +333,8 @@ const selectBook = (id) => {
   color: #9196ad;
 }
 
-.activeCategory {
-  background: #000;
+.activeCategory { 
+  color: blue !important;
 }
 </style>
 

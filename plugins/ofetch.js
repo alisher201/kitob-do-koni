@@ -54,7 +54,6 @@ export default defineNuxtPlugin((_nuxtApp) => {
       }
     },
     onResponseError({ response }) {
-      console.log('Response error:', response);
       const statusCode = response.status;
       if (statusCode === 401) {
         useTestTStore().refreshToken()

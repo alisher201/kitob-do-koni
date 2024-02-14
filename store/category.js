@@ -10,6 +10,7 @@ export const useCategory = defineStore("category", {
     katalog: {},
     katalogpic: {},
     catologType: null,
+    errorCategory: null
 
   }),
   actions: {
@@ -36,12 +37,23 @@ export const useCategory = defineStore("category", {
           this.katalogpic = res.result;
         })
     },
-    
-    fetchCategoryType(id, type) {
-      $fetch(`${this.url}/category/books/${id}?type=${type}`)
+    // kitob type bo'ycha so'rov
+    async fetchCategoryType(id, type) {
+      let request = type == 'all' ? `${this.url}/category/books/${id}` : `${this.url}/category/books/${id}?type=${type}`
+      return await $fetch(request)
         .then((res) => {
+          console.log(res, 'res');
           this.catologType = res.result;
         })
+        .catch(error => {
+          if (error.response.status == 404) {
+            this.errorCategory = error.response.status
+          }
+          else {
+            this.errorCategory = 'ABDULLOHNI XATOSI  :))))'
+          }
+        })
+
     },
 
   }
