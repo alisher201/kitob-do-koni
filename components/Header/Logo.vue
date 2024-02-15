@@ -1,16 +1,9 @@
 <template>
   <div>
-    <div
-      style="
-        position: absolute;
-        background: #31313159;
-        width: 100%;
-        height: 130vh;
-        z-index: 4;
-      "
-      :style="{ display: inputFocus ? 'block' : 'none' }"
-      @click="focusNone"
-    ></div>
+
+    <div style="position: absolute; background: #31313159; width: 100%; height: 130vh; z-index: 4; "
+      :style="{ display: inputFocus ? 'block' : 'none' }" @click="focusNone">
+    </div>
     <div class="containerLogo d-flex align-items-center">
       <div
         class="container d-flex align-items-center justify-content-between px-0"
@@ -31,9 +24,9 @@
         </button>
         <!-- {{ inputFocus }}
         {{ searchList }} -->
-        <div style="position: relative; z-index: 4">
+        <div style="position: relative; z-index: 4;">
           <div class="input-group" style="width: 479px">
-            <input
+            <!-- <input
               type="text"
               @change="result"
               v-model="searchbooks"
@@ -41,21 +34,19 @@
               style="height: 44px"
               placeholder="kitob izlash..."
               @focus="BookSearch"
-              @keydown.enter="searchProduct"
-            />
+              @blur="inputBlur"
+            /> -->
 
-            <span
-              class="input-group-text d-flex justify-content-center align-items-center"
-              style="width: 68px; height: 44px"
-              @click="searchProduct"
-              ><img src="~/assets/contact/bx_search-alt-2.png" alt=""
-            /></span>
+
+            <input type="text" @change="result" v-model="searchbooks" class="form-control" style="height: 44px"
+              placeholder="kitob izlash..." @focus="BookSearch" @keydown.enter="searchProduct" />
+
+
+            <span class="input-group-text d-flex justify-content-center align-items-center"
+              style="width: 68px; height: 44px" @click="searchProduct"><img src="~/assets/contact/bx_search-alt-2.png"
+                alt="" /></span>
           </div>
-          <div
-            class="mt-2"
-            style="position: absolute; z-index: 999; width: 100%"
-            v-if="inputFocus && searchList"
-          >
+          <div class="mt-2" style="position: absolute; z-index: 999; width: 100%;" v-if="inputFocus && searchList">
             <HeaderSearchData @searchEmit="selectData" />
           </div>
         </div>
@@ -136,7 +127,7 @@
       </div>
     </div>
 
-    <div class="collapse colapseContainer" id="collapseExample">
+    <div class="collapse colapseContainer" id="collapseExample">  
       <div class="" style="min-height: 100vh">
         <HomeCategoriesList />
       </div>
@@ -150,22 +141,26 @@ const searchbooks = ref(null);
 const watchedValue = ref();
 let inputFocus = ref(false);
 const store = useTestTStore();
-let searchList = ref(true);
+let searchList = ref(true)
+
+
 
 const BookSearch = () => {
-  document.body.style.overflow = "hidden";
-  inputFocus.value = true;
-  store.searchValue = null;
-  store.searchValue = searchbooks.value;
-};
+  document.body.style.overflow = 'hidden'
+  inputFocus.value = true
+  store.searchValue = null
+  store.searchValue = searchbooks.value
+}
+
 
 const selectData = (data) => {
   // store.serchResult = null
-  searchbooks.value = data;
-  store.searchValue = null;
+  searchbooks.value = data
+  store.searchValue = null
 
-  searchProduct();
-};
+  searchProduct()
+}
+
 
 const profile = () => {
   let user = false;
@@ -233,7 +228,10 @@ const sendRequest = () => {
           store.productSearch = null;
         }
       }
-    });
+
+    })
+
+
 };
 const searchProduct = () => {
   focusNone();
@@ -264,9 +262,14 @@ const focusNone = () => {
   inputFocus.value = false;
 };
 
-// onMounted(() => {
-//   // store.fechData();
-// });
+onMounted(() => {
+  const jwtToken = localStorage.getItem('jwtToken')
+  if(!jwtToken) {
+    store.uuIdPost({
+    uuid: String(new Date().getTime()),
+    model: navigator.userAgent
+  })
+  }});
 </script>
 
 <style scoped>

@@ -6,13 +6,11 @@
 
 <script setup>
 definePageMeta({
-    layout:'login'
+    layout: 'login'
 })
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
 
 
 

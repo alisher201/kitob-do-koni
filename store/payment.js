@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { book } from '@/utils/payment'
+import { book, rating } from '@/utils/payment'
 
 export const usePayment = defineStore('payment', {
     stor: () => ({
@@ -14,6 +14,9 @@ export const usePayment = defineStore('payment', {
                         this.book = res.result
                     }
                 })
+        },
+        async create_commit(data) {
+            return await rating.create(data)
         }
     }
 

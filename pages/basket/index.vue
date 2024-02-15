@@ -1,4 +1,5 @@
 <template>
+  {{ store.basket.result }}
   <div>
     <div class="container px-0">
       <div v-if="empty" class="d-flex align-items-center flex-column my-5">
@@ -26,6 +27,7 @@
                   class="basketCheck"
                   v-model="checkAll"
                   @click="selectAll"
+                  
                 />
                 <span class="ms-2">{{ $t("home.basket.select") }}</span>
               </div>
@@ -35,7 +37,7 @@
             </div>
             <div
               class="d-flex mt-4"
-              v-for="(item, idx) in basketProduct"
+              v-for="(item, idx) in store.basket.result"
               :key="idx"
             >
               <div class="me-3 d-flex align-items-center">
@@ -48,11 +50,11 @@
               <div class="basketProduts">
                 <div class="d-flex justify-content-between">
                   <div class="d-flex">
-                    <div><img :src="item.Img" alt="" class="basketImg" /></div>
+                    <div><img :src="item.product.image" alt="" class="basketImg" /></div>
                     <div class="ms-4 ps-2">
-                      <p class="bookTitle">{{ item.bookName }}</p>
-                      <p class="bookAuthor">{{ item.bookAuthor }}</p>
-                      <p class="bookPrice">{{ item.bookPrice }}</p>
+                      <p class="bookTitle">{{ item.product.name }}</p>
+                      <p class="bookAuthor">{{ item.product.author }}</p>
+                      <p class="bookPrice">{{ item.product.price }}</p>
                     </div>
                   </div>
                   <div class="d-flex flex-column justify-content-between">

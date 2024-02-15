@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="about">
-        <p><span >{{ $t("home.author") }}</span> <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
+        <p ref="ptag"><span >{{ $t("home.author") }}</span>  <span>----------</span> <span>Jeyms Klil</span></p>
         <p class="mt-2">{{ $t("home.genre") }} <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
 
         <p  class="mt-2">{{ $t("home.year") }}<img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
@@ -13,10 +13,15 @@
         <p class="mt-2">{{ $t("home.publishing") }}<img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
 
       </div>
-        
     </div>
 </template>
-<script>
+<script setup>
+
+let re
+ const Props = defineProps({
+ 
+})
+// const refs = toRefs()
 
 </script>
 <style scoped>

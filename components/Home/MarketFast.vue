@@ -94,9 +94,10 @@ const addBasket = (id, bookId) => {
   store.basketAdd({ product_id: id, type: bookId ? "book" : "other" });
 };
 
-onMounted(() => {
-  // store.basketAdd()
-});
+onMounted (() => {
+})
+  
+
 </script>
 
 <style scoped>

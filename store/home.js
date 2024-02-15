@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
-import { register, book_category, searchTop, search, uuId } from "../utils/home"
+import { register, book_category, searchTop, search, uuId, refresh } from "../utils/home"
 export const useTestTStore = defineStore("home", {
   state: () => ({
     url: useRuntimeConfig().public.siteUrl,
@@ -22,7 +22,7 @@ export const useTestTStore = defineStore("home", {
     async fechData() {
       return await book_category.get()
         .then((res) => {
-          this.category = res.result.result;
+          this.category = res?.result?.result;
         })
     },
 
@@ -49,33 +49,19 @@ export const useTestTStore = defineStore("home", {
         .then(res => {
           localStorage.setItem('jwtToken', res.result.token)
           localStorage.setItem('userFullName', res.result.full_name)
+          localStorage.setItem('type', res.result.type)
+          localStorage.setItem('refreshToken', res.result.refresh_token)
         })
     },
 
     // search top
     async fechSearchTop() {
       return await searchTop.get()
-        .then(res => {
-          this.word = res
-        })
-    },
-
-    // product serach data watch
-    async searchData(data) {
-      return await $fetch(`${this.url}/product/search?name=${data}`)
-        .then(res => {
-          this.productSearch = res
-        })
-
-    },
-
-    // enter search book product
-    async searchProductData(data) {
-      return await $fetch(`${this.url}/product/search?name=${data}`)
-        .then(res => {
-          this.serchResult = res
-        })
-    },
+      .then(res => {
+          // console.log(res);    
+          this.word= res
+      })
+   },
 
     // search history get 
     async SearchHistoryBook() {
@@ -115,9 +101,23 @@ export const useTestTStore = defineStore("home", {
           localStorage.setItem('jwtToken', res.result.token)
           localStorage.setItem('userFullName', res.result.full_name)
           localStorage.setItem('type', res.result.type)
+          localStorage.setItem('refreshToken', res.result.refresh_token)
+
+        }
+      })
+    },
+    async refreshToken() {
+      return await refresh.get()
+      .then(res => {
+        if(res?.success) {
+          localStorage.setItem('jwtToken', res.result.token)
+          localStorage.setItem('userFullName', res.result.full_name)
+          localStorage.setItem('type', res.result.type)
+          localStorage.setItem('refreshToken', res.result.refresh_token)
 
         }
       })
     }
+
   }
 })
