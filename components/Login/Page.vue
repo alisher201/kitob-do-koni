@@ -27,12 +27,12 @@
             >
 
             <input
-              
               type="number"
               class="form-control"
-              id="email"
+              id="number"
               placeholder="+998 00 000 00 00"
               name="number"
+              :rules="validateNumber"
             />
           </div>
           <div class="mb-3 mt-3 list inputbox">
@@ -40,19 +40,18 @@
               >Parol <span>*</span></label
             >
             <input
-              
               name="password"
               class="form-control"
               type="password"
               placeholder="parol 8 ta bo'lsin"
+              :rules="validatePassword"
             />
 
             <div class="li">
-
               <NuxtLink to="/password" href="">Parolni unutdingizmi?</NuxtLink>
             </div>
           </div>
-          <button>Login</button>
+          <button @click="senDataUser">Login</button>
           <div class="bottom">
             <h2>
               Avval ro'yhatdan o'tganmisiz?
@@ -65,11 +64,66 @@
   </div>
 </template>
   
-  <script setup>
+  <script >
+// const store = useLogin();
+
+// onMounted(() =>{
+//   store.loginRegistr()
+
+// })
+
+import {useLogin} from '../../store/login'
 const content = ref(null);
 onMounted(() => {
   content.value = 1;
 });
+
+export default {
+  components: {
+    useLogin,
+  },
+  data() {
+    return {
+      login: {
+        phone: null,
+        password: null,
+      },
+    };
+  },
+  methods: {
+    // onSubmit(values) {
+    //   console.log(values, null, 2);
+    // },
+    // validateEmail(value) {
+    // if (!value) {
+    //   return 'ism familyangizni kiritng';
+    // }
+
+    // const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    // if (!regex.test(value)) {
+    //   return "parol noto'g'ri";
+    // }
+    // All is good
+    // return true;
+    // },
+    validateNumber(value) {
+      console.log("telefon validate");
+      if (!value) {
+        return "telefon raqamni kiritng kiriting";
+      }
+    },
+    validatePassword(value) {
+      console.log("password validate");
+      if (!value) {
+        return "Parol kiritng";
+      }
+    },
+    senDataUser() {
+      console.log("sendDataUser");
+      login().loginUser(this.login);
+    },
+  },
+};
 </script>
   
   <style lang="scss" scoped>

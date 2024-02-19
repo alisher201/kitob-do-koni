@@ -5,14 +5,20 @@ import { useRuntimeConfig } from "nuxt/app";
 export const useLogin = defineStore ("login",{
     
     state:() => ({
-        url: useRuntimeConfig().public.siteUrl      
-        
+        url: useRuntimeConfig().public.siteUrl,
     }),
-  
-    
+
     actions: {
         async loginRegistr(data) {
             await $fetch(`${this.url}/login`, {
+                method: 'Post',
+                body: {
+                  data
+                  }
+            })
+        },      
+        async loginUser(data) {
+            await $fetch(`${this.url}/client/login`, {
                 method: 'Post',
                 body: {
                   data
