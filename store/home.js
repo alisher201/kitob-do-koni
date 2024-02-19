@@ -49,6 +49,8 @@ export const useTestTStore = defineStore("home", {
         .then(res => {
           localStorage.setItem('jwtToken', res.result.token)
           localStorage.setItem('userFullName', res.result.full_name)
+          localStorage.setItem('type', res.result.type)
+          localStorage.setItem('refreshToken', res.result.refresh_token)
         })
     },
 

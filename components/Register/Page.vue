@@ -109,7 +109,8 @@ export default {
       userRegister: {
         full_name: null,
         phone: null,
-        password: null
+        password: null,
+        type: 'client'
       }
 
     }
