@@ -26,7 +26,8 @@
               >Telefon raqam <span>*</span></label
             >
 
-            <input
+            <Field
+              v-model="userlogin.phone"
               type="number"
               class="form-control"
               id="number"
@@ -39,7 +40,8 @@
             <label for="password" class="form-label"
               >Parol <span>*</span></label
             >
-            <input
+            <Field
+              v-model="userlogin.phone"
               name="password"
               class="form-control"
               type="password"
@@ -84,7 +86,7 @@ export default {
   },
   data() {
     return {
-      login: {
+      userlogin: {
         phone: null,
         password: null,
       },
@@ -120,7 +122,7 @@ export default {
     },
     senDataUser() {
       console.log("sendDataUser");
-      login().loginUser(this.login);
+      login().loginUser(this.userlogin);
     },
   },
 };
