@@ -41,7 +41,7 @@
 
 
             <!-- populr book -->
-            <p style="font-size: 18px; color:#35363D ;">Sizni qiziqtirishi mumkin</p>
+            <p styl5e="font-size: 18px; color:#35363D ;">Sizni qiziqtirishi mumkin</p>
 
 
 

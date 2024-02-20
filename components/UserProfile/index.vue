@@ -32,7 +32,7 @@
             <img class="rasm" src="@/assets/profile/nastroyka.svg" alt="" />
             <p href="" class="h2">Profil sozlamalar</p>
           </NuxtLink>
-          <NuxtLink to="" class="main_list">
+          <NuxtLink to="/" class="main_list">
             <img class="rasm" src="@/assets/profile/tabler_logout.svg" alt="" />
             <p to="" class="h2" style="color: red">chiqish</p>
           </NuxtLink>

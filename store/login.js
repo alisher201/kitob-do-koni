@@ -8,7 +8,6 @@ export const useLogin = defineStore ("login",{
         url: useRuntimeConfig().public.siteUrl      
         
     }),
-  
     
     actions: {
         async loginRegistr(data) {

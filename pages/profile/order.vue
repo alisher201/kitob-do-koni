@@ -15,6 +15,7 @@
 </template>
 
 <script setup>
+
 const content = ref(null)
 
 onMounted(() => {

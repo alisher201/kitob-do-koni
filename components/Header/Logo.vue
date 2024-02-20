@@ -155,7 +155,6 @@ const selectData = (data) => {
 
 }
 const profile = () => {
-  let user = true
   let get = localStorage.getItem("type")  
   if (get =="guest") {
     router.push('/register')
@@ -252,12 +251,7 @@ onMounted(() => {
   }});
 </script>
 
-<style scoped>
-/* @media only screen and (max-width: 768px) {
-  .navbar-brand {
-    margin-left: 50px;
-  }
-} */
+<style scoped >
 
 .active {
   fill: #35363d;
@@ -296,3 +290,4 @@ onMounted(() => {
   align-items: center;
   gap: 6px;
 }
+</style>

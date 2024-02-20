@@ -2,7 +2,7 @@
   <div>
     <div class="row mb-5">
       <div class="col6 col-xl-6 col-lg-6 col-md-12 col-sm-12">
-        <img class="img-fluid" :src="useAsset(item.img!)">
+        <!-- <img class="img-fluid" :src="useAsset(item.img!)"> -->
       </div>
 
       <div class="col6 col-xl-6 col-lg-6 col-md-12 col-sm-12 d-flex align-items-center justify-content-start">

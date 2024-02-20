@@ -2,22 +2,29 @@
     <div >
       <div class="main">
         <h1 class="h1">Bildirishnoma</h1>
-    
-        <div class="main_list" >
-          <div    class="img1"  v-for="(item,index) in data" :key="index" @click="selectImg(item.id)">
-              <img :src="item.img"  alt="">
-              <div >
-                  <h2>{{item.word}}</h2>
-                  <p>{{item.world}}</p>
-              </div>
+        <div class="row">
+          <div class="main_list row " >
+            <div class="img1 col-sm-6"  v-for="(item,index) in store.notifications?.result" :key="index" @click="selectImg(item.id)">
+                <img :src="item.img"  alt="">
+                <div >
+                    <h2>{{item.title}}</h2>
+                    <p>{{item.body.slice[0,4]}}</p>
+                </div>
+            </div>
           </div>
         </div>
+        <!-- <pre>{{ store.notifications?.result}}</pre> -->
+        <!-- <pre>{{store.notifications?.result[0].parent}}sal</pre> -->
       </div>
     </div>
   </template>
   <script setup>
-const store = PtofileHistory()
-console.log(store.OrderHistory());
+
+  const store = ProfileHistory()
+
+  onMounted(()=>{
+    store.Notification()
+  })
 
   import img1 from  "../../assets/profile/img1.svg";
   import img2 from "../../assets/profile/image2.svg";
@@ -76,8 +83,8 @@ console.log(store.OrderHistory());
     left: 479px;
     border-radius: 10px;
     // color: #FAFAFA;
-    background-color:#FAFAFA;     
-  //   background-color: red;
+    background-color:#FAFAFA;      
+    // background-color: red;
     margin: 60px 121px 283px 40px;
     
   }
@@ -95,10 +102,13 @@ console.log(store.OrderHistory());
       margin:18px 0px 0px 30px;
   }
   .main_list{
-      display:flex;
+    //   display:flex;
       padding:4px;
       margin:18px 0px 0px 30px;
       gap: 20px;
+      // background-color: blue;
+      width: 909px;
+      height: 280px;
       grid-template-columns: repeat(auto-fit,minmax(300px,2fr));
   }
   h2{
