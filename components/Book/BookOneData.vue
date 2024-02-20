@@ -12,6 +12,7 @@ let type = ref([])
 const storeBasket = useBasketStore()
 let bookType = ref(1)
 let is_book = ref(false)
+let comentsData = ref([])
 
 
 let bookcontent = ref(1)
@@ -45,6 +46,13 @@ const ordrItem = () => {
   const router = useRouter()
   router.push('/OrderItem')
 }
+const fetchBookOne = () => {
+  store.fetch_book_one(route.params.id)
+    .then(() => {
+      comentsData.value = [...store.book.reviews, ...store.book.shop_reviews]
+
+    })
+}
 
 const basketAdd = (id, type) => {
   storeBasket.basketAdd({ product_id: id, type: type.length ? 'book' : 'product' })
@@ -53,6 +61,11 @@ const basketAdd = (id, type) => {
 onMounted(() => {
   store.fetch_book_one(route.params.id)
     .then(() => {
+      //commetsData ...store.book.reviews and store.book.shop_reviews
+
+      comentsData.value = [...store.book.reviews, ...store.book.shop_reviews]
+
+
       let elementLength = store.book?.reviews.length
       let sum = 0
       if (store.book && store.book.reviews && store.book.reviews.length > 0) {
@@ -68,7 +81,7 @@ onMounted(() => {
       if (store.book && store.book.type) {
         store.book.type.forEach(item => {
           type.value.push(item.type)
-          if(item.type) {
+          if (item.type) {
             is_book.value = true
           }
         })
@@ -205,14 +218,9 @@ onMounted(() => {
       </div>
 
       <div class="comments" v-if="bookcontent == 3">
-        <BookComments
-         :comments="store.book?.reviews"
-         :ratings="ratings.toFixed(1)"
-         :commitCount="comitCount"
-         :is_book="is_book"
+        <BookComments :comments="comentsData" :ratings="ratings.toFixed(1)" :commitCount="comitCount" :is_books="is_book"
+          @fetchBookOne="fetchBookOne" />
 
-          />
-          
       </div>
 
     </div>
@@ -501,4 +509,5 @@ onMounted(() => {
 .bookTypeActive {
   border: 1px solid #41A2DB !important;
   color: #41A2DB !important;
-}</style>
+}
+</style>
