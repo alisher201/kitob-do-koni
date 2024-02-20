@@ -3,15 +3,18 @@
 
     <!-- catoologlar sidebar -->
     <div class="flex">
-      <small class="container-item">Bosh sahifa / Katalog /{{$i18n.locale == 'uz' ? store.katalog?.name_oz : store.katalog?.name_ru }}/{{ $i18n.locale == 'uz' ? catologChild?.name_oz : catologChild?.name_ru
-      }} </small>
+      <small class="container-item"> <span @click="$router.push('/')">Bosh sahifa</span>/Katalog /{{ $i18n.locale == 'uz'
+        ? store.katalog?.name_oz :
+        store.katalog?.name_ru }}/{{ $i18n.locale == 'uz' ? catologChild?.name_oz : catologChild?.name_ru
+  }} </small>
     </div>
 
     <div class="row mx-0 mt-3">
       <div class="col-4 sideBar p-4">
         <h6><strong>Katalog</strong></h6>
         <p class="ms-2">
-          <strong style="font-size: 15px">{{$i18n.locale == 'uz' ? store.katalog?.name_oz : store.katalog?.name_ru }}</strong>
+          <strong style="font-size: 15px">{{ $i18n.locale == 'uz' ? store.katalog?.name_oz : store.katalog?.name_ru
+          }}</strong>
         </p>
         <!-- categorys item name -->
         <p v-for="(item, index) in store.katalog?.childrens?.slice(0, alld) ||
@@ -35,54 +38,66 @@
 
           <strong>{{ $t("home.format") }}</strong>
         </h6>
-        <p @click="requestBookType('all')">
-          <input type="checkbox" class="form-check-input me-2 ms-1"   v-model="typeBook.all"/>{{ $t("home.kinds") }}
+        <p @click="requestBookType('all')" class="bookTypeRequest">
+          <input type="checkbox" class="form-check-input me-2 ms-1" v-model="typeBook.all" />{{ $t("home.kinds") }}
 
         </p>
-        <p @click="requestBookType('ebook')">
+        <p @click="requestBookType('ebook')" class="bookTypeRequest">
           <input type="checkbox" class="form-check-input me-2 ms-1" v-model="typeBook.ebook" />{{ $t("home.elecBook") }}
         </p>
-        <p @click="requestBookType('audio')">
+        <p @click="requestBookType('audio')" class="bookTypeRequest">
           <input type="checkbox" class="form-check-input me-2 ms-1" v-model="typeBook.audio" />{{ $t("home.audioBook") }}
         </p>
-        <p @click="requestBookType('paper')">
+        <p @click="requestBookType('paper')" class="bookTypeRequest">
           <input type="checkbox" class="form-check-input me-2 ms-1" v-model="typeBook.paper" /> paper
         </p>
         <hr class="my-4" />
 
+        <!-- narxlar filteri -->
         <h6>
           <strong>{{ $t("home.price") }}</strong>
         </h6>
         <div class="row">
           <div class="col-6">
             <label class="price">{{ $t("home.from") }}</label>
-            <input type="text" class="form-control mb-1" />
+            <input type="text" class="form-control mb-1" v-model="oBarMinValue" />
           </div>
           <div class="col-6">
-            <label class="price">{{ $t("home.upTo") }}</label><input type="text" class="form-control" />
+            <label class="price">{{ $t("home.upTo") }}</label><input type="text" class="form-control"
+              v-model="oBarMaxValue" />
           </div>
         </div>
+        <MultiRangeSlider baseClassName="multi-range-slider-bar-only" :minValue="oBarMinValue" :maxValue="oBarMaxValue"
+          :max="5000000" :min="1000" :step="10000" :rangeMargin="0" @input="update_oBarValues" />
+
+
+
+
         <div>
-          <!-- <vue-slider/> -->
         </div>
+
+
+
+        <!-- kitob tili bo'ycha sorov yuborish -->
         <hr class="my-4" />
         <h6>
           <strong>{{ $t("home.lang") }}</strong>
         </h6>
-        <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />
+
+        <p @click="requestLanguageType('all')" class="bookTypeRequest">
+          <input type="checkbox" class="form-check-input me-2 ms-1" v-model="languageType.all" />
           {{ $t("home.allLang") }}
         </p>
-        <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />{{
+        <p @click="requestLanguageType('uz')" class="bookTypeRequest">
+          <input type="checkbox" class="form-check-input me-2 ms-1" v-model="languageType.uz" />{{
             $t("home.uzb")
           }}
         </p>
-        <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />English
+        <p @click="requestLanguageType('en')" class="bookTypeRequest">
+          <input type="checkbox" class="form-check-input me-2 ms-1" v-model="languageType.en" />English
         </p>
-        <p>
-          <input type="checkbox" class="form-check-input me-2 ms-1" />Русский
+        <p @click="requestLanguageType('ru')" class="bookTypeRequest">
+          <input type="checkbox" class="form-check-input me-2 ms-1" v-model="languageType.ru">Русский
         </p>
       </div>
 
@@ -96,7 +111,7 @@
         </div>
 
         <div class="bookGrid mt-4" v-if="!store.errorCategory">
-          <div class="p-0" v-for="(item, index) in store.katalogpic" :key="index" @click="selectBook(item.id)">
+          <div class="p-0" v-for="(item, index) in store.catologType" :key="index" @click="selectBook(item.id)">
             <!-- <div v-for="(item, index) in store.katalogtypep" :key="index">
               <pre>{{ item }}</pre>
             </div> -->
@@ -126,58 +141,187 @@
           <h1 style="color: red ;">
             {{ store.errorCategory }}
           </h1>
-          
+
         </div>
       </div>
     </div>
+
+
+    <!-- input valiation -->
+     <input ref="emailInput" v-model="emailValue" type="email" placeholder="Email"><br>
+    <span v-if="emailError" style="color: red;">{{ emailError.message }}</span><br>
+
+
+    <input ref="emailInput" v-model="telNumber" type="number" placeholder="number"><br>
+    <span v-if="errorTel" style="color: red;">{{ errorTel.message }}</span>
+    <br>
+
+    <input ref="emailInput" v-model="password" type="text" placeholder="password"><br>
+    <span v-if="passwordError" style="color: red;">{{ passwordError.message }}</span>
+    <br>
+    <input ref="emailInput" v-model="confirmPassword" type="text" placeholder="password"><br>
+    <span v-if="confirmError" style="color: red;">{{ confirmError.message }}</span>
+    <br>
+    <button @click="sendMassage">yuborish</button> 
+
+
   </div>
 </template>
 <script setup>
+import MultiRangeSlider from "multi-range-slider-vue";
+import "@/node_modules/multi-range-slider-vue/MultiRangeSliderBlack.css";
+import "@/node_modules/multi-range-slider-vue/MultiRangeSliderBarOnly.css";
+import { useCategory } from '@/store/category'
 const store = useCategory();
 const url = useRuntimeConfig().public.bookUrl;
+let lang_book = ref('all')
+let type_book = ref('all')
+
+
+const emailValue = ref(null);
+const emailError = ref(null);
+const telNumber = ref(null)
+const errorTel = ref(null)
+const password = ref(null)
+const passwordError = ref(null)
+const confirmPassword = ref(null)
+const confirmError = ref(null)
+
+
+
+
+watch(emailValue, (newVAlue) => {
+  emailError.value = !isEmpty(newVAlue, 'email').item ? isEmpty(newVAlue, 'email') : validateEmail(newVAlue)
+});
+watch(telNumber, (newValue) => {
+  errorTel.value = !isEmpty(newValue, 'Telifon nomeri').item ? isEmpty(newValue, 'Telifon nomeri') : validateLength(newValue, 12, 12, 'telfon nomeri');
+})
+watch(password, (newValue) => {
+  passwordError.value = passwordValidator(newValue)
+})
+watch(confirmPassword, (newValue) => {
+  confirmError.value = confirmedValidator(newValue, password.value)
+})
+
+const sendMassage = () => {
+  // Emailni tekshirish
+  emailError.value = !isEmpty(emailValue.value, 'ismi').item ? isEmpty(emailValue.value, 'ismi') : validateEmail(emailValue.value);
+
+  // telifon nomerni tekshirish
+  errorTel.value = validateLength(telNumber.value, 12, 12, 'telfon nomeri');
+
+  // password validation
+  passwordError.value = passwordValidator(password.value)
+
+  // confirm password 
+  confirmError.value = confirmedValidator(confirmPassword.value, password.value)
+
+  let array = [emailError.value, errorTel.value, passwordError.value, confirmError.value]
+  let validtaionDAta = validation(array)
+  console.log(validtaionDAta);
+
+
+
+
+  if (validtaionDAta) {
+    console.log('malumotlar yuboriladi');
+  }
+  else {
+    console.log('yuborilmadi');
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const alld = ref(5);
 const typeBook = ref({
-  all: false,
+  all: true,
   paper: false,
   ebook: false,
   audio: false
 })
+
+const languageType = ref({
+  all: true,
+  uz: false,
+  ru: false,
+  en: false
+})
+let oBarMinValue = ref(1000)
+let oBarMaxValue = ref(500000)
+
 // Get ID
 const route = useRoute();
+const router = useRouter()
 let catologChild = ref(null)
 
 const activeCatolog = (id) => {
   if (store.katalog.childrens) {
     let findCatolog = store.katalog.childrens.find(item => item.id == id)
     catologChild.value = findCatolog
+    router.replace(`/Categories/${findCatolog.id}`)
 
   }
 }
+
+// type book request
 const requestBookType = (type) => {
   const bookType = typeBook.value;
-  
   for (let key in bookType) {
     bookType[key] = (key === type);
   }
-  
-  store.fetchCategoryType(route.params.id, type)
+  type_book.value = type
+  store.fetchCategoryType(route.params.id, type_book.value, lang_book.value, oBarMinValue.value, oBarMaxValue.value)
 };
 
-// Get Data from category.js
-onMounted(() => {
+// language book request
+const requestLanguageType = (type) => {
+  const bookType = languageType.value;
+  for (let key in bookType) {
+    bookType[key] = (key === type);
+  }
 
-  
-  
+  lang_book.value = type
+  store.fetchCategoryType(route.params.id, type_book.value, lang_book.value, oBarMinValue.value, oBarMaxValue.value)
+
+};
+
+
+
+const update_oBarValues = (e) => {
+  oBarMinValue.value = e.minValue;
+  oBarMaxValue.value = e.maxValue;
+  store.fetchCategoryType(route.params.id, type_book.value, lang_book.value, oBarMinValue.value, oBarMaxValue.value)
+
+}
+
+onMounted(() => {
   // bitta category ni chaqirish uchun get method
   store.fetchKatalog(route.params.id)
-  .then(() => {
-    activeCatolog(route.params.id)
+    .then(() => {
+      activeCatolog(route.params.id)
 
-  })
-    store.fetchKatalogPic(1)
+    })
+  store.fetchCatgoryBooks(route.params.id)
+  store.fetchCategoryType(route.params.id, type_book.value, lang_book.value, oBarMinValue.value, oBarMaxValue.value)
 
-    // kitobni type bo'ycha  so'rov
-    requestBookType('all')
+
+
 });
 
 
@@ -207,9 +351,11 @@ const selectBook = (id) => {
   font-weight: 500;
   color: #35363D;
 }
+
 .categoriaData:hover {
-cursor: pointer;
+  cursor: pointer;
 }
+
 .categoriaAll {
   font-size: 14px;
   color: #9196ad;
@@ -333,8 +479,12 @@ cursor: pointer;
   color: #9196ad;
 }
 
-.activeCategory { 
+.activeCategory {
   color: blue !important;
+}
+
+.bookTypeRequest {
+  cursor: pointer;
 }
 </style>
 
