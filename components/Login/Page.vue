@@ -20,34 +20,35 @@
           <h1>Tizimga kirish</h1>
           <h2>Tizim kirish va 1280+ kitobga kirish huquqiga ega boʻling</h2>
         </div>
-        <form @submit="onSubmit">
+        <dev>
           <div class="mb-3 mt-3 list">
             <label for="email" class="form-label"
               >Telefon raqam <span>*</span></label
             >
 
-            <Field
-              v-model="userlogin.phone"
+            <input
+              v-model="telNumber"
               type="number"
               class="form-control"
-              id="number"
               placeholder="+998 00 000 00 00"
-              name="number"
-              :rules="validateNumber"
             />
+            <span v-if="errorTel" style="color: red">{{
+              errorTel.message
+            }}</span>
           </div>
           <div class="mb-3 mt-3 list inputbox">
             <label for="password" class="form-label"
               >Parol <span>*</span></label
             >
-            <Field
-              v-model="userlogin.phone"
-              name="password"
+            <input
+              v-model="password"
               class="form-control"
               type="password"
               placeholder="parol 8 ta bo'lsin"
-              :rules="validatePassword"
             />
+            <span v-if="passwordError" style="color: red">{{
+              passwordError.message
+            }}</span>
 
             <div class="li">
               <NuxtLink to="/password" href="">Parolni unutdingizmi?</NuxtLink>
@@ -60,71 +61,59 @@
               <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
             </h2>
           </div>
-        </form>
+        </dev>
       </div>
     </div>
   </div>
 </template>
   
-  <script >
-// const store = useLogin();
+<script  setup>
+const store = useLogin();
 
-// onMounted(() =>{
-//   store.loginRegistr()
+const userlogin = ref({
+  phone: null,
+  password: null,
+});
 
-// })
+// Validatsiya
+const telNumber = ref(null);
+const errorTel = ref(null);
+const password = ref(null);
+const passwordError = ref(null);
 
-import {useLogin} from '../../store/login'
+watch(telNumber, (newValue) => {
+  errorTel.value = !isEmpty(newValue, "Telifon nomeri").item
+    ? isEmpty(newValue, "Telifon nomeri")
+    : validateLength(newValue, 12, 12, "telfon nomeri");
+});
+
+watch(password, (newValue) => {
+  console.log(password);
+  console.log("asdfasdfasdfasdfdfa");
+  passwordError.value = passwordValidator(newValue);
+});
+
+
 const content = ref(null);
 onMounted(() => {
   content.value = 1;
 });
 
-export default {
-  components: {
-    useLogin,
-  },
-  data() {
-    return {
-      userlogin: {
-        phone: null,
-        password: null,
-      },
-    };
-  },
-  methods: {
-    // onSubmit(values) {
-    //   console.log(values, null, 2);
-    // },
-    // validateEmail(value) {
-    // if (!value) {
-    //   return 'ism familyangizni kiritng';
-    // }
-
-    // const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    // if (!regex.test(value)) {
-    //   return "parol noto'g'ri";
-    // }
-    // All is good
-    // return true;
-    // },
-    validateNumber(value) {
-      console.log("telefon validate");
-      if (!value) {
-        return "telefon raqamni kiritng kiriting";
-      }
-    },
-    validatePassword(value) {
-      console.log("password validate");
-      if (!value) {
-        return "Parol kiritng";
-      }
-    },
-    senDataUser() {
-      console.log("sendDataUser");
-      login().loginUser(this.userlogin);
-    },
-  },
+const senDataUser = () => {
+  // Validatsiya
+  // telefon
+  errorTel.value = validateLength(telNumber.value, 12, 12, "telfon nomeri");
+  // password
+  // passwordError.value = passwordValidator(password);
+  let array = [errorTel.value, passwordError.value];
+  let validtaionDAta = validation(array);
+  console.log(validtaionDAta);
+  userlogin.value.phone = telNumber.value
+  userlogin.value.password = password.value
+  console.log(userlogin.value);
+  if (validtaionDAta) {
+    store.loginUser(userlogin.value);
+  }
 };
 </script>
   
