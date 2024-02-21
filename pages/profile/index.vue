@@ -8,12 +8,12 @@
                 <img :src="item.img"  alt="">
                 <div >
                     <h2>{{item.title}}</h2>
-                    <p>{{item.body.slice[0,4]}}</p>
+                    <p>{{item.body}}</p>
                 </div>
             </div>
           </div>
         </div>
-        <!-- <pre>{{ store.notifications?.result}}</pre> -->
+        <pre>{{ store.notifications?.result}}</pre>
         <!-- <pre>{{store.notifications?.result[0].parent}}sal</pre> -->
       </div>
     </div>
@@ -78,13 +78,13 @@
   }
   .main {
     width: 948px;
-    height: 325px;
+    // height: 325px
     top: 232px;
     left: 479px;
     border-radius: 10px;
     // color: #FAFAFA;
-    background-color:#FAFAFA;      
-    // background-color: red;
+    // background-color:#FAFAFA;      
+    background-color: red;
     margin: 60px 121px 283px 40px;
     
   }
@@ -106,7 +106,7 @@
       padding:4px;
       margin:18px 0px 0px 30px;
       gap: 20px;
-      // background-color: blue;
+      background-color: blue;
       width: 909px;
       height: 280px;
       grid-template-columns: repeat(auto-fit,minmax(300px,2fr));
@@ -154,7 +154,7 @@
   .img1{
       
       width: 415px;
-      height: 115px;
+      // height: 115px;
       top: 297px;
       left: 509px;
       border-radius: 10px;
