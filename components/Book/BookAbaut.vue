@@ -17,7 +17,6 @@
 </template>
 <script setup>
 
-let re
  const Props = defineProps({
  
 })

@@ -148,7 +148,7 @@
 
 
     <!-- input valiation -->
-     <input ref="emailInput" v-model="emailValue" type="email" placeholder="Email"><br>
+    <input ref="emailInput" v-model="emailValue" type="email" placeholder="Email"><br>
     <span v-if="emailError" style="color: red;">{{ emailError.message }}</span><br>
 
 
@@ -224,7 +224,7 @@ const sendMassage = () => {
 
 
   if (validtaionDAta) {
-    console.log('malumotlar yuboriladi');
+    console.log('malumotlar yuborildi');
   }
   else {
     console.log('yuborilmadi');
