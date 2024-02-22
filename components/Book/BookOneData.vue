@@ -197,8 +197,6 @@ onMounted(() => {
     </div>
     <div class="bookData">
       <div class="aboutMenu d-flex">
-
-
         <div class=""
           :style="{ 'border-bottom': bookcontent === 1 ? '2px solid #307cce' : 'none', 'padding-bottom': bookcontent === 1 ? '8px' : '0', 'color': bookcontent === 1 ? '#307cce' : 'initial' }"
           @click="bookcontent = 1">{{ $t("home.info") }}</div>

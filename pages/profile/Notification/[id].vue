@@ -1,6 +1,6 @@
 <template>
     <div v-for="(item,index) in store?.notifications?.result" :key="index">
-        <div class="div">
+        <div class="div" v-if="(route.params.id == item.id)">
             <dev @click="back.go(-1)">
                 <img class="h1" src="@/assets/profile/back.png" alt="">
                 
@@ -9,20 +9,21 @@
             <div  class="div1">
                 <div  class="div2">
                     <!-- <img style="" src="@/assets/profile/singlepage.png" alt=""> -->
-                    <img class="img1" :src="' https://beta.kytab.uz'+item.parent.image" alt="">
+                    <img class="img1" :src="'https://beta.kytab.uz'+item.parent.image" alt="">  
                 </div>
                 <h2 class="h2">{{ item.title }}</h2>
                 <p class="p">{{ item.body }}</p>
             </div>
         </div>
-        <pre></pre>
     </div>
 </template>
 
 <script setup>
 const back = useRouter();
+const route  = useRoute()
 const store = ProfileHistory()
-
+// console.log(`${back.id}`,'back')
+console.log(route.params.id,'route.param.id');
 onMounted(()=>{
   store.Notification()
 })

@@ -9,12 +9,18 @@
                 <p class="main_list_p">{{item.foiz}}</p>
                 <img class="main_list_img" style="height:2px;margin-top:8px" :src="item.stecer" alt="">
             </div>
-           
+            
         </NuxtLink>
+         <pre>{{ store.books }}</pre>
     </div>
+
 </template>
 
 <script setup>
+const store = ProfileHistory()
+onMounted(()=>{
+    store.Book()
+})
 import img1 from '../../assets/profile/AtomOdatlari.png';
 import img3 from '../../assets/profile/foiz.png';
 import start1 from '../../assets/profile/start.png';

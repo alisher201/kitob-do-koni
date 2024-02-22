@@ -7,6 +7,7 @@ export const ProfileHistory = defineStore("test", {
     profile: {},
     settings: {},
     notifications: {},
+    books: {},
     url: useRuntimeConfig().public.siteUrl,
 
 
@@ -44,6 +45,12 @@ export const ProfileHistory = defineStore("test", {
         .then((res)=>{
           this.notifications = res
         })
+    },
+    async Book(){
+      return await profile_my_books.get()
+      .then((res)=>{
+        this.books = res
+      })
     }
   }
 })

@@ -1,31 +1,78 @@
 <template>
-    <div>
-        <div class="about">
-        <p ref="ptag"><span >{{ $t("home.author") }}</span>  <span>----------</span> <span>Jeyms Klil</span></p>
-        <p class="mt-2">{{ $t("home.genre") }} <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-
-        <p  class="mt-2">{{ $t("home.year") }}<img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-
-        <p class="mt-2">{{ $t("home.ageLimit") }}<img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-        <p class="mt-2">ISBN <img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-        <p class="mt-2">{{ $t("home.pages") }}<img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-        <p class="mt-2">{{ $t("home.category") }}<img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-        <p class="mt-2">{{ $t("home.publishing") }}<img src="../../assets/contact/Line 644.png" alt="">Jeyms Klil</p>
-
+  <div>
+    <div class="about">
+      <div class="d-flex pt-2">
+          <p>{{ $t("home.author") }}</p>
+        <div class="flex-fill">
+          <hr class="hr" />
+        </div>
+          <p>{{ store?.book?.creator }}</p>
+      </div>
+      <div class="d-flex pt-2">
+          <p>{{ $t("home.genre") }}</p>
+        <div class="flex-fill">
+          <hr class="hr" />
+        </div>
+          <p>Badiy</p>
+      </div>
+      <div class="d-flex pt-2">
+          <p>{{ $t("home.year") }}</p>
+        <div class="flex-fill">
+          <hr class="hr" />
+        </div>
+          <p>{{ store?.book?.year }}</p>
+      </div>
+      <div class="d-flex pt-2">
+          <p>{{ $t("home.ageLimit") }}</p>
+        <div class="flex-fill">
+          <hr class="hr" />
+        </div>
+        <p>{{ store?.book?.age_access }}</p>
+      </div>
+      <div class="d-flex pt-2">
+          <p>ISBN</p>
+        <div class="flex-fill">
+          <hr class="hr" />
+        </div>
+        <p>{{ store?.book?.isbn }}</p>
+      </div>
+      <div class="d-flex pt-2">
+          <p>{{ $t("home.pages") }}</p>
+        <div class="flex-fill">
+          <hr class="hr" />
+        </div>
+        <p>{{store?.book?.number_of_pages}}</p>
+      </div>
+      <div class="d-flex pt-2">
+          <p>{{ $t("home.category") }}</p>
+        <div class="flex-fill">
+          <hr class="hr" />
+        </div>
+          <p>{{ store?.book?.status }}</p>
+      </div>
+      <div class="d-flex pt-2">
+          <p>{{ $t("home.publishing") }}</p>
+        <div class="flex-fill">
+          <hr class="hr" />
+        </div>
+          <p>{{ store?.book?.publishing_house }}</p>
       </div>
     </div>
+    <div>
+    </div>
+  </div>
 </template>
 <script setup>
-
- const Props = defineProps({
- 
-})
-// const refs = toRefs()
+// const Props = defineProps({});
+const store = usePayment()
 
 </script>
 <style scoped>
 .about {
   padding: 0 32px 32px 32px;
-  color: #858D96;}
-    
+  color: #858d96;
+}
+hr.hr {
+  border-top: 1px dashed #000000;
+}
 </style>
