@@ -2,52 +2,60 @@
   <div>
     <div class="wrapper">
       <h1 class="wrapper_h1">Profile sozlamalar</h1>
-      <div class="main">
+      <div class="main"  :key="index">
         <div class="main_div">
           <h2>Shaxsiy ma’lumotlar</h2>
           <div class="main_section">
-            <img src="../../assets/profile/doira.png" alt="" />
-            
+            <img v-if="(!form.image)" src="../../assets/profile/doira.png" alt="" />
+            <img v-else :src="'https://kytabshop.al-raqam.com/' + form.image" alt="" />
+          </div>
+          <div class="main_image">
+            <label  for="myfile">Select a image</label>
+            <input type="file" @change="fileUplaod" style="display: none;" id="myfile" >
           </div>
         </div>
         <div>
           <img  v-show="content == null"  style="margin:31px 0px 0px 540px; display:none " src="../../assets/profile/Vector.png" alt="">
-            <form :class="{'content' : content==1}" @click="content = 1" action="" class="form">
+            <form :class="{'content' : content==1}" @click="content = 1"  class="form" >
                 <div class="d-flex">  
                     <div class="mt-1">
-                         <label for="email" class="form-label">Ism Familiya:</label>
-                         <input type="text" class="form-control form_input " id="email" placeholder="Enter name" name="email">
+                         <label for="email" class="form-label" >Ism Familiya:</label>
+                         <input v-model="form.full_name" type="text" class="form-control form_input " id="full_name" placeholder="Enter name" name="full_name" >
+      
                       </div>
                      <div style="margin:0px 0px 0px 20px" class="mt-1">
                           <label for="email" class="form-label">Tug'ulgan sana </label>
-                         <input type="date" class="form-control form_input" id="email" placeholder="Enter date" name="email">
+                         <input v-model="form.birth_date" type="date" class="form-control form_input" id="date" placeholder="Enter date" name="birth_date">
                       </div>
                 </div>
                 <div class="d-flex">  
                     <div class="mt-1">
                          <label for="text" class="form-label">Telefon raqam</label>
-                         <input type="text" class="form-control form_input " id="email" placeholder="Telefon raqam" name="email">
+                         <input v-model="form.phone" type="text" class="form-control form_input " id="email" placeholder="Telefon raqam" name="phone">
                       </div>
                      <div style="margin:0px 0px 0px 20px" class="mt-1">
                           <label for="text" class="form-label">Jinsi</label>
-                          <input type="text" class="form-control form_input" id="email" placeholder="Jinsi" name="email">
-                         
+                          <!-- <input v-model="form.gender" type="text" class="form-control form_input" id="email" placeholder="Jinsi" name="gender"> -->
+                          <select v-model="form.gender" class="form-select form-control form_input" id="sel1" name="sellist1">
+                            <option>male</option>
+                            <option>female</option>
+                          </select>
                       </div>
                 </div>
                 <div class="mt-1">
                     <label for="text" class="form-label">Email</label>
-                    <input type="text" class="form-control" id="email" placeholder="email" name="email">
+                    <input v-model="form.email" type="text" class="form-control" id="email" placeholder="email" name="email">
                 </div>
                 <div class="mt-1">
                     <label for="text" class="form-label">Manzil</label>
-                    <input type="text" class="form-control" id="email" placeholder="Manzil" name="email">
+                    <input v-model="form.address" type="text" class="form-control" id="email" placeholder="Manzil" name="address">
                 </div>
                 <div v-show="content == 1" class="mt-3 button" >
                     <button>Bekor qilish</button>
-                    <button>O'zgartirishni saqlash</button>
+                    <button type="button" @click="send" >O'zgartirishni saqlash</button>
                 </div>
             </form> 
-           
+           <!-- <pre>{{ store?.settings }}</pre> -->
         </div>
       </div>
       <div>
@@ -60,23 +68,21 @@
             <div :class="{'template' : template==1}" @click="template = 1" class="d-flex" style="justify-content:space-around">  
                 <div class="mt-1">
                     <label for="email" class="label">Joriy parol</label>
-                    <input type="text" class="form-control input " id="email" placeholder="Joriy parol" name="email">
+                    <input v-model="forms.old_password" type="text" class="form-control input " id="email" placeholder="Joriy parol" name="old_pasword">
                 </div>
                 <div style="margin:0px 0px 0px 0px" class="mt-1">
                     <label for="email" class="label">Yangi parol </label>
-                    <input type="text" class="form-control input" id="email" placeholder="yangi parol" name="email">
+                    <input v-model="forms.new_password" type="text" class="form-control input" id="email" placeholder="yangi parol" name="new_password">
                 </div>
                 <div class="mt-1" >
                     <label for="email" class="label">Yangi parol</label>
-                    <input type="text" class="form-control input " id="email" placeholder="yangi parol" name="email">
+                    <input v-model="forms.confirm_new_password" type="text" class="form-control input " id="email" placeholder="yangi parol" name="confirm_password">
                 </div>
-               
             </div>
             <div v-show="template == 1" class="mt-3 button" style="margin:0px 25px 0px 0px" >
                 <button>Bekor qilish</button>
-                <button>O'zgartirishni saqlash</button>
+                <button type="button" @click="Check">O'zgartirishni saqlash</button>
             </div>  
-          
         </form>
       </div>
     </div>
@@ -84,9 +90,53 @@
 </template>     
 
 <script setup>
+let form = ref({
+  full_name : null,
+  phone : null,
+  email : "",
+  address : "",
+  image : null,
+  birth_date : "",
+  gender :"",
+})
+let forms = ref({
+  old_password : null,
+  new_password : null,
+  confirm_new_password: null
+})
 
+const store = ProfileHistory()
+// console.log(store,'salomat');
 const content = ref(null)
 const template = ref(null)
+
+// console.log(store?.settings,'setting');
+const send = async () =>{   
+    await store.Settings(form.value);  
+}
+const Check = async () =>{
+  if(forms.value.new_password == forms.value.confirm_new_password){
+    console.log('eroro1')
+    await store.Password(forms.value);
+  }
+  else{
+    console.log('error');
+  }
+}
+const fileUplaod = async (e) => {
+  const form = new FormData();
+  form.append('image', e.target.files[0]);
+  await store.Images(form)
+}
+
+onMounted(()=> {
+  store.Setting()
+  .then(()=>{
+    // form.value.phone = store.settings.phone
+    form.value = store.settings
+    console.log(store.settings,'store.setting');
+  })
+})
 
 </script>
 
@@ -97,7 +147,6 @@ const template = ref(null)
   top: 232px;
   left: 479px;
   background-color: #FAFAFA;        
-//   background-color: red;
   margin: 40px 121px 171px 30px;
 }
 .wrapper_h1 {
@@ -139,6 +188,18 @@ const template = ref(null)
   color: #010416;
   padding-top: 18px;
 }
+.main_image{
+  display: flex;
+  justify-content: center;
+}
+.main_image label{
+  // margin-left: 40px;
+  background-color: rgb(92, 92, 226);
+  color:white;
+  padding:3px;
+  border-radius: 3px;;
+  align-items: center;
+}
 .main_section {
   width: 150px;
   height: 150px;
@@ -149,13 +210,15 @@ const template = ref(null)
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 30px 152px 20px;
+  margin: 20px 30px 0px 20px;
+  padding:20px
 }
 .main_section img {
-  width: 106px;
-  height: 106px;
+  width: 100%;
+  height: 100%;
   top: 379px;
   left: 551px;
+  border-radius: 7px;
 }
 .form-label{
   width: 161px;
@@ -177,7 +240,6 @@ const template = ref(null)
     top: 379px;
     left: 709px;
     border-radius: 5px;
-    // border: 2px solid rgb(62, 106, 209);
     background-color:#FFFFFF;
 }
 .button{
@@ -229,8 +291,6 @@ const template = ref(null)
 .label{
   width: 121px;
   height: 40px;
-//   top: 315px;
-//   left: 529px;
   font-family: Manrope;
   font-size: 16px;
   font-weight: 600;
@@ -246,7 +306,6 @@ const template = ref(null)
     top: 379px;
     left: 709px;
     border-radius: 5px;
-    // border: 2px solid rgb(62, 106, 209);
     background-color:#FFFFFF;
 }
 </style>

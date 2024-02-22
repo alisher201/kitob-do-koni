@@ -224,7 +224,7 @@ const sendMassage = () => {
 
 
   if (validtaionDAta) {
-    console.log('malumotlar yuboriladi');
+    console.log('malumotlar yuborildi');
   }
   else {
     console.log('yuborilmadi');

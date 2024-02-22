@@ -9,7 +9,6 @@ export const jwtAuth = (token) => {
       console.error(error)
     }
   })
-
 }
 
 

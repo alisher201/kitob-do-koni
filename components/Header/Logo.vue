@@ -5,21 +5,13 @@
       :style="{ display: inputFocus ? 'block' : 'none' }" @click="focusNone">
     </div>
     <div class="containerLogo d-flex align-items-center">
-      <div
-        class="container d-flex align-items-center justify-content-between px-0"
-      >
+      <div class="container d-flex align-items-center justify-content-between px-0">
         <span class="py-0 pl-5">
           <img src="~/assets/kytabLogo.png" alt="site-logo" title="site-logo" />
         </span>
 
-        <button
-          class="btn btnCategory ms-3"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseExample"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-        >
+        <button class="btn btnCategory ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+          aria-expanded="false" aria-controls="collapseExample">
           <img src="~/assets/contact/category.png" alt="" /> Katalog
         </button>
         <!-- {{ inputFocus }}
@@ -159,46 +151,18 @@ const selectData = (data) => {
   store.searchValue = null
 
   searchProduct()
+
+
 }
-
-
 const profile = () => {
-  let user = false;
-  if (user) {
-    router.push("/profile");
-  } else {
-    router.push("/register");
+  let get = localStorage.getItem("type")  
+  if (get =="guest") {
+    router.push('/register')
   }
-};
-
-const unwatch = watch(
-  () => router.currentRoute.value.path,
-  (newVal) => {
-    // console.log(newVal);
-
-    watchedValue.value = newVal;
-
-    if (watchedValue.value === "/basket") {
-      karzinka.style.display = "none";
-      karzinka2.style.display = "block";
-    } else {
-      karzinka.style.display = "block";
-      karzinka2.style.display = "none";
-    }
-
-    if (watchedValue.value === "/favourite") {
-      dataCursor.classList.add("active");
-    } else {
-      dataCursor.classList.remove("active");
-    }
-
-    if (watchedValue.value === "/profile") {
-      dataProfile.classList.add("active");
-    } else {
-      dataProfile.classList.remove("active");
-    }
+  else {
+    router.push('/profile')
   }
-);
+}
 
 watch(searchbooks, (newVal) => {
   // store.searchValue = searchbooks.value
@@ -287,12 +251,7 @@ onMounted(() => {
   }});
 </script>
 
-<style scoped>
-/* @media only screen and (max-width: 768px) {
-  .navbar-brand {
-    margin-left: 50px;
-  }
-} */
+<style scoped >
 
 .active {
   fill: #35363d;
@@ -330,16 +289,5 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 6px;
-}
-
-::placeholder {
-  font-size: 15px;
-}
-
-.colapseContainer {
-  position: absolute;
-  z-index: 999;
-  background: #fff;
-  width: 100%;
 }
 </style>
