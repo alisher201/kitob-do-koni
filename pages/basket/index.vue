@@ -290,6 +290,7 @@ watch(
   basketProduct,
   (newVal, oldVal) => {
     calulatorProduct(newVal);
+    console.log(newVal);
     select(newVal);
     filterItems(newVal);
   },

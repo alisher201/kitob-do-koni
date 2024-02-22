@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <div class="container mb-5 pb-5 px-0">
       <h4 class="mt-4" style="font-weight: 700">{{ $t("home.processing") }}</h4>
 
@@ -217,6 +216,7 @@ import regions from "../../assets/contact/regions.png";
 import express from "../../assets/contact/express.png";
 let peyment = ref(null);
 let delevireyAdress = ref(null)
+const route = useRoute();
 const peymentType = [
   { imgs: payme },
   { imgs: click },

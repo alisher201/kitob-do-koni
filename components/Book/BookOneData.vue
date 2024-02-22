@@ -1,11 +1,15 @@
 <script setup>
+// import { toast } from 'vue3-toastify';
+
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
+
 
 
 const store = usePayment()
 const route = useRoute()
 const url = useRuntimeConfig().public.bookUrl
+const siteUrl = useRuntimeConfig().public.siteUrl
 let comitCount = ref(0)
 let ratings = ref(0)
 let type = ref([])
@@ -13,6 +17,15 @@ const storeBasket = useBasketStore()
 let bookType = ref(1)
 let is_book = ref(false)
 let comentsData = ref([])
+let routePath = route.path
+let copyPath = siteUrl + routePath
+
+const copyLink = () => {
+  navigator.clipboard.writeText(copyPath)
+  // console.log(copyPath);
+
+}
+
 
 
 let bookcontent = ref(1)
@@ -47,29 +60,20 @@ const ordrItem = () => {
   router.push('/OrderItem')
 }
 const fetchBookOne = () => {
+  refresh()
+
+}
+const refresh = () => {
   store.fetch_book_one(route.params.id)
     .then(() => {
-      comentsData.value = [...store.book.reviews, ...store.book.shop_reviews]
-
-    })
-}
-
-const basketAdd = (id, type) => {
-  storeBasket.basketAdd({ product_id: id, type: type.length ? 'book' : 'product' })
-}
-
-onMounted(() => {
-  store.fetch_book_one(route.params.id)
-    .then(() => {
-      //commetsData ...store.book.reviews and store.book.shop_reviews
 
       comentsData.value = [...store.book.reviews, ...store.book.shop_reviews]
 
 
-      let elementLength = store.book?.reviews.length
+      let elementLength = comentsData.value.length
       let sum = 0
-      if (store.book && store.book.reviews && store.book.reviews.length > 0) {
-        store.book?.reviews.forEach(element => {
+      if (store.book) {
+        comentsData.value.forEach(element => {
           let ratingData = element.rating
           sum += ratingData
         })
@@ -82,6 +86,7 @@ onMounted(() => {
         store.book.type.forEach(item => {
           type.value.push(item.type)
           if (item.type) {
+            console.log(is_book.value);
             is_book.value = true
           }
         })
@@ -92,6 +97,17 @@ onMounted(() => {
     .catch(error => {
       console.error('Error fetching book:', error);
     });
+}
+
+const basketAdd = (id, type) => {
+  storeBasket.basketAdd({ product_id: id, type: type.length ? 'book' : 'product' })
+    .then(() => {
+      alert('Siz savatga qo`shildi')
+    })
+}
+
+onMounted(() => {
+  refresh()
 })
 </script>
 
@@ -128,8 +144,11 @@ onMounted(() => {
             <h3 class="bookTitle">{{ store.book?.name }} </h3>
           </div>
           <div class="col-4 d-flex align-items-center justify-content-end pe-0">
+            <!-- like img  -->
             <img src="../../assets/contact/oneBookLIke.png" alt="" class="me-2" />
-            <img src="../../assets/contact/download.png" alt="" />
+
+            <!-- copy img -->
+            <img src="../../assets/contact/download.png" alt="" @click="copyLink" />
           </div>
         </div>
         <div class="d-flex align-items-center">
@@ -156,17 +175,17 @@ onMounted(() => {
             <!-- booktype -->
 
             <div class="d-flex justify-content-between">
-              <button class="booktype btn border px-3" v-if="type.includes('paper')"
+              <button class="booktype btn border px-3" v-if="type.includes('paper')" @click="bookType = 1"
                 :class="{ 'bookTypeActive': bookType == 1 }">
                 <img src="@/assets/contact/book-open.png" alt="" /><small class="ms-2">Book</small>
               </button>
 
-              <button class="btn border px-4 booktype" v-if="type.includes('audio')"
-                :class="{ 'abobookTypeActiveutBook': bookType == 2 }">
+              <button class="btn border px-4 booktype" v-if="type.includes('audio')" @click="bookType = 2"
+                :class="{ 'bookTypeActive': bookType == 2 }">
                 <img src="@/assets/contact/headphones.png" alt="" /><small class="ms-2">Audio</small>
               </button>
 
-              <button class="btn border px-3 booktype" v-if="type.includes('ebook')"
+              <button class="btn border px-3 booktype" v-if="type.includes('ebook')" @click="bookType = 3"
                 :class="{ 'bookTypeActive': bookType == 3 }">
                 <img src="@/assets/contact/ebookk.png" alt="" /><small class="ms-2">eBook</small>
               </button>
@@ -218,6 +237,7 @@ onMounted(() => {
       <div v-show="bookcontent == 2">
         <h1>ma'lumot yo'q</h1>
       </div>
+      {{ ratings.toFixed(1) }}
 
       <div class="comments" v-if="bookcontent == 3">
         <BookComments :comments="comentsData" :ratings="ratings.toFixed(1)" :commitCount="comitCount" :is_books="is_book"

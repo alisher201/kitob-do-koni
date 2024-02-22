@@ -14,7 +14,7 @@
           </div>
 
           <!-- umumi ovozlar soni -->
-          <p class="mt-2">{{ $t("home.votes") }} 23</p>
+          <p class="mt-2">{{ $t("home.votes") }} {{ Props.comments.length }}</p>
         </div>
 
         <hr class="mb-0" />

@@ -44,7 +44,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
       const refreshToken = localStorage.getItem('refreshToken')
 
       if (jwtToken) {
-        options.headers = { Authorization: `Bearer ${jwtToken}`,
+        options.headers = { Authorization: `Be arer ${jwtToken}`,
         refresh: refreshToken
        }
         
