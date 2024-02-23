@@ -1,13 +1,20 @@
-import { defineStore } from "pinia";
-import { useRuntimeConfig } from "nuxt/app";
-import { cart, getCart } from "../utils/basket";
+import {
+  defineStore
+} from "pinia";
+import {
+  useRuntimeConfig
+} from "nuxt/app";
+import {
+  cart,
+  getCart
+} from "../utils/basket";
 
 export const useBasketStore = defineStore("basket", {
   state: () => ({
     url: useRuntimeConfig().public.siteUrl,
-    basket:'data'
+    basket: null
   }),
-  
+
   actions: {
     // async basketData() {
     //     try {
@@ -18,17 +25,17 @@ export const useBasketStore = defineStore("basket", {
     //       console.error("Error fetching data:", error);
     //     }
     //   }
-      async basketAdd(data){
-        return await cart.create(data)
-        .then((res) => {
-          this.basket = res;
-        })
-     },
-     async basketGet(data) {
+    async basketAdd(data) {
+      return await cart.create(data)
+    },
+    async basketDelete(data) {
+      return await cartDelete.delate(data)
+    },
+    async basketGet(data) {
       return await getCart.get(data)
-      .then((res) => {
-        this.basket = res;
-      })
-     }
+        .then((res) => {
+          this.basket = res.result;
+        })
+    }
   }
 });

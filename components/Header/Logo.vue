@@ -167,38 +167,30 @@ const profile = () => {
 watch(searchbooks, (newVal) => {
   // store.searchValue = searchbooks.value
   sendRequest();
-
-
 });
 
 // Bekintga so'rovni yuborish funktsiyasi
 const sendRequest = () => {
   // store.fechSearchTop()
 
-  store.searchData(searchbooks.value)
+  store
+    .searchData(searchbooks.value)
 
     .then(() => {
       // console.log(store.productSearch.result.length > 0 ? true : false);
       // store.serchResult = res
       if (store.productSearch.result.length == 0) {
         // searchList.value = false
-        searchList.value = false
-        store.searchValue = searchbooks.value
-        console.log('gag');
-
-      }
-      else {
-        store.searchValue = searchbooks.value
-        searchList.value = true
-
+        searchList.value = false;
+        store.searchValue = searchbooks.value;
+        console.log("gag");
+      } else {
+        store.searchValue = searchbooks.value;
+        searchList.value = true;
 
         if (!searchbooks.value) {
-          store.productSearch = null
-
-
+          store.productSearch = null;
         }
-
-
       }
 
     })
@@ -206,40 +198,33 @@ const sendRequest = () => {
 
 };
 const searchProduct = () => {
-  focusNone()
+  focusNone();
   if (searchbooks.value?.length > 3) {
     // qidruvlarni tarixia uchun qidirilgan productlarni  post qiib becendga jo'natish
-    store.createHistoryBook({ word: searchbooks.value })
+    store.createHistoryBook({ word: searchbooks.value });
     // book apisidan ma'lumot izlash
-    store.fetchBookSearch(searchbooks.value)
-      .then(() => {
-        // product apisidan ma'lumotlar izlash 
-        store.searchProductData(searchbooks.value)
+    store.fetchBookSearch(searchbooks.value).then(() => {
+      // product apisidan ma'lumotlar izlash
+      store
+        .searchProductData(searchbooks.value)
 
-          .then(() => {
-            if (store.productSearch?.result) {
-              // store.serchResult = null
-              searchList.value = false
-              store.searchValue = null
-              // store.serchResult = res
-              // console.log('dfadfsa');
-              router.push('/search')
-            }
-          })
-
-      })
-
-
-
+        .then(() => {
+          if (store.productSearch?.result) {
+            // store.serchResult = null
+            searchList.value = false;
+            store.searchValue = null;
+            // store.serchResult = res
+            // console.log('dfadfsa');
+            router.push("/search");
+          }
+        });
+    });
   }
-
-
-}
+};
 const focusNone = () => {
-  document.body.style.overflow = 'visible'
-  inputFocus.value = false
-}
-
+  document.body.style.overflow = "visible";
+  inputFocus.value = false;
+};
 
 onMounted(() => {
   const jwtToken = localStorage.getItem('jwtToken')

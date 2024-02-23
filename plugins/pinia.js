@@ -3,6 +3,7 @@ import{useTestTStore} from '~/store/home'
 import {ProfileHistory} from '~/store/profile'
 import {useLogin} from '~/store/login'
 
+
 export default defineNuxtPlugin(({ $pinia }) => {
   const mainStore = useMainStore($pinia);
   const testTStore = useTestTStore($pinia);
