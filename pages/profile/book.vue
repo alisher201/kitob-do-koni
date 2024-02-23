@@ -7,10 +7,15 @@
           <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">Audio kitob</div>
         </div>
         <div v-if="(item.type == 'ebook')" v-show="content == 1"><TableBook/></div>
-        <div  v-else v-show="content == 2"><TableNotfound/></div>
-        <pre style="background-color:white  ">{{ item  }}</pre>
+        <div v-else v-show="content == 1"><TableNotfound/></div>
 
+        <div  v-if="(item.type == 'audio')" v-show="content == 2"><TableNotfound/></div>
+        <div  v-else v-show="content == 2"><TableNotfound/></div>
+        
+        <!-- <pre style="background-color:white  ">{{ item  }}</pre> -->
+        
       </div>
+
     </div>
   </template>
   
@@ -28,7 +33,7 @@
   <style lang="scss" scoped>
   .main {
     width: 920px;
-    height: 226px;
+    height: 500px;
     top: 232px;
     left: 30px;
     background-color: #fafafa;
