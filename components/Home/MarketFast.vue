@@ -74,7 +74,7 @@ import { useRuntimeConfig } from "nuxt/app";
 
 const store = useBasketStore();
 
-const url = useRuntimeConfig().public.siteUrl;
+// const url = useRuntimeConfig().public.siteUrl;
 const urlimg = useRuntimeConfig().public.bookUrl;
 const props = defineProps({
   title: String,
