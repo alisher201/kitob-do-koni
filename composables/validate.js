@@ -1,4 +1,3 @@
-
 // email validation
 export const validateEmail = (emailValue) => {
 
@@ -76,8 +75,10 @@ export const validateLength = (value, minLength, maxLength, key) => {
 
 // pasword validation
 export const passwordValidator = password => {
-    const regExp = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/
-    const validPassword = regExp.test(password)
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+
+    // const regExp = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*()]).{8,}/
+    const validPassword = regex.test(password)
     if (!validPassword) {
         return {
             item: false,
@@ -86,7 +87,8 @@ export const passwordValidator = password => {
     }
     else {
         return {
-            item: true
+            item: true,
+            message: null
         }
     }
 }

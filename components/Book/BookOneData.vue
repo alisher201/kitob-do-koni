@@ -112,9 +112,9 @@ onMounted(() => {
           <img :src="url + '/' + store.book?.image" alt="" />
         </div>
 
-        <div class="showImgs" v-if="store.book && store.book.gallery">
-          <div class="showImg" v-for="item in store.book?.gallery.slice(0, 4)">
-            <img :src="url + '/' + item?.path" alt="" />
+        <div class="showImgs">
+          <div class="showImg" v-for="item in store.book?.gallery" :key="item">
+            <img :src="url + '/' +  item.path" alt="" />
           </div>
 
 

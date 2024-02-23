@@ -69,7 +69,7 @@
   
 <script  setup>
 const store = useLogin();
-
+const router = useRouter();
 const userlogin = ref({
   phone: null,
   password: null,
@@ -113,6 +113,7 @@ const senDataUser = () => {
   console.log(userlogin.value);
   if (validtaionDAta) {
     store.loginUser(userlogin.value);
+    router.push('/')
   }
 };
 </script>

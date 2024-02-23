@@ -53,7 +53,7 @@ export const useTestTStore = defineStore("home", {
           localStorage.setItem('refreshToken', res.result.refresh_token)
         })
     },
-
+    
     // search top
     async fechSearchTop() {
       return await searchTop.get()
@@ -77,7 +77,7 @@ export const useTestTStore = defineStore("home", {
     async createHistoryBook(data) {
       return await search.create(data)
     },
-
+        
     // delate history
     async dealteSearch(id) {
       return await search.delate(id)
