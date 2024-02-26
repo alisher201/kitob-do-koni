@@ -1,18 +1,26 @@
 <template>
-    <div class="wrapper">
-        <NuxtLink to="/reading" class="main" v-for="(item,ind) in data" :key="ind">
-            <img :src="item.img" alt="">
-            <h2>{{item.name}}</h2>
-            <p class="main_p">{{item.author}}</p>
-            <img class="main_img" :src="item.start" alt="">
-            <div class="main_list">
-                <p class="main_list_p">{{item.foiz}}</p>
-                <img class="main_list_img" style="height:2px;margin-top:8px" :src="item.stecer" alt="">
-            </div>
-            
-        </NuxtLink>
-         <pre>{{ store.books }}</pre>
+    <div>
+
+    <div style="background-color:white;">
+        <div class="wrapper" >
+            <NuxtLink to="/reading" class="main"  v-for="(item,index) in store.books.result" :key="index">
+                <div class="">
+                    <img :src="' https://beta.kytab.uz'+ item.book.image" alt="">
+                    <h2>{{item.book.name}}</h2>
+                    <p class="main_p">{{item.book.author.fio}}</p>
+                    <img class="main_img" :src="item.start" alt="">
+                    <div class="main_list">
+                        <p class="main_list_p">{{item.foiz}}</p>
+                        <img class="main_list_img" style="height:2px;margin-top:8px" :src="item.stecer" alt="">
+                    </div>
+                </div>
+                
+            </NuxtLink>
+        </div>
+        <!-- <pre style="">{{ store.books }}</pre> -->
     </div>
+    </div>
+
 
 </template>
 
@@ -75,7 +83,7 @@ const data = [
 <style lang="scss" scoped>
 .wrapper{
     display: flex;
-    background-color:#FAFAFA
+    background-color:#FAFAFA;
 }
 .main{
     width: 840px;
@@ -83,9 +91,13 @@ const data = [
     top: 232px;
     // left: 479px;
     border-radius: 10px;
-    background-color:#FAFAFA;
-    // background-color: red;
+    // background-color:#FAFAFA;
+    background-color: red;
     margin-left:30px;
+}
+img{
+    width: 50px;
+    height: 50px;
 }
 .main_list{
     display: flex;

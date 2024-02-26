@@ -6,9 +6,27 @@
           <img src="../../assets/profile/back1.png" alt="" />
           <h1>salom</h1>
         </div>
-        <div class="section_div">
-          <img class="mx-3" src="../../assets/profile/setting.png" alt="" />
-          <img src="../../assets/profile/stecer.png" alt="" />
+        <div class="section_div d-flex">
+          <div>
+            <img
+              class="mx-3 cursor-pointer"
+              @click="toggleDropdown"
+              src="../../assets/profile/setting.png"
+              alt=""
+            />
+            <div
+              v-show="isDropdownOpen"
+              id="myDropdown"
+              class="dropdown-content rounded mt-3 mr-2"
+            >
+              <p>Yorug'lik</p>
+              <p>Shrift</p>
+              <p>Hajmi</p>
+            </div>
+          </div>
+          <div>
+            <img src="../../assets/profile/stecer.png" alt="" />
+          </div>
         </div>
       </div>
     </div>
@@ -75,6 +93,11 @@
   </section>
 </template>
 <script setup>
+const isDropdownOpen = ref(false);
+
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
 let swiper = null;
 const slides = [
   {
@@ -107,6 +130,21 @@ const onSwiper = (sw) => {
 };
 </script>
 <style>
+.dropdown-content {
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 160px;
+  
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+.dropdown-content p {
+  color: black;
+  /* padding: 12px 16px; */
+  text-decoration: none;
+  display: block;
+}
 .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
   background-color: #007bff; /* Adjust the color as needed */
 }
