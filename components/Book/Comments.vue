@@ -56,12 +56,12 @@
           <div class="d-flex">
             <div class="main_img">
               <img v-if="items.user?.photo" :src="url + '/' + items.user?.photo" alt="" class="commentImg" />
-              <h1 v-else>M</h1>
+              <h1 v-else style="color: #fff; font-weight: 700;">{{ items.user?.name ? items.user?.name.substring(0, 1).toUpperCase() : items.user?.full_name.substring(0, 1).toUpperCase() }}</h1>
 
             </div>
             <!-- <pre>{{ items.comment}}</pre> -->
             <div class="px-4">
-              <span>{{ items.user?.name }} <br />
+              <span>{{ items.user?.name ? items.user?.name : items.user?.full_name }} <br />
                 <span v-for="(item, index) in stars" :key="index" class="comentsList">
                   <img :src="item.img" alt="" v-if="item.id <= items.rating" />
 

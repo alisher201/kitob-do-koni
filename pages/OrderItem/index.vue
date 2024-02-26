@@ -136,6 +136,7 @@
             v-for="(item, idx) in peymentType"
             :key="idx"
             :style="{ gridArea: `cardItem${idx + 1}` }"
+            @click="peyment = idx"
           >
             <input
               class="form-check-input"

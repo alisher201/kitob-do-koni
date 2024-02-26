@@ -235,7 +235,6 @@ onMounted(() => {
       <div v-show="bookcontent == 2">
         <h1>ma'lumot yo'q</h1>
       </div>
-      {{ ratings.toFixed(1) }}
 
       <div class="comments" v-if="bookcontent == 3">
         <BookComments :comments="comentsData" :ratings="ratings.toFixed(1)" :commitCount="comitCount" :is_books="is_book"
