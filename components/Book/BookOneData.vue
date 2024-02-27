@@ -2,7 +2,6 @@
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
 
-
 const store = usePayment()
 const route = useRoute()
 const url = useRuntimeConfig().public.bookUrl
@@ -42,8 +41,12 @@ const bookImgs = [
 
 ];
 
+
 const ordrItem = () => {
   const router = useRouter()
+  localStorage.getItem('params',route.params.id)
+  console.log(route.params.id);
+  // localStorage.setItem()
   router.push('/OrderItem')
 }
 const fetchBookOne = () => {

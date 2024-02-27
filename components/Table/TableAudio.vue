@@ -1,7 +1,8 @@
 <template>
-    <div style="background-color:white;">
+    <div>
+     <div style="background-color:white;">
         <div class="wrapper " >
-            <NuxtLink to="/reading" class="main col-sm-12"  v-for="(item,index) in store.books.result" :key="index">
+            <NuxtLink to="/audio" class="main col-sm-12"  v-for="(item,index) in store.books.result" :key="index">
                 <div class="main_card">
                     <img :src="' https://beta.kytab.uz'+ item.book.image" alt="">
                     <h2>{{item.book.name}}</h2>
@@ -17,11 +18,10 @@
                         <img class="main_list_img" style="height:2px;margin-top:8px" :src="item.stecer" alt="">
                     </div>
                 </div>
-                
             </NuxtLink>
         </div>
+     </div>
     </div>
-    
 </template>
 
 <script setup>
@@ -29,7 +29,6 @@ const store = ProfileHistory()
 onMounted(()=>{
     store.Book()
 })
-
 </script>
 
 <style lang="scss" scoped>

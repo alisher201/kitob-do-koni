@@ -1,51 +1,31 @@
 <template>
   <div>
-    
     <div class="container mb-5 pb-5 px-0">
       <h4 class="mt-4" style="font-weight: 700">{{ $t("home.processing") }}</h4>
-
       <div class="d-flex justify-content-between">
         <div class="OrderProcessing">
           <div class="d-flex">
             <div class="processingNumber">1</div>
             <p class="yourData ms-2">{{ $t("home.yourInfo") }}</p>
           </div>
-
           <div class="processingData mt-3">
             <div>
-              <label for="" class="processingLabel mb-1"
+                <label for="" class="processingLabel mb-1"
                 >{{ $t("home.surname") }}<span>*</span></label
               >
-              <input
-                type="text"
-                class="form-control"
-                :placeholder="$t('home.entersurname')"
+              <input  type="text"  class="form-control"  :placeholder="$t('home.entersurname')"
               />
             </div>
             <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.name") }}<span>*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                :placeholder="$t('home.entername')"
-              />
+              <label for="" class="processingLabel mb-1">{{ $t("home.name") }}<span>*</span></label>
+              <input type="text" class="form-control" :placeholder="$t('home.entername')" />
             </div>
             <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.phone") }}<span>*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                :placeholder="$t('home.enternum')"
-              />
+              <label for="" class="processingLabel mb-1">{{ $t("home.phone") }}<span>*</span></label>
+              <input  type="text"  class="form-control"  :placeholder="$t('home.enternum')"/>
             </div>
             <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.city") }}<span>*</span></label
-              >
+              <label for="" class="processingLabel mb-1">{{ $t("home.city") }}<span>*</span></label>
               <select class="form-select" aria-label="Default select example">
                 <option selected>Open this select menu</option>
                 <option value="1">One</option>
@@ -54,9 +34,7 @@
               </select>
             </div>
             <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.district") }}<span>*</span></label
-              >
+              <label for="" class="processingLabel mb-1">{{ $t("home.district") }}<span>*</span></label>
               <select class="form-select">
                 <option selected><small>Open this select menu</small></option>
                 <option value="1">One</option>
@@ -65,22 +43,13 @@
               </select>
             </div>
             <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.address") }}<span>*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                :placeholder="$t('home.enteraddress')"
-              />
+              <label for="" class="processingLabel mb-1">{{ $t("home.address") }}<span>*</span></label>
+              <input type="text" class="form-control" :placeholder="$t('home.enteraddress')"/>
             </div>
           </div>
           <div class="mt-3">
             <label for="" class="processingLabel mb-1">{{ $t("home.courier") }}</label>
-            <input
-              type="text"
-              class="form-control"
-            />
+            <input type="text" class="form-control"/>
           </div>
         </div>
         <!-- buyurtma haqida -->
@@ -200,6 +169,7 @@
         </div>
       </div>
     </div>
+    <pre>{{ store.invoices }}</pre>
   </div>
 </template>
 <script setup>
@@ -217,6 +187,18 @@ import regions from "../../assets/contact/regions.png";
 import express from "../../assets/contact/express.png";
 let peyment = ref(null);
 let delevireyAdress = ref(null)
+
+const form = ({
+  full_name:{},
+  
+
+})
+
+const store = OrderPayment()
+onMounted(()=>{
+  store.Order_invoices()
+})
+
 const peymentType = [
   { imgs: payme },
   { imgs: click },
