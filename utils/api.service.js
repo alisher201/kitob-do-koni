@@ -31,11 +31,14 @@ export class FechData {
       method: 'DELETE',
     })
   }
+  
+  deleteAll = () => {
+    return $fetch(`${url}/${this.api}`, {
+      method: 'POST'
+    })
+  }
   // GetOneById
   getOne = (id) => {
     return $fetch(`${url}/${this.api}/${id}`)
   }
 }
-
-
-

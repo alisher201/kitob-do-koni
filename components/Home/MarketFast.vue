@@ -61,6 +61,7 @@
           </div>
           <div class="ps-2">
             <small class="author">{{ item.description }}</small>
+            {{ item.id }}
           </div>
           <small class="stats ms-2">5,0</small>
           <span class="starsNumbers">(32)</span>
@@ -83,7 +84,6 @@ const props = defineProps({
     default: () => [],
   },
 });
-// console.log(bookImgs);
 
 let swiper = null;
 

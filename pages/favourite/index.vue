@@ -5,19 +5,38 @@
       <p style="font-size: 18px; color: #35363d">
         {{ $t("home.favorites.interested") }}
       </p>
-
-      <div class="bookGrid mt-4">
+      <div
+        v-if="empty == 0"
+        class="d-flex align-items-center flex-column my-5"
+        style="height: 500px; justify-content: center"
+      >
+        <div class="d-flex align-items-center">
+          <strong role="status">Loading...</strong>
+          <div class="spinner-border ms-auto" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div
+        v-else-if="empty == 1"
+        class="d-flex align-items-center flex-column my-5"
+      >
+        <img src="../../assets/contact/emptyFavourite.png" alt="" />
+        <h4 style="font-weight: 600">Sevimli kitoblaringiz shu yerda bo'ladi</h4>
+        <small>
+          <small style="color: #1c5793"> " Bosh sahifa "</small>
+          <small style="color: #9196ad">bo'limiga qarang</small>
+        </small>
+      </div>
+      <div class="bookGrid mt-4" v-else>
         <div
           class="p-0 booksList"
-          v-for="(item, index) in bookImgs"
+          v-for="(item, index) in store.like"
           :key="index"
-          @click="selectBook(item.id)"
         >
           <div class="bookData">
             <img :src="item.imgs" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
-            <div class="likeBox" @click="favourite(index)">
+            <div class="likeBox" @click="favourite(item.product.id)">
               <img
                 src="../../assets/contact/booklike.png"
                 alt=""
@@ -48,7 +67,7 @@
             />
           </div>
           <div class="ps-2">
-            <small class="title">{{ item.bookTitle }}</small>
+            <small class="title">{{ item.product.name_uz }}</small>
           </div>
           <div class="ps-2">
             <small class="author">{{ item.author }}</small>
@@ -63,63 +82,32 @@
 </template>
 
 <script setup>
-import bookImg from "../../assets/contact/bookimg.png";
-import bookImg1 from "../../assets/contact/bookImg2.png";
+const store = useBasketStore();
 
-const selectBook = () => {};
+let likeLength = ref(0)
+let empty = ref(0)
 
-const bookImgs = [
-  {
-    id: 1,
-    imgs: bookImg,
-    bookTitle: "Rebekka",
-    author: "Jon Duglas",
-    like: true,
-  },
-  {
-    id: 2,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-    like: true,
-  },
-  {
-    id: 3,
-    imgs: bookImg,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Agata Kristi",
-    like: true,
-  },
-  {
-    id: 4,
-    imgs: bookImg1,
-    bookTitle: "Sharqiy ekspressdagi qotillik",
-    author: "Dafna Dyu Morye",
-    like: true,
-  },
-  {
-    id: 5,
-    imgs: bookImg,
-    bookTitle: "Rebekka",
-    author: "Jon Duglas",
-    like: true,
-  },
-  {
-    id: 6,
-    imgs: bookImg1,
-    bookTitle: "Kitoblar qanday o'qiladi",
-    author: "Sidni Sheldon",
-    like: true,
-  },
-];
-
-const favourite = (index) => {
-  let likeDislike = (bookImgs[index].like = !bookImgs[index].like);
-
-  if (likeDislike == false) {
-    bookLike2[index].style.width = "0";
-  }
+const refresh = () => {
+  store.favourite().then(() => {
+    likeLength.value = store.like.length;
+    likeLength.value == 0 ? (empty.value = 1) : (empty.value = 2);
+  });
 };
+
+const favourite = (id) => {
+  // let likeDislike = (bookImgs[index].like = !bookImgs[index].like);
+
+  // if (likeDislike == false) {
+  //   bookLike2[index].style.width = "0";
+  // }
+  store.favouriteDelete(id).then(() => {
+    refresh()
+  });
+};
+
+onMounted(() => {
+  refresh()
+});
 </script>
 
 <style scoped>

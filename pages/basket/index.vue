@@ -11,7 +11,10 @@
           <div class="spinner-border ms-auto" aria-hidden="true"></div>
         </div>
       </div>
-      <div v-else-if="empty == 1" class="d-flex align-items-center flex-column my-5">
+      <div
+        v-else-if="empty == 1"
+        class="d-flex align-items-center flex-column my-5"
+      >
         <img src="../../assets/contact/basketEmpty.png" alt="" />
         <h4 style="font-weight: 600">Savatcha bo’sh</h4>
         <small>
@@ -40,7 +43,7 @@
                 <span class="ms-2">{{ $t("home.basket.select") }}</span>
               </div>
               <div>
-                <p class="remove">{{ $t("home.basket.delete") }}</p>
+                <p @click="deleteAll" class="remove">{{ $t("home.basket.delete") }}</p>
               </div>
             </div>
             <div
@@ -74,7 +77,16 @@
                   <div class="d-flex flex-column justify-content-between">
                     <div>
                       <div class="d-flex">
-                        <div class="basketLike" @click="addFavourite(idx)">
+                        <div
+                          class="basketLike"
+                          @click="
+                            addFavourite(
+                              idx,
+                              item.product.id,
+                              item.book_id,
+                            )
+                          "
+                        >
                           <svg
                             width="22"
                             height="22"
@@ -183,8 +195,16 @@ let basketLength = ref(0);
 
 // functions
 
-const addFavourite = (idx) => {
+const addFavourite = (idx, id, bookId) => {
   store.basket[idx].favorite = !store.basket[idx].favorite;
+  if (store.basket[idx].favorite == true) {
+    store.addFavourite({
+      product_id: id,
+      type: bookId ? "book" : "other",
+    });
+  } else {
+    store.favouriteDelete(id)
+  }
 };
 
 const selectAll = () => {
@@ -253,10 +273,15 @@ const productRemove = (idx) => {
 };
 
 const deleteBasket = (id) => {
-  console.log(id);
   store.basketDelete(id).then(() => {
     refresh();
   });
+};
+
+const deleteAll = () => {
+  store.removeCarts().then(() => {
+    refresh()
+  })
 };
 
 // functions
@@ -312,6 +337,7 @@ onMounted(() => {
   font-size: 15px;
   color: #f83333;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .basketProduts {
