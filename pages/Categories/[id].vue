@@ -13,7 +13,7 @@
       <div class="col-4 sideBar p-4">
         <h6><strong>Katalog</strong></h6>
         <p class="ms-2">
-          <strong style="font-size: 15px">{{ $i18n.locale == 'uz' ? store.katalog?.name_oz : store.katalog?.name_ru
+          <strong style="font-size: .9375rem">{{ $i18n.locale == 'uz' ? store.katalog?.name_oz : store.katalog?.name_ru
           }}</strong>
         </p>
         <!-- categorys item name -->
@@ -333,7 +333,7 @@ const selectBook = (id) => {
 <style scoped>
 .sideBar {
   height: auto;
-  border-radius: 10px;
+  border-radius: .625rem;
   background: #fafafa;
 }
 
@@ -342,12 +342,12 @@ const selectBook = (id) => {
 }
 
 .sideBar h6 {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 400;
 }
 
 .categoriaData {
-  font-size: 14px;
+  font-size: .875rem;
   font-weight: 500;
   color: #35363D;
 }
@@ -357,14 +357,14 @@ const selectBook = (id) => {
 }
 
 .categoriaAll {
-  font-size: 14px;
+  font-size: .875rem;
   color: #9196ad;
   cursor: pointer;
 }
 
 .price {
   color: #8f8e8e;
-  font-size: 13px;
+  font-size: .8125rem;
 }
 
 .btnColor {
@@ -374,79 +374,79 @@ const selectBook = (id) => {
 .categoyImg {
   width: 100%;
   height: 100%;
-  border-radius: 7px;
+  border-radius: .4375rem;
 }
 
 .btnBestseller {
   background: #67c926;
   position: absolute;
-  left: -5px;
-  top: 10px;
+  left: -0.3125rem;
+  top: .625rem;
   border: none;
-  border-radius: 3px;
-  font-size: 12px;
+  border-radius: .1875rem;
+  font-size: .75rem;
   color: #fff;
   font-weight: 600;
   z-index: 1;
-  width: 78px;
-  height: 23px;
+  width: 4.875rem;
+  height: 1.4375rem;
 }
 
 .newBook {
   background: #ff673d;
   position: absolute;
-  left: -5px;
-  top: 10px;
+  left: -0.3125rem;
+  top: .625rem;
   border: none;
-  border-radius: 3px;
-  font-size: 12px;
+  border-radius: .1875rem;
+  font-size: .75rem;
   color: #fff;
   font-weight: 600;
-  width: 49px;
-  height: 23px;
+  width: 3.0625rem;
+  height: 1.4375rem;
 }
 
 .bookData {
   position: relative;
-  height: 260px;
+  height: 16.25rem;
 }
 
 .bookLike {
   position: absolute;
-  right: 10px;
-  top: 10px;
+  right: .625rem;
+  top: .625rem;
   cursor: pointer;
   display: none;
 }
 
 .karzinka {
   position: absolute;
-  right: 10px;
-  top: 45px;
+  right: .625rem;
+  top: 2.8125rem;
   cursor: pointer;
   display: none;
 }
 
 .ebook {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: .625rem;
+  bottom: .625rem;
   cursor: pointer;
   display: none;
 }
 
 .bookopen {
   position: absolute;
-  right: 40px;
-  bottom: 10px;
+  right: 2.5rem;
+  bottom: .625rem;
   cursor: pointer;
   display: none;
 }
 
 .headphone {
   position: absolute;
-  right: 70px;
-  bottom: 10px;
+  right: 4.375rem;
+  bottom: .625rem;
   cursor: pointer;
   display: none;
 }
@@ -463,12 +463,12 @@ const selectBook = (id) => {
   width: 100%;
   display: grid;
   grid-template-columns: 23.5% 23.5% 23.5% 23.5%;
-  gap: 15px;
+  gap: .9375rem;
 }
 
 .starsNumbers {
   color: #9196ad;
-  font-size: 13px;
+  font-size: .8125rem;
 }
 
 .title {

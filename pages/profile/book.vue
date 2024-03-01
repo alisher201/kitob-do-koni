@@ -8,7 +8,7 @@
         </div>
         <div v-if="(item.type == 'ebook')" v-show="content == 1"><TableBook/></div>
         <div  v-else v-show="content == 2"><TableNotfound/></div>
-        <pre style="background-color:white  ">{{ item  }}</pre>
+                                                                                                                                                                                            <!-- <pre style="background-color:white  ">{{ item  }}</pre> -->
 
       </div>
     </div>

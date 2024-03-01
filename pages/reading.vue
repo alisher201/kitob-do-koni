@@ -8,6 +8,8 @@
 definePageMeta({
     layout:'bookreading'
 })
+
+
 </script>
 
 <style lang="scss" scoped>

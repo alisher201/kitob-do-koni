@@ -157,7 +157,7 @@ const selectData = (data) => {
 const profile = () => {
   let get = localStorage.getItem("type")  
   if (get =="guest") {
-    router.push('/register')
+    router.push('/login')
   }
   else {
     router.push('/profile')
@@ -184,7 +184,6 @@ const sendRequest = () => {
         // searchList.value = false
         searchList.value = false
         store.searchValue = searchbooks.value
-        console.log('gag');
 
       }
       else {
