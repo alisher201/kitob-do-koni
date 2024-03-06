@@ -9,6 +9,7 @@ export const OrderPayment = defineStore("order",{
         invoices:{},
         delivery:{},
         check:{},
+        token:{},
 
     }),
     actions:{
@@ -42,6 +43,11 @@ export const OrderPayment = defineStore("order",{
         },
         async Order_Token(data){
             return await order_token.create(data)
+            .then((res)=>{
+                this.token = res.result.token
+                console.log(res,'res');
+                // this.token = JSON.Stringify(res)
+            });
         },
         async Order_Payment(data){
             return await order_payment.create(data)

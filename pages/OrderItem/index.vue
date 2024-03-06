@@ -101,7 +101,7 @@
         </div>
         <p class="bycard">{{ $t("home.card") }}</p>
         <div class="peymentCards">
-          <div  class="peymentCard d-flex"  v-for="(item, idx) in peymentType"  :key="idx"  :style="{ gridArea: `cardItem${idx + 1}` }"  @click="peyment = idx">
+          <div  class="peymentCard d-flex"  v-for="(item, idx) in peymentType"  :key="idx"  :style="{ gridArea: `cardItem${idx + 1}` }"  @click="Payment.card = item.name">
             <!-- <p>{{ Payment.card }}</p> -->
             <input class="form-check-input"   type="radio" name="flexRadioDefault"   id="flexRadioDefault1"   :value="item.name"   v-model="Payment.card" />
             <div   class="d-flex justify-content-center align-items-center w-100"   for="flexRadioDefault1" >
@@ -185,7 +185,6 @@ import payme from "@/assets/contact/payme.png";
 // import stanart from "../../assets/contact/standart.png";
 // import regions from "../../assets/contact/regions.png";
 // import express from "../../assets/contact/express.png";
-let peyment = ref(false);
 const router = useRouter()
 let url = useRuntimeConfig().public.bookUrl
 definePageMeta({
@@ -216,7 +215,7 @@ onMounted(()=>{
     Payment.value.full_name = localStorage.getItem("userFullName")
     Payment.value.phone = localStorage.getItem("phone")
   },0)
-
+//  
 })
 const send = async() => {
   let pay = {
@@ -236,7 +235,7 @@ const send = async() => {
 
   let check = Payment.value.deliver + " " + Payment.value.district + " " + Payment.value.address
   let deliveryMethodd =  Payment.value.deliveryMethod
-  let delivery = deliveryMethodd.toLowerCase()
+  let delivery = deliveryMethodd?.toLowerCase()
   let payload = {
     deliveryAddress:check,
     paymentMethod  : Payment.value.card,
@@ -257,12 +256,14 @@ const send = async() => {
   }
   else{
     console.log(Payment.value.card,'payment');
+    await store.Order_Payment(payload)
     router.push('/payment')
+    
   }
 }
 const peymentType = [
-  { imgs: payme ,name:'Payme'},
-  { imgs: click ,name:'Click'},
+  { imgs: payme ,name:'card'},
+  { imgs: click ,name:'card'},
   // { imgs: uzum },
   // { imgs: paynet },
   // { imgs: oson },
