@@ -145,7 +145,7 @@
         </div>
       </div>
     </div>
-
+    
 
     <!-- input valiation -->
     <input ref="emailInput" v-model="emailValue" type="email" placeholder="Email"><br>
@@ -162,7 +162,7 @@
     <input ref="emailInput" v-model="confirmPassword" type="text" placeholder="password"><br>
     <span v-if="confirmError" style="color: red;">{{ confirmError.message }}</span>
     <br>
-    <button @click="sendMassage">yuborish</button> 
+    <button @click="sendMassage">yuborish</button>
 
 
   </div>
@@ -208,7 +208,7 @@ const sendMassage = () => {
   emailError.value = !isEmpty(emailValue.value, 'ismi').item ? isEmpty(emailValue.value, 'ismi') : validateEmail(emailValue.value);
 
   // telifon nomerni tekshirish
-  errorTel.value = validateLength(telNumber.value, 12, 12, 'telfon nomeri');
+  errorTel.value = errorTel.value = !isEmpty(emailValue.value, 'Telifon nomeri').item ? isEmpty(emailValue.value, 'Telifon nomeri') : validateLength(emailValue.value, 12, 12, 'telfon nomeri')
 
   // password validation
   passwordError.value = passwordValidator(password.value)

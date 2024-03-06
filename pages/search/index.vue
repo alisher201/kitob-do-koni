@@ -2,10 +2,6 @@
     <div>        
         <div class="container px-0">
             <div class="text-center my-5" >
-              
-                <!-- <h1 class="notFound">Hech narsa topilmadi</h1>
-                <p class="request">So'rovingizni o'zgartirib ko'ring</p> -->
-                <!-- <pre> {{ store.serchResult }}</pre> -->
                   <div class="main_product col-4">
                     <div class=" product " v-for="(item,index) in store.serchResult?.result" :key="index">
                    

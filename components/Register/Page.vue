@@ -109,14 +109,22 @@ const store = useTestTStore();
 const emailError = ref(null);
 const errorTel = ref(null);
 const passwordError = ref(null);
+const { full_name, phone, password } = toRefs(userRegister.value);
 
-watch(userRegister, (newVAlue) => {
-  emailError.value = isEmpty(newVAlue.full_name, "string");
+watch(full_name, (newVAlue) => {
+  emailError.value = isEmpty(newVAlue, "string");
 }, { deep: true });
-watch(userRegister, (newValue) => {errorTel.value = !isEmpty(newValue.phone, "Telifon nomeri").item ? isEmpty(newValue.phone, "Telifon nomeri")
-    : validateLength(newValue.phone, 12, 12, "telfon nomeri");
+
+
+
+
+watch(phone, (newValue) => {errorTel.value = !isEmpty(newValue, "Telifon nomeri").item ? isEmpty(newValue, "Telifon nomeri")
+    : validateLength(newValue, 12, 12, "telfon nomeri");
 }, { deep: true });
-watch(userRegister, (newValue) => { passwordError.value = passwordValidator(newValue.password);
+
+
+
+watch(password, (newValue) => { passwordError.value = passwordValidator(newValue);
 }, { deep: true });
 
 const senDataUser = async () => {
@@ -131,13 +139,14 @@ const senDataUser = async () => {
 
   let array = [emailError.value, errorTel.value, passwordError.value];
   let validtaionDAta = validation(array);
-
+  
   if (validtaionDAta) {
     await store.registerUser(userRegister.value);
   }
   console.log(validtaionDAta);
   if (validtaionDAta) {
     console.log('malumotlar yuborildi');
+    localStorage.setItem("phone",userRegister.value.phone)
   }
   else {
     console.log('yuborilmadi');

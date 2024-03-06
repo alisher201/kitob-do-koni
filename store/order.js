@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import {order_invoices,order_status, order_transaction,order_complete,order_token,order_payment,order_exists} from "../utils/order"
+import {order_invoices,order_status, order_transaction,order_complete,order_token,order_payment,order_exists,order_delivery,order_check} from "../utils/order"
 import { useRuntimeConfig} from "nuxt/app";
 
 
@@ -7,6 +7,9 @@ export const OrderPayment = defineStore("order",{
     state:() =>({
         url: useRuntimeConfig().public.siteUrl,
         invoices:{},
+        delivery:{},
+        check:{},
+
     }),
     actions:{
         async Order_invoices(){
@@ -15,6 +18,19 @@ export const OrderPayment = defineStore("order",{
                 this.invoices = res
             })
         },
+        async Order_delivery(){
+            return await order_delivery.get()
+            .then((res)=>{
+                this.delivery = res.result
+            })
+        },
+        async Order_check(data){
+            return await order_check.create(data)
+            // .then((res)=>{
+            //     this.check = res.result
+            // })
+        },
+
         async Order_Status(data){
             return await order_status.put(data)
         },
@@ -33,5 +49,6 @@ export const OrderPayment = defineStore("order",{
         async Order_Exists(data){
             return await order_exists.create(data)
         }
+
     }
 })

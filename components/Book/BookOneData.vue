@@ -1,17 +1,31 @@
 <script setup>
+// import { toast } from 'vue3-toastify';
+
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
 
 const store = usePayment()
 const route = useRoute()
 const url = useRuntimeConfig().public.bookUrl
+const siteUrl = useRuntimeConfig().public.siteUrl
 let comitCount = ref(0)
 let ratings = ref(0)
 let type = ref([])
+let cont = ref(null)
 const storeBasket = useBasketStore()
-let bookType = ref(1)
+let bookType = ref(null)
 let is_book = ref(false)
 let comentsData = ref([])
+let routePath = route.path
+let copyPath = siteUrl + routePath
+
+
+const copyLink = () => {
+  navigator.clipboard.writeText(copyPath)
+  // console.log(copyPath);
+
+}
+
 
 
 let bookcontent = ref(1)
@@ -41,38 +55,38 @@ const bookImgs = [
 
 ];
 
-
 const ordrItem = () => {
+  let orderdata = {
+    booktype: bookType.value
+  }
   const router = useRouter()
-  localStorage.getItem('params',route.params.id)
+  localStorage.setItem('bookTypeId',orderdata.booktype)
+  localStorage.setItem('productId',route.params.id)
+  localStorage.setItem('quantity',1)
+
+  // localStorage.setItem('bookType',bookType.value)
+  // localStorage.setItem('price', store.book?.type?.price )
+  localStorage.setItem('price', 1 )
+
   console.log(route.params.id);
   // localStorage.setItem()
   router.push('/OrderItem')
 }
 const fetchBookOne = () => {
+  refresh()
+
+}
+const refresh = () => {
   store.fetch_book_one(route.params.id)
     .then(() => {
-      comentsData.value = [...store.book.reviews, ...store.book.shop_reviews]
-
-    })
-}
-
-const basketAdd = (id, type) => {
-  storeBasket.basketAdd({ product_id: id, type: type.length ? 'book' : 'product' })
-}
-
-onMounted(() => {
-  store.fetch_book_one(route.params.id)
-    .then(() => {
-      //commetsData ...store.book.reviews and store.book.shop_reviews
 
       comentsData.value = [...store.book.reviews, ...store.book.shop_reviews]
 
 
-      let elementLength = store.book?.reviews.length
+      let elementLength = comentsData.value.length
       let sum = 0
-      if (store.book && store.book.reviews && store.book.reviews.length > 0) {
-        store.book?.reviews.forEach(element => {
+      if (store.book) {
+        comentsData.value.forEach(element => {
           let ratingData = element.rating
           sum += ratingData
         })
@@ -85,6 +99,7 @@ onMounted(() => {
         store.book.type.forEach(item => {
           type.value.push(item.type)
           if (item.type) {
+            console.log(is_book.value);
             is_book.value = true
           }
         })
@@ -95,6 +110,23 @@ onMounted(() => {
     .catch(error => {
       console.error('Error fetching book:', error);
     });
+}
+
+const basketAdd = (id, type) => {
+  storeBasket.basketAdd({ product_id: id, type: type.length ? 'book' : 'product' })
+    .then(() => {
+      alert('Siz savatga qo`shildi')
+    if(type.length) {
+      localStorage.setItem('productType','book')
+    }
+    else{
+      localStorage.setItem('productType','product')
+    }
+    })
+}
+
+onMounted(() => {
+  refresh()
 })
 </script>
 
@@ -107,8 +139,6 @@ onMounted(() => {
           / {{ store.book?.name }} ({{ store.book?.author[0].fio }})
         </span>
       </small></div>
-
-
     <div class="row">
       <div class="col-4 ">
         <div class="bookimg border">
@@ -131,8 +161,11 @@ onMounted(() => {
             <h3 class="bookTitle">{{ store.book?.name }} </h3>
           </div>
           <div class="col-4 d-flex align-items-center justify-content-end pe-0">
+            <!-- like img  -->
             <img src="../../assets/contact/oneBookLIke.png" alt="" class="me-2" />
-            <img src="../../assets/contact/download.png" alt="" />
+
+            <!-- copy img -->
+            <img src="../../assets/contact/download.png" alt="" @click="copyLink" />
           </div>
         </div>
         <div class="d-flex align-items-center">
@@ -149,7 +182,7 @@ onMounted(() => {
         <div>
           <span class="statCount">{{ $t("home.cost") }}:</span>
           <div class="mb-3">
-            <span class="bookPrice">{{ store.book?.type?.price }} {{ $t("home.basket.sum") }}</span>
+            <span  class="bookPrice">{{ store.book?.type?.price }} {{ $t("home.basket.sum") }}</span>
             <small class="discount ms-3"><del>185 000 {{ $t("home.basket.sum") }}</del></small>
           </div>
         </div>
@@ -159,21 +192,25 @@ onMounted(() => {
             <!-- booktype -->
 
             <div class="d-flex justify-content-between">
-              <button class="booktype btn border px-3" v-if="type.includes('paper')"
-                :class="{ 'bookTypeActive': bookType == 1 }">
-                <img src="@/assets/contact/book-open.png" alt="" /><small class="ms-2">Book</small>
+              <button class="booktype btn border px-3" v-for="(item,index) in store?.book?.type " :key="index"    @click="bookType= item.id"
+                :class="{ 'bookTypeActive': bookType == item.id }">
+                <img  src="@/assets/contact/book-open.png" alt="" /><small class="ms-2">{{item.type}}</small>
               </button>
 
-              <button class="btn border px-4 booktype" v-if="type.includes('audio')"
-                :class="{ 'abobookTypeActiveutBook': bookType == 2 }">
+              <!-- <button  class="btn border px-4 booktype" v-if="type.includes('audio')" @click="bookType = 2"
+                :class="{ 'bookTypeActive': bookType == 2 }">
                 <img src="@/assets/contact/headphones.png" alt="" /><small class="ms-2">Audio</small>
               </button>
 
-              <button class="btn border px-3 booktype" v-if="type.includes('ebook')"
+              <button class="btn border px-3 booktype" v-if="type.includes('ebook')" @click="bookType = 3"
                 :class="{ 'bookTypeActive': bookType == 3 }">
                 <img src="@/assets/contact/ebookk.png" alt="" /><small class="ms-2">eBook</small>
-              </button>
+              </button> -->
             </div>
+            <div v-for="(item,index) in store?.book?.type " :key="index">
+              <pre>{{ item.id }}</pre>
+            </div>
+            <pre>{{ store?.book?.type }}</pre>
             <!-- fragment -->
             <div class="mt-2 row">
               <div class="col-6">
@@ -263,7 +300,6 @@ onMounted(() => {
     </div>
     <pre>
         {{ store.book }}
-
       </pre>
   </div>
 </template>

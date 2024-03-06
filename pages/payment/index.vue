@@ -7,6 +7,16 @@ const submitPeyment = () => {
   let router = useRouter()
   router.push('/payment/confirmation')
 }
+
+let form =ref( {
+  card_code:null,
+  card_name:null,
+  card_date:null,
+})
+
+const send = async() =>{
+    await console.log(form.value)
+}
 </script>
 
 <template>
@@ -21,7 +31,7 @@ const submitPeyment = () => {
               <p class="cardNumber">{{ $t("home.cardNum") }}</p>
               <img src="../../assets/contact/uzcardlogo.png" alt="" />
             </div>
-            <div class="cardCode">
+            <div class="cardCode">          
               <span>****</span>
               <span class="ms-2">****</span>
               <span class="ms-2">****</span>
@@ -45,20 +55,20 @@ const submitPeyment = () => {
           <p class="fw-bold mt-3">{{ $t("home.amount") }} 165 000 {{ $t("home.basket.sum") }}</p>
           <div>
             <label for="" class="formCard">{{ $t("home.cardNum") }}</label>
-            <input type="text" class="form-control" placeholder="******************" />
+            <input type="number" v-model="form.card_code" class="form-control" placeholder="******************" />
           </div>
           <div class="row">
             <div class="col-7">
-              <label for="" class="formCard">{{ $t("home.cardName") }}</label>
-              <input type="text" class="form-control" :placeholder="$t('home.nameSurname')" />
+              <label for="" class="formCard">{{ $t("home.cardName") }} </label>
+              <input type="text" v-model="form.card_name" class="form-control" placeholder="Karta nomi" />
             </div>
             <div class="col-5">
               <label for="" class="formCard">{{ $t("home.period") }}</label>
-              <input type="text" class="form-control" placeholder="OO/YY" />
+              <input type="" v-model="form.card_date" class="form-control" placeholder="OO/YY" />
             </div>
           </div>
           <div class="cardPeymentContainer">
-            <button class="w-100 cardPeyment fw-bold text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button @click="send" class="w-100 cardPeyment fw-bold text-white" data-bs-toggle="modal"  data-bs-target="#staticBackdrop">
               {{ $t("home.pay") }}
             </button>
           </div>
