@@ -29,23 +29,20 @@
             <Form @submit="onSubmit"  action="">
                 <div class="mb-3 mt-3 list">
                     <label for="tel" class="form-label">Telefon raqam <span>*</span></label>
-                    <!-- <input type="number" class="form-control" id="number" placeholder="+998 00 000 00 00" name="tel"/> -->
-                    <Field type="number" class="form-control" id="email" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber" />
+                    <input v-model="telNumber" type="number" class="form-control" placeholder="+998 00 000 00 00"/>
               <ErrorMessage style="color:red" name="number" />
                 </div>
-                     <button @click.prevent="preventRefresh" :class="{'content': content == 2}" @click="content = 2">Davom etish</button>
-                      <!-- <button>Davom etish</button> -->
+                     <button @click.prevent="" :class="{'content': content == 2}" @click="content = 2">Davom etish</button>
                      <div class="bottom">
                      <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink> </h2>
                 </div>    
               
              </Form>
           </div>
-          <div v-show="content == 2">
+          <!-- <div v-show="content == 2">
             <Form   @submit="onSubmit" action="">
                 <div class="mb-3 mt-3 list">
                     <label for="email" class="form-label">Tasdiqlash kodi: <span>+998 97 589 53 69 </span>  telefon raqamga yu bordik</label>
-                    <!-- <input type="email" class="form-control" id="email" placeholder="395027" name="email"/> -->
                     <Field type="number" class="form-control" id="email" placeholder="sms codini kiritng" name="number" :rules="validateCode" />
                     <div class="li">
                     <ErrorMessage style="color:red" name="number" />
@@ -59,13 +56,11 @@
                 <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink> </h2>
                 </div>    
             </form>
-          </div>
-        
-          <div v-show="content == 3">
+          </div> -->
+          <!-- <div v-show="content == 3">
                 <Form  @submit="onSubmit"  action="">
                     <div class="mb-3 mt-3 list inputbox">
                         <label for="password" class="form-label">Parol <span>*</span></label>
-                        <!-- <input  type="password" class="form-control" id="password" placeholder="Yangi parol" name="password"/> -->
                          <Field name="password" class="form-control" type="password" placeholder="Yangi parol" :rules="validatePassword" />
                          <ErrorMessage style="color:red" name="password" />
 
@@ -81,72 +76,66 @@
                         <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink> </h2>
                     </div>    
                 </Form>
-          </div>
-       
+          </div> -->
         </div>
       </div>
     </div>
   </template>
   
-  <script >
-  import { ref, onMounted } from 'vue';
-  import { Form, Field, ErrorMessage } from 'vee-validate';
-  export default {
+  <script setup>
+  // import { ref, onMounted } from 'vue';
+  // import { Form, Field, ErrorMessage } from 'vee-validate';
+  // export default {
     
-    components: {
-      Form,
-      Field,
-      ErrorMessage,
-    },
-    methods: {
-      onSubmit(values) {
-        console.log(values, null, 2);
-      },
-      validateEmail(value) {
-        if (!value) {
-          return 'ism familyangizni kiritng';
-        }
+  //   components: {
+  //     Form,
+  //     Field,
+  //     ErrorMessage,
+  //   },
+  //   methods: {
+  //     onSubmit(values) {
+  //       console.log(values, null, 2);
+  //     },
+  //     validateEmail(value) {
+  //       if (!value) {
+  //         return 'ism familyangizni kiritng';
+  //       }
     
-        const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-        if (!regex.test(value)) {
-          return "parol noto'g'ri";
-        }
-        // All is good
-        return true;
-      },
-      validateNumber(value) {
-          if(!value){
-            return 'telefon raqamni kiritng kiriting'
-          }
-        },
-        validatePassword(value) {
-          if(!value){
-            return 'Parol kiritng'
-          }
-        },
-        validateNewPassword(value) {
-          if(!value){
-            return 'Yangi parol kiritng kiritng'
-          }
-        },
-        validateCode(value) {
-          if(!value){
-            return 'Sms kod kelmadi'
-          }
-        }
-    },
-    setup() {
-    const content = ref(null);
+  //       const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  //       if (!regex.test(value)) {
+  //         return "parol noto'g'ri";
+  //       }
+  //       // All is good
+  //       return true;
+  //     },
+  //       validatePassword(value) {
+  //         if(!value){
+  //           return 'Parol kiritng'
+  //         }
+  //       },
+  //       validateNewPassword(value) {
+  //         if(!value){
+  //           return 'Yangi parol kiritng kiritng'
+  //         }
+  //       },
+  //       validateCode(value) {
+  //         if(!value){
+  //           return 'Sms kod kelmadi'
+  //         }
+  //       }
+  //   },
+  //   setup() {
+  //   const content = ref(null);
 
-    onMounted(() => {
-      content.value = 1;
-    });
+  //   onMounted(() => {
+  //     content.value = 1;
+  //   });
 
-    return {
-      content
-    };
-  },
-  };
+  //   return {
+  //     content
+  //   };
+  // },
+  // };
 
 
 
@@ -157,10 +146,17 @@
   // })
 
 
+// Validatsiya
+const telNumber = ref(null);
+const errorTel = ref(null);
+const content = ref(1)
 
 
-
-
+watch(telNumber, (newValue) => {
+  errorTel.value = !isEmpty(newValue, "Telifon nomeri").item
+    ? isEmpty(newValue, "Telifon nomeri")
+    : validateLength(newValue, 12, 12, "telfon nomeri");
+});
   </script>
   
   <style lang="scss" scoped>
