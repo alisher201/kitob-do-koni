@@ -3,7 +3,7 @@
     <div class="container px-0 mt-5">
       <div class="d-flex justify-content-between mb-3">
         <div class="d-flex">
-          <h4 class="bestText">{{title}}</h4>
+          <h4 class="bestText">{{ title }}</h4>
           <svg
             class="mt-1"
             xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +40,7 @@
       >
         <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx">
           <div class="bookData">
-            <img :src="url +'/'+ item?.image"  alt="" class="categoyImg" />
+            <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
             <img
@@ -49,17 +49,19 @@
               class="bookLike"
             />
             <img
-                src="../../assets/contact/karzinka.png"
-                alt=""
-                class="karzinka"
-                @click="addBasket(item.id, item.book_id)"
-              />
-              <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
+              src="../../assets/contact/karzinka.png"
+              alt=""
+              class="karzinka"
+              @click="addBasket(item.id, item.book_id)"
+            />
+            <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
           </div>
           <div class="ps-2">
-              <small class="title">{{ item.description }}</small>
-            </div>
-            <div class="ps-2"><small class="author">{{ item.creator }}</small></div> 
+            <small class="title">{{ item.creator }}</small>
+          </div>
+          <div class="ps-2">
+            <small class="author">{{ item.description }}</small>
+          </div>
           <small class="stats ms-2">5,0</small>
           <span class="starsNumbers">(32)</span>
         </SwiperSlide>
@@ -70,26 +72,27 @@
 <script setup>
 import { useRuntimeConfig } from "nuxt/app";
 
-const store = useBasketStore()
+const store = useBasketStore();
 
-const url= useRuntimeConfig().public.siteUrl
-const props = defineProps ({
-  title:String,
+// const url = useRuntimeConfig().public.siteUrl;
+const urlimg = useRuntimeConfig().public.bookUrl;
+const props = defineProps({
+  title: String,
   bookImgs: {
     type: Array,
-    default: () => []
-  }
-})
+    default: () => [],
+  },
+});
 // console.log(bookImgs);
 
 let swiper = null;
-  
+
 const onSwiper = (sw) => {
   swiper = sw;
 };
 const addBasket = (id, bookId) => {
-  store.basketAdd({product_id: id, type: bookId ? 'book': 'product'})
-}
+  store.basketAdd({ product_id: id, type: bookId ? "book" : "other" });
+};
 
 onMounted (() => {
 })
@@ -97,9 +100,7 @@ onMounted (() => {
 
 </script>
 
-
 <style scoped>
-
 .bestText {
   font-size: 22px;
   font-weight: 700;

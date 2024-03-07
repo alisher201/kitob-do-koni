@@ -319,6 +319,7 @@ onMounted(() => {
   );
 });
 
+
 const selectBook = (id) => {
   const router = useRouter();
   router.push(`/book/${id}`);

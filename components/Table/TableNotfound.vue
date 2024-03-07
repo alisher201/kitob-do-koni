@@ -32,7 +32,7 @@
     top: 342px;
     left: 728px;
     border-radius: 5px;
-    margin:30px 249px 77px 249px;
+    margin:0px 249px 77px 249px;
 
 }
 img{
