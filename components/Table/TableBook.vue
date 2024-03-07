@@ -4,7 +4,7 @@
         <div style="background-color:white;">
             <div class="wrapper">
                 <div class="main" v-for="(item, index) in store.books.result" :key="index"
-                    @click="$router.push('/reading/' + item.book.id)">
+                    @click=" readingLInk(item)">
                     <div class="">
                         <img :src="' https://beta.kytab.uz' + item.book.image" alt="">
                         <h2>{{ item.book.name }}</h2>

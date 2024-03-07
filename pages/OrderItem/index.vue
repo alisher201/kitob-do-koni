@@ -154,10 +154,8 @@
             </div>
           </div>
           <div class="" style="grid-area: line">
-            <img src="../../assets/contact/Line 17.png" alt="" class="w-100" />
           </div>
           <div class="" style="grid-area: linee">
-            <img src="../../assets/contact/Line 17.png" alt="" class="w-100" />
           </div>
         </div>
         <div>
@@ -212,9 +210,9 @@ import paynet from "@/assets/contact/paynet.png";
 import uzcard from "@/assets/contact/click.png";
 import visa from "@/assets/contact/visa.png";
 import uzum from "@/assets/contact/uzum.png";
-import stanart from "../../assets/contact/standart.png";
-import regions from "../../assets/contact/regions.png";
-import express from "../../assets/contact/express.png";
+import stanart from "@/assets/contact/standart.png";
+import regions from "@/assets/contact/regions.png";
+import express from "@/assets/contact/express.png";
 let peyment = ref(null);
 let delevireyAdress = ref(null)
 const route = useRoute();

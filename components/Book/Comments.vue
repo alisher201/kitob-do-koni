@@ -82,9 +82,9 @@
               </div>
               <div class="d-flex justify-content-between mt-4">
                 <p class="small">{{ items.created_at }}</p>
-                <img src="../../assets/contact/comments.png" alt="" />
+                <img src="@/assets/contact/comments.png" alt="" />
               </div>
-              <img src="../../assets/contact/Line 18.png" alt="" class="w-100 mt-4" />
+              <img src="@/assets/contact/Lines.png" alt="" class="w-100 mt-4" />
             </div>
           </div>
         </div>
@@ -93,8 +93,8 @@
   </div>
 </template>
 <script setup>
-import star from "../../assets/contact/starActive.png";
-import star2 from "../../assets/contact/starIs_active.png";
+import star from "@/assets/contact/starActive.png";
+import star2 from "@/assets/contact/starIs_active.png";
 
 
 const url = useRuntimeConfig().public.bookUrl

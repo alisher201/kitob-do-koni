@@ -1,54 +1,81 @@
 <template>
-  <di class="row mx-0 px-0" style="height: 100vh; overflow: hidden !important; width: 100%;">
-    <div class="col-2 chaptres">
+  <div class="row mx-0 px-0" style="height: 100vh; overflow: hidden !important; width: 100%;">
+    <div class="col-2 chaptres" :class="skin == 1 ? 'chaptresbarSepia' : skin == 2 ? 'ChaptersbarDark' : ''">
       <div>
         <ul>
-          <li v-for="(chapter, index) in toc" :key="index" >
+          <li v-for="(chapter, index) in toc" :key="index" class="chaptresList">
 
             <a href="#" @click.prevent="navigateTo(chapter.href)" class="wrapText"
-              :style="{ color: chapter.href == currentHref ? 'red' : 'black' }">
+              :style="{ color: chapter.href == currentHref ? 'blue' : colorDate }">
               {{ chapter.label }}
-            
+
             </a>
           </li>
         </ul>
       </div>
     </div>
-    <div class="col-10 border">
-      <div class="row  mx-0 px-0 w" style="border: 1px solid red;">
-        <div class="col-1 border mx-0 px-0">
-          <button @click="prevPage">Oldingi Sahifa</button>
+    <div class="col-10" :class="skin == 1 ? 'sepia' : skin == 2 ? 'dark' : ''">
+      <div class="row  mx-0 px-0">
+        <div class="col-1 mx-0 px-0  prevPage" @click="prevPage">
+          <div class="settingsCol">
+            <img src="../../assets/contact/Frame.png" alt="" class="settingImg" @click="openSettings($event)">
+            <div class="settingsData" v-show="settingsOpen">
+              <!-- <div class="d-flex"> -->
+              <p @click="$event.stopPropagation(), skin = 0, colorDate = '#000'" class="">White</p>
+              <p @click="$event.stopPropagation(), skin = 1, colorDate = '#fff'">Sepia</p>
+              <!-- <p @click="$event.stopPropagation(), skin = 2, colorDate = '#fff'">Black</p> -->
+              <!-- </div> -->
+
+            </div>
+
+          </div>
+
+
+          <img src="../../assets/contact/arrowRight.png" alt="" class="prevRightImg">
 
         </div>
         <div class="col-10">
-          <div id="viewer" style="width: 100%; height: 90vh ; border: 1px solid red;"></div>
+          <div id="viewer" style="width: 100%; height: 90vh; color: #fff;"></div>
           <div class="mt-3" :style="{
-            height: '5px',
-            backgroundColor: 'blue',
-            width: progressPercent + '%'
-          }"></div>
-          <p>{{ progressPercent.toFixed(2) }}%</p>
+      height: '5px',
+      backgroundColor: 'blue',
+      width: progressPercent + '%'
+    }">
+          </div>
+          <p>{{ progressPercent.toFixed(0) }}%</p>
         </div>
-        <div class="col-1 border">
-          <button @click="nextPage">Keyingi Sahifa</button>
-
+        <div class="col-1  nextPage">
+          <div class="exit" @click="back.back(-1)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: #828384;transform: 2;msFilter:2;"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
+          </div>
+          <div class="left" @click="nextPage" >
+            <img src="../../assets/contact/arrowLeft.png" alt="">
+          </div>
         </div>
 
       </div>
     </div>
 
-  </di>
+  </div>
 </template>
+
 <script setup>
 import ePub from 'epubjs';
+
+
 const bookURL = 'https://beta.kytab.uz/storage/epub/2023-10/08lxKcMjyIQPN64plbFv.epub'; // Backend'dan keladigan URL
 const progress = ref(0);
 let progressPercent = ref(0);
 const toc = ref([]);
 const currentHref = ref('');
-
-
 const rendition = ref(null);
+const skin = ref(1);
+const colorDate = ref('white');
+const settingsOpen = ref(false);
+const back = useRouter()
+const route = useRoute()
+const store = useTestTStore()
+
 
 
 // Kitobni yuklash va uning tarkibini ishlash uchun asosiy funksiya
@@ -65,12 +92,16 @@ function loadBook() {
     toc.value = navigation.toc;
   });
 
+
+
+
   // Kitobning sahifalar sonini hisoblash uchun locations obyektini yaratish
   book.value.ready.then(() => {
     return book.value.locations.generate(1024); // Sahifalar sonini hisoblash uchun 1024px kenglikdan foydalanamiz
   }).then(() => {
     rendition.value.display();
-  });
+  })
+  
 
 
 }
@@ -80,7 +111,7 @@ const bookPagination = () => {
     const currentLocation = rendition.value.currentLocation();
     if (currentLocation && currentLocation.start && currentLocation.end) {
       const startCfi = location.start.cfi;
-      
+
       const progress = book.value.locations.percentageFromCfi(startCfi);
       progressPercent.value = progress * 100; // Progressni foiz sifatida saqlaymiz
 
@@ -91,29 +122,15 @@ const bookPagination = () => {
 
         return item.cfiBase == startCfi.substring(8, string_end)
       });
-      const currentSection = toc.value[currentSectionIndex -1];
-      console.log(currentSection);
+      const currentSection = toc.value[currentSectionIndex - 1];
       if (currentSection && currentSection.href) {
         currentHref.value = currentSection.href;
       } else {
-        console.log('currentSetonIndex none');
+        return
       }
     }
   });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 function navigateTo(href) {
@@ -126,12 +143,14 @@ function navigateTo(href) {
 
 
 
-// Keyingi sahifaga o'tish
+// Sahifani yopish
 function nextPage() {
   if (rendition.value) {
     rendition.value.next();
   }
 }
+
+
 
 // Oldingi sahifaga qaytish
 function prevPage() {
@@ -139,14 +158,23 @@ function prevPage() {
     rendition.value.prev();
   }
 }
+const openSettings = (e) => {
+  e.stopPropagation()
+  settingsOpen.value = !settingsOpen.value
+}
 onMounted(() => {
   loadBook()
   bookPagination()
+  console.log(store);
+store.epubFetch(bookURL).then((res) => {
+    console.log(res);
+  })
 
 
 
 });
 </script>
+
 <style>
 * {
   margin: 0;
@@ -160,10 +188,118 @@ onMounted(() => {
 
 }
 
+::selection {
+  color: red;
+  background-color: none;
+}
+
 .wrapText {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
   overflow: hidden;
+  text-decoration: none;
+
+}
+
+.chaptresList {
+  list-style-type: none;
+  padding: 3px 0;
+  border-bottom: 1px solid lightgrey;
+  cursor: pointer;
+}
+
+.prevPage {
+  cursor: pointer;
+  position: relative;
+}
+
+.prevRightImg {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  width: 35px;
+}
+
+.nextPage {
+  cursor: pointer;
+  position: relative;
+  padding-top: 30px;
+}
+
+.nextPage img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 35px;
+}
+
+.settingImg {
+  position: relative;
+  left: 15%;
+  top: 15px;
+}
+
+.settingsCol {
+  height: 40px;
+  /* position: relative; */
+}
+
+.sepia {
+  background: #F4EACD;
+}
+
+.dark {
+  background: #1B1F2A;
+}
+
+.ChaptersbarDark {
+  background: #2C3142;
+  padding: 3px 0;
+}
+
+.chaptresbarSepia {
+  background: #111111;
+  padding: 3px 0;
+
+}
+
+.settingsData {
+  width: 110px;
+  height: 60px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 30px;
+  padding: 0px;
+  box-shadow:
+    0 0 0 2px rgb(255, 255, 255),
+    4px 4px 4px #2C3142;
+  transition: 2s;
+  border-radius: 5px;
+}
+
+.settingsData p {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  padding-top: 20px;
+  color: #a6a6a6;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.settingsData p:hover {
+  color: black;
+}
+.left{
+  width: 100%;
+  height: 100%;
+}
+
+.exit {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
 }
 </style>

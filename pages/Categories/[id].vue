@@ -147,22 +147,6 @@
     </div>
     
 
-    <!-- input valiation -->
-    <input ref="emailInput" v-model="emailValue" type="email" placeholder="Email"><br>
-    <span v-if="emailError" style="color: red;">{{ emailError.message }}</span><br>
-
-
-    <input ref="emailInput" v-model="telNumber" type="number" placeholder="number"><br>
-    <span v-if="errorTel" style="color: red;">{{ errorTel.message }}</span>
-    <br>
-
-    <input ref="emailInput" v-model="password" type="text" placeholder="password"><br>
-    <span v-if="passwordError" style="color: red;">{{ passwordError.message }}</span>
-    <br>
-    <input ref="emailInput" v-model="confirmPassword" type="text" placeholder="password"><br>
-    <span v-if="confirmError" style="color: red;">{{ confirmError.message }}</span>
-    <br>
-    <button @click="sendMassage">yuborish</button>
 
 
   </div>
@@ -176,76 +160,6 @@ const store = useCategory();
 const url = useRuntimeConfig().public.bookUrl;
 let lang_book = ref('all')
 let type_book = ref('all')
-
-
-const emailValue = ref(null);
-const emailError = ref(null);
-const telNumber = ref(null)
-const errorTel = ref(null)
-const password = ref(null)
-const passwordError = ref(null)
-const confirmPassword = ref(null)
-const confirmError = ref(null)
-
-
-
-
-watch(emailValue, (newVAlue) => {
-  emailError.value = !isEmpty(newVAlue, 'email').item ? isEmpty(newVAlue, 'email') : validateEmail(newVAlue)
-});
-watch(telNumber, (newValue) => {
-  errorTel.value = !isEmpty(newValue, 'Telifon nomeri').item ? isEmpty(newValue, 'Telifon nomeri') : validateLength(newValue, 12, 12, 'telfon nomeri');
-})
-watch(password, (newValue) => {
-  passwordError.value = passwordValidator(newValue)
-})
-watch(confirmPassword, (newValue) => {
-  confirmError.value = confirmedValidator(newValue, password.value)
-})
-
-const sendMassage = () => {
-  // Emailni tekshirish
-  emailError.value = !isEmpty(emailValue.value, 'ismi').item ? isEmpty(emailValue.value, 'ismi') : validateEmail(emailValue.value);
-
-  // telifon nomerni tekshirish
-  errorTel.value = errorTel.value = !isEmpty(emailValue.value, 'Telifon nomeri').item ? isEmpty(emailValue.value, 'Telifon nomeri') : validateLength(emailValue.value, 12, 12, 'telfon nomeri')
-
-  // password validation
-  passwordError.value = passwordValidator(password.value)
-
-  // confirm password 
-  confirmError.value = confirmedValidator(confirmPassword.value, password.value)
-
-  let array = [emailError.value, errorTel.value, passwordError.value, confirmError.value]
-  let validtaionDAta = validation(array)
-  console.log(validtaionDAta);
-
-
-
-
-  if (validtaionDAta) {
-    console.log('malumotlar yuborildi');
-  }
-  else {
-    console.log('yuborilmadi');
-  }
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 const alld = ref(5);
@@ -262,7 +176,7 @@ const languageType = ref({
   ru: false,
   en: false
 })
-let oBarMinValue = ref(1000)
+let oBarMinValue = ref(0)
 let oBarMaxValue = ref(500000)
 
 // Get ID

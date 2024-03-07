@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
 import { register, book_category, searchTop, search, uuId, refresh } from "../utils/home"
+
+
 export const useTestTStore = defineStore("home", {
   state: () => ({
     url: useRuntimeConfig().public.siteUrl,
@@ -132,7 +134,17 @@ export const useTestTStore = defineStore("home", {
 
         }
       })
-    }
+    },
+   async epubFetch(url) {
+
+    return await $fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+
+      }
+    
+    })
+   }
 
   }
 })
