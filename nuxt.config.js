@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["store"],
   },
-  modules: ["@nuxt/devtools", "@pinia/nuxt", 'nuxt-swiper','@vee-validate/nuxt'],
+  modules: ["@nuxt/devtools", "@pinia/nuxt", 'nuxt-swiper'],
   extends: ["nuxt-seo-kit"],
   routeRules: {
     "/**": { robots: "index, follow" },
