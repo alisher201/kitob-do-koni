@@ -9,12 +9,15 @@
                 <p class="main_list_p">{{item.foiz}}</p>
                 <img class="main_list_img" style="height:2px;margin-top:8px" :src="item.stecer" alt="">
             </div>
-           
         </NuxtLink>
     </div>
 </template>
 
 <script setup>
+const store = ProfileHistory()
+onMounted(()=>{
+    store.Book()
+})
 import img1 from '../../assets/profile/AtomOdatlari.png';
 import img3 from '../../assets/profile/foiz.png';
 import start1 from '../../assets/profile/start.png';
@@ -72,12 +75,8 @@ const data = [
     background-color:#FAFAFA
 }
 .main{
-    width: 840px;
-    height: 308px;
-    top: 232px;
     // left: 479px;
     border-radius: 10px;
-    background-color:#FAFAFA;
     // background-color: red;
     margin-left:30px;
 }

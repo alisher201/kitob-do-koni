@@ -14,7 +14,7 @@
           </div>
 
           <!-- umumi ovozlar soni -->
-          <p class="mt-2">{{ $t("home.votes") }} 23</p>
+          <p class="mt-2">{{ $t("home.votes") }} {{ Props.comments.length }}</p>
         </div>
 
         <hr class="mb-0" />
@@ -42,8 +42,9 @@
               </button>
             </div>
             <div class="w-50 ps-2">
-              <button class="w-100 submitData" :disabled="!commitData.comment || !commitData.rating" @click="sendCommit">{{
-                $t("home.sending") }}</button>
+              <button class="w-100 submitData" :disabled="!commitData.comment || !commitData.rating"
+                @click="sendCommit">{{
+                  $t("home.sending") }}</button>
             </div>
           </div>
 
@@ -53,20 +54,28 @@
         <h5 class="">{{ $t("home.numComments") }} 1257</h5>
         <div class="mt-3" v-for="(items, index) in Props.comments" :key="index">
           <div class="d-flex">
-            <div>
-              <img :src="url + '/' + items.user.photo" alt="" class="commentImg" />
+            <div class="main_img">
+              <img v-if="items.user?.photo" :src="url + '/' + items.user?.photo" alt="" class="commentImg" />
+              <h1 v-else style="color: #fff; font-weight: 700;">{{ items.user?.name ? items.user?.name.substring(0, 1).toUpperCase() : items.user?.full_name.substring(0, 1).toUpperCase() }}</h1>
+
             </div>
+            <!-- <pre>{{ items.comment}}</pre> -->
             <div class="px-4">
-              <span>{{ items.user.name }} <br />
+              <span>{{ items.user?.name ? items.user?.name : items.user?.full_name }} <br />
                 <span v-for="(item, index) in stars" :key="index" class="comentsList">
                   <img :src="item.img" alt="" v-if="item.id <= items.rating" />
+
                   <img :src="item.img2" alt="" v-if="item.id > items.rating" />
+
                 </span>
               </span>
               <div class="commentsText mt-3">
                 <span v-if="items && items.comment && items.comment.length <= more">{{ items.comment }}</span>
                 <span v-else>
-                  {{ items.comment.substring(0, more) }}...
+                  <span v-if="items && items.comment && typeof items.comment == 'string'">
+                    {{ items?.comment.substring(0, more) }}
+                  </span>
+
                   <small @click="more = 1000000" style="color: #307CCE; font-weight: 600; cursor: pointer;">Ko'proq
                     o'qish</small>
                 </span>
@@ -79,18 +88,11 @@
             </div>
           </div>
         </div>
-        {{ Props.commitCount }}
-        <br />
-        <!-- {{ $route.params.id }} -->
-        <!-- __________________________________________________ -->
-        {{ commitData }}
-        <!-- {{ typeof Props.is_book }} -->
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { boolean } from "yup";
 import star from "../../assets/contact/starActive.png";
 import star2 from "../../assets/contact/starIs_active.png";
 
@@ -104,14 +106,12 @@ const Props = defineProps({
   },
   ratings: String,
   commitCount: Number,
-  is_book: {
-    type: boolean,
-    required: true
+  is_books: Boolean
 
-  } 
 })
 const route = useRoute()
 const store = usePayment()
+const emit = defineEmits(['fetchBookOne'])
 const stars = [
   { id: 1, img: star, img2: star2 },
   { id: 2, img: star, img2: star2 },
@@ -124,7 +124,7 @@ const commitData = ref({
   rating: null,
   comment: null,
   product_id: route.params.id,
-  type: Props.is_book ? 'book' : 'other'
+  type: Props.is_books ? 'book' : 'other'
 })
 
 let more = ref(130)
@@ -135,6 +135,12 @@ const clearData = () => {
 const sendCommit = () => {
   if (commitData.value.rating && commitData.value.comment) {
     store.create_commit(commitData.value)
+      .then(() => {
+
+        emit('fetchBookOne')
+
+        clearData()
+      })
   }
 }
 onMounted(() => {
@@ -210,9 +216,11 @@ onMounted(() => {
 }
 
 .commentImg {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+  background-color: #307cce;
+
 }
 
 .comentsList img {
@@ -224,5 +232,16 @@ onMounted(() => {
   width: 85%;
   color: #838998;
   font-size: 14px;
+}
+
+.main_img h1 {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: #307cce;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
 }
 </style>

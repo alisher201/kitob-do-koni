@@ -9,7 +9,7 @@
            </tr>
          </thead>
          <tbody>
-           <tr v-for="(item, index) in body" :key="index">
+           <tr v-for="(item, index) in store.profile?.result?.cash" :key="index">
              <td
                v-for="(bodyInHeader, bodyInIndex) in headers"
                :key="bodyInIndex"
@@ -17,6 +17,7 @@
                <slot :name="`body_${bodyInHeader.value}`" :item="item">
                  {{ item[bodyInHeader.value] }}
                </slot>
+               <!-- <pre>{{ store.profile?.result?.cash }} salomaaat</pre> -->
              </td>
            </tr>
          </tbody>
@@ -25,6 +26,12 @@
 </template>
 
 <script setup>
+const store = ProfileHistory()
+onMounted(()=>{
+  store.OrderHistory()
+})
+// console.log(store.profile?.result,'salomat')
+
 const headers = [
  {
    title: "No",
@@ -32,29 +39,19 @@ const headers = [
  },
  {
    title: "Buyurtma raqami",
-   value: "raqam",
+   value: "id",
  },
  {
    title: "Buyurtma sanasi",
-   value: "sanasi",
+   value: "created_at",
  },
  {
    title: "Narxi",
-   value: "narxi",
+   value: "total_amount",
  },
  {
    title: "Holati",
-   value: "holati",
- },
-];
-const body = [
- {
-   id: "1",
-   raqam:"234444",
-   sanasi:"10.06.2023",
-   narxi:"24 000 so'm",
-   holati:"Faol"
-
+   value: "status",
  },
 ];
 

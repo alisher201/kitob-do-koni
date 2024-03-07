@@ -2,21 +2,46 @@
     <div>        
         <div class="container px-0">
             <div class="text-center my-5" >
-                <!-- {{ a }} -->
-                <h1 class="notFound">Hech narsa topilmadi</h1>
-                <p class="request">So'rovingizni o'zgartirib ko'ring</p>
-                <pre> {{ store.serchResult }}
-                  {{ store.bookSearchdata }}
-                  
-
-                </pre>
+              
+                <!-- <h1 class="notFound">Hech narsa topilmadi</h1>
+                <p class="request">So'rovingizni o'zgartirib ko'ring</p> -->
+                <!-- <pre> {{ store.serchResult }}</pre> -->
+                  <div class="main_product col-4">
+                    <div class=" product " v-for="(item,index) in store.serchResult?.result" :key="index">
+                   
+                      <div class="product_list">
+                          <img class="" :src="'https://kytabshop.al-raqam.com'+'/'+item.image" alt="" aria-placeholder="s">
+                      </div>
+                      <div class="">
+                        <p>{{ item.name_uz }}</p>   
+                      </div>
+                      <p class="">{{ item.price }} narxi</p>
+                      <p>{{ item.quantity }} marta sotib olingan</p>
+                      <p >{{ item.description_uz  }}</p>
+                    </div>
+                  </div>
+               
+                <!-- <pre>{{ store.bookSearchdata }}</pre> -->
+                <div class="main_product col-4">
+                    <div class=" product" v-for="(item,index) in store.bookSearchdata?.result" :key="index">
+                      <div class="product_list">
+                         <img class="" :src="'https://kytabshop.al-raqam.com'+'/'+item.image" alt="" aria-placeholder="s">
+                      </div>
+                      <div class="">
+                        <p >{{ item.name_uz }}</p>   
+                      </div>
+                        <p>{{ item.price }} narxi</p>
+                        <p>{{ item.quantity }} marta sotib olingan</p>
+                        <p>{{ item.description_uz  }}</p>
+                    </div>
+                  </div>
 
             </div>
             <hr>
 
 
             <!-- populr book -->
-            <p style="font-size: 18px; color:#35363D ;">Sizni qiziqtirishi mumkin</p>
+            <p styl5e="font-size: 18px; color:#35363D ;">Sizni qiziqtirishi mumkin</p>
 
 
 
@@ -57,6 +82,7 @@
 
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
+
 
 const store = useTestTStore()
 
@@ -113,6 +139,29 @@ const bookImgs = [
     font-size: 14px;
     font-weight: 400;
 
+}
+.main_product{
+  display: grid;
+  gap:5px;
+  grid-template-columns: auto auto auto auto auto auto;
+  
+}
+.product{
+  
+  width:34vh;
+  gap: 5px;
+  background-color: rgb(59, 196, 206);
+  border-radius: 9px;
+  
+}
+.product_list  img {
+  /* width: 34vh; */
+  border-radius: 9px;
+  width: 100%;
+  height: 100%;
+}
+.product p {
+  font-size: 1.3rem;
 }
 
 

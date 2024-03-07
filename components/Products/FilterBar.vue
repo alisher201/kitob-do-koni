@@ -4,7 +4,7 @@
             <div class="card-body p-5">
                 <div class="search-title">
                     <h4>Catagories +</h4>
-                    <h6 v-for="item in info.types" :key="item.name" @click="" :value="item.value">
+                    <h6 v-for="item in info.types" :key="item.name"  :value="item.value">
                         {{ item.name }}
                     </h6>
                 </div>
@@ -13,7 +13,7 @@
                     <div class="colors">
                         <h5>Color</h5>
                         <span v-for="item in info.colors" :key="item.name" class="circle"
-                            :style="`background-color:${item.value}`" @click="" :value="item.name"></span>
+                            :style="`background-color:${item.value}`" :value="item.name"></span>
                     </div>
                 </div>
                 <div class="search-title">

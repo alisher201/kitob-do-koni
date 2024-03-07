@@ -25,132 +25,132 @@
             Roʻyxatdan oʻting va 1280+ kitobga kirish huquqiga ega boʻling
           </h2>
         </div>
-        <!-- <div class="section_flex">
-          <div  class="section_check">
-            <img src="../../assets/register/Account.png" alt="" />
-            <p>Foydalanuvchi</p>
-            <input :class="{'content' :content==1}" @click="content = 1" type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked/>
-          </div>
-          <div class="section_check" >
-            <img id="section_check_img"  src="../../assets/register/home.svg" alt=""
-            />
-            <p>Do'kon</p>
-            <input :class="{'content' :content==2}" @click="content = 2" type="radio" class="form-check-input" id="radio2"  name="optradio" value="option2"
-            />
-          </div>
-        </div>
-        <div v-show= "content ==1"><RegisterUser /></div>
-        <div v-show = "content == 2"><RegisterSHop /></div> -->
-        <!-- <div class="title">
-          <p>
-            Foydalanuvchilar kitoblarni o'qishlari, sotib olishlari va do'stlari
-            bilan baham ko'rishlari mumkin
-          </p>
-        </div> -->
         <Form @submit="onSubmit" action="">
           <div class="mb-3 mt-3 list">
-            <label for="email" class="form-label">Ism familiya <span>*</span></label>
+            <label for="name" class="form-label"
+              >Ism familiya <span>*</span></label
+            >
 
             <!-- <input type="email" class="form-control" id="email" placeholder="Ism familiyangizni kiriting" name="email"/> -->
-            <Field v-model="userRegister.full_name" name="string" type="string" placeholder="Ism familiyangizni kiriting" class="form-control" :rules="validateEmail"/>
-            <ErrorMessage style="color:red" name="full_name" />
-
-            
+            <input
+              ref="emailInput"
+              v-model="userRegister.full_name"
+              name="string"
+              type="string"
+              placeholder="Ism familiyangizni kiriting"
+              class="form-control"
+            />
+            <span v-if="emailError" style="color: red" name="full_name">{{
+              emailError.message
+            }}</span>
           </div>
           <div class="mb-3 mt-3 list">
-            <label for="email" class="form-label">Telefon raqam <span>*</span></label>
+            <label for="email" class="form-label"
+              >Telefon raqam <span>*</span></label
+            >
             <!-- <input type="email" class="form-control" id="email" placeholder="+998 00 000 00 00" name="email"/> -->
-            <Field v-model="userRegister.phone" type="string" class="form-control" id="number" placeholder="+998 00 000 00 00" name="number" :rules="validateNumber"/>
-            <ErrorMessage style="color:red" name="number" />
-
-
+            <input
+              ref="emailInput"
+              v-model="userRegister.phone"
+              type="number"
+              class="form-control"
+              id="number"
+              placeholder="+998 00 000 00 00"
+              name="number"
+            />
+            <span v-if="errorTel" style="color: red">{{
+              errorTel.message
+            }}</span>
           </div>
           <div class="mb-3 mt-3 list inputbox">
-            <label for="password" class="form-label">Parol <span>*</span></label>
-            <box-icon type='solid' name='user-circle'></box-icon>
-            
-            <!-- <input  type="password" class="form-control" id="password" placeholder="parol o'ylab top" name="password"/> -->
-            <Field  v-model="userRegister.password" type="password" class="form-control" id="password" placeholder="parol o'ylab top"  name="password" :rules="validatePassword"/>
-            <ErrorMessage style="color:red" name="password" />
-            
-          </div> 
-          <!-- <button  @click.prevent="preventRefresh"  @click="$router.push('/')" >Ro'yxatdan o'tish</button> -->
-          <button @click="senDataUser">Ro'yxatdan o'tish</button>
-          <div class="bottom">
-            <h2>Avval ro'yhatdan o'tganmisiz? <NuxtLink to="/">Tizimga kirish</NuxtLink> </h2>
-          </div>    
-            
-        </Form>
-        <!-- <Form @submit="onSubmit">
-          <Field name="email" type="email" :rules="validateEmail" />
-          <ErrorMessage name="email" />
+            <label for="password" class="form-label"
+              >Parol <span>*</span></label
+            >
+            <box-icon type="solid" name="user-circle"></box-icon>
 
-          <Field name="email" type="email" :rules="validateEmail" />
-          <ErrorMessage style="color:red" name="email" />
-          <button>Sign up</button>
-        </Form> -->
+            <input
+              ref="emailInput"
+              v-model="userRegister.password"
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="parol o'ylab top"
+              name="password"
+            />
+            <span v-if="passwordError" style="color: red" name="password">{{
+              passwordError.message
+            }}</span>
+          </div>
+          <button type="button" @click="senDataUser">Ro'yxatdan o'tish</button>
+          <div class="bottom">
+            <h2>
+              Avval ro'yhatdan o'tganmisiz?
+              <NuxtLink to="/">Tizimga kirish</NuxtLink>
+            </h2>
+          </div>
+        </Form>
       </div>
     </div>
   </div>
 </template>
 
-<script >
-import { Form, Field, ErrorMessage } from 'vee-validate';
-import {useTestTStore} from '../../store/home'
-export default {
-  components: {
-    Form,
-    Field,
-    ErrorMessage,
-    useTestTStore
-  },
-  data() {
-    return {    
-      userRegister: {
-        full_name: null,
-        phone: null,
-        password: null,
-        type: 'client'
-      }
+<script setup>
+import {useTestTStore} from '@/store/home.js' 
+let userRegister = ref({
+  full_name: null,
+  phone: null,
+  password: null,
+  type: "client",
+});
+console.log(userRegister.value.full_name, "userRegister");
 
-    }
-  },
-  methods: {
-    onSubmit(values) {
-      console.log(values, null, 2);
-    },
-    validateEmail(value) {
-      if (!value) {
-        return 'ism familyangizni kiritng';
-      }
-  
-      // const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-      // if (!regex.test(value)) {
-      //   return "parol noto'g'ri";
-      // }
-      // All is good
-      // return true;
-    },
-    validateNumber(value) {
-        if(!value){
-          return 'telefon raqamni kiritng kiriting'
-        }
-      },
-      validatePassword(value) {
-        if(!value){
-          return 'Parol kiritng'
-        }
-      },
-      senDataUser() {
-        useTestTStore().registerUser(this.userRegister);
-        
-      }
-      
-  },
+const store = useTestTStore();
+
+const emailError = ref(null);
+const errorTel = ref(null);
+const passwordError = ref(null);
+const { full_name, phone, password } = toRefs(userRegister.value);
+
+watch(full_name, (newVAlue) => {
+  emailError.value = isEmpty(newVAlue, "string");
+}, { deep: true });
+
+
+
+
+watch(phone, (newValue) => {errorTel.value = !isEmpty(newValue, "Telifon nomeri").item ? isEmpty(newValue, "Telifon nomeri")
+    : validateLength(newValue, 12, 12, "telfon nomeri");
+}, { deep: true });
+
+
+
+watch(password, (newValue) => { passwordError.value = passwordValidator(newValue);
+}, { deep: true });
+
+const senDataUser = async () => {
+  emailError.value = isEmpty(userRegister.value.full_name, "ismi");
+  console.log(emailError.value,'salomat usejon');
+  // errorTel.value = !isEmpty(userRegister.value.phone, "number").item ? isEmpty(userRegister.value.phone, "number") : validateLength(newValue.phone, 12, 12, "telfon nomeri");
+  errorTel.value = validateLength(userRegister.value.phone, 12, 12, "telfon nomeri");
+
+  console.log(errorTel.value,'erorottel');
+  passwordError.value = passwordValidator(userRegister.value.password);
+  console.log(passwordError.value,'salomat pasword');
+
+  let array = [emailError.value, errorTel.value, passwordError.value];
+  let validtaionDAta = validation(array);
+
+  if (validtaionDAta) {
+    await store.registerUser(userRegister.value);
+  }
+  console.log(validtaionDAta);
+  if (validtaionDAta) {
+    console.log('malumotlar yuborildi');
+  }
+  else {
+    console.log('yuborilmadi');
+  }
 };
-
-
-
 </script>
 
 <style lang="scss" scoped>
@@ -182,10 +182,9 @@ export default {
   margin: 40px 30px 44px 680px;
   border: none;
 }
-.section_select option{
+.section_select option {
   font-weight: 600;
   font-size: 16px;
-
 }
 .wrapper {
   // background-color: red;
@@ -224,7 +223,6 @@ export default {
 //   display: flex;
 //   justify-content: space-between;
 // }
-
 .section_check {
   background-color: #fafafa;
   border: 01px solid #a3acb5;
@@ -295,7 +293,7 @@ export default {
   margin: 0px 48px 12px 15px;
   padding: 12px;
 }
-label{
+label {
   width: 115px;
   height: 18px;
   top: 471px;
@@ -306,36 +304,35 @@ label{
   line-height: 18px;
   letter-spacing: 0em;
   text-align: left;
-  color:#323232;
+  color: #323232;
   margin: 20px 0px 10px 0px;
 }
 label span {
-  color: #E93C3C;
+  color: #e93c3c;
   font-size: 19px;
   font-weight: 700;
-
 }
-.list{
-  margin:0px 0px 30px 0px;
+.list {
+  margin: 0px 0px 30px 0px;
   padding: 0px;
 }
-button{
+button {
   width: 100%;
-  background-color:#1C5793;
+  background-color: #1c5793;
   padding: 10px;
-  border:none;
+  border: none;
   border-radius: 10px;
   color: white;
 }
-.bottom{
+.bottom {
   width: 100%;
   height: 307px;
   top: 752px;
   left: 832px;
   border: 1px;
-  margin:20px 0px 0px 0px;
+  margin: 20px 0px 0px 0px;
 }
-.bottom h2{
+.bottom h2 {
   width: 298px;
   height: 19px;
   top: 770px;
@@ -347,7 +344,7 @@ button{
   text-align: center;
   // color: #35363D
 }
-.NuxtLink{
-  color: #1C5793;
+.NuxtLink {
+  color: #1c5793;
 }
 </style>

@@ -39,7 +39,7 @@
         @swiper="onSwiper"
       >
         <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx">
-          <div class="bookData">
+          <div @click="$router.push(`/book/${item.id}`)" class="bookData">
             <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
@@ -47,12 +47,13 @@
               src="../../assets/contact/booklike.png"
               alt=""
               class="bookLike"
+              @click="addFavourite($event, idx, item.id, item.book_id,)"
             />
             <img
               src="../../assets/contact/karzinka.png"
               alt=""
               class="karzinka"
-              @click="addBasket(item.id, item.book_id)"
+              @click="addBasket($event, item.id, item.book_id)"
             />
             <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
           </div>
@@ -87,15 +88,29 @@ const props = defineProps({
 
 let swiper = null;
 
+// const bookData = (event, id) => {
+  
+// }
+
 const onSwiper = (sw) => {
   swiper = sw;
 };
-const addBasket = (id, bookId) => {
+const addBasket = (e, id, bookId) => {
+  e.stopPropagation()
   store.basketAdd({ product_id: id, type: bookId ? "book" : "other" });
 };
 
-onMounted (() => {
-})
+const addFavourite = (e, idx, id, bookId) => {
+    store.addFavourite({
+      product_id: id,
+      type: bookId ? "book" : "other",
+    });
+  
+  e.stopPropagation()
+};
+
+// onMounted (() => {
+// })
   
 
 </script>

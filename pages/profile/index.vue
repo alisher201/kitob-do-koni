@@ -2,60 +2,40 @@
     <div >
       <div class="main">
         <h1 class="h1">Bildirishnoma</h1>
-    
-        <div class="main_list" >
-          <div    class="img1"  v-for="(item,index) in data" :key="index" @click="selectImg(item.id)">
-              <img :src="item.img"  alt="">
-              <div >
-                  <h2>{{item.word}}</h2>
-                  <p>{{item.world}}</p>
-              </div>
+        <div class="row">
+          <div class="main_list row " >
+            <div class="img1 col-sm-6"  v-for="(item,index) in store?.notifications?.result" :key="index" @click="selectImg(item.id)">
+              <div>
+                <img :src="'https://beta.kytab.uz'+item.parent.image"  alt="">
+                <!-- <pre>{{ item.parent.image }}</pre> -->
+
+              </div>  
+                <div >
+                    <h2>{{item.parent.title}}</h2>
+                    <p>{{item.parent.body.substring(0,90)}}</p>
+                </div>
+            </div>
           </div>
         </div>
+        <!-- <pre>{{ store.notifications?.result}}</pre> -->
+        <!-- <pre>{{store.notifications?.result[0].parent}}sal</pre> -->
       </div>
     </div>
   </template>
   <script setup>
-  import img1 from  "../../assets/profile/img1.svg";
-  import img2 from "../../assets/profile/image2.svg";
-  import img3 from "../../assets/profile/image3.svg";
-  import img4 from "../../assets/profile/image4.svg";
-  
-                        // 
-  const data = [
-      {
-          id:1,
-          img: img1,
-          word:"Lorem ipsum dolor sit amt kas consecture adipiscing ",
-          world:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus  "
-      },
-      {
-          id:2,
-          img: img2,
-          word:"Lorem ipsum dolor sit amt kas consecture adipiscing ",
-          world:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus  "
-  
-  
-      },
-      {
-          id:3,
-           img:  img3  ,
-           word:"Lorem ipsum dolor sit, amet consectetur adipisicing elit..",
-           world:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus  "
-  
-       },
-       {
-          id:4,
-           img: img4,
-           word:"Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-           world:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus  "
-  
-       }
-  ]
-       const selectImg = (id) =>{
-        const router = useRouter()
-        router.push(`/profile/Notification/${id}`)
-       }
+
+  const store = ProfileHistory()
+
+  onMounted(()=>{
+    store.Notification()
+  })
+
+
+const selectImg = (id) =>{
+  const router = useRouter()
+  router.push(`/profile/Notification/${id}`)
+}
+
   </script>
   
   <style lang="scss" scoped>
@@ -68,13 +48,13 @@
   }
   .main {
     width: 948px;
-    height: 325px;
+    // height: 325px
     top: 232px;
     left: 479px;
     border-radius: 10px;
     // color: #FAFAFA;
-    background-color:#FAFAFA;     
-  //   background-color: red;
+    // background-color:#FAFAFA;      
+    background-color: red;
     margin: 60px 121px 283px 40px;
     
   }
@@ -92,10 +72,13 @@
       margin:18px 0px 0px 30px;
   }
   .main_list{
-      display:flex;
+    //   display:flex;
       padding:4px;
       margin:18px 0px 0px 30px;
       gap: 20px;
+      background-color: blue;
+      width: 909px;
+      // height: 280px;
       grid-template-columns: repeat(auto-fit,minmax(300px,2fr));
   }
   h2{
@@ -141,7 +124,7 @@
   .img1{
       
       width: 415px;
-      height: 115px;
+      // height: 115px;
       top: 297px;
       left: 509px;
       border-radius: 10px;

@@ -25,12 +25,7 @@
   
   <style lang="scss" scoped>
   .main {
-    width: 920px;
-    height: 226px;
-    top: 232px;
-    left: 30px;
     background-color: #fafafa;
-    margin: 40px 121px 412px 30px;
   }
   .h1 {
     width: 178px;

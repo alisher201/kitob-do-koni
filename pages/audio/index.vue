@@ -10,9 +10,9 @@
       <div class="container">
         <div class="wrapper">
           <div class="wrapper_ul">
-            <img src="../../assets/profile/audio.png" alt="" />
+            <img :src="urlimg + audioData?.book?.image" alt="" />
             <h2>Malkolm Gloduel</h2>
-            <h1>ZUkkolar va landovurlar</h1>
+            <h1>{{ audioData?.book?.name }}</h1>
             <div class="audio-player">
               <div class="controls">
                 <div class="remainingTime">
@@ -113,95 +113,169 @@
 </template>
 
 <script setup>
-import img1 from "../../assets/profile/AtomOdatlari.png";
-import img3 from "../../assets/profile/foiz.png";
-import start1 from "../../assets/profile/start.png";
-import img2 from "../../assets/profile/Kitoblar.png";
-import img4 from "../../assets/profile/Ruxiyat.png";
-import img5 from "../../assets/profile/Zukkolar.png";
-import img6 from "../../assets/profile/Raqamlar.png";
-import useAudioPlayer from "./audio.js";
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 
 const store = ProfileHistory();
 const urlimg = useRuntimeConfig().public.bookUrl;
-import { useRoute } from 'vue-router';
-const route = useRoute();
+import { useRoute } from "vue-router";
+const router = useRoute();
 
-let id = ref(null)
+const audioData = ref("");
+const audioSrcs = ref([]);
 
-const profile = () => {
-  store.Book();
-};
+// watch(audioData, (newValue) => {
+//   if (newValue.file_path) {
+//     audioSrcs.value = [urlimg + newValue.file_path];
+//   }
+// });
 
-const {
-  isPlaying,
-  audioSrcs,
-  remainingTime,
-  minusTime,
-  currentTrackIndex,
-  volume,
-  progress,
-  audioDuration,
-  speed,
-  togglePlayback,
-  changeVolume,
-  seek,
-  changeSpeed,
-  skipForward,
-  skipBackward,
-  playNext,
-  playPrevious,
-} = useAudioPlayer();
-
-const data = [
-  {
-    img: img1,
-    name: "Atom odatlar (yum...",
-    author: "Martimer Alder",
-    start: start1,
-    foiz: "50%",
-    stecer: img3,
-  },
-  {
-    img: img2,
-    name: "Kitoblar qanday o’q...",
-    author: "Jayms Kir",
-    start: start1,
-    foiz: "50%",
-    stecer: img3,
-  },
-  {
-    img: img4,
-    name: "Ruhiyat parhezi",
-    author: "Jayms Kir",
-    start: start1,
-    foiz: "50%",
-    stecer: img3,
-  },
-  {
-    img: img5,
-    name: "Zukkolar va landov...",
-    author: "Malkolm Gladuell",
-    start: start1,
-    foiz: "50%",
-    stecer: img3,
-  },
-  {
-    img: img6,
-    name: "Raqamlar uchun ya...",
-    author: "Barbara Oukli",
-    start: start1,
-    foiz: "50%",
-    stecer: img3,
-  },
-];
+let audio = null;
+const isPlaying = ref(false);
+const remainingTime = ref("00:00:00");
+const minusTime = ref("-00:00:00");
+const currentTrackIndex = ref(0);
+const volume = ref(50);
+const progress = ref(0);
+const audioDuration = ref(0);
+const speed = ref("1");
 
 onMounted(() => {
-  profile();
-  id = route.params.id
+  const storedAudioData = JSON.parse(localStorage.getItem("audioData"));
+  if (storedAudioData) {
+    audioData.value = storedAudioData;
+    audioSrcs.value.push(urlimg + storedAudioData.file_path);
+    console.log(storedAudioData);
+  }
+  audio = new Audio();
+  audio.autoplay = false;
+  audio.addEventListener("timeupdate", updateProgress);
 
-  console.log( id );
+  if (audioSrcs.value.length > 0) {
+    loadAudio();
+  }
 });
+
+onBeforeUnmount(() => {
+  if (audio) {
+    audio.pause();
+    audio.removeEventListener("timeupdate", updateProgress);
+    audio = null;
+  }
+});
+
+// functions
+
+const togglePlayback = () => {
+  if (isPlaying.value) {
+    pauseAudio();
+  } else {
+    playAudio();
+  }
+};
+
+const playAudio = () => {
+  if (audio) {
+    audio.play();
+    isPlaying.value = true;
+  }
+};
+
+const pauseAudio = () => {
+  if (audio) {
+    audio.pause();
+    isPlaying.value = false;
+  }
+};
+
+const updateProgress = () => {
+  if (audio) {
+    progress.value = (audio.currentTime / audio.duration) * 100 || 0;
+
+    const remainingSeconds = audio.currentTime;
+    if (remainingSeconds <= 0) {
+      remainingTime.value = `00:00:00`;
+    } else {
+      const hours = Math.floor(remainingSeconds / 3600);
+      const minutes = Math.floor((remainingSeconds % 3600) / 60);
+      const seconds = Math.floor(remainingSeconds % 60);
+      remainingTime.value = `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    }
+
+    const remainingMinus = audio.duration - audio.currentTime;
+    if (isNaN(audio.duration) || remainingMinus <= 0) {
+      minusTime.value = `-00:00:00`;
+    } else {
+      const hours = Math.floor(remainingMinus / 3600);
+      const minutes = Math.floor((remainingMinus % 3600) / 60);
+      const seconds = Math.floor(remainingMinus % 60);
+      minusTime.value = `-${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    }
+
+    if (progress.value >= 100) {
+      isPlaying.value = false;
+    }
+  }
+};
+
+const seek = () => {
+  if (audio) {
+    const seekTime = (progress.value / 100) * audio.duration;
+    audio.currentTime = seekTime;
+  }
+};
+
+const changeSpeed = () => {
+  if (audio) {
+    audio.playbackRate = parseFloat(speed.value);
+  }
+};
+
+const skipForward = () => {
+  if (audio) {
+    const newPosition = Math.min(audio.currentTime + 10, audio.duration);
+    audio.currentTime = newPosition;
+  }
+};
+
+const skipBackward = () => {
+  if (audio) {
+    const newPosition = Math.max(audio.currentTime - 10, 0);
+    audio.currentTime = newPosition;
+  }
+};
+
+const loadAudio = () => {
+  if (audio && audioSrcs.value.length > 0) {
+    audio.src = audioSrcs.value[currentTrackIndex.value];
+    audio.load();
+    audio.addEventListener("loadedmetadata", () => {
+      audioDuration.value = audio.duration;
+    });
+  }
+};
+
+const playNext = () => {
+  if (audio) {
+    currentTrackIndex.value =
+      (currentTrackIndex.value + 1) % audioSrcs.value.length;
+    loadAudio();
+    playAudio();
+  }
+};
+
+const playPrevious = () => {
+  if (audio) {
+    currentTrackIndex.value =
+      (currentTrackIndex.value - 1 + audioSrcs.value.length) %
+      audioSrcs.value.length;
+    loadAudio();
+    playAudio();
+  }
+};
 </script>
 
 <style lang="scss" scoped>

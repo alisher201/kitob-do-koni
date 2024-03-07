@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="div">
+    <div v-for="(item,index) in store?.notifications?.result" :key="index">
+        <div class="div" v-if="(route.params.id == item.id)">
             <dev @click="back.go(-1)">
                 <img class="h1" src="@/assets/profile/back.png" alt="">
                 
@@ -9,10 +9,10 @@
             <div  class="div1">
                 <div  class="div2">
                     <!-- <img style="" src="@/assets/profile/singlepage.png" alt=""> -->
-                    <img class="img1" src="@/assets/profile/singlepage1.png" alt="">
+                    <img class="img1" :src="'https://beta.kytab.uz'+item.parent.image" alt="">  
                 </div>
-                <h2 class="h2">Lorem ipsum dolor sit.</h2>
-                <p class="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus facilisis. Placerat neque neque et integer urna, mattis rhoncus diam. Integer metus, urna,doqckx  .pretium maecenas quisque. Risus, justo, dolor orci amet. Elementum pulvinar commodo, pretium sed voflq lectus faucibus arcu nunc. Eget congue consequat, non tellus nulla pellentesque dcdcddnecvddnam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus facilisis. Placerat neque neque et integer daowmri dupbaqr leaibfsp urna,mattisIntescfmetusurna, cdpqfkp pretium maecenas quisque. Risus, justo, dolor orci amet. Elementum pulvinar commodo, ommodo, pretium sed lectus faucibus arcu nunc. Eget congue consequat, non tellus nulla Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eget neque magnis tempor in sed cursus facilisis. Placerat neque neque et integer </p>
+                <h2 class="h2">{{ item.title }}</h2>
+                <p class="p">{{ item.body }}</p>
             </div>
         </div>
     </div>
@@ -20,6 +20,13 @@
 
 <script setup>
 const back = useRouter();
+const route  = useRoute()
+const store = ProfileHistory()
+// console.log(`${back.id}`,'back')
+console.log(route.params.id,'route.param.id');
+onMounted(()=>{
+  store.Notification()
+})
 </script>
 
 <style lang="scss" scoped>

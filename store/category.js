@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
 import { book_category } from "../utils/home"
 import { categoryParent } from '@/utils/category'
+
 export const useCategory = defineStore("category", {
 
   state: () => ({
@@ -10,6 +11,7 @@ export const useCategory = defineStore("category", {
     katalog: {},
     katalogpic: {},
     catologType: null,
+    errorCategory: null
 
   }),
   actions: {
@@ -20,7 +22,7 @@ export const useCategory = defineStore("category", {
         })
     },
 
-
+    //   bita categorga so'rov yuboraish
     async fetchKatalog(id) {
       return await categoryParent.getOne(id)
         .then((res) => {
@@ -29,19 +31,58 @@ export const useCategory = defineStore("category", {
     },
 
 
-
-    fetchKatalogPic(id) {
+    // bu category ga oid kitoblar ga slo'rov yuboradi
+    fetchCatgoryBooks(id) {
       $fetch(`${this.url}/category/books/${id}`)
         .then((res) => {
-          this.katalogpic = res.result;
+          this.errorCategory = null
+          this.catologType = res.result;
+
         })
+        .catch(error => {
+          if (error.response?.status == 404) {
+            this.errorCategory = error.response.status
+          }
+          else {
+            this.errorCategory = 'ABDULLOHNI XATOSI  :))))'
+          }
+        })
+
     },
-    
-    fetchCategoryType(id, type) {
-      $fetch(`${this.url}/category/books/${id}?type=${type}`)
+
+    async fetchCategoryType(id, type, lang, price_from, price_to) {
+
+      let request = null
+
+      if (type == 'all' && lang == 'all') {
+        request = `${this.url}/category/books/${id}?price_from=${price_from}&price_to=${price_to}`
+      }
+      else if (type == 'all') {
+        request = `${this.url}/category/books/${id}?lang=${lang}&price_from=${price_from}&price_to=${price_to}`
+      }
+      else if(lang == 'all'){
+        request = `${this.url}/category/books/${id}?type=${type}&price_from=${price_from}&price_to=${price_to}`
+      }
+      else {
+        request = `${this.url}/category/books/${id}?type=${type}&lang=${lang}&price_from=${price_from}&price_to=${price_to}`
+
+      }
+
+
+      return await $fetch(request)
         .then((res) => {
+          this.errorCategory = null
           this.catologType = res.result;
         })
+        .catch(error => {
+          if (error.response?.status == 404) {
+            this.errorCategory = error.response.status
+          }
+          else {
+            this.errorCategory = 'ABDULLOHNI XATOSI  :))))'
+          }
+        })
+
     },
 
   }
