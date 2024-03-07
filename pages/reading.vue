@@ -2,7 +2,7 @@
     <div>
         <NuxtPage />
     </div>
-</template>
+</template> 
 
 <script setup>
 definePageMeta({
