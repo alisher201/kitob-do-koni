@@ -25,13 +25,13 @@
             <label for="email" class="form-label"
               >Telefon raqam <span>*</span></label
             >
-            <input  class="form-control" v-model="tel" v-maska data-maska="#-#" />
+            <!-- <input  class="form-control" v-model="tel" v-maska data-maska="#-#" /> -->
 
             <input
               v-model="telNumber"
               type="number"
               class="form-control"
-              v-maska data-maska="#-#"
+              v-maska data-maska="############"
             />
             <span v-if="errorTel" style="color: red">{{
               errorTel.message
@@ -113,7 +113,10 @@ const senDataUser = () => {
   userlogin.value.phone = telNumber.value
   userlogin.value.password = password.value
   console.log(userlogin.value);
+  // localStorage.setItem('type',client)
+
   if (validtaionDAta) {
+
     store.loginUser(userlogin.value);
     router.push('/')
   }

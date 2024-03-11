@@ -26,7 +26,6 @@
             >{{ basketLength }} {{ $t("home.basket.product") }}</small
           >
         </div>
-
         <div class="row mb-5">
           <div class="col-9">
             <div class="d-flex justify-content-between mb-3">
@@ -43,11 +42,13 @@
                 <p class="remove">{{ $t("home.basket.delete") }}</p>
               </div>
             </div>
+            <pre>{{ store.basket }}</pre>
             <div
               class="d-flex mt-4"
               v-for="(item, idx) in store.basket"
               :key="idx"
             >
+            <pre>{{ item.product.price }}</pre>
               <div class="me-3 d-flex align-items-center">
                 <input
                   type="checkbox"
@@ -133,7 +134,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> 
           <!-- Order Data -->
           <div class="col-3">
             <div class="yourOrderContainer mt-5">
@@ -158,7 +159,7 @@
                 <p>{{ totalPrice + 20000 }} {{ $t("home.basket.sum") }}</p>
               </div>
               <div class="mt-2">
-                <button class="w-100 sendOrder mt-3">
+                <button @click="send" class="w-100 sendOrder mt-3">
                   {{ $t("home.basket.shopping") }}
                 </button>
               </div>
@@ -180,8 +181,14 @@ let sum = ref(0);
 let totalSum = ref(null);
 let totalPrice = ref(0);
 let basketLength = ref(0);
-
-// functions
+  
+const send = ()=>{
+  for(const i of store.basket){
+    console.log(i.product.price);
+    console.log(i.product_id)
+    console.log()
+  }
+}
 
 const addFavourite = (idx) => {
   store.basket[idx].favorite = !store.basket[idx].favorite;

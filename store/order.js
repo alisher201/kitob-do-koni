@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import {order_invoices,order_status, order_transaction,order_complete,order_token,order_payment,order_exists,order_delivery,order_check} from "../utils/order"
+import {order_invoices,order_status, order_transaction,order_complete,order_token,order_payment,order_exists,order_delivery,order_check,order_forget} from "../utils/order"
 import { useRuntimeConfig} from "nuxt/app";
 
 
@@ -10,6 +10,9 @@ export const OrderPayment = defineStore("order",{
         delivery:{},
         check:{},
         token:{},
+        invoic_id:{},
+        exists:{},
+        forget:{},
 
     }),
     actions:{
@@ -44,16 +47,29 @@ export const OrderPayment = defineStore("order",{
         async Order_Token(data){
             return await order_token.create(data)
             .then((res)=>{
-                this.token = res.result.token
-                console.log(res,'res');
+                this.token = res?.result
+               
                 // this.token = JSON.Stringify(res)
             });
         },
         async Order_Payment(data){
             return await order_payment.create(data)
+            .then((res)=>{
+                this.invoic_id = res?.result
+               
+            })
         },
         async Order_Exists(data){
             return await order_exists.create(data)
+            .then((res)=>{
+                this.exists = res?.result
+            })
+        },
+        async Order_Forget(data){
+            return await order_forget.create(data)
+            .then((res)=>{
+                this.forget = res?.result
+            });
         }
 
     }

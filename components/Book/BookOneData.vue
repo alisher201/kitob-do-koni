@@ -1,9 +1,6 @@
 <script setup>
-// import { toast } from 'vue3-toastify';
-
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
-
 const store = usePayment()
 const route = useRoute()
 const url = useRuntimeConfig().public.bookUrl
@@ -11,23 +8,18 @@ const siteUrl = useRuntimeConfig().public.siteUrl
 let comitCount = ref(0)
 let ratings = ref(0)
 let type = ref([])
-let cont = ref(null)
 const storeBasket = useBasketStore()
 let bookType = ref(null)
 let is_book = ref(false)
 let comentsData = ref([])
 let routePath = route.path
 let copyPath = siteUrl + routePath
-
+let bookPrice = ref(null)
+let file_fragment = ref(null)
 
 const copyLink = () => {
   navigator.clipboard.writeText(copyPath)
-  // console.log(copyPath);
-
 }
-
-
-
 let bookcontent = ref(1)
 const bookImgs = [
   { imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
@@ -52,37 +44,42 @@ const bookImgs = [
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
   },
-
 ];
 
 const ordrItem = () => {
-  let orderdata = {
-    booktype: bookType.value
+  if(bookPrice.value) {
+    
+    if( store.book?.type){
+      localStorage.setItem('productType','book')
+    }
+    else{
+        localStorage.setItem('productType','product')
+    }
+    let orderdata = {
+      booktype: bookType.value
+    }
+    const router = useRouter()
+    localStorage.setItem('bookTypeId',orderdata.booktype)
+    localStorage.setItem('productId',route.params.id)
+    localStorage.setItem('quantity',1)
+    localStorage.setItem('price', bookPrice.value )
+
+    console.log(route.params.id);
+    router.push('/OrderItem')
+
+    }
+  else{
+    alert('uxlading')
   }
-  const router = useRouter()
-  localStorage.setItem('bookTypeId',orderdata.booktype)
-  localStorage.setItem('productId',route.params.id)
-  localStorage.setItem('quantity',1)
-
-  // localStorage.setItem('bookType',bookType.value)
-  // localStorage.setItem('price', store.book?.type?.price )
-  localStorage.setItem('price', 1 )
-
-  console.log(route.params.id);
-  // localStorage.setItem()
-  router.push('/OrderItem')
+ 
 }
 const fetchBookOne = () => {
   refresh()
-
 }
-const refresh = () => {
-  store.fetch_book_one(route.params.id)
+const refresh = async() => {
+  await store.fetch_book_one(route.params.id)
     .then(() => {
-
       comentsData.value = [...store.book.reviews, ...store.book.shop_reviews]
-
-
       let elementLength = comentsData.value.length
       let sum = 0
       if (store.book) {
@@ -94,7 +91,6 @@ const refresh = () => {
         comitCount.value = elementLength
       }
 
-
       if (store.book && store.book.type) {
         store.book.type.forEach(item => {
           type.value.push(item.type)
@@ -104,8 +100,6 @@ const refresh = () => {
           }
         })
       }
-
-
     })
     .catch(error => {
       console.error('Error fetching book:', error);
@@ -115,23 +109,41 @@ const refresh = () => {
 const basketAdd = (id, type) => {
   storeBasket.basketAdd({ product_id: id, type: type.length ? 'book' : 'product' })
     .then(() => {
-      alert('Siz savatga qo`shildi')
-    if(type.length) {
-      localStorage.setItem('productType','book')
-    }
-    else{
-      localStorage.setItem('productType','product')
-    }
+      notify()
+
     })
 }
 
 onMounted(() => {
   refresh()
+  .then(() => {
+    bookTypeadd(store.book.type[0].id, store.book.type[0].price)
+  });
 })
+
+const notify = () => {
+  useNuxtApp().$toast.success("Savatchaga qo'shildi", {
+    autoClose: 5000,
+    dangerouslyHTMLString: true,
+  });
+};
+const bookTypeadd =(id,price,file) => {
+  console.log(id,price);
+  bookType.value = id
+  bookPrice.value = price
+  file_fragment.value = file
+}
+
+console.log('epubUrl')
 </script>
 
 <template>
+  
   <div class="container mb-5 pb-5 px-0">
+    <div @click="notify">
+    notify by click
+  </div>
+  
     <div class="my-3"><small class="mt-5">
         Bosh sahifa/
         <span>{{ $i18n.locale == 'uz' ? store.book?.category[0]?.name_oz : store.book?.category[0]?.name_ru }}</span>
@@ -149,7 +161,6 @@ onMounted(() => {
           <div class="showImg" v-for="item in store.book?.gallery" :key="item">
             <img :src="url + '/' +  item.path" alt="" />
           </div>
-
 
         </div>
       </div>
@@ -182,7 +193,8 @@ onMounted(() => {
         <div>
           <span class="statCount">{{ $t("home.cost") }}:</span>
           <div class="mb-3">
-            <span  class="bookPrice">{{ store.book?.type?.price }} {{ $t("home.basket.sum") }}</span>
+           
+            <span  class="bookPrice">{{bookPrice}}{{ $t("home.basket.sum") }}</span>
             <small class="discount ms-3"><del>185 000 {{ $t("home.basket.sum") }}</del></small>
           </div>
         </div>
@@ -190,31 +202,20 @@ onMounted(() => {
         <div class="row">
           <div class="col-6">
             <!-- booktype -->
-
             <div class="d-flex justify-content-between">
-              <button class="booktype btn border px-3" v-for="(item,index) in store?.book?.type " :key="index"    @click="bookType= item.id"
-                :class="{ 'bookTypeActive': bookType == item.id }">
+              <button class="booktype btn border px-3" v-for="(item,index) in store?.book?.type " :key="index"   @click="bookTypeadd(item.id,item.price,item.file_fragment)"
+                :class="{ 'bookTypeActive': bookType == item.id }" >
                 <img  src="@/assets/contact/book-open.png" alt="" /><small class="ms-2">{{item.type}}</small>
               </button>
-
-              <!-- <button  class="btn border px-4 booktype" v-if="type.includes('audio')" @click="bookType = 2"
-                :class="{ 'bookTypeActive': bookType == 2 }">
-                <img src="@/assets/contact/headphones.png" alt="" /><small class="ms-2">Audio</small>
-              </button>
-
-              <button class="btn border px-3 booktype" v-if="type.includes('ebook')" @click="bookType = 3"
-                :class="{ 'bookTypeActive': bookType == 3 }">
-                <img src="@/assets/contact/ebookk.png" alt="" /><small class="ms-2">eBook</small>
-              </button> -->
-            </div>
-            <div v-for="(item,index) in store?.book?.type " :key="index">
-              <pre>{{ item.id }}</pre>
-            </div>
-            <pre>{{ store?.book?.type }}</pre>
-            <!-- fragment -->
+            </div>  
+            <!-- <div v-for="(item,index) in store?.book?.type " :key="index"> -->
+              <!-- <pre>{{ item.id }}</pre> -->
+            <!-- </div> -->
+            <!-- <pre>{{ store?.book?.type }}</pre> -->
             <div class="mt-2 row">
               <div class="col-6">
-                <button class="btn border w-100 fragment">
+                <!-- {{ file_fragment.value }} -->
+                <button  :disabled="file_fragment == null" :style="{cursor: file_fragment == null ? 'no-drop' : 'auto'}"  class="btn border w-100 fragment">
                   <img src="@/assets/contact/book-open2.png" alt="" />{{ $t("home.reading") }}
                 </button>
               </div>
@@ -225,12 +226,10 @@ onMounted(() => {
               </div>
             </div>
 
-            <!-- basket -->
-            <button class="w-100 basket mt-2" @click="basketAdd(store.book.id, store.book.type)">{{ $t("home.addBasket")
-            }}</button>
-
-            <!-- prompt payment -->
-            <button class="w-100 buy mt-2" @click="ordrItem">{{ $t("home.quickBuy") }}</button>
+            <button   :disabled="bookPrice == null" :style="{cursor: bookPrice == null ? 'no-drop' : 'auto'}"  class="w-100 basket mt-2 "  @click="basketAdd(store.book.id, store.book.type)">{{ $t("home.addBasket")}} </button>
+              <button  class="w-100 buy mt-2" @click="ordrItem">{{bookPrice ? $t("home.quickBuy"): 'Yuklab olish' }}</button>
+           
+            
           </div>
         </div>
       </div>
@@ -260,9 +259,7 @@ onMounted(() => {
       <div class="comments" v-if="bookcontent == 3">
         <BookComments :comments="comentsData" :ratings="ratings.toFixed(1)" :commitCount="comitCount" :is_books="is_book"
           @fetchBookOne="fetchBookOne" />
-
       </div>
-
     </div>
 
     <div class=" mt-5">
@@ -276,7 +273,9 @@ onMounted(() => {
             <img src="@/assets/contact/arrowLeft.png" alt="" />
           </button>
         </div>
-
+        <pre>
+              {{store.book}}
+            </pre>
       </div>
       <div class=" bookGrid mt-3">
         <div class="p-0 dataItem" v-for="(item, index) in bookImgs" :key="index">
@@ -298,9 +297,10 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <pre>
+    <!-- <pre>
         {{ store.book }}
-      </pre>
+      </pre> -->
+
   </div>
 </template>
 
@@ -313,7 +313,6 @@ onMounted(() => {
   height: 300px;
   background: #e6e8ec66;
   border-radius: 15px;
-  /* margin-left: 10px; */
 }
 
 .bookimg img {

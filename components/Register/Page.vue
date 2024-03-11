@@ -140,7 +140,7 @@ const senDataUser = async () => {
   let array = [emailError.value, errorTel.value, passwordError.value];
   let validtaionDAta = validation(array);
   
-  if (validtaionDAta) {
+  if (validtaionDAta) { 
     await store.registerUser(userRegister.value);
   }
   console.log(validtaionDAta);
