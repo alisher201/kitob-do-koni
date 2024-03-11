@@ -18,6 +18,15 @@ export const useLogin = defineStore("login", {
                     data
                 }
             })
+                .then(res => {
+                    if (res?.success) {
+                        localStorage.setItem('jwtToken', res.result.token)
+                        localStorage.setItem('userFullName', res.result.full_name)
+                        localStorage.setItem('type', res.result.type)
+                        localStorage.setItem('refreshToken', res.result.refresh_token)
+
+                    }
+                })
         },
         async loginUser(data) {
             return await login.create(data)

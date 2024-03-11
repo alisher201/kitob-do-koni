@@ -49,12 +49,7 @@ export const useCategory = defineStore("category", {
         })
 
     },
-    // kitob type bo'ycha so'rov
 
-    // type          paper, ebook,audio
-    // lang          uz, ru, en  
-    // price_from
-    // price_to
     async fetchCategoryType(id, type, lang, price_from, price_to) {
 
       let request = null

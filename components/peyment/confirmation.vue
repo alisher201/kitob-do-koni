@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="w-100 d-flex justify-content-center  align-items-center modalContainer">
-      <div class="modalData">
+      <div class="modalData">   
         <h4>Tranzaksiyani tasdiqlash</h4>
         <p class="modalContent">Telefon raqamingizga bir martalik kod yuborildi</p>
         <div class="d-flex justify-content-between mt-2">

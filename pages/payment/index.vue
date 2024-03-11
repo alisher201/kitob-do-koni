@@ -1,14 +1,3 @@
-<script setup>
-definePageMeta({
-  layout: "Payment",
-});
-let status = ref(false)
-const submitPeyment = () => {
-  let router = useRouter()
-  router.push('/payment/confirmation')
-}
-</script>
-
 <template>
   <div>
     <SeoKit />
@@ -21,11 +10,12 @@ const submitPeyment = () => {
               <p class="cardNumber">{{ $t("home.cardNum") }}</p>
               <img src="../../assets/contact/uzcardlogo.png" alt="" />
             </div>
-            <div class="cardCode">
-              <span>****</span>
+            <div class="cardCode">  
+              <!-- {{ form.card_code }}         -->
+              <span >{{form.card_code ? form.card_code.substring(0,4) : '****'}}   </span>
               <span class="ms-2">****</span>
               <span class="ms-2">****</span>
-              <span class="ms-2">****</span>
+              <span class="ms-2">{{form.card_code ? form.card_code.substring(12,16) : '****'}}</span>
             </div>
             <div class="d-flex justify-content-between">
               <div>
@@ -45,20 +35,20 @@ const submitPeyment = () => {
           <p class="fw-bold mt-3">{{ $t("home.amount") }} 165 000 {{ $t("home.basket.sum") }}</p>
           <div>
             <label for="" class="formCard">{{ $t("home.cardNum") }}</label>
-            <input type="text" class="form-control" placeholder="******************" />
+            <input type="text" v-model="form.card_code" class="form-control" placeholder="******************" />
           </div>
           <div class="row">
             <div class="col-7">
-              <label for="" class="formCard">{{ $t("home.cardName") }}</label>
-              <input type="text" class="form-control" :placeholder="$t('home.nameSurname')" />
+              <label for="" class="formCard">{{ $t("home.cardName") }} </label>
+              <input type="text" v-model="form.card_name" class="form-control" placeholder="Ism Familiya" />
             </div>
             <div class="col-5">
               <label for="" class="formCard">{{ $t("home.period") }}</label>
-              <input type="text" class="form-control" placeholder="OO/YY" />
+              <input type="" v-model="form.card_date" class="form-control" placeholder="OO/YY"  v-maska data-maska="##/##"/>
             </div>
           </div>
           <div class="cardPeymentContainer">
-            <button class="w-100 cardPeyment fw-bold text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button @click="send" class="w-100 cardPeyment fw-bold text-white" data-bs-toggle="modal"  data-bs-target="#staticBackdrop">
               {{ $t("home.pay") }}
             </button>
           </div>
@@ -76,6 +66,7 @@ const submitPeyment = () => {
           </div>
         </div>
       </div>
+      {{ store.token }}
 
       <!-- Modal -->
       <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -108,7 +99,47 @@ const submitPeyment = () => {
     </div>
   </div>
 </template>
+<script setup>
+const store = OrderPayment()
 
+definePageMeta({
+  layout: "Payment",
+});
+let status = ref(false)
+const submitPeyment = () => {
+  let router = useRouter()
+  router.push('/payment/confirmation')
+}
+
+let form =ref( {
+  card_code:null,
+  card_name:null,
+  card_date:null,
+})
+
+const send = async() =>{
+  let name = form.value.card_name?.toLowerCase()
+  let payload = {
+    name:name,
+    pan:form.value.card_code,
+    expiry:form.value.card_date
+  }
+  console.log(payload)
+  await store.Order_Token(payload)
+  .then(() =>{
+    let token = store.token
+    localStorage.setItem('token',token)
+    console.log(token,'token') 
+    let order = {
+      token:localStorage.getItem('token'),
+      invoice_id:localStorage.getItem('invoice_id'),
+    }
+    store.Order_Transaction(token)
+  })
+    
+
+}
+</script>
 <style scoped>
 .cardData {
   width: 524px;
@@ -148,7 +179,7 @@ const submitPeyment = () => {
 }
 
 .cardCode {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 33px;
   letter-spacing: 0.02em;

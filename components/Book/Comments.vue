@@ -14,7 +14,7 @@
           </div>
 
           <!-- umumi ovozlar soni -->
-          <p class="mt-2">{{ $t("home.votes") }} 23</p>
+          <p class="mt-2">{{ $t("home.votes") }} {{ Props.comments.length }}</p>
         </div>
 
         <hr class="mb-0" />
@@ -56,12 +56,12 @@
           <div class="d-flex">
             <div class="main_img">
               <img v-if="items.user?.photo" :src="url + '/' + items.user?.photo" alt="" class="commentImg" />
-              <h1 v-else>M</h1>
+              <h1 v-else style="color: #fff; font-weight: 700;">{{ items.user?.name ? items.user?.name.substring(0, 1).toUpperCase() : items.user?.full_name.substring(0, 1).toUpperCase() }}</h1>
 
             </div>
             <!-- <pre>{{ items.comment}}</pre> -->
             <div class="px-4">
-              <span>{{ items.user?.name }} <br />
+              <span>{{ items.user?.name ? items.user?.name : items.user?.full_name }} <br />
                 <span v-for="(item, index) in stars" :key="index" class="comentsList">
                   <img :src="item.img" alt="" v-if="item.id <= items.rating" />
 
@@ -82,9 +82,9 @@
               </div>
               <div class="d-flex justify-content-between mt-4">
                 <p class="small">{{ items.created_at }}</p>
-                <img src="../../assets/contact/comments.png" alt="" />
+                <img src="@/assets/contact/comments.png" alt="" />
               </div>
-              <img src="../../assets/contact/Line 18.png" alt="" class="w-100 mt-4" />
+              <img src="@/assets/contact/Lines.png" alt="" class="w-100 mt-4" />
             </div>
           </div>
         </div>
@@ -93,8 +93,8 @@
   </div>
 </template>
 <script setup>
-import star from "../../assets/contact/starActive.png";
-import star2 from "../../assets/contact/starIs_active.png";
+import star from "@/assets/contact/starActive.png";
+import star2 from "@/assets/contact/starIs_active.png";
 
 
 const url = useRuntimeConfig().public.bookUrl

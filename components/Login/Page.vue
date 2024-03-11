@@ -77,6 +77,7 @@ const router = useRouter();
 const userlogin = ref({
   phone: null,
   password: null,
+  // type: "client",
 });
 
 // Validatsiya
