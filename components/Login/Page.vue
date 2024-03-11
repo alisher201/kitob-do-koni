@@ -25,13 +25,14 @@
             <label for="email" class="form-label"
               >Telefon raqam <span>*</span></label
             >
-            <input  class="form-control" v-model="tel" v-maska data-maska="#-#" />
+            <!-- {{ tel }} -->
 
             <input
               v-model="telNumber"
-              type="number"
               class="form-control"
-              v-maska data-maska="#-#"
+              placeholder="+998 00 000 00 00"
+              v-maska
+              data-maska="+998 ## ### ## ##"
             />
             <span v-if="errorTel" style="color: red">{{
               errorTel.message
@@ -50,6 +51,8 @@
             <span v-if="passwordError" style="color: red">{{
               passwordError.message
             }}</span>
+
+            <span v-if="error" style="color: red">{{ error }}</span>
 
             <div class="li">
               <NuxtLink to="/password" href="">Parolni unutdingizmi?</NuxtLink>
@@ -78,22 +81,33 @@ const userlogin = ref({
 
 // Validatsiya
 
-const tel = ref(null);
-const telNumber = ref(null);
+const telNumber = ref("");
 const errorTel = ref(null);
 const password = ref(null);
 const passwordError = ref(null);
 
-watch(telNumber, (newValue) => {
-  errorTel.value = !isEmpty(newValue, "Telifon nomeri").item
-    ? isEmpty(newValue, "Telifon nomeri")
-    : validateLength(newValue, 12, 12, "telfon nomeri");
-});
+const tel = ref(telNumber.value);
+
+const error = ref(null);
+// console.log(tel);
+const maskval = (data) => {
+  return data.substring(1, 20).replace(/\s/g, "");
+};
+watch(
+  telNumber,
+  (newValue) => {
+    console.log(maskval(newValue));
+
+    errorTel.value = !isEmpty(maskval(newValue), "Telifon nomeri").item
+      ? isEmpty(maskval(newValue), "Telifon nomeri")
+      : validateLength(maskval(newValue), 12, 12, "telfon nomeri");
+  },
+  { deep: true }
+);
 
 watch(password, (newValue) => {
   passwordError.value = passwordValidator(newValue);
 });
-
 
 const content = ref(null);
 onMounted(() => {
@@ -103,19 +117,33 @@ onMounted(() => {
 const senDataUser = () => {
   // Validatsiya
   // telefon
-  errorTel.value = validateLength(telNumber.value, 12, 12, "telfon nomeri");
+  errorTel.value = validateLength(
+    maskval(telNumber.value),
+    12,
+    12,
+    "telfon nomeri"
+  );
   // password
   // passwordError.value = passwordValidator(password);
   let array = [errorTel.value, passwordError.value];
   let validtaionDAta = validation(array);
   console.log(validtaionDAta);
-  userlogin.value.phone = telNumber.value
-  userlogin.value.password = password.value
+  userlogin.value.phone = maskval(telNumber.value);
+  userlogin.value.password = password.value;
   console.log(userlogin.value);
   if (validtaionDAta) {
-    store.loginUser(userlogin.value);
-    router.push('/')
+    store.loginUser(userlogin.value).then((res) => {
+      if (res.error) {
+        error.value = res.message;
+      }else {
+    localStorage.setItem("jwtToken", res.result.token);
+    localStorage.setItem("userFullName", res.result.full_name);
+    localStorage.setItem("type", res.result.type);
+    localStorage.setItem("refreshToken", res.result.refresh_token);
+    router.push("/");
   }
+    });
+  } 
 };
 </script>
   

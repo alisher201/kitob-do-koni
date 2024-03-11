@@ -33,7 +33,7 @@
               v-model="telNumber"
               type="number"
               class="form-control"
-              placeholder="+998 00 000 00 00"
+              placeholder="998 00 000 00 00"
             />
             <span v-if="errorTel" style="color: red">{{
               errorTel.message
@@ -53,7 +53,7 @@
             <div class="mb-3 mt-3 list">
               <label for="email" class="form-label"
                 >Tasdiqlash kodi: <span>+998 97 589 53 69 </span> telefon
-                raqamga yu bordik</label
+                raqamga yubordik</label
               >
               <input
                 v-model="code"
