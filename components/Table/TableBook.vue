@@ -1,30 +1,38 @@
 <template>
     <div>
-
         <div style="background-color:white;">
             <div class="wrapper">
-                <div class="main" v-for="(item, index) in store.books.result" :key="index"
-                    @click="readingLInk(item)">
-                    <div class="">
+                <div class="main" v-for="(item, index) in store.books.result?.ebooks" :key="index"
+                   >
+                  
+                   
+                    <div class=""  @click="readingLInk(item.file_path)">
                         <img :src="' https://beta.kytab.uz' + item.book.image" alt="">
                         <h2>{{ item.book.name }}</h2>
                         <p class="main_p">{{ item.book.author.fio }}</p>
                         <img class="main_img" :src="item.start" alt="">
                         <div class="main_list">
                             <p class="main_list_p">{{ item.foiz }}</p>
-                            <img class="main_list_img" style="height:.125rem;margin-top:.5rem" :src="item.stecer" alt="">
+                            <img class="main_list_img" style="height:2px;margin-top:8px" :src="item.stecer" alt="">
                         </div>
                     </div>
 
                 </div>
             </div>
-            <pre style="">{{ store.books.result[0].file_path }}</pre>
+            <!-- <pre style="">{{ store.books.result[0].file_path }}</pre> -->
         </div>
     </div>
 </template>
 
 <script setup>
 const store = ProfileHistory()
+const router = useRouter();
+
+const readingLInk = (item) => {
+    let data = JSON.stringify(item)
+    localStorage.setItem('epubUrl', data)
+    router.push('/reading')
+}
 
 onMounted(() => {
     store.Book()
@@ -47,29 +55,29 @@ onMounted(() => {
     height: 100%;
 }
 .main{
-    width:150px;
-    height: 260px;
-    top: 232px;
-    // left: 479px;
-    border-radius: 10px;
+    width:9.375rem;
+    height: 16.25rem;
+    top: 14.5rem;
+    // left: 29.9375rem;
+    border-radius: .625rem;
     background-color:#FAFAFA;
     // background-color: red;
-    margin-left:30px;
+    margin-left:1.875rem;
 }
 .main_card{
-    width: 30px;
-    height: 30px;
+    width: 1.875rem;
+    height: 1.875rem;
     background-color: blue;
 
 }
 .main_card_p{
-    margin-top:22px;
-    width: 150px;
+    margin-top:1.375rem;
+    width: 9.375rem;
     color: black;
 }
 img{
-    width: 150px;
-    height: 150px;
+    width: 9.375rem;
+    height: 9.375rem;
 }
 
 .main_list {
@@ -77,56 +85,56 @@ img{
 }
 
 h2 {
-    width: 8.1875rem;
-    height: 1.125rem;
-    top: 34.3125rem;
-    left: 32.3125rem;
+    width: 131px;
+    height: 18px;
+    top: 549px;
+    left: 517px;
     font-family: Manrope;
-    font-size: .875rem;
+    font-size: 14px;
     font-weight: 600;
-    line-height: 1.125rem;
+    line-height: 18px;
     letter-spacing: 0.02em;
     text-align: left;
     color:#35363D;
-    // margin:6px 7px 3px 8px; 
+    // margin:.375rem .4375rem .1875rem .5rem; 
 }
 .main_p{
-    width: 150px;
-    height: 18px;
-    top: 570px;
-    // left: 517px;
+    width: 9.375rem;
+    height: 1.125rem;
+    top: 35.625rem;
+    // left: 32.3125rem;
     font-family: Manrope;
-    font-size: .8125rem;
+    font-size: 13px;
     font-weight: 400;
-    line-height: 1.125rem;
+    line-height: 18px;
     letter-spacing: 0.02em;
     text-align: left;
     // color:#9196AD;
     color: #35363D;
-    margin:0px 0px 15px 0px;
+    margin:0rem 0rem .9375rem 0rem;
 }
 
 .main_img {
-    width: 4.125rem;
-    height: 1rem;
-    top: 37rem;
-    left: 32.3125rem;
-    margin: .1875rem 2.4375rem .25rem .5rem;
+    width: 66px;
+    height: 16px;
+    top: 592px;
+    left: 517px;
+    margin: 3px 39px 4px 8px;
 }
 
 .main_list {
-    margin: 0rem 0rem 0rem .5rem;
+    margin: 0px 0px 0px 8px;
 }
 
 .main_list_p {
-    width: 1.6875rem;
-    height: 1rem;
-    top: 38.25rem;
-    left: 32.3125rem;
+    width: 27px;
+    height: 16px;
+    top: 612px;
+    left: 517px;
     font-family: Manrope;
-    font-size: .75rem;
+    font-size: 12px;
     font-weight: 500;
-    line-height: 1rem;
+    line-height: 16px;
     letter-spacing: 0.04em;
     text-align: left;
     content: 50%;
@@ -135,11 +143,11 @@ h2 {
 }
 
 .main_list_img {
-    width: 6.25rem;
-    height: .1875rem;
-    top: 38.6875rem;
-    left: 34.3125rem;
-    border-radius: .125rem;
+    width: 100px;
+    height: 3px;
+    top: 619px;
+    left: 549px;
+    border-radius: 2px;
 
 }
 </style>

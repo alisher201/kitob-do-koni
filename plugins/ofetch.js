@@ -1,18 +1,25 @@
 import { ofetch } from 'ofetch'
 import { useTestTStore } from '@/store/home'
 
-let jwtToken = localStorage.getItem('jwtToken')
+// let jwtToken = localStorage.getItem('jwtToken')
 
 export default defineNuxtPlugin((_nuxtApp) => {
+  let jwtToken = null
+
+  if (process.client) {
+    // Check if code is running in the client-side environment
+    jwtToken = localStorage.getItem('jwtToken');
+  }
   globalThis.$fetch = ofetch.create({
+    // data: tokens,
     onRequest({ request, options }) {
 
-    
+
 
       if (jwtToken) {
         options.headers = {
           Authorization: `Bearer ${jwtToken}`,
-          accept : 'application/json'
+          accept: 'application/json'
         }
 
         // options.headers = {refresh: refreshToken}
@@ -24,11 +31,15 @@ export default defineNuxtPlugin((_nuxtApp) => {
     onResponseError({ response }) {
       const statusCode = response.status;
       if (statusCode === 401) {
-        // localStorage.removeItem('jwtToken')
 
-        jwtToken = localStorage.getItem('refreshToken')
+        if (process.client) {
+          // Check if code is running in the client-side environment
+          // jwtToken = localStorage.getItem('jwtToken');
+          jwtToken = localStorage.getItem('refreshToken')
+          useTestTStore().refreshToken()
+        }
 
-         useTestTStore().refreshToken()
+
 
       }
     }
