@@ -1,6 +1,5 @@
 <template>
   <main>
-    {{ dataa }}
     <HomeCarousel />
     <HomePossibilities />
     <HomeMarketFast :title="'Bozori chaqqon'" :bookImgs="store?.books?.special_offer" />
@@ -12,9 +11,9 @@
 </template>
  
 <script setup>
-let dataa = ref('')
 const store = useTestTStore();
 onMounted(() => {
+  store.language = localStorage.getItem('language')
   store.fechBooks().then((a) => {
   });
 

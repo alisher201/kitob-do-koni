@@ -113,7 +113,6 @@
             
           </div>
           <div class="" style="grid-area: linee">
-            <img src="../../assets/contact/Line 17.png" alt="" class="w-100" />
           </div>
         </div>
         <div>
