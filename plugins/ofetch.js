@@ -1,7 +1,7 @@
 import { ofetch } from 'ofetch'
 import { useTestTStore } from '@/store/home'
 
-let jwtToken = localStorage.getItem('jwtToken')
+// let jwtToken = localStorage.getItem('jwtToken')
 
 export default defineNuxtPlugin((_nuxtApp) => {
   globalThis.$fetch = ofetch.create({

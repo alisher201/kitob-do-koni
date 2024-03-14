@@ -77,12 +77,11 @@ const router = useRouter();
 const userlogin = ref({
   phone: null,
   password: null,
-  // type: "client",
 });
 
 // Validatsiya
 
-const telNumber = ref("");
+const telNumber = ref(null);
 const errorTel = ref(null);
 const password = ref(null);
 const passwordError = ref(null);
@@ -90,14 +89,14 @@ const passwordError = ref(null);
 const tel = ref(telNumber.value);
 
 const error = ref(null);
-// console.log(tel);
 const maskval = (data) => {
-  return data.substring(1, 20).replace(/\s/g, "");
+  let stringData = String(data)
+  return stringData.substring(1, 20).replace(/\s/g, "");
 };
 watch(
   telNumber,
   (newValue) => {
-    console.log(maskval(newValue));
+    
 
     errorTel.value = !isEmpty(maskval(newValue), "Telifon nomeri").item
       ? isEmpty(maskval(newValue), "Telifon nomeri")
@@ -125,27 +124,29 @@ const senDataUser = () => {
     "telfon nomeri"
   );
   // password
-  // passwordError.value = passwordValidator(password);
+  passwordError.value = passwordValidator(password.value);
   let array = [errorTel.value, passwordError.value];
   let validtaionDAta = validation(array);
-  console.log(validtaionDAta);
   userlogin.value.phone = maskval(telNumber.value);
   userlogin.value.password = password.value;
-  console.log(userlogin.value);
   if (validtaionDAta) {
     store.loginUser(userlogin.value).then((res) => {
       if (res.error) {
-        error.value = res.message;
-      }else {
-    localStorage.setItem("jwtToken", res.result.token);
-    localStorage.setItem("userFullName", res.result.full_name);
-    localStorage.setItem("type", res.result.type);
-    localStorage.setItem("refreshToken", res.result.refresh_token);
-    router.push("/");
-  }
+        useNuxtApp().$toast.info(res.message, {
+          autoClose: 5000,
+          dangerouslyHTMLString: true,
+        });
+      } else {
+        localStorage.setItem("jwtToken", res.result.token);
+        localStorage.setItem("userFullName", res.result.full_name);
+        localStorage.setItem("type", res.result.type);
+        localStorage.setItem("refreshToken", res.result.refresh_token);
+        router.push("/");
+      }
     });
-  } 
+  }
 };
+
 </script>
   
   <style lang="scss" scoped>
