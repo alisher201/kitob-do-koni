@@ -115,66 +115,6 @@
 </template>
   
 <script setup>
-// import { ref, onMounted } from 'vue';
-// import { Form, Field, ErrorMessage } from 'vee-validate';
-// export default {
-
-//   components: {
-//     Form,
-//     Field,
-//     ErrorMessage,
-//   },
-//   methods: {
-//     onSubmit(values) {
-//       console.log(values, null, 2);
-//     },
-//     validateEmail(value) {
-//       if (!value) {
-//         return 'ism familyangizni kiritng';
-//       }
-
-//       const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-//       if (!regex.test(value)) {
-//         return "parol noto'g'ri";
-//       }
-//       // All is good
-//       return true;
-//     },
-//       validatePassword(value) {
-//         if(!value){
-//           return 'Parol kiritng'
-//         }
-//       },
-//       validateNewPassword(value) {
-//         if(!value){
-//           return 'Yangi parol kiritng kiritng'
-//         }
-//       },
-//       validateCode(value) {
-//         if(!value){
-//           return 'Sms kod kelmadi'
-//         }
-//       }
-//   },
-//   setup() {
-//   const content = ref(null);
-
-//   onMounted(() => {
-//     content.value = 1;
-//   });
-
-//   return {
-//     content
-//   };
-// },
-// };
-
-// const content = ref(null)
-
-// onMounted(() => {
-//   content.value = 1;
-// })
-
 // Validatsiya
 
 const store = useLogin();

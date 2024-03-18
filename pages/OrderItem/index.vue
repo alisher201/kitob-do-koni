@@ -15,12 +15,13 @@
           <div class="processingData mt-3">
               <div v-if="(usertype == 'guest')">
                 <label for="" class="processingLabel mb-1">{{ $t("home.surname") }}<span>*</span></label>
-                <input v-model="Payment.full_name"  type="text"  class="form-control"  :placeholder="$t('home.entersurname')"
-                />
+                <input v-model="Payment.full_name"  type="text"  class="form-control"  :placeholder="$t('home.entersurname')" />
+                <span v-if="emailError" style="color: red" name="full_name">{{emailError.message}}</span>
               </div>
               <div v-if="(usertype == 'guest')">
                 <label for="" class="processingLabel mb-1">{{ $t("home.phone") }}<span>*</span></label>
                 <input v-model="Payment.phone" type="text"  class="form-control"  :placeholder="$t('home.enternum')"/>
+                <span v-if="errorTel" style="color: red">{{  errorTel.message}}</span>
               </div>
             
             <div>
@@ -31,6 +32,7 @@
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </select>
+              <span v-if="emailError" style="color: red" name="full_name">{{  emailError.message}}</span>
             </div>
             <div>
               <label for="" class="processingLabel mb-1">{{ $t("home.district") }}<span>*</span></label>
@@ -40,10 +42,16 @@
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </select>
+              <span v-if="emailError" style="color: red" name="full_name">{{
+              emailError.message
+            }}</span>
             </div>
             <div>
               <label for="" class="processingLabel mb-1">{{ $t("home.address") }}<span>*</span></label>
               <input v-model="Payment.address" type="text" class="form-control" :placeholder="$t('home.enteraddress')"/>
+              <span v-if="emailError" style="color: red" name="full_name">{{
+              emailError.message
+            }}</span>
             </div>
           </div>
           <!-- <div class="mt-3">
@@ -298,6 +306,44 @@ const peymentType = [
   // { imgs: mastercard },
   // { imgs: visa },
 ];
+
+// const emailError = ref(null);
+
+// // const full_name = ref(null)
+// const errorTel = ref(null)
+// // const delevireyAdress = ref(null)
+
+
+
+// watch(Payment.value.full_name, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+
+// watch(Payment.value.phone, (newValue) => {errorTel.value = !isEmpty(newValue, "Telifon nomeri").item ? isEmpty(newValue, "Telifon nomeri")
+//     : validateLength(newValue, 12, 12, "telfon nomeri");
+// }, { deep: true });
+
+
+// watch(Payment.value.deliver, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+// watch(Payment.value.district, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+
+// watch(Payment.value.address, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+
+// watch(Payment.value.card, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+
+// watch(Payment.value.deliveryMethod, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+
+
 
 </script>
 <style>

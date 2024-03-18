@@ -38,7 +38,7 @@
         :pagination="{ clickable: true }"
         @swiper="onSwiper"
       >
-        <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx">
+        <SwiperSlide  v-for="(item, idx) in bookImgs" :key="idx">
           <div class="bookData">
             <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>

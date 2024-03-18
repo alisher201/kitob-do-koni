@@ -19,7 +19,10 @@ let bookPrice = ref(null);
 let file_fragment = ref(null);
 let file_type = ref(null);
 const reading = ref(null);
-
+let swiper = null;
+const onSwiper = (sw) => {
+  swiper = sw;
+};
 
 const copyLink = () => {
   navigator.clipboard.writeText(copyPath);
@@ -48,6 +51,22 @@ const bookImgs = [
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
   },
+  {
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  {
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  {
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  
 ];
 
 const ordrItem = () => {
@@ -350,25 +369,29 @@ console.log("epubUrl");
       </div>
     </div>
 
-    <div class="mt-5">
-      <div class="d-flex justify-content-between">
+    <div class="mt-5 mb-5">
+      <div class="d-flex justify-content-between mb-3">
         <h6 class="p-0">{{ $t("home.recently") }}</h6>
         <div>
-          <button class="nextRight me-2">
+          <button class="nextRight me-2" @click="swiper.slidePrev()">
             <img src="@/assets/contact/arrowRight.png" alt="" />
           </button>
-          <button class="nextLeft">
+          <button class="nextLeft" @click="swiper.slideNext()">
             <img src="@/assets/contact/arrowLeft.png" alt="" />
           </button>
         </div>
-        <!-- <pre>
-              {{ store.book }}
-            </pre -->
-        >
       </div>
-      
-      <!-- <div class="bookGrid mt-3">
-        <div
+        
+      <Swiper
+        :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
+        :grid="{ rows: 1, fill: 'row' }"
+        :slides-per-view="6"
+        :space-between="10"
+        :pagination="{ clickable: true }"
+        @swiper="onSwiper"
+      >
+      <!-- <div class="bookGrid mt-3"> -->
+        <SwiperSlide
           class="p-0 dataItem"
           v-for="(item, index) in bookImgs"
           :key="index"
@@ -398,45 +421,14 @@ console.log("epubUrl");
           <img src="../../assets/contact/Star.png" alt="" />
           <small class="stats ms-2">5,0</small>
           <span class="starsNumbers">(32)</span>
-        </div>
-      </div> -->
-      <div class="bookGrid mt-3">
-        <div
-          class="p-0 dataItem"
-          v-for="(item, index) in bookImgs"
-          :key="index"
-        >
-          <div class="bookDataa">
-            <img :src="item.imgs" alt="" class="categoyImg" />
-            <button class="btnBestseller">Bestseller</button>
-            <button class="newBook">Yangi</button>
-            <img
-              src="../../assets/contact/booklike.png"
-              alt=""
-              class="bookLike"
-            />
-            <img
-              src="../../assets/contact/karzinka.png"
-              alt=""
-              class="karzinka"
-            />
-            <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
-          </div>
-          <div class="ps-2">
-            <small class="title">{{ item.bookTitle }}</small>
-          </div>
-          <div class="ps-2">
-            <small class="author">{{ item.author }}</small>
-          </div>
-          <img src="../../assets/contact/Star.png" alt="" />
-          <small class="stats ms-2">5,0</small>
-          <span class="starsNumbers">(32)</span>
-        </div>
-      </div>
+        </SwiperSlide>
+      <!-- </div> -->
+    </Swiper>
     </div>
-    <pre>
-        {{ store.book }}
-      </pre>
+    <!-- <pre>
+      {{ store.recent }}
+    </pre> -->
+      
   </div>
 </template>
 
