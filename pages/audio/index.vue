@@ -187,6 +187,10 @@ const pauseAudio = () => {
   }
 };
 
+const changeVolume = () => {
+  audio.volume = volume.value / 100;
+};
+
 const updateProgress = () => {
   if (audio) {
     progress.value = (audio.currentTime / audio.duration) * 100 || 0;

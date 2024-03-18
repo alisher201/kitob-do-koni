@@ -43,17 +43,28 @@
             <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
+            <div
+              class="likeBox"
+              @click="addFavourite($event, idx, item.id, item.type.book_id)"
+            >
             <img
-              src="../../assets/contact/booklike.png"
-              alt=""
-              class="bookLike"
-              @click="addFavourite($event, idx, item.id, item.book_id,)"
-            />
+                src="../../assets/contact/bookLike2.png"
+                alt=""
+                class="bookLike2"
+                :style="{ opacity: item.is_favorite ? '1' : '0' }"
+              />
+              <img
+                src="../../assets/contact/booklike.png"
+                alt=""
+                class="bookLike"
+                :style="{ opacity: item.is_favorite ? '0' : '1' }"
+              />
+            </div>
             <img
               src="../../assets/contact/karzinka.png"
               alt=""
               class="karzinka"
-              @click="addBasket($event, item.id, item.book_id)"
+              @click="addBasket($event, item.id, item.type.book_id)"
             />
             <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
           </div>
@@ -61,7 +72,8 @@
             <small class="title">{{ item.creator }}</small>
           </div>
           <div class="ps-2">
-            <small class="author">{{ item.description }}</small>
+            <small class="author">{{ item.name }}</small>
+            <small class="author"> favorite: {{ item.is_favorite }}</small>
             {{ item.id }}
           </div>
           <small class="stats ms-2">5,0</small>
@@ -76,6 +88,8 @@ import { useRuntimeConfig } from "nuxt/app";
 
 const store = useBasketStore();
 
+const { bookImgs } = props;
+
 // const url = useRuntimeConfig().public.siteUrl;
 const urlimg = useRuntimeConfig().public.bookUrl;
 const props = defineProps({
@@ -89,30 +103,35 @@ const props = defineProps({
 let swiper = null;
 
 // const bookData = (event, id) => {
-  
+
 // }
 
 const onSwiper = (sw) => {
   swiper = sw;
 };
 const addBasket = (e, id, bookId) => {
-  e.stopPropagation()
+  e.stopPropagation();
   store.basketAdd({ product_id: id, type: bookId ? "book" : "other" });
 };
 
 const addFavourite = (e, idx, id, bookId) => {
+  e.stopPropagation();
+
+  bookImgs[idx].is_favorite = !bookImgs[idx].is_favorite;
+
+  if (bookImgs[idx].is_favorite) {
     store.addFavourite({
       product_id: id,
       type: bookId ? "book" : "other",
     });
-  
-  e.stopPropagation()
+  } else {
+    const type = bookId ? "book" : "other";
+    store.favouriteDelete(id, type);
+  }
 };
 
 // onMounted (() => {
 // })
-  
-
 </script>
 
 <style scoped>

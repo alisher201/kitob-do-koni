@@ -25,12 +25,13 @@
             <label for="email" class="form-label"
               >Telefon raqam <span>*</span></label
             >
+            <input  class="form-control" v-model="tel" v-maska data-maska="#-#" />
 
             <input
               v-model="telNumber"
               type="number"
               class="form-control"
-              placeholder="+998 00 000 00 00"
+              v-maska data-maska="#-#"
             />
             <span v-if="errorTel" style="color: red">{{
               errorTel.message
@@ -73,9 +74,12 @@ const router = useRouter();
 const userlogin = ref({
   phone: null,
   password: null,
+  // type: "client",
 });
 
 // Validatsiya
+
+const tel = ref(null);
 const telNumber = ref(null);
 const errorTel = ref(null);
 const password = ref(null);
@@ -88,8 +92,6 @@ watch(telNumber, (newValue) => {
 });
 
 watch(password, (newValue) => {
-  console.log(password);
-  console.log("asdfasdfasdfasdfdfa");
   passwordError.value = passwordValidator(newValue);
 });
 

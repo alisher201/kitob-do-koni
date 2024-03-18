@@ -1,62 +1,41 @@
+import {
+  ofetch
+} from 'ofetch'
+import {
+  useTestTStore
+} from '@/store/home'
 
-// import { ofetch } from 'ofetch'
-
-// export default defineNuxtPlugin((_nuxtApp) => {
-//   globalThis.$fetch = ofetch.create({
-//     onRequest ({ request, options }) {
-//       console.log(request);
-//     //  const authStore = useTestTStore()
-//      const jwtToken = localStorage.getItem('jwtToken')
-
-//       if (jwtToken) {
-//         options.headers = { Authorization: `Bearer ${jwtToken}` }
-//       } else {
-//         console.log('Not authenticated')
-//       }
-//     },
-//     onResponseError ({ error }) {
-//       // console.error(error.response, 'eror')
-//       console.log('fgfghhghjghjghj');
-//     }
-//   })
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { ofetch } from 'ofetch'
-import {useTestTStore} from '@/store/home'
+let jwtToken = localStorage.getItem('jwtToken')
 
 export default defineNuxtPlugin((_nuxtApp) => {
   globalThis.$fetch = ofetch.create({
-    onRequest({ request, options }) {
-      const jwtToken = localStorage.getItem('jwtToken')
-      const refreshToken = localStorage.getItem('refreshToken')
+    onRequest({
+      request,
+      options
+    }) {
 
       if (jwtToken) {
-        options.headers = { Authorization: `Bearer ${jwtToken}`,
-        refresh: refreshToken
-       }
-        
+        options.headers = {
+          Authorization: `Bearer ${jwtToken}`,
+          accept: 'application/json'
+        }
+
         // options.headers = {refresh: refreshToken}
       } else {
         console.log('Not authenticated')
+        // options.headers = { Authorization: `Bearer ${refreshToken}` }
       }
     },
-    onResponseError({ response }) {
+    onResponseError({
+      response
+    }) {
       const statusCode = response.status;
       if (statusCode === 401) {
-        // useTestTStore().refreshToken()
+        // localStorage.removeItem('jwtToken')
+
+        jwtToken = localStorage.getItem('refreshToken')
+
+        useTestTStore().refreshToken()
 
       }
     }

@@ -157,7 +157,7 @@ const selectData = (data) => {
 const profile = () => {
   let get = localStorage.getItem("type")  
   if (get =="guest") {
-    router.push('/register')
+    router.push('/login')
   }
   else {
     router.push('/profile')
@@ -173,20 +173,21 @@ watch(searchbooks, (newVal) => {
 const sendRequest = () => {
   // store.fechSearchTop()
 
-  store
-    .searchData(searchbooks.value)
+  store.searchData(searchbooks.value)
 
     .then(() => {
       // console.log(store.productSearch.result.length > 0 ? true : false);
       // store.serchResult = res
       if (store.productSearch.result.length == 0) {
         // searchList.value = false
-        searchList.value = false;
-        store.searchValue = searchbooks.value;
-        console.log("gag");
-      } else {
-        store.searchValue = searchbooks.value;
-        searchList.value = true;
+        searchList.value = false
+        store.searchValue = searchbooks.value
+
+      }
+      else {
+        store.searchValue = searchbooks.value
+        searchList.value = true
+
 
         if (!searchbooks.value) {
           store.productSearch = null;

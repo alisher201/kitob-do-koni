@@ -2,12 +2,14 @@
     <div>
         <NuxtPage />
     </div>
-</template>
+</template> 
 
 <script setup>
 definePageMeta({
-    layout:'bookreading'
+    layout:'reading'
 })
+
+
 </script>
 
 <style lang="scss" scoped>

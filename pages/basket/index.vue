@@ -83,7 +83,7 @@
                             addFavourite(
                               idx,
                               item.product.id,
-                              item.book_id,
+                              item.product.type,
                             )
                           "
                         >
@@ -195,15 +195,15 @@ let basketLength = ref(0);
 
 // functions
 
-const addFavourite = (idx, id, bookId) => {
+const addFavourite = (idx, id, type) => {
   store.basket[idx].favorite = !store.basket[idx].favorite;
   if (store.basket[idx].favorite == true) {
     store.addFavourite({
       product_id: id,
-      type: bookId ? "book" : "other",
+      type: type,
     });
   } else {
-    store.favouriteDelete(id)
+    store.favouriteDelete(id, type)
   }
 };
 

@@ -32,6 +32,12 @@ export class FechData {
     })
   }
   
+  likeDelete = (id, type) => {
+    return $fetch(`${url}/${this.api}/${id}?type=${encodeURIComponent(type)}`, {
+      method: 'DELETE',
+    })
+  }
+  
   deleteAll = () => {
     return $fetch(`${url}/${this.api}`, {
       method: 'POST'

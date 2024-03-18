@@ -55,8 +55,8 @@ export const useBasketStore = defineStore("basket", {
           this.like = res.result
         })
     },
-    async favouriteDelete(data) {
-      return await likeDelete.delate(data)
+    async favouriteDelete(id, type) {
+      return await likeDelete.likeDelete(id, type)
     },
   }
 });

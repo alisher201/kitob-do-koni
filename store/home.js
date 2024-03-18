@@ -1,6 +1,8 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
 import { register, book_category, searchTop, search, uuId, refresh } from "../utils/home"
+
+
 export const useTestTStore = defineStore("home", {
   state: () => ({
     url: useRuntimeConfig().public.siteUrl,
@@ -53,15 +55,15 @@ export const useTestTStore = defineStore("home", {
           localStorage.setItem('refreshToken', res.result.refresh_token)
         })
     },
-    
+
     // search top
     async fechSearchTop() {
       return await searchTop.get()
-      .then(res => {
+        .then(res => {
           // console.log(res);    
-          this.word= res
-      })
-   },
+          this.word = res
+        })
+    },
 
     // search history get 
     async SearchHistoryBook() {
@@ -77,7 +79,7 @@ export const useTestTStore = defineStore("home", {
     async createHistoryBook(data) {
       return await search.create(data)
     },
-        
+
     // delate history
     async dealteSearch(id) {
       return await search.delate(id)
@@ -96,28 +98,53 @@ export const useTestTStore = defineStore("home", {
     //uuId guest post method
     async uuIdPost(data) {
       return await uuId.create(data)
+        .then(res => {
+          if (res?.success) {
+            localStorage.setItem('jwtToken', res.result.token)
+            localStorage.setItem('userFullName', res.result.full_name)
+            localStorage.setItem('type', res.result.type)
+            localStorage.setItem('refreshToken', res.result.refresh_token)
+
+          }
+        })
+    },
+    async refreshToken() {
+
+      const refreshToken = localStorage.getItem('refreshToken')
+
+     await $fetch(`${this.url}/refresh`, {
+        headers: {
+          Authorization: refreshToken
+
+        }
+      })
+      // refresh.get()
       .then(res => {
         if(res?.success) {
           localStorage.setItem('jwtToken', res.result.token)
           localStorage.setItem('userFullName', res.result.full_name)
           localStorage.setItem('type', res.result.type)
           localStorage.setItem('refreshToken', res.result.refresh_token)
+
+        }
+      })
+      .catch(error => {
+        if(error.response.status == 401) {
+          return 
 
         }
       })
     },
-    async refreshToken() {
-      return await refresh.get()
-      .then(res => {
-        if(res?.success) {
-          localStorage.setItem('jwtToken', res.result.token)
-          localStorage.setItem('userFullName', res.result.full_name)
-          localStorage.setItem('type', res.result.type)
-          localStorage.setItem('refreshToken', res.result.refresh_token)
+   async epubFetch(url) {
 
-        }
-      })
-    }
+    return await $fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+
+      }
+    
+    })
+   }
 
   }
 })

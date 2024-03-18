@@ -1,31 +1,43 @@
 <template>
     <div>
-      <div class="main">
+      <div class="main" v-for="(item,index) in store.books.result" :key="index"  >
         <h1 class="h1">Mening Kitoblarim</h1>
         <div class="main_div">
           <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">Elektron kitob</div>
           <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">Audio kitob</div>
         </div>
-        <div v-show="content == 1"><TableBook/></div>
-        <div v-show="content == 2"><TableNotfound/></div>
+        <div v-if="(item.type == 'ebook')" v-show="content == 1"><TableBook/></div>
+        <div v-else v-show="content == 1"><TableNotfound/></div>
+
+        <!-- <div  v-if="(item.type == 'audio')" v-show="content == 2"><TableAudio/></div>
+        <div  v-else v-show="content == 2"><TableNotfound/></div>
+         -->
+        <!-- <pre style="background-color:white  ">{{ item  }}</pre> -->
+        
       </div>
+
     </div>
   </template>
   
   <script setup>
-  
+  const store = ProfileHistory()
   const content = ref(null)
-  
-  
   onMounted(() => {
     content.value = 1;
+    store.Book()
   })
+  // console.log(store.books.result.book,'store.book');
   
   </script>
   
   <style lang="scss" scoped>
   .main {
+    width: 920px;
+    height: 226px;
+    top: 232px;
+    left: 30px;
     background-color: #fafafa;
+    margin: 40px 121px 412px 30px;
   }
   .h1 {
     width: 178px;

@@ -139,13 +139,14 @@ const senDataUser = async () => {
 
   let array = [emailError.value, errorTel.value, passwordError.value];
   let validtaionDAta = validation(array);
-
+  
   if (validtaionDAta) {
     await store.registerUser(userRegister.value);
   }
   console.log(validtaionDAta);
   if (validtaionDAta) {
     console.log('malumotlar yuborildi');
+    localStorage.setItem("phone",userRegister.value.phone)
   }
   else {
     console.log('yuborilmadi');

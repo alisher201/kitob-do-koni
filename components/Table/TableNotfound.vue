@@ -53,7 +53,6 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 
-
 .wrapper {
     display: flex;
     gap: 20px;

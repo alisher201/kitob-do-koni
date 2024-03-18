@@ -1,51 +1,29 @@
 <template>
   <div>
-    <div class="container mb-5 pb-5 px-0">
+    <div class="container mb-5 pb-5 px-0" >
       <h4 class="mt-4" style="font-weight: 700">{{ $t("home.processing") }}</h4>
-
       <div class="d-flex justify-content-between">
         <div class="OrderProcessing">
           <div class="d-flex">
             <div class="processingNumber">1</div>
             <p class="yourData ms-2">{{ $t("home.yourInfo") }}</p>
           </div>
-
           <div class="processingData mt-3">
+            <!-- <div style="width:100%" > -->
+              <div v-if="(usertype == 'guest')">
+                <label for="" class="processingLabel mb-1">{{ $t("home.surname") }}<span>*</span></label>
+                <input v-model="Payment.full_name"  type="text"  class="form-control"  :placeholder="$t('home.entersurname')"
+                />
+              </div>
+              <div v-if="(usertype == 'guest')">
+                <label for="" class="processingLabel mb-1">{{ $t("home.phone") }}<span>*</span></label>
+                <input v-model="Payment.phone" type="text"  class="form-control"  :placeholder="$t('home.enternum')"/>
+              </div>
+            <!-- </div> -->
+            
             <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.surname") }}<span>*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                :placeholder="$t('home.entersurname')"
-              />
-            </div>
-            <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.name") }}<span>*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                :placeholder="$t('home.entername')"
-              />
-            </div>
-            <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.phone") }}<span>*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                :placeholder="$t('home.enternum')"
-              />
-            </div>
-            <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.city") }}<span>*</span></label
-              >
-              <select class="form-select" aria-label="Default select example">
+              <label for="" class="processingLabel mb-1">{{ $t("home.city") }}<span>*</span></label>
+              <select v-model="Payment.deliver" class="form-select" aria-label="Default select example">
                 <option selected>Open this select menu</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -53,10 +31,8 @@
               </select>
             </div>
             <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.district") }}<span>*</span></label
-              >
-              <select class="form-select">
+              <label for="" class="processingLabel mb-1">{{ $t("home.district") }}<span>*</span></label>
+              <select v-model="Payment.district" class="form-select">
                 <option selected><small>Open this select menu</small></option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -64,35 +40,26 @@
               </select>
             </div>
             <div>
-              <label for="" class="processingLabel mb-1"
-                >{{ $t("home.address") }}<span>*</span></label
-              >
-              <input
-                type="text"
-                class="form-control"
-                :placeholder="$t('home.enteraddress')"
-              />
+              <label for="" class="processingLabel mb-1">{{ $t("home.address") }}<span>*</span></label>
+              <input v-model="Payment.address" type="text" class="form-control" :placeholder="$t('home.enteraddress')"/>
             </div>
           </div>
           <div class="mt-3">
             <label for="" class="processingLabel mb-1">{{ $t("home.courier") }}</label>
-            <input
-              type="text"
-              class="form-control"
-            />
+            <input v-model="Payment.comment" type="text" class="form-control"/>
           </div>
         </div>
         <!-- buyurtma haqida -->
         <div class="yourOrderContainer">
           <p class="yourOrder">{{ $t("home.basket.order") }}</p>
           <div class="d-flex justify-content-between orderAbout">
-            <p>{{ $t("home.basket.books") }} (3)</p>
-            <p>128.000 {{ $t("home.basket.sum") }}</p>
+            <p>{{ $t("home.basket.books") }} (1)</p>
+            <p id="myParagraph">{{ price }} {{ $t("home.basket.sum") }}</p>
           </div>
 
           <div class="d-flex justify-content-between orderAbout my-1">
             <p>{{ $t("home.basket.delivery") }}</p>
-            <p>20.000 {{ $t("home.basket.sum") }}</p>
+            <p  >{{ delevireyAdress }} {{ $t("home.basket.sum") }}</p>
           </div>
 
           <div class="d-flex justify-content-between orderAbout">
@@ -108,17 +75,20 @@
           <div class="mt-2">
             <small>{{ $t("home.code") }}</small>
             <div class="d-flex justify-content-between mt-2">
-              <input
-                type="text"
-                :placeholder=" $t('home.enterCode')"
-                class="orderPromokod"
-              />
-
+              <input  type="text"  :placeholder=" $t('home.enterCode')"  class="orderPromokod"/>
               <button class="submitProma">{{ $t("home.apply") }}</button>
             </div>
-            <button class="w-100 sendOrder mt-3" @click="payment">
+            <div v-if="(usertype =='guest')">  
+              <button class="w-100 cardPeyment fw-bold text-white  sendOrder mt-3"  data-bs-toggle="modal" data-bs-target="#staticBackdrop"  type="button" @click="send">
               {{ $t("home.processing") }}
-            </button>
+              </button>
+            </div>
+            <div v-else>
+              <button class="w-100 cardPeyment fw-bold text-white  sendOrder mt-3"    type="button" @click="send">
+              {{ $t("home.processing") }}
+               </button>
+            </div>
+         
           </div>
         </div>
       </div>
@@ -131,54 +101,24 @@
         </div>
         <p class="bycard">{{ $t("home.card") }}</p>
         <div class="peymentCards">
-          <div
-            class="peymentCard d-flex"
-            v-for="(item, idx) in peymentType"
-            :key="idx"
-            :style="{ gridArea: `cardItem${idx + 1}` }"
-            @click="peyment = idx"
-          >
-            <input
-              class="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
-              :value="idx"
-              v-model="peyment"
-            />
-            <div
-              class="d-flex justify-content-center align-items-center w-100"
-              for="flexRadioDefault1"
-            >
+          <div  class="peymentCard d-flex"  v-for="(item, idx) in peymentType"  :key="idx"  :style="{ gridArea: `cardItem${idx + 1}` }"  @click="Payment.card = item.name">
+            <!-- <p>{{ Payment.card }}</p> -->
+            <input class="form-check-input"   type="radio" name="flexRadioDefault"   id="flexRadioDefault1"   :value="item.name"   v-model="Payment.card" />
+            <div   class="d-flex justify-content-center align-items-center w-100"   for="flexRadioDefault1" >
               <img :src="item.imgs" alt="" />
             </div>
-          </div>
-          <div class="" style="grid-area: line">
-            <img src="../../assets/contact/Line 17.png" alt="" class="w-100" />
+
+            
           </div>
           <div class="" style="grid-area: linee">
-            <img src="../../assets/contact/Line 17.png" alt="" class="w-100" />
           </div>
         </div>
         <div>
-          <small style="font-weight: 600"
-            >{{ $t("home.cash") }}</small
-          >
+          <small style="font-weight: 600">{{ $t("home.cash") }}</small>
         </div>
         <div class="peymentCard d-flex mt-3">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault1"
-            value="cash"
-            v-model="peyment"
-          />
-
-          <div
-            class="d-flex justify-content-center align-items-center w-100"
-            for="flexRadioDefault1"
-          >
+          <input    class="form-check-input"   type="radio"   name="flexRadioDefault"   id="flexRadioDefault1"   value="cash"  v-model="Payment.card" >
+          <div   class="d-flex justify-content-center align-items-center w-100"   for="flexRadioDefault1" >
             <img src="../../assets/contact/cash.png" alt="" />
           </div>
         </div>
@@ -190,64 +130,148 @@
         </div>
 
         <div class="deliverGrid ">
-          <div class="deliver d-flex" v-for="(item, idx) in delevirey" :key="idx">
-            <input class="form-check-input" type="radio" name="deliver" :value="idx" v-model="delevireyAdress"/>
-            <div class="ps-2">
-              <small>{{ item.delevireyData }}</small>
+          <div class=" deliver d-flex" v-for="(item, idx) in store.delivery" :key="idx">
+            <input   class="form-check-input" type="radio" name="deliver" :value="idx" @click="method" :v-model="Payment.deliveryMethod = item.code" id="flexRadioDefault1"/>
+            <div class="ps-2" for="flexRadioDefault1">
+              <small >{{ item.name }}</small>
+              <p style="width:120px">{{ item.price  }} so'm</p>
             </div>
-            <div class="d-flex align-items-center"><img :src="item.delevireyImg" alt="" /></div>
+            
+            <div class="align-items-center "  style="width: 200px; height: 200px;"><img :src="'https://kytabshop.al-raqam.com'+item.image" alt="" /></div>
           </div>
         </div>
       </div>
+      <pre>{{ store?.delivery }}</pre>
+      <pre>{{ typeof usertype }}</pre>
+      <div >
+        <div  class="modal fade" id="staticBackdrop"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content " style="background-color: transparent !important; border: none;">
+            <div class="modalData">
+              <h4>{{ $t("home.confirm") }}</h4>
+              <p class="modalContent">{{ $t("home.oneTime") }}</p>
+              <div class="d-flex justify-content-between mt-2">  
+              </div>
+              <div><img src="../../assets/contact/peymentLine.png" alt="" class="w-100"></div>
+              <div class="mt-4"><input type="text" class="form-control" :placeholder="$t('home.oneTimeCode')" /></div>
+              <div class="mt-4">
+                <p class="modalContent text-center">{{ $t("home.resend") }}</p>
+              </div>
+              <div class="mt-4">
+                <p class="peymentcancel text-center" type="button" data-bs-dismiss="modal">{{ $t("home.cancel") }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+     
+
     </div>
   </div>
 </template>
 <script setup>
 import click from "~/assets/contact/click.png";
-import humo from "@/assets/contact/humo.png";
-import mastercard from "@/assets/contact/mastercard.png";
-import oson from "@/assets/contact/oson.png";
+// import humo from "@/assets/contact/humo.png";
+// import mastercard from "@/assets/contact/mastercard.png";
+// import oson from "@/assets/contact/oson.png";
 import payme from "@/assets/contact/payme.png";
-import paynet from "@/assets/contact/paynet.png";
-import uzcard from "@/assets/contact/click.png";
-import visa from "@/assets/contact/visa.png";
-import uzum from "@/assets/contact/uzum.png";
-import stanart from "../../assets/contact/standart.png";
-import regions from "../../assets/contact/regions.png";
-import express from "../../assets/contact/express.png";
-let peyment = ref(null);
-let delevireyAdress = ref(null)
-const route = useRoute();
+// import paynet from "@/assets/contact/paynet.png";
+// import uzcard from "@/assets/contact/click.png";
+// import visa from "@/assets/contact/visa.png";
+// import uzum from "@/assets/contact/uzum.png";
+// import stanart from "../../assets/contact/standart.png";
+// import regions from "../../assets/contact/regions.png";
+// import express from "../../assets/contact/express.png";
+const router = useRouter()
+let url = useRuntimeConfig().public.bookUrl
+definePageMeta({
+  layout: "OrderItem",
+});
+let Payment = ref({
+  full_name:null,
+  phone:null,
+  deliver:null,
+  district:null,
+  address:null,
+  comment:null,
+  card:null,
+  deliveryMethod:null
+})
+const usertype = ref(null)
+// console.log(Payment); 
+console.log(Payment.value.deliveryMethod,'deliver');
+const price = ref(null)
+
+console.log();
+const store = OrderPayment()
+onMounted(()=>{
+  store.Order_delivery()
+   usertype.value  = localStorage.getItem("type") 
+
+  setTimeout(()=>{
+    Payment.value.full_name = localStorage.getItem("userFullName")
+    Payment.value.phone = localStorage.getItem("phone")
+  },0)
+//  
+})
+const send = async() => {
+  let pay = {
+    full_name:Payment.value.full_name,
+    phone:Payment.value.phone,
+  }
+  console.log(usertype.value,'usertype');
+  if(usertype.value == "guest"){
+    console.log('salom')
+    localStorage.setItem("phone", pay.phone)
+    await store.Order_check(pay)
+
+  }
+  else{
+    console.log("Oldin ro'yxatdan o'tgan nomer");
+  }
+
+  let check = Payment.value.deliver + " " + Payment.value.district + " " + Payment.value.address
+  let deliveryMethodd =  Payment.value.deliveryMethod
+  let delivery = deliveryMethodd?.toLowerCase()
+  let payload = {
+    deliveryAddress:check,
+    paymentMethod  : Payment.value.card,
+    deliveryMethod : delivery,
+    productList :[{
+      productId :localStorage.getItem("productId"), 
+      productType : localStorage.getItem("productType"),                        
+      bookTypeId:localStorage.getItem("bookTypeId"),
+      quantity:localStorage.getItem('quantity')
+    } ]
+   
+  }
+  if(Payment.value.card == 'cash'){
+    console.log("buyurtmangiz jo'natildi");
+    console.log(Payment.value.card,'card');
+    console.log(Payment.value.deliveryMethod,'deliver');
+    await store.Order_Payment(payload)
+  }
+  else{
+    console.log(Payment.value.card,'payment');
+    await store.Order_Payment(payload)
+    router.push('/payment')
+    
+  }
+}
 const peymentType = [
-  { imgs: payme },
-  { imgs: click },
-  { imgs: uzum },
+  { imgs: payme ,name:'card'},
+  { imgs: click ,name:'card'},
+  // { imgs: uzum },
   // { imgs: paynet },
-  { imgs: oson },
-  { imgs: uzcard },
-  { imgs: humo },
-  { imgs: mastercard },
+  // { imgs: oson },
+  // { imgs: uzcard },
+  // { imgs: humo },
+  // { imgs: mastercard },
   // { imgs: visa },
 ];
-const delevirey = [
-  {
-    delevireyImg: stanart,
-    delevireyData: "Standart - 16 000 so'm 1-5 ish kunida",
-  },
-  {
-    delevireyImg: regions,
-    delevireyData: "Viloyatlarga- 44 000 so'm 1-7 ish kunida",
-  },
-  {
-    delevireyImg: express,
-    delevireyData: "Express - 55 000 so'm 1-3 soatgacha",
-  },
-];
-const payment = () => {
-  const router = useRouter()
-  router.push('/Payment')
 
-}
 </script>
 <style>
 .OrderProcessing {
@@ -391,4 +415,28 @@ const payment = () => {
   background: #fff;
   padding: 6px;
 }
+.modalData {
+  width: 524px;
+  height: auto;
+  padding: 60px 30px;
+  background-image: url('../../assets/contact/peymentBacground.png');
+  background-size: 100% 100%;
+}
+
+.modalData h4 {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 30px;
+}
+.modalConten {
+  font-size: 17px;
+  color: #35363D;
+  font-weight: 500;
+
+}
+
+.peymentcancel {
+  color: #727171;
+}
+
 </style>
