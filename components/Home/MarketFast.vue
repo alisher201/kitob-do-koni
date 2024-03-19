@@ -38,7 +38,7 @@
         :pagination="{ clickable: true }"
         @swiper="onSwiper"
       >
-        <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx">
+        <SwiperSlide v-for="(item, idx) in props.bookImgs" :key="idx">
           <div @click="$router.push(`/book/${item.id}`)" class="bookData">
             <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
@@ -117,9 +117,9 @@ const addBasket = (e, id, bookId) => {
 const addFavourite = (e, idx, id, bookId) => {
   e.stopPropagation();
 
-  bookImgs[idx].is_favorite = !bookImgs[idx].is_favorite;
+  props.bookImgs[idx].is_favorite = !props.bookImgs[idx].is_favorite;
 
-  if (bookImgs[idx].is_favorite) {
+  if (props.bookImgs[idx].is_favorite) {
     store.addFavourite({
       product_id: id,
       type: bookId ? "book" : "other",
