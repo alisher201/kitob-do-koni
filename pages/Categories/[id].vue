@@ -94,6 +94,7 @@
               class="form-control mb-1"
               v-model="oBarMinValue"
             />
+            
           </div>
           <div class="col-6">
             <label class="price">{{ $t("home.upTo") }}</label
@@ -168,14 +169,17 @@
               <pre>{{ item }}</pre>
             </div> -->
             <div class="bookData">
+              
               <img :src="url + '/' + item?.image" class="categoyImg" />
               <button class="btnBestseller">Bestseller</button>
+              
               <button class="newBook">Yangi</button>
               <img
                 src="../../assets/contact/booklike.png"
                 alt=""
                 class="bookLike"
               />
+              
               <img
                 src="../../assets/contact/karzinka.png"
                 alt=""
@@ -187,7 +191,10 @@
                 src="../../assets/contact/bookopen.png"
                 alt=""
                 class="bookopen"
+
               />
+              
+              
               <img
                 src="../../assets/contact/headphone.png"
                 alt=""

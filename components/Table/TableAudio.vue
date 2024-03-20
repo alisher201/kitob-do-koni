@@ -2,23 +2,19 @@
     <div>
      <div style="background-color:white;">
         <div class="wrapper " >
-            <NuxtLink to="/audio" class="main col-sm-12"  v-for="(item,index) in store.books.result" :key="index">
-                <div class="main_card">
+            <div  class="main col-sm-12"  v-for="(item,index) in store.books?.result?.audios" :key="index">
+                <div class="main_card" @click="readingLInk(item.file_path)">
                     <img :src="' https://beta.kytab.uz'+ item.book.image" alt="">
                     <h2>{{item.book.name}}</h2>
-                    <div v-for="(itm,index) in item" :key="index">
-                        <div v-for="(i, ind) in itm.author " :key="ind">
-                            <p class="main_p">{{i.fio}}</p>
-                        </div>
-                        
-                    </div>
-                    <p class="main_card_p">{{ item.book.number_of_pages }} ta page</p>
+                    <p class="main_p">{{ item.book.author.fio }}</p>
+                    <!-- <p class="main_card_p">{{ item.book.number_of_pages }} ta page</p> -->
                     <div class="main_list">
                         <p class="main_list_p">{{item.foiz}}</p>
                         <img class="main_list_img" style="height:2px;margin-top:8px" :src="item.stecer" alt="">
                     </div>
                 </div>
-            </NuxtLink>
+            </div>
+            <!-- <pre>{{ store.books?.result?.audios }}</pre> -->
         </div>
      </div>
     </div>
@@ -26,6 +22,14 @@
 
 <script setup>
 const store = ProfileHistory()
+const router = useRouter();
+
+const readingLInk = (item) => {
+    let data = JSON.stringify(item)
+    localStorage.setItem('epubUrl', data)
+    router.push('/audio')
+}
+
 onMounted(()=>{
     store.Book()
 })

@@ -297,7 +297,7 @@ console.log("epubUrl");
             </div>
             <!-- <pre>{{ file_type }}</pre> -->
             <!-- {{ reading }} -->
-            {{ file_fragment }}
+            <!-- {{ file_fragment }} -->
 
             <button
               :disabled="bookPrice == null"
@@ -405,6 +405,7 @@ console.log("epubUrl");
               alt=""
               class="bookLike"
             />
+            
             <img
               src="../../assets/contact/karzinka.png"
               alt=""
@@ -425,9 +426,9 @@ console.log("epubUrl");
       <!-- </div> -->
     </Swiper>
     </div>
-    <!-- <pre>
+    <pre>
       {{ store.recent }}
-    </pre> -->
+    </pre>
       
   </div>
 </template>

@@ -36,6 +36,7 @@
                   v-model="checkAll"
                   @click="selectAll"
                 />
+                
                 <span class="ms-2">{{ $t("home.basket.select") }}</span>
               </div>
               <div>
@@ -70,8 +71,14 @@
                       <p class="bookTitle">{{ item.product.name }}</p>
                       <p class="bookAuthor">{{ item.product.author }}</p>
                       <p class="bookPrice">{{ item.product.price }}</p>
+                      <div class="basket">
+                        <button class="basket_button" @click="cont=1" :class="{'active' : cont == 1}"><img src="../../assets/contact/eBook.png" alt="" class="ebook" /></button>
+                        <button class="basket_button" @click="cont=2" :class="{'active' : cont == 2}"><img  src="../../assets/contact/bookopen.png"  alt=""  class="bookopen"/></button>
+                        <button class="basket_button" @click="cont=3" :class="{'active' : cont == 3}"><img  src="../../assets/contact/headphone.png"  alt=""  class="headphone"/></button>
+                      </div>
                     </div>
                   </div>
+
                   <div class="d-flex flex-column justify-content-between">
                     <div>
                       <div class="d-flex">
@@ -96,6 +103,7 @@
                             />
                           </svg>
                         </div>
+                        
                         <div
                           class="basketdelate"
                           @click="deleteBasket(item.id)"
@@ -182,14 +190,23 @@ let sum = ref(0);
 let totalSum = ref(null);
 let totalPrice = ref(0);
 let basketLength = ref(0);
+const cont = ref(1);
   
 const send = ()=>{
   for(const i of store.basket){
-    console.log(i.product.price);
-    console.log(i.product_id)
-    console.log()
+    console.log(i.product.price,'1');
+    console.log(i.product_id,'2')
+    // console.log(i)
+    let array = [
+  {
+    
+  },
+
+]
   }
+
 }
+
 
 const addFavourite = (idx) => {
   store.basket[idx].favorite = !store.basket[idx].favorite;
@@ -288,6 +305,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.active{
+  background-color:blue;
+  border-radius: 50%;
+}
 .btn {
   border: none;
 }
@@ -423,5 +444,12 @@ onMounted(() => {
   border-radius: 7px;
   background: #fff;
   padding: 0 8px;
+}
+.basket{
+  display:flex;
+  gap: 10px;
+}
+.basket_button{
+  border:none
 }
 </style>

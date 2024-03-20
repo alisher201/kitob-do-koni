@@ -1,15 +1,20 @@
 <template>
-  <div>
-      <div class="main">
-        <h1 class="h1">Buyurtmalar tarixi</h1>
-        <div class="main_div">
-          <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">Muddatli to'lov</div>
-          <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">Yetkazib berilgan</div>
-          <div  class="main_p" :class="{'price' :content == 3}" @click="content = 3">Naqd to'lov</div>
-        </div>
-        <div v-show="content == 1"><Table/></div>
-        <div v-show="content == 2"><TablePrice/></div>
-        <div v-show="content == 3"><TablePay/></div>
+  <div >
+      <div class="main  ">
+        <div class="row">
+          <div class="row  ">
+            <h1 class="h1">Buyurtmalar tarixi</h1>
+            <div class="main_div ">
+              <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">Muddatli to'lov</div>
+              <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">Yetkazib berilgan</div>
+              <div  class="main_p" :class="{'price' :content == 3}" @click="content = 3">Naqd to'lov</div>
+            </div>
+            <div v-show="content == 1"><Table/></div>
+            <div v-show="content == 2"><TablePrice/></div>
+            <div v-show="content == 3"><TablePay/></div>
+          </div>
+      </div>
+       
       </div>
   </div>
 </template>
@@ -26,15 +31,15 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .main {
-  width: 920px;
+  width: 100%;
   height: 226px;
   top: 232px;
-  left: 30px;
-  background-color: #fafafa;
-  margin: 40px 121px 412px 30px;
+  // background-color: #fafafa;
+  // background-color: red;
+  margin: 40px 0px 412px 10px;
 }
 .h1 {
-  width: 178px;
+  width: 188px;
   height: 47px;
   top: 250px;
   left: 509px;
