@@ -25,14 +25,12 @@
             <label for="email" class="form-label"
               >Telefon raqam <span>*</span></label
             >
-            <!-- {{ tel }} -->
+            <!-- <input  class="form-control" v-model="tel" v-maska data-maska="#-#" /> -->
 
             <input
               v-model="telNumber"
               class="form-control"
-              placeholder="+998 00 000 00 00"
-              v-maska
-              data-maska="+998 ## ### ## ##"
+              v-maska data-maska="############"
             />
             <span v-if="errorTel" style="color: red">{{
               errorTel.message
@@ -127,23 +125,16 @@ const senDataUser = () => {
   passwordError.value = passwordValidator(password.value);
   let array = [errorTel.value, passwordError.value];
   let validtaionDAta = validation(array);
-  userlogin.value.phone = maskval(telNumber.value);
-  userlogin.value.password = password.value;
+  console.log(validtaionDAta);
+  userlogin.value.phone = telNumber.value
+  userlogin.value.password = password.value
+  console.log(userlogin.value);
+  // localStorage.setItem('type',client)
+
   if (validtaionDAta) {
-    store.loginUser(userlogin.value).then((res) => {
-      if (res.error) {
-        useNuxtApp().$toast.info(res.message, {
-          autoClose: 5000,
-          dangerouslyHTMLString: true,
-        });
-      } else {
-        localStorage.setItem("jwtToken", res.result.token);
-        localStorage.setItem("userFullName", res.result.full_name);
-        localStorage.setItem("type", res.result.type);
-        localStorage.setItem("refreshToken", res.result.refresh_token);
-        router.push("/");
-      }
-    });
+
+    store.loginUser(userlogin.value);
+    router.push('/')
   }
 };
 
@@ -280,12 +271,6 @@ button {
   font-size: 14px;
   font-weight: 500;
   line-height: 19px;
-  letter-spacing: 0.02em;
-  text-align: center;
-
-  font-family: TT Commons;
-  font-size: 14px;
-  line-height: 16px;
   letter-spacing: 0.02em;
   text-align: center;
   // color: #35363D

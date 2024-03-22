@@ -15,7 +15,7 @@ export const useTestTStore = defineStore("home", {
     searchValue: null,
     Searchhistory: null,
     bookSearchdata: null,
-    productSearch: null
+    productSearch: null,
 
   }),
   actions: {
@@ -122,8 +122,6 @@ export const useTestTStore = defineStore("home", {
       .then(res => {
         if(res?.success) {
           localStorage.setItem('jwtToken', res.result.token)
-          localStorage.setItem('userFullName', res.result.full_name)
-          localStorage.setItem('type', res.result.type)
           localStorage.setItem('refreshToken', res.result.refresh_token)
 
         }

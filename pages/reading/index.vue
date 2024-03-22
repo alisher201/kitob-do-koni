@@ -4,10 +4,11 @@
       <div>
         <ul>
           <li v-for="(chapter, index) in toc" :key="index" class="chaptresList">
+          
 
             <a href="#" @click.prevent="navigateTo(chapter.href)" class="wrapText"
               :style="{ color: chapter.href == currentHref ? 'blue' : colorDate }">
-              {{ chapter.label }}
+              {{ chapter.label }} 
 
             </a>
           </li>
@@ -47,7 +48,7 @@
         <div class="col-1  nextPage">
           <div class="exit" @click="back.back(-1)">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-              style="fill: #828384;transform: 2;msFilter:2;">
+              style="fill: #828384;transform: 2;">
               <path
                 d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z">
               </path>
@@ -68,7 +69,8 @@
 import ePub from 'epubjs';
 
 
-const bookURL = 'https://beta.kytab.uz/storage/epub/2023-10/08lxKcMjyIQPN64plbFv.epub'; // Backend'dan keladigan URL
+
+let bookURL = null; // Backend'dan keladigan URL
 const progress = ref(0);
 let progressPercent = ref(0);
 const toc = ref([]);
@@ -80,6 +82,8 @@ const settingsOpen = ref(false);
 const back = useRouter()
 const route = useRoute()
 const store = useTestTStore()
+const urlEpub = useRuntimeConfig().public.bookUrl
+
 
 
 
@@ -168,6 +172,8 @@ const openSettings = (e) => {
   settingsOpen.value = !settingsOpen.value
 }
 onMounted(() => {
+  // console.log(JSON.parse(localStorage.getItem('epubUrl')));
+bookURL = urlEpub + JSON.parse(localStorage.getItem('epubUrl'))
   loadBook()
     bookPagination()
   // store.epubFetch(bookURL).then((res) => {

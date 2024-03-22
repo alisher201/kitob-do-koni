@@ -2,6 +2,7 @@ import { useMainStore } from '~/store'
 import{useTestTStore} from '~/store/home'
 import {ProfileHistory} from '~/store/profile'
 import {useLogin} from '~/store/login'
+import {usePayment} from '~/store/payment'
 
 
 export default defineNuxtPlugin(({ $pinia }) => {
@@ -15,7 +16,8 @@ export default defineNuxtPlugin(({ $pinia }) => {
       mainStore,
       testTStore,
       profileStore,
-      register
+      register,
+      usePayment
           }
   }
 })

@@ -20,20 +20,22 @@
         class="d-flex align-items-center flex-column my-5"
       >
         <img src="../../assets/contact/emptyFavourite.png" alt="" />
-        <h4 style="font-weight: 600">Sevimli kitoblaringiz shu yerda bo'ladi</h4>
+        <h4 style="font-weight: 600">
+          Sevimli kitoblaringiz shu yerda bo'ladi
+        </h4>
         <small>
           <small style="color: #1c5793"> " Bosh sahifa "</small>
           <small style="color: #9196ad">bo'limiga qarang</small>
         </small>
       </div>
       <div class="bookGrid mt-4" v-else>
-        <div
-          class="p-0 booksList"
-          v-for="(item, idx) in store.like"
-          :key="idx"
-        >
+        <div class="p-0 booksList" v-for="(item, idx) in store.like" :key="idx">
           <div class="bookData">
-            <img :src="urlimg + '/' + item?.product?.image" alt="" class="categoyImg" />
+            <img
+              :src="urlimg + '/' + item?.product?.image"
+              alt=""
+              class="categoyImg"
+            />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
             <div class="likeBox" @click="favourite(item.product_id, item.type)">
@@ -53,18 +55,21 @@
               src="../../assets/contact/karzinka.png"
               alt=""
               class="karzinka"
+              @click="addBasket($event, item.product_id, item.type)"
             />
-            <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
-            <img
-              src="../../assets/contact/bookopen.png"
-              alt=""
-              class="bookopen"
-            />
-            <img
-              src="../../assets/contact/headphone.png"
-              alt=""
-              class="headphone"
-            />
+            <div class="wrapper-icons">
+              <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
+              <img
+                src="../../assets/contact/bookopen.png"
+                alt=""
+                class="bookopen"
+              />
+              <img
+                src="../../assets/contact/headphone.png"
+                alt=""
+                class="headphone"
+              />
+            </div>
           </div>
           <div class="ps-2">
             <small class="title">{{ item?.product?.name }}</small>
@@ -85,13 +90,29 @@
 const store = useBasketStore();
 const urlimg = useRuntimeConfig().public.bookUrl;
 
-let likeLength = ref(0)
-let empty = ref(0)
+let likeLength = ref(0);
+let empty = ref(0);
 
 const refresh = () => {
   store.favourite().then(() => {
     likeLength.value = store.like.length;
     likeLength.value == 0 ? (empty.value = 1) : (empty.value = 2);
+  });
+};
+
+const addBasket = (e, id, bookId) => {
+  e.stopPropagation();
+  store
+    .basketAdd({ product_id: id, type: bookId ? "book" : "other" })
+    .then(() => {
+      notify();
+    });
+};
+
+const notify = () => {
+  useNuxtApp().$toast.success("Savatchaga qo'shildi", {
+    autoClose: 5000,
+    dangerouslyHTMLString: true,
   });
 };
 
@@ -102,12 +123,12 @@ const favourite = (id, type) => {
   //   bookLike2[idx].style.width = "0";
   // }
   store.favouriteDelete(id, type).then(() => {
-    refresh()
+    refresh();
   });
 };
 
 onMounted(() => {
-  refresh()
+  refresh();
 });
 </script>
 
@@ -170,24 +191,24 @@ onMounted(() => {
   cursor: pointer;
   display: none;
 }
+.wrapper-icons {
+  position: absolute;
+  display: flex;
+  gap: 5px;
+  right: 0.625rem;
+  bottom: 0.625rem;
+}
 .ebook {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
   cursor: pointer;
   display: none;
 }
+
 .bookopen {
-  position: absolute;
-  right: 40px;
-  bottom: 10px;
   cursor: pointer;
   display: none;
 }
+
 .headphone {
-  position: absolute;
-  right: 70px;
-  bottom: 10px;
   cursor: pointer;
   display: none;
 }
@@ -201,8 +222,8 @@ onMounted(() => {
 }
 .bookGrid {
   width: 100%;
-  display: grid;
-  grid-template-columns: auto auto auto auto auto auto;
+  display: flex;
+  flex-wrap: wrap;
   gap: 15px;
 }
 .starsNumbers {
@@ -218,6 +239,8 @@ onMounted(() => {
 }
 .booksList {
   margin-bottom: 100px;
+  max-width: 200px;
+  width: 100%;
 }
 .booksList:hover {
   box-shadow: 0px 2px 4px 0px #dbdbdb40;

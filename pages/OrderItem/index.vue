@@ -1,5 +1,9 @@
 <template>
   <div>
+    <!-- <pre>
+    {{ store.forget }}
+
+    </pre> -->
     <div class="container mb-5 pb-5 px-0" >
       <h4 class="mt-4" style="font-weight: 700">{{ $t("home.processing") }}</h4>
       <div class="d-flex justify-content-between">
@@ -9,17 +13,16 @@
             <p class="yourData ms-2">{{ $t("home.yourInfo") }}</p>
           </div>
           <div class="processingData mt-3">
-            <!-- <div style="width:100%" > -->
               <div v-if="(usertype == 'guest')">
                 <label for="" class="processingLabel mb-1">{{ $t("home.surname") }}<span>*</span></label>
-                <input v-model="Payment.full_name"  type="text"  class="form-control"  :placeholder="$t('home.entersurname')"
-                />
+                <input v-model="Payment.full_name"  type="text"  class="form-control"  :placeholder="$t('home.entersurname')" />
+                <span v-if="emailError" style="color: red" name="full_name">{{emailError.message}}</span>
               </div>
               <div v-if="(usertype == 'guest')">
                 <label for="" class="processingLabel mb-1">{{ $t("home.phone") }}<span>*</span></label>
                 <input v-model="Payment.phone" type="text"  class="form-control"  :placeholder="$t('home.enternum')"/>
+                <span v-if="errorTel" style="color: red">{{  errorTel.message}}</span>
               </div>
-            <!-- </div> -->
             
             <div>
               <label for="" class="processingLabel mb-1">{{ $t("home.city") }}<span>*</span></label>
@@ -29,6 +32,7 @@
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </select>
+              <span v-if="emailError" style="color: red" name="full_name">{{  emailError.message}}</span>
             </div>
             <div>
               <label for="" class="processingLabel mb-1">{{ $t("home.district") }}<span>*</span></label>
@@ -38,16 +42,22 @@
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </select>
+              <span v-if="emailError" style="color: red" name="full_name">{{
+              emailError.message
+            }}</span>
             </div>
             <div>
               <label for="" class="processingLabel mb-1">{{ $t("home.address") }}<span>*</span></label>
               <input v-model="Payment.address" type="text" class="form-control" :placeholder="$t('home.enteraddress')"/>
+              <span v-if="emailError" style="color: red" name="full_name">{{
+              emailError.message
+            }}</span>
             </div>
           </div>
-          <div class="mt-3">
+          <!-- <div class="mt-3">
             <label for="" class="processingLabel mb-1">{{ $t("home.courier") }}</label>
             <input v-model="Payment.comment" type="text" class="form-control"/>
-          </div>
+          </div> -->
         </div>
         <!-- buyurtma haqida -->
         <div class="yourOrderContainer">
@@ -141,8 +151,9 @@
           </div>
         </div>
       </div>
-      <pre>{{ store?.delivery }}</pre>
-      <pre>{{ typeof usertype }}</pre>
+      <!-- <pre>{{store?.invoic_id?.invoice_id}}</pre>     -->
+      <!-- <pre>{{ store?.delivery }}</pre>
+      <pre>{{ typeof usertype }}</pre> -->
       <div >
         <div  class="modal fade" id="staticBackdrop"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -154,12 +165,15 @@
               <div class="d-flex justify-content-between mt-2">  
               </div>
               <div><img src="../../assets/contact/peymentLine.png" alt="" class="w-100"></div>
-              <div class="mt-4"><input type="text" class="form-control" :placeholder="$t('home.oneTimeCode')" /></div>
+              <div class="mt-4"><input v-model="Payment.sms" type="text" class="form-control" :placeholder="$t('home.oneTimeCode')" /></div>
               <div class="mt-4">
                 <p class="modalContent text-center">{{ $t("home.resend") }}</p>
               </div>
-              <div class="mt-4">
-                <p class="peymentcancel text-center" type="button" data-bs-dismiss="modal">{{ $t("home.cancel") }}</p>
+              <div class="mt-4" >
+                <button  class="modalbutton " type="button"  data-bs-dismiss="modal" @click="start">Yuborish</button>
+              </div>
+              <div class="mt-2">
+                <button class="peymentcancel text-center" type="button" data-bs-dismiss="modal">{{ $t("home.cancel") }}</button>
               </div>
             </div>
           </div>
@@ -184,6 +198,7 @@ import payme from "@/assets/contact/payme.png";
 // import stanart from "../../assets/contact/standart.png";
 // import regions from "../../assets/contact/regions.png";
 // import express from "../../assets/contact/express.png";
+const content = ref(null)
 const router = useRouter()
 let url = useRuntimeConfig().public.bookUrl
 definePageMeta({
@@ -197,7 +212,8 @@ let Payment = ref({
   address:null,
   comment:null,
   card:null,
-  deliveryMethod:null
+  deliveryMethod:null,
+  sms:null,
 })
 const usertype = ref(null)
 // console.log(Payment); 
@@ -209,13 +225,24 @@ const store = OrderPayment()
 onMounted(()=>{
   store.Order_delivery()
    usertype.value  = localStorage.getItem("type") 
-
-  setTimeout(()=>{
-    Payment.value.full_name = localStorage.getItem("userFullName")
-    Payment.value.phone = localStorage.getItem("phone")
-  },0)
-//  
 })
+const start=()=>{
+  let guest = {
+    phone:Payment.value.phone,
+    code:Payment.value.sms
+  }
+      store.Order_Forget(guest)
+      .then(()=>{
+          localStorage.setItem('jwtToken',store.forget.token);
+          localStorage.setItem('efreshToken',store.forget.refresh_token);
+          localStorage.setItem('type', store.forget.user_data.type)
+          localStorage.setItem("phone", store.forget.user_data.phone)
+
+          al()
+          console.log('al ishladi')
+      });
+      
+ }
 const send = async() => {
   let pay = {
     full_name:Payment.value.full_name,
@@ -223,43 +250,51 @@ const send = async() => {
   }
   console.log(usertype.value,'usertype');
   if(usertype.value == "guest"){
-    console.log('salom')
-    localStorage.setItem("phone", pay.phone)
     await store.Order_check(pay)
 
   }
   else{
-    console.log("Oldin ro'yxatdan o'tgan nomer");
-  }
-
+    console.log('al ishladi');
+   al() 
+  } 
+}
+const al = ()=>{
   let check = Payment.value.deliver + " " + Payment.value.district + " " + Payment.value.address
-  let deliveryMethodd =  Payment.value.deliveryMethod
-  let delivery = deliveryMethodd?.toLowerCase()
-  let payload = {
-    deliveryAddress:check,
-    paymentMethod  : Payment.value.card,
-    deliveryMethod : delivery,
-    productList :[{
-      productId :localStorage.getItem("productId"), 
-      productType : localStorage.getItem("productType"),                        
-      bookTypeId:localStorage.getItem("bookTypeId"),
-      quantity:localStorage.getItem('quantity')
-    } ]
-   
-  }
-  if(Payment.value.card == 'cash'){
-    console.log("buyurtmangiz jo'natildi");
-    console.log(Payment.value.card,'card');
-    console.log(Payment.value.deliveryMethod,'deliver');
-    await store.Order_Payment(payload)
-  }
-  else{
-    console.log(Payment.value.card,'payment');
-    await store.Order_Payment(payload)
-    router.push('/payment')
+    let deliveryMethodd =  Payment.value.deliveryMethod
+    let delivery = deliveryMethodd?.toLowerCase()
+    let payload = {
+      deliveryAddress:check,
+      paymentMethod  : Payment.value.card,
+      deliveryMethod : delivery,
+      productList :[{
+        productId :localStorage.getItem("productId"), 
+        productType : localStorage.getItem("productType"),                        
+        bookTypeId:localStorage.getItem("bookTypeId"),
+        quantity:localStorage.getItem('quantity')
+      } ]
+    
+    }
+    if(Payment.value.card == 'cash'){
+        console.log("buyurtmangiz jo'natildi");
+        // console.log(Payment.value.card,'card');
+        //  console.log(Payment.value.deliveryMethod,'deliver');
+          store.Order_Payment(payload)
+          console.log('cash ishladi')
+          
+    }
+    else{
+      console.log(Payment.value.card,'payment');
+       store.Order_Payment(payload)
+      .then(()=>{
+        let invoice_id = store?.invoic_id?.invoice_id
+        localStorage.setItem("invoiceId",invoice_id)
+      
+      })
+      router.push('/payment')
     
   }
 }
+
 const peymentType = [
   { imgs: payme ,name:'card'},
   { imgs: click ,name:'card'},
@@ -271,6 +306,44 @@ const peymentType = [
   // { imgs: mastercard },
   // { imgs: visa },
 ];
+
+// const emailError = ref(null);
+
+// // const full_name = ref(null)
+// const errorTel = ref(null)
+// // const delevireyAdress = ref(null)
+
+
+
+// watch(Payment.value.full_name, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+
+// watch(Payment.value.phone, (newValue) => {errorTel.value = !isEmpty(newValue, "Telifon nomeri").item ? isEmpty(newValue, "Telifon nomeri")
+//     : validateLength(newValue, 12, 12, "telfon nomeri");
+// }, { deep: true });
+
+
+// watch(Payment.value.deliver, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+// watch(Payment.value.district, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+
+// watch(Payment.value.address, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+
+// watch(Payment.value.card, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+
+// watch(Payment.value.deliveryMethod, (newVAlue) => {
+//   emailError.value = isEmpty(newVAlue, "string");
+// }, { deep: true });
+
+
 
 </script>
 <style>
@@ -435,8 +508,22 @@ const peymentType = [
 
 }
 
+.modalbutton{
+  width: 100%;
+  background-color:blue;
+  color:white;
+  height: 5vh;
+  border:none;
+  border-radius: 5px;
+}
 .peymentcancel {
-  color: #727171;
+  color:white;
+  width: 100%;
+  background-color: red;
+  height: 5vh;
+  border: none;
+  border-radius: 5px;
+
 }
 
 </style>

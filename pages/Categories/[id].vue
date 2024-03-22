@@ -189,7 +189,6 @@
                   alt=""
                   class="ebook"
                 />
-
                 <img
                   src="../../assets/contact/bookopen.png"
                   alt=""

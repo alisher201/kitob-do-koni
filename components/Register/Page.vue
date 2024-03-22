@@ -96,15 +96,14 @@
 
 <script setup>
 import {useTestTStore} from '@/store/home.js' 
+const store = useTestTStore();
 let userRegister = ref({
   full_name: null,
   phone: null,
   password: null,
   type: "client",
 });
-console.log(userRegister.value.full_name, "userRegister");
-
-const store = useTestTStore();
+// console.log(userRegister.value.full_name, "userRegister");
 
 const emailError = ref(null);
 const errorTel = ref(null);
@@ -115,14 +114,9 @@ watch(full_name, (newVAlue) => {
   emailError.value = isEmpty(newVAlue, "string");
 }, { deep: true });
 
-
-
-
 watch(phone, (newValue) => {errorTel.value = !isEmpty(newValue, "Telifon nomeri").item ? isEmpty(newValue, "Telifon nomeri")
     : validateLength(newValue, 12, 12, "telfon nomeri");
 }, { deep: true });
-
-
 
 watch(password, (newValue) => { passwordError.value = passwordValidator(newValue);
 }, { deep: true });
@@ -140,7 +134,7 @@ const senDataUser = async () => {
   let array = [emailError.value, errorTel.value, passwordError.value];
   let validtaionDAta = validation(array);
   
-  if (validtaionDAta) {
+  if (validtaionDAta) { 
     await store.registerUser(userRegister.value);
   }
   console.log(validtaionDAta);

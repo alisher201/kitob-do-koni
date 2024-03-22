@@ -1,146 +1,305 @@
 <template>
-  <div>
-    <SeoKit />
-    <Header />
-    <div class="container mb-5 pb-5 px-0 d-flex flex-column align-items-center " style="position: relative;">
-      <div class="cardData">
-        <div class="cardImg">
-          <div class="cardList">
-            <div class="d-flex justify-content-between">
-              <p class="cardNumber">{{ $t("home.cardNum") }}</p>
-              <img src="../../assets/contact/uzcardlogo.png" alt="" />
-            </div>
-            <div class="cardCode">  
-              <!-- {{ form.card_code }}         -->
-              <span >{{form.card_code ? form.card_code.substring(0,4) : '****'}}   </span>
-              <span class="ms-2">****</span>
-              <span class="ms-2">****</span>
-              <span class="ms-2">{{form.card_code ? form.card_code.substring(12,16) : '****'}}</span>
-            </div>
-            <div class="d-flex justify-content-between">
-              <div>
-                <p class="cardNumber">{{ $t("home.cardName") }}</p>
-                <p class="text-white">
-                  <span>###########</span> <span class="ms-2">#######</span>
-                </p>
+  <div class="main-content">
+    <div>
+      <SeoKit />
+      <Header />
+      <div
+        class="container mb-5 pb-5 px-0 d-flex flex-column align-items-center"
+        style="position: relative"
+      >
+        <div class="cardData">
+          <div class="cardImg">
+            <div class="cardList">
+              <div class="d-flex justify-content-between">
+                <p class="cardNumber">{{ $t("home.cardNum") }}</p>
+                <img src="../../assets/contact/uzcardlogo.png" alt="" />
               </div>
-              <div>
-                <p class="cardNumber">{{ $t("home.term") }}</p>
-                <p class="text-white">OO/YY</p>
+              <div class="cardCode">
+                <!-- {{ form.card_code }}         -->
+                <span
+                  >{{
+                    form.card_code ? form.card_code.substring(0, 4) : "****"
+                  }}
+                </span>
+                <span class="ms-2">****</span>
+                <span class="ms-2">****</span>
+                <span class="ms-2">{{
+                  form.card_code ? form.card_code.substring(12, 16) : "****"
+                }}</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div>
+                  <p class="cardNumber">{{ $t("home.cardName") }}</p>
+                  <p class="text-white">
+                    <span>###########</span> <span class="ms-2">#######</span>
+                  </p>
+                </div>
+                <div>
+                  <p class="cardNumber">{{ $t("home.term") }}</p>
+                  <p class="text-white">OO/YY</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <p class="fw-bold mt-3">{{ $t("home.amount") }} 165 000 {{ $t("home.basket.sum") }}</p>
           <div>
-            <label for="" class="formCard">{{ $t("home.cardNum") }}</label>
-            <input type="text" v-model="form.card_code" class="form-control" placeholder="******************" />
-          </div>
-          <div class="row">
-            <div class="col-7">
-              <label for="" class="formCard">{{ $t("home.cardName") }} </label>
-              <input type="text" v-model="form.card_name" class="form-control" placeholder="Ism Familiya" />
+            <p class="fw-bold mt-3">
+              {{ $t("home.amount") }} 165 000 {{ $t("home.basket.sum") }}
+            </p>
+            <div>
+              <label for="" class="formCard">{{ $t("home.cardNum") }}</label>
+              <input
+                type="text"
+                v-model="form.card_code"
+                class="form-control"
+                placeholder="******************"
+              />
             </div>
-            <div class="col-5">
-              <label for="" class="formCard">{{ $t("home.period") }}</label>
-              <input type="" v-model="form.card_date" class="form-control" placeholder="OO/YY"  v-maska data-maska="##/##"/>
+            <div class="row">
+              <div class="col-7">
+                <label for="" class="formCard"
+                  >{{ $t("home.cardName") }}
+                </label>
+                <input
+                  type="text"
+                  v-model="form.card_name"
+                  class="form-control"
+                  placeholder="Ism Familiya"
+                />
+              </div>
+              <div class="col-5">
+                <label for="" class="formCard">{{ $t("home.period") }}</label>
+                <input
+                  type=""
+                  v-model="form.card_date"
+                  class="form-control"
+                  placeholder="OO/YY"
+                  v-maska
+                  data-maska="##/##"
+                />
+              </div>
+            </div>
+            <div class="cardPeymentContainer">
+              <button
+                @click="send"
+                class="w-100 cardPeyment fw-bold text-white"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+              >
+                {{ $t("home.pay") }}
+              </button>
             </div>
           </div>
-          <div class="cardPeymentContainer">
-            <button @click="send" class="w-100 cardPeyment fw-bold text-white" data-bs-toggle="modal"  data-bs-target="#staticBackdrop">
-              {{ $t("home.pay") }}
-            </button>
+        </div>
+        <div class="statusCard mt-2 d-flex justify-content-between">
+          <div class="">
+            <p class="">{{ $t("home.remember") }}</p>
+            <small>{{ $t("home.agree") }}</small>
+          </div>
+          <div>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input h4"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckChecked"
+                checked
+                v-model="status"
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="statusCard mt-2 d-flex justify-content-between">
-        <div class="">
-          <p class="">{{ $t("home.remember") }}</p>
-          <small>{{ $t("home.agree") }}</small>
-        </div>
-        <div>
-          <div class="form-check form-switch">
-            <input class="form-check-input h4" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked
-              v-model="status" />
-          </div>
-        </div>
-      </div>
-      {{ store.token }}
+        {{ store.token }}
 
-      <!-- Modal -->
-      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content " style="background-color: transparent !important; border: none;">
-            <div class="modalData">
-              <h4>{{ $t("home.confirm") }}</h4>
-              <p class="modalContent">{{ $t("home.oneTime") }}</p>
-              <div class="d-flex justify-content-between mt-2">
-                <p class="modalContent">{{ $t("home.cardNum") }}</p>
-                <p class="modalContent">************1694</p>
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div
+              class="modal-content"
+              style="background-color: transparent !important; border: none"
+            >
+              <div class="modalData">
+                <h4>{{ $t("home.confirm") }}</h4>
+                <p class="modalContent">{{ $t("home.oneTime") }}</p>
+                <div class="d-flex justify-content-between mt-2">
+                  <p class="modalContent">{{ $t("home.cardNum") }}</p>
+                  <p class="modalContent">************1694</p>
+                </div>
+                <div>
+                  <img
+                    src="../../assets/contact/peymentLine.png"
+                    alt=""
+                    class="w-100"
+                  />
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                  <p class="modalContent">{{ $t("home.transaction") }}</p>
+                  <p class="modalContent">
+                    165 000 {{ $t("home.basket.sum") }}
+                  </p>
+                </div>
+                <div class="mt-4">
+                  <input
+                    type="text"
+                    v-model="pay.sms"
+                    class="form-control"
+                    :placeholder="$t('home.oneTimeCode')"
+                  />
+                </div>
+                <div class="mt-4">
+                  <p class="modalContent text-center">
+                    {{ $t("home.resend") }}
+                  </p>
+                </div>
+                <div class="mt-4">
+                  <button
+                    class="modalbutton"
+                    data-bs-dismiss="modal"
+                    type="button"
+                    @click="start"
+                  >
+                    Yuborish
+                  </button>
+                </div>
+                <div class="mt-2">
+                  <button
+                    class="peymentcancel text-center"
+                    type="button"
+                    data-bs-dismiss="modal"
+                  >
+                    {{ $t("home.cancel") }}
+                  </button>
+                </div>
               </div>
-              <div><img src="../../assets/contact/peymentLine.png" alt="" class="w-100"></div>
-              <div class="d-flex justify-content-between mt-2">
-                <p class="modalContent">{{ $t("home.transaction") }}</p>
-                <p class="modalContent">165 000 {{ $t("home.basket.sum") }}</p>
-              </div>
-              <div class="mt-4"><input type="text" class="form-control" :placeholder="$t('home.oneTimeCode')" /></div>
-              <div class="mt-4">
-                <p class="modalContent text-center">{{ $t("home.resend") }}</p>
-              </div>
-              <div class="mt-4">
-                <p class="peymentcancel text-center" type="button" data-bs-dismiss="modal">{{ $t("home.cancel") }}</p>
-              </div>
+              <!-- <pre>{{ store.exists?.token}}</pre>
+            <pre>{{ store.exists }}</pre> -->
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="second-content">
+    <div class="box">
+      <h1 class="disclaimer">
+        Kechirasiz, ushbu veb-saytga mobil qurilmalar orqali kirish hozirda
+        mavjud emas.
+      </h1>
+    </div>
+    <MobileApp />
+  </div>
 </template>
 <script setup>
-const store = OrderPayment()
+import MobileApp from "@/components/Home/MobileApp.vue";
+
+const store = OrderPayment();
 
 definePageMeta({
   layout: "Payment",
 });
-let status = ref(false)
+let status = ref(false);
 const submitPeyment = () => {
-  let router = useRouter()
-  router.push('/payment/confirmation')
-}
+  let router = useRouter();
+  router.push("/payment/confirmation");
+};
 
-let form =ref( {
-  card_code:null,
-  card_name:null,
-  card_date:null,
-})
+let form = ref({
+  card_code: null,
+  card_name: null,
+  card_date: null,
+});
+let pay = ref({
+  sms: null,
+});
 
-const send = async() =>{
-  let name = form.value.card_name?.toLowerCase()
+const send = async () => {
+  let name = form.value.card_name?.toLowerCase();
   let payload = {
-    name:name,
-    pan:form.value.card_code,
-    expiry:form.value.card_date
-  }
-  console.log(payload)
-  await store.Order_Token(payload)
-  .then(() =>{
-    let token = store.token
-    localStorage.setItem('token',token)
-    console.log(token,'token') 
-    let order = {
-      token:localStorage.getItem('token'),
-      invoice_id:localStorage.getItem('invoice_id'),
-    }
-    store.Order_Transaction(token)
-  })
-    
+    name: name,
+    pan: form.value.card_code,
+    expiry: form.value.card_date,
+  };
+  let p = {
+    pan: form.value.card_code,
+  };
 
-}
+  console.log(payload);
+  await store.Order_Exists(p).then(() => {
+    if (store.exists?.token) {
+      let token = store.exists?.token;
+      localStorage.setItem("token", token);
+      console.log(token, "token");
+      let order = {
+        token: localStorage.getItem("token"),
+        invoice_id: localStorage.getItem("invoiceId"),
+      };
+      store.Order_Transaction(order);
+    } else {
+      store
+        .Order_Token(payload)
+
+        .then(() => {
+          let token = store?.token?.token;
+          localStorage.setItem("token", token);
+          console.log(token, "token");
+          let order = {
+            token: localStorage.getItem("token"),
+            invoice_id: localStorage.getItem("invoiceId"),
+          };
+          store.Order_Transaction(order);
+        });
+    }
+  });
+};
+const start = () => {
+  let message = {
+    invoice_id: localStorage.getItem("invoiceId"),
+    sms: pay.value.sms,
+  };
+  store.Order_Complete(message);
+};
 </script>
+
 <style scoped>
+
+.box {
+  background: red;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.disclaimer {
+  text-align: center;
+  font-size: 20px;
+  color: white;
+}
+
+.second-content {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    display: none;
+  }
+  .second-content {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .cardData {
   width: 524px;
   height: auto;
@@ -223,26 +382,11 @@ const send = async() =>{
   color: #707070;
 }
 
-
-
-
-
-
-/* .modalContainer {
-  background-color: #31313159;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 140vh;
-  z-index: 999;
-
-} */
-
 .modalData {
   width: 524px;
   height: auto;
   padding: 60px 30px;
-  background-image: url('../../assets/contact/peymentBacground.png');
+  background-image: url("../../assets/contact/peymentBacground.png");
   background-size: 100% 100%;
 }
 
@@ -254,12 +398,23 @@ const send = async() =>{
 
 .modalConten {
   font-size: 17px;
-  color: #35363D;
+  color: #35363d;
   font-weight: 500;
-
 }
-
+.modalbutton {
+  width: 100%;
+  background-color: blue;
+  color: white;
+  height: 5vh;
+  border: none;
+  border-radius: 5px;
+}
 .peymentcancel {
-  color: #727171;
+  color: white;
+  width: 100%;
+  background-color: red;
+  height: 5vh;
+  border: none;
+  border-radius: 5px;
 }
 </style>

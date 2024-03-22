@@ -25,7 +25,7 @@
           <button class="nextRight me-2" @click="swiper.slidePrev()">
             <img src="@/assets/contact/arrowRight.png" alt="" />
           </button>
-          <button class="nextLeft" @click="swiper.slidePrev()">
+          <button class="nextLeft" @click="swiper.slideNext()">
             <img src="@/assets/contact/arrowLeft.png" alt="" />
           </button>
         </div>
@@ -66,7 +66,23 @@
               class="karzinka"
               @click="addBasket($event, item.id, item.type.book_id)"
             />
-            <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
+            <div class="wrapper-icons">
+                <img
+                  src="../../assets/contact/eBook.png"
+                  alt=""
+                  class="ebook"
+                />
+                <img
+                  src="../../assets/contact/bookopen.png"
+                  alt=""
+                  class="bookopen"
+                />
+                <img
+                  src="../../assets/contact/headphone.png"
+                  alt=""
+                  class="headphone"
+                />
+              </div>
           </div>
           <div class="ps-2">
             <small class="title">{{ item.creator }}</small>
@@ -111,7 +127,10 @@ const onSwiper = (sw) => {
 };
 const addBasket = (e, id, bookId) => {
   e.stopPropagation();
-  store.basketAdd({ product_id: id, type: bookId ? "book" : "other" });
+  store.basketAdd({ product_id: id, type: bookId ? "book" : "other" })
+  .then(() => {
+      notify();
+    });
 };
 
 const addFavourite = (e, idx, id, bookId) => {
@@ -128,6 +147,13 @@ const addFavourite = (e, idx, id, bookId) => {
     const type = bookId ? "book" : "other";
     store.favouriteDelete(id, type);
   }
+};
+
+const notify = () => {
+  useNuxtApp().$toast.success("Savatchaga qo'shildi", {
+    autoClose: 5000,
+    dangerouslyHTMLString: true,
+  });
 };
 
 // onMounted (() => {
@@ -169,25 +195,24 @@ const addFavourite = (e, idx, id, bookId) => {
   cursor: pointer;
   display: none;
 }
-.ebook {
+.wrapper-icons {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  display: flex;
+  gap: 5px;
+  right: 0.625rem;
+  bottom: 0.625rem;
+}
+.ebook {
   cursor: pointer;
   display: none;
 }
 
 .bookopen {
-  position: absolute;
-  right: 40px;
-  bottom: 10px;
   cursor: pointer;
   display: none;
 }
+
 .headphone {
-  position: absolute;
-  right: 70px;
-  bottom: 10px;
   cursor: pointer;
   display: none;
 }
