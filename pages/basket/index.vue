@@ -11,7 +11,10 @@
           <div class="spinner-border ms-auto" aria-hidden="true"></div>
         </div>
       </div>
-      <div v-else-if="empty == 1" class="d-flex align-items-center flex-column my-5">
+      <div
+        v-else-if="empty == 1"
+        class="d-flex align-items-center flex-column my-5"
+      >
         <img src="../../assets/contact/basketEmpty.png" alt="" />
         <h4 style="font-weight: 600">Savatcha bo’sh</h4>
         <small>
@@ -36,20 +39,19 @@
                   v-model="checkAll"
                   @click="selectAll"
                 />
-                
+
                 <span class="ms-2">{{ $t("home.basket.select") }}</span>
               </div>
               <div>
                 <p class="remove">{{ $t("home.basket.delete") }}</p>
               </div>
             </div>
-            <pre>{{ store.basket }}</pre>
             <div
               class="d-flex mt-4"
               v-for="(item, idx) in store.basket"
               :key="idx"
             >
-            <pre>{{ item.product.price }}</pre>
+              <pre>{{ item.product.price }}</pre>
               <div class="me-3 d-flex align-items-center">
                 <input
                   type="checkbox"
@@ -72,9 +74,20 @@
                       <p class="bookAuthor">{{ item.product.author }}</p>
                       <p class="bookPrice">{{ item.product.price }}</p>
                       <div class="basket">
-                        <button class="basket_button" @click="cont=1" :class="{'active' : cont == 1}"><img src="../../assets/contact/eBook.png" alt="" class="ebook" /></button>
-                        <button class="basket_button" @click="cont=2" :class="{'active' : cont == 2}"><img  src="../../assets/contact/bookopen.png"  alt=""  class="bookopen"/></button>
-                        <button class="basket_button" @click="cont=3" :class="{'active' : cont == 3}"><img  src="../../assets/contact/headphone.png"  alt=""  class="headphone"/></button>
+                        <button
+                         
+                          class="btn border px-3"
+                          v-for="(itm, index) in item.product.types"
+                          :key="index"
+                          @click="bookTypeadd(itm.id)"
+                          :class="{'active' : item.product.bookTypeId == itm.id}"
+                         
+                        >
+                          {{ itm.type}}
+                          <!-- <img src="../../assets/contact/eBook.png" alt="" class="ebook" /> -->
+                        </button>
+                        <!-- <button class="btn border px-3" @click="cont=2" :class="{'active' : cont == 2}"><img  src="../../assets/contact/bookopen.png"  alt=""  class="bookopen"/></button>
+                        <button class="btn border px-3" @click="cont=3" :class="{'active' : cont == 3}"><img  src="../../assets/contact/headphone.png"  alt=""  class="headphone"/></button> -->
                       </div>
                     </div>
                   </div>
@@ -103,7 +116,7 @@
                             />
                           </svg>
                         </div>
-                        
+
                         <div
                           class="basketdelate"
                           @click="deleteBasket(item.id)"
@@ -137,13 +150,12 @@
                       >
                         <img src="../../assets/contact/plyus.png" alt="" />
                       </button>
-                      
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
           <!-- Order Data -->
           <div class="col-3">
             <div class="yourOrderContainer mt-5">
@@ -174,6 +186,7 @@
               </div>
             </div>
           </div>
+          <pre>{{ store.basket }}</pre>
         </div>
       </div>
     </div>
@@ -183,6 +196,7 @@
 <script setup>
 const urlimg = useRuntimeConfig().public.bookUrl;
 const store = useBasketStore();
+const bookType = ref(null)
 
 let empty = ref(0);
 let checkAll = ref(true);
@@ -191,22 +205,27 @@ let totalSum = ref(null);
 let totalPrice = ref(0);
 let basketLength = ref(0);
 const cont = ref(1);
-  
-const send = ()=>{
-  for(const i of store.basket){
-    console.log(i.product.price,'1');
-    console.log(i.product_id,'2')
-    // console.log(i)
-    let array = [
-  {
-    
-  },
 
-]
-  }
+const send = () => {
+  let array = [];
+  let bask = []
+  array = store.basket.filter((i) => i.product.is_check);
+  array.forEach(item => {
+    let product = {
+      bookTypeId: item.product.bookTypeId,
+      productId: item.product_id,
+      productType:item.product.type,
+      quantity: item.product.count
+    }
+    bask.push(product)
+  })
+  console.log(bask,'bask');
+  let basket_string = JSON.stringify(bask);
 
-}
+  localStorage.setItem("Product", basket_string);
 
+  console.log(array);
+};
 
 const addFavourite = (idx) => {
   store.basket[idx].favorite = !store.basket[idx].favorite;
@@ -241,6 +260,8 @@ const calulatorProduct = (arry) => {
     if (product.product.is_check == true) {
       sum += product.product.count;
       priceSum += product.product.totalPrice;
+
+
     }
   });
   totalSum.value = sum;
@@ -254,7 +275,12 @@ const refresh = () => {
     store.basket.forEach((item, idx) => {
       item.product.is_check = true;
       item.product.count = 1;
+      
       item.product.totalPrice = item.product.price;
+      if(item.product.types) {
+        item.product.bookTypeId=item.product.types[0].id
+
+      }
     });
   });
 };
@@ -284,8 +310,6 @@ const deleteBasket = (id) => {
   });
 };
 
-// functions
-
 watch(
   store,
   (newVal) => {
@@ -302,12 +326,15 @@ onMounted(() => {
   }
   refresh();
 });
+const bookTypeadd = (id) => {
+  store.basket.forEach(item => item.product.bookTypeId = id )
+};
 </script>
 
 <style scoped>
-.active{
-  background-color:blue;
-  border-radius: 50%;
+.active {
+  border: 1px solid #41a2db !important;
+  color: #41a2db !important;
 }
 .btn {
   border: none;
@@ -445,11 +472,8 @@ onMounted(() => {
   background: #fff;
   padding: 0 8px;
 }
-.basket{
-  display:flex;
+.basket {
+  display: flex;
   gap: 10px;
-}
-.basket_button{
-  border:none
 }
 </style>

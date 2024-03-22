@@ -4,7 +4,7 @@ import { book, rating,popular_recent } from '@/utils/payment'
 export const usePayment = defineStore('payment', {
     stor: () => ({
         book: null,
-        recent: {}
+        recent:null
 
     }),
     actions: {

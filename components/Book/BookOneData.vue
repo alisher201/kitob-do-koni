@@ -70,19 +70,27 @@ const bookImgs = [
 ];
 
 const ordrItem = () => {
+  let type = null
   if (bookPrice.value) {
     if (store.book?.type) {
-      localStorage.setItem("productType", "book");
+      type = "book"
     } else {
-      localStorage.setItem("productType", "product");
+      type = "other"
     }
     let orderdata = {
       booktype: bookType.value,
     };
-    localStorage.setItem("bookTypeId", orderdata.booktype);
-    localStorage.setItem("productId", route.params.id);
-    localStorage.setItem("quantity", 1);
-    localStorage.setItem("price", bookPrice.value);
+    let Book = [{
+      bookTypeId : orderdata.booktype,
+      productId: route.params.id,
+      quantity: 1,
+      productType: type
+
+    }]
+    let Productdata = JSON.stringify(Book);
+    localStorage.setItem('Product', Productdata)
+
+    
 
     console.log(route.params.id);
     router.push("/OrderItem");
@@ -141,6 +149,8 @@ onMounted(() => {
       store.book.type[0].type
     );
   });
+  store.Popular_recent()
+
 });
 
 const notify = () => {
@@ -257,30 +267,13 @@ console.log("epubUrl");
                 class="booktype btn border px-3"
                 v-for="(item, index) in store?.book?.type"
                 :key="index"
-                @click="
-                  bookTypeadd(
-                    item.id,
-                    item.price,
-                    item.file_fragment,
-                    item.type
-                  )
-                "
-                :class="{ bookTypeActive: bookType == item.id }"
-              >
-                <img src="@/assets/contact/book-open.png" alt="" /><small
-                  class="ms-2"
-                  >{{ item.type }}</small
-                  
-                >
+                @click="  bookTypeadd(item.id,item.price,item.file_fragment,item.type)"
+                :class="{ bookTypeActive: bookType == item.id }">
+                <img src="@/assets/contact/book-open.png" alt="" /><small class="ms-2">{{ item.type }}</small>
               </button>
             </div>
-            <!-- <div v-for="(item,index) in store?.book?.type " :key="index"> -->
-            <!-- <pre>{{ item.id }}</pre> -->
-            <!-- </div> -->
-            <!-- <pre>{{ store?.book?.type }}</pre> -->
             <div class="mt-2 row">
               <div class="col-6">
-                <!-- {{ file_fragment.value }} -->
                 <button @click="fragment " :disabled="reading !==1 " :style="{   cursor: reading !== 1 ? 'no-drop' : 'auto', }" class="btn border w-100 fragment">
                   <img src="@/assets/contact/book-open2.png" alt="" />{{
                     $t("home.reading")
@@ -395,7 +388,7 @@ console.log("epubUrl");
           class="p-0 dataItem"
           v-for="(item, index) in bookImgs"
           :key="index"
-        >
+        >jsjdj
           <div class="bookDataa">
             <img :src="item.imgs" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
@@ -427,7 +420,7 @@ console.log("epubUrl");
     </Swiper>
     </div>
     <pre>
-      {{ store.recent }}
+      {{ store.recent }} 
     </pre>
       
   </div>

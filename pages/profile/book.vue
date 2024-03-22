@@ -12,8 +12,8 @@
           <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">Audio kitob</div>
         </div>
         <div>
-          <div v-if="(!store.books?.result?.ebooks)">
-            <div   v-show="content == 1"><TableBook/>nd</div>
+          <div v-if="(store.books?.result?.ebooks)">
+            <div   v-show="content == 1"><TableBook/></div>
           </div>
           <div v-else>
              <div   v-show="content == 1"><TableNotfound/></div>
@@ -21,7 +21,7 @@
 
         </div>
         <div>
-          <div v-if="(!store.books?.result?.ebooks)">
+          <div v-if="(store.books?.result?.ebooks)">
             <div   v-show="content == 2"><TableAudio/></div>
 
           </div>
