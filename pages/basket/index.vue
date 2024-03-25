@@ -46,12 +46,12 @@
                 <p class="remove">{{ $t("home.basket.delete") }}</p>
               </div>
             </div>
+            
             <div
               class="d-flex mt-4"
               v-for="(item, idx) in store.basket"
               :key="idx"
             >
-              <pre>{{ item.product.price }}</pre>
               <div class="me-3 d-flex align-items-center">
                 <input
                   type="checkbox"
@@ -59,6 +59,7 @@
                   v-model="item.product.is_check"
                 />
               </div>
+              
               <div class="basketProduts">
                 <div class="d-flex justify-content-between">
                   <div class="d-flex">
@@ -69,6 +70,7 @@
                         class="basketImg"
                       />
                     </div>
+                    
                     <div class="ms-4 ps-2">
                       <p class="bookTitle">{{ item.product.name }}</p>
                       <p class="bookAuthor">{{ item.product.author }}</p>
@@ -79,15 +81,14 @@
                           class="btn border px-3"
                           v-for="(itm, index) in item.product.types"
                           :key="index"
-                          @click="bookTypeadd(itm.id)"
+                          @click="bookTypeadd(itm.id,itm.type)"
                           :class="{'active' : item.product.bookTypeId == itm.id}"
                          
                         >
                           {{ itm.type}}
-                          <!-- <img src="../../assets/contact/eBook.png" alt="" class="ebook" /> -->
+                          
                         </button>
-                        <!-- <button class="btn border px-3" @click="cont=2" :class="{'active' : cont == 2}"><img  src="../../assets/contact/bookopen.png"  alt=""  class="bookopen"/></button>
-                        <button class="btn border px-3" @click="cont=3" :class="{'active' : cont == 3}"><img  src="../../assets/contact/headphone.png"  alt=""  class="headphone"/></button> -->
+                      
                       </div>
                     </div>
                   </div>
@@ -116,7 +117,6 @@
                             />
                           </svg>
                         </div>
-
                         <div
                           class="basketdelate"
                           @click="deleteBasket(item.id)"
@@ -134,19 +134,20 @@
                         </div>
                       </div>
                     </div>
-                    <div class="productCount">
-                      <button
+                    <div class="productCount"  >
+                      <button 
                         class="btn"
                         @click="productRemove(idx)"
-                        :disabled="item.product.count == 1"
+                        :disabled="item.product.count == 1  "
+
                       >
                         <img src="../../assets/contact/minus.png" alt="" />
                       </button>
                       {{ item.product.count }}
-                      <button
+                      <button 
                         class="btn"
                         @click="productAdd(idx)"
-                        :disabled="item.product.count == item.product.quantity"
+                        :disabled="item.product.count == item.product.quantity || types == 'audio' && item.product.type == 'book' || types == 'ebook' && item.product.type == 'book'"
                       >
                         <img src="../../assets/contact/plyus.png" alt="" />
                       </button>
@@ -186,7 +187,7 @@
               </div>
             </div>
           </div>
-          <pre>{{ store.basket }}</pre>
+          <!-- <pre>{{ store.basket }}</pre> -->
         </div>
       </div>
     </div>
@@ -197,7 +198,7 @@
 const urlimg = useRuntimeConfig().public.bookUrl;
 const store = useBasketStore();
 const bookType = ref(null)
-
+let types=ref('audio')
 let empty = ref(0);
 let checkAll = ref(true);
 let sum = ref(0);
@@ -206,6 +207,8 @@ let totalPrice = ref(0);
 let basketLength = ref(0);
 const cont = ref(1);
 
+let data = []
+// data = store.basket.filter((i)=> i.product.type)
 const send = () => {
   let array = [];
   let bask = []
@@ -286,6 +289,7 @@ const refresh = () => {
 };
 
 const productAdd = (idx) => {
+
   store.basket[idx].product.count++;
 
   store.basket[idx].product.totalPrice =
@@ -326,8 +330,13 @@ onMounted(() => {
   }
   refresh();
 });
-const bookTypeadd = (id) => {
-  store.basket.forEach(item => item.product.bookTypeId = id )
+const bookTypeadd = (id,type) => {
+  store.basket.forEach(item => {
+    item.product.bookTypeId = id
+   
+    types = type
+    console.log(types);
+  } )
 };
 </script>
 

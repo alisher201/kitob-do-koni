@@ -16,26 +16,46 @@
           </div>
           <img src="@/assets/profile/chiziq.svg" alt="" />
           
-          <NuxtLink to="/profile" class="main_list" >
+          <!-- <div @click="router.push('/profile')"  class="main_list" :class="{ 'background-blue': $route.path == '/profile' }" >
             <img class="rasm"  src="@/assets/profile/Frame.svg" alt="" />
             <p  class="h2">Bildirishnoma</p>
-          </NuxtLink>
-          <NuxtLink to="/profile/order" class="main_list" >
+          </div>
+          <div  @click="router.push('/profile/order')"  class="main_list" >
             <img class="rasm" src="@/assets/profile/qongiroq.svg" alt="" />
             <p  href="" class="h2">Buyurtma tarixi</p>
-          </NuxtLink>
-          <NuxtLink to="/profile/book" class="main_list">
+          </div>
+          <div  @click="router.push('/profile/book')"   class="main_list">
             <img class="rasm" src="@/assets/profile/watch.svg" alt="" />
             <p href="" class="h2">Mening Kitoblarim</p>
-          </NuxtLink>
-          <NuxtLink to="/profile/settings"  class="main_list">
+          </div>
+          <div  @click="router.push('/profile/settings')"  class="main_list">
             <img class="rasm" src="@/assets/profile/nastroyka.svg" alt="" />
             <p href="" class="h2">Profil sozlamalar</p>
-          </NuxtLink>
-          <NuxtLink to="/" class="main_list">
+          </div>
+          <div @click="router.push('/')" class="main_list">
             <img class="rasm" src="@/assets/profile/tabler_logout.svg" alt="" />
             <p to="" class="h2" style="color: red">chiqish</p>
-          </NuxtLink>
+          </div> -->
+          <div @click="router.push('/profile')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile' }">
+            <img class="rasm" src="@/assets/profile/Frame.svg" alt="" />
+            <p class="h2">Bildirishnoma</p>
+          </div>
+          <div @click="router.push('/profile/order')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/order' }">
+            <img class="rasm" src="@/assets/profile/qongiroq.svg" alt="" />
+            <p class="h2">Buyurtma tarixi</p>
+          </div>
+          <div @click="router.push('/profile/book')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/book' }">
+            <img class="rasm" src="@/assets/profile/watch.svg" alt="" />
+            <p class="h2">Mening Kitoblarim</p>
+          </div>
+          <div @click="router.push('/profile/settings')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/settings' }">
+            <img class="rasm" src="@/assets/profile/nastroyka.svg" alt="" />
+            <p class="h2">Profil sozlamalar</p>
+          </div>
+          <div @click="router.push('/') " class="main_list" :class="{ 'router-link-active': $route.path === '/' }">
+            <img class="rasm" src="@/assets/profile/tabler_logout.svg" alt="" />
+            <p class="h2" style="color: red">chiqish</p>
+          </div>
         </div>
       </div>
     </div>
@@ -45,16 +65,20 @@
 <script setup>
 const content = ref(false)
 const notification = ref(true)
+const router = useRouter()
+
 
 
 </script>
   <style lang="scss" scoped>
 
-.router-link-exact-active,.nuxt-link,
- .nuxt-link{
-  background-color: #f1f1f1;
-  border-bottom: none; 
-  text-decoration: none;
+// .router-link-active{
+//   background-color: #e22323;
+//   border-bottom: none; 
+//   text-decoration: none;
+// }
+.router-link-active {
+  background-color: rgb(226, 231, 121);
 }
 
 .main {
@@ -76,6 +100,7 @@ const notification = ref(true)
   left: 141px;
   border-radius: 10px;
   margin-top: 5px;
+  cursor: pointer;
 }
 .aylana {
   display: flex;

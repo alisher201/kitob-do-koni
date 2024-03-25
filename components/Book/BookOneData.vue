@@ -288,6 +288,7 @@ console.log("epubUrl");
                 </button>
               </div>
             </div>
+            
             <!-- <pre>{{ file_type }}</pre> -->
             <!-- {{ reading }} -->
             <!-- {{ file_fragment }} -->
@@ -386,11 +387,13 @@ console.log("epubUrl");
       <!-- <div class="bookGrid mt-3"> -->
         <SwiperSlide
           class="p-0 dataItem"
-          v-for="(item, index) in bookImgs"
+          v-for="(item, index) in store.recent"
           :key="index"
-        >jsjdj
+        >
           <div class="bookDataa">
-            <img :src="item.imgs" alt="" class="categoyImg" />
+            <img v-if="item.type == 'book'" :src="'https://beta.kytab.uz'+item.product.image" alt="" class="categoyImg" />
+            <img v-else :src="'https://kytabshop.al-raqam.com'+item.product.image" alt="" class="categoyImg" />
+            
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
             <img
@@ -407,10 +410,19 @@ console.log("epubUrl");
             <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
           </div>
           <div class="ps-2">
-            <small class="title">{{ item.bookTitle }}</small>
+            <small class="title">{{ item.product.name }}</small>
+            <small class="title">{{ item.product.name_uz}}</small>
+
           </div>
           <div class="ps-2">
-            <small class="author">{{ item.author }}</small>
+            <small class="author">{{ item.product.author }}</small>
+            <small class="author">{{ item.product.description_uz }}</small>
+
+          </div>
+          <div>
+            <small v-if="(item.product.price)" class="price">{{ item.product.price }} so'm</small>
+            <!-- <small v-else class="price">Tekin</small> -->
+            
           </div>
           <img src="../../assets/contact/Star.png" alt="" />
           <small class="stats ms-2">5,0</small>
@@ -635,11 +647,13 @@ console.log("epubUrl");
 }
 
 .title {
-  font-weight: 800;
+  font-weight: 1000;
+  color: black;
 }
 
 .author {
-  color: #9196ad;
+  color: #5b5e6d;
+  font-weight: 600;
 }
 
 .bookLike {
@@ -664,5 +678,9 @@ console.log("epubUrl");
 .bookTypeActive {
   border: 1px solid #41a2db !important;
   color: #41a2db !important;
+}
+.price{
+  color:black;
+  font-weight: 800;
 }
 </style>

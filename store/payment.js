@@ -22,7 +22,7 @@ export const usePayment = defineStore('payment', {
         async Popular_recent(){
             return await popular_recent.get()
                 .then(res => {
-                    this.recent = res
+                    this.recent = res.result
                 })
         }
     }

@@ -2,11 +2,13 @@
     <div>
      <div style="background-color:white;">
         <div class="wrapper " >
-            <div  class="main col-sm-12"  v-for="(item,index) in store.books?.result?.audios" :key="index">
-                <div class="main_card" @click="readingLInk(item.file_path)">
+            <div  class="main "  v-for="(item,index) in store.books?.result?.audios" :key="index">
+                <div class="" @click="readingLInk(item.file_path)">
                     <img :src="' https://beta.kytab.uz'+ item.book.image" alt="">
                     <h2>{{item.book.name}}</h2>
-                    <p class="main_p">{{ item.book.author.fio }}</p>
+                    <p v-for="(itm,index ) in  item.book.author" :key="index" class="">{{ itm.fio }}</p>
+
+                    <!-- <p class="main_p">{{ item.book.author.fio }}</p> -->
                     <!-- <p class="main_card_p">{{ item.book.number_of_pages }} ta page</p> -->
                     <div class="main_list">
                         <p class="main_list_p">{{item.foiz}}</p>
@@ -14,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <pre>{{ store.books?.result?.audios }}</pre> -->
+            <!-- <pre>{{ store.books?.result }}</pre> -->
         </div>
      </div>
     </div>
@@ -46,14 +48,14 @@ onMounted(()=>{
     height: 100%;
 }
 .main{
-    width:150px;
-    height: 260px;
-    top: 232px;
-    // left: 479px;
-    border-radius: 10px;
+    width:11.375rem;
+    height: 18rem;
+    top: 14.5rem;
+    // left: 29.9375rem;
+    border-radius: .625rem;
     background-color:#FAFAFA;
     // background-color: red;
-    margin-left:30px;
+    margin-left:1.875rem;
 }
 .main_card{
     width: 30px;
@@ -62,13 +64,13 @@ onMounted(()=>{
 
 }
 .main_card_p{
-    margin-top:22px;
-    width: 150px;
+    margin-top:1.375rem;
+    width: 9.375rem;
     color: black;
 }
 img{
-    width: 150px;
-    height: 150px;
+    width: 11.375rem;
+    height: 11.375rem;
 }
 .main_list{
     display: flex;

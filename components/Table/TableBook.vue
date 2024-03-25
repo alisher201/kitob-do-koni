@@ -2,11 +2,17 @@
     <div>
         <div style="background-color:white;">
             <div class="wrapper">
-                <div class="main" v-for="(item, index) in store.books?.result?.ebooks" :key="index">                   
+                <div class="main" v-for="(item, index) in store.books.result?.ebooks" :key="index">
                     <div class=""  @click="readingLInk(item.file_path)">
                         <img :src="' https://beta.kytab.uz' + item.book.image" alt="">
                         <h2>{{ item.book.name }}</h2>
-                        <p class="main_p">{{ item.book.author.fio }}</p>
+                        
+                        <p v-for="(itm,index ) in  item.book.author" :key="index" class="">{{ itm.fio }}</p>
+                        <div>
+                        <p v-if="(item.book.number_of_pages )">{{ item.book.number_of_pages }} bet</p>
+                        <p v-else></p>
+
+                        </div>
                         <img class="main_img" :src="item.start" alt="">
                         <div class="main_list">
                             <p class="main_list_p">{{ item.foiz }}</p>
@@ -16,10 +22,9 @@
 
                 </div>
             </div>
-            <!-- <pre style="">{{ store.books.result.ebooks}}</pre> -->
+            <!-- <pre style="">{{ store.books.result }}</pre> -->
         </div>
     </div>
-
 </template>
 
 <script setup>
@@ -34,6 +39,10 @@ const readingLInk = (item) => {
 
 onMounted(() => {
     store.Book()
+
+
+
+
 })
 
 </script>
@@ -46,11 +55,12 @@ onMounted(() => {
 .wrapper{
     display: flex;
     background-color:#FAFAFA;
+    // background-color:red;
     height: 100%;
 }
 .main{
-    width:9.375rem;
-    height: 16.25rem;
+    width:11.375rem;
+    height: 18rem;
     top: 14.5rem;
     // left: 29.9375rem;
     border-radius: .625rem;
@@ -70,8 +80,8 @@ onMounted(() => {
     color: black;
 }
 img{
-    width: 9.375rem;
-    height: 9.375rem;
+    width: 11.375rem;
+    height: 11.375rem;
 }
 
 .main_list {

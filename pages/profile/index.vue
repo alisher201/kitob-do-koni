@@ -19,12 +19,6 @@
             </div>
           </div>
         </div>
-
-      
-       
-        <!-- <pre>{{ store.notifications?.result}}</pre> -->
-        <!-- <pre>{{store}}</pre> -->
-        <!-- <pre>{{store.notifications?.result[0].parent}}sal</pre> -->
       </div>
       <div v-else>
         <TableNotfound />
