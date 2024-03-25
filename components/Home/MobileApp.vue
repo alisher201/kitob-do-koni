@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="col-5 d-flex justify-content-center">
-            <img src="@/assets/contact/kytabMobile.png" alt="" />
+            <img class="img" src="@/assets/contact/kytabMobile.png" alt="" />
           </div>
         </div>
       </div>
@@ -35,5 +35,43 @@
 .mobileData {
   color: #9196ad;
   font-size: 20px;
+}
+
+@media (max-width: 900px) {
+  .col-7 {
+  width: 100%;
+}
+
+.mt-4 {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.row {
+  gap: 40px;
+  justify-content: center;
+  text-align: center;
+}
+
+.mobileApp {
+  background: #fafafa;
+  width: 100%;
+}
+
+.mobileApp h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+.mobileData {
+  color: #9196ad;
+  font-size: 16px;
+  width: 100%;
+}
+.img {
+  width: 300px;
+  height: 180px;
+}
 }
 </style>

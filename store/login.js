@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { useRuntimeConfig } from "nuxt/app";
-import { login, forgetpassword } from '@/utils/login'
+import { login, forgetpassword,checkforgetpassword,changepassword } from '@/utils/login'
 
 
 export const useLogin = defineStore("login", {
@@ -36,6 +36,9 @@ export const useLogin = defineStore("login", {
         },
         async checkforgetpassword(data) {
             return await checkforgetpassword.create(data)
+        },
+        async changepassword(data) {
+            return await changepassword.create(data)
         }
     }
 })

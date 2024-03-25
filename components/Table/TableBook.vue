@@ -49,12 +49,11 @@ onMounted(() => {
     height: 100%;
 }
 .main{
-    width:9.375rem;
-    height: 16.25rem;
-    top: 14.5rem;
-    // left: 29.9375rem;
-    border-radius: .625rem;
-    background-color:#FAFAFA;
+    width:150px;
+    height: 260px;
+    top: 232px;
+    // left: 479px;
+    border-radius: 10px;
     // background-color: red;
     margin-left:1.875rem;
 }

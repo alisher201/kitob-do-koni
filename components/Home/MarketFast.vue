@@ -38,29 +38,59 @@
         :pagination="{ clickable: true }"
         @swiper="onSwiper"
       >
-        <SwiperSlide  v-for="(item, idx) in bookImgs" :key="idx">
-          <div class="bookData">
+        <SwiperSlide v-for="(item, idx) in props.bookImgs" :key="idx">
+          <div @click="$router.push(`/book/${item.id}`)" class="bookData">
             <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
+            <div
+              class="likeBox"
+              @click="addFavourite($event, idx, item.id, item.type.book_id)"
+            >
             <img
-              src="../../assets/contact/booklike.png"
-              alt=""
-              class="bookLike"
-            />
+                src="../../assets/contact/bookLike2.png"
+                alt=""
+                class="bookLike2"
+                :style="{ opacity: item.is_favorite ? '1' : '0' }"
+              />
+              <img
+                src="../../assets/contact/booklike.png"
+                alt=""
+                class="bookLike"
+                :style="{ opacity: item.is_favorite ? '0' : '1' }"
+              />
+            </div>
             <img
               src="../../assets/contact/karzinka.png"
               alt=""
               class="karzinka"
-              @click="addBasket(item.id, item.book_id)"
+              @click="addBasket($event, item.id, item.type.book_id)"
             />
-            <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
+            <div class="wrapper-icons">
+                <img
+                  src="../../assets/contact/eBook.png"
+                  alt=""
+                  class="ebook"
+                />
+                <img
+                  src="../../assets/contact/bookopen.png"
+                  alt=""
+                  class="bookopen"
+                />
+                <img
+                  src="../../assets/contact/headphone.png"
+                  alt=""
+                  class="headphone"
+                />
+              </div>
           </div>
           <div class="ps-2">
             <small class="title">{{ item.creator }}</small>
           </div>
           <div class="ps-2">
-            <small class="author">{{ item.description }}</small>
+            <small class="author">{{ item.name }}</small>
+            <small class="author"> favorite: {{ item.is_favorite }}</small>
+            {{ item.id }}
           </div>
           <small class="stats ms-2">5,0</small>
           <span class="starsNumbers">(32)</span>
@@ -74,6 +104,8 @@ import { useRuntimeConfig } from "nuxt/app";
 
 const store = useBasketStore();
 
+const { bookImgs } = props;
+
 // const url = useRuntimeConfig().public.siteUrl;
 const urlimg = useRuntimeConfig().public.bookUrl;
 const props = defineProps({
@@ -83,21 +115,49 @@ const props = defineProps({
     default: () => [],
   },
 });
-// console.log(bookImgs);
 
 let swiper = null;
+
+// const bookData = (event, id) => {
+
+// }
 
 const onSwiper = (sw) => {
   swiper = sw;
 };
-const addBasket = (id, bookId) => {
-  store.basketAdd({ product_id: id, type: bookId ? "book" : "other" });
+const addBasket = (e, id, bookId) => {
+  e.stopPropagation();
+  store.basketAdd({ product_id: id, type: bookId ? "book" : "other" })
+  .then(() => {
+      notify();
+    });
 };
 
-onMounted (() => {
-})
-  
+const addFavourite = (e, idx, id, bookId) => {
+  e.stopPropagation();
 
+  props.bookImgs[idx].is_favorite = !props.bookImgs[idx].is_favorite;
+
+  if (props.bookImgs[idx].is_favorite) {
+    store.addFavourite({
+      product_id: id,
+      type: bookId ? "book" : "other",
+    });
+  } else {
+    const type = bookId ? "book" : "other";
+    store.favouriteDelete(id, type);
+  }
+};
+
+const notify = () => {
+  useNuxtApp().$toast.success("Savatchaga qo'shildi", {
+    autoClose: 5000,
+    dangerouslyHTMLString: true,
+  });
+};
+
+// onMounted (() => {
+// })
 </script>
 
 <style scoped>
@@ -135,25 +195,24 @@ onMounted (() => {
   cursor: pointer;
   display: none;
 }
-.ebook {
+.wrapper-icons {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  display: flex;
+  gap: 5px;
+  right: 0.625rem;
+  bottom: 0.625rem;
+}
+.ebook {
   cursor: pointer;
   display: none;
 }
 
 .bookopen {
-  position: absolute;
-  right: 40px;
-  bottom: 10px;
   cursor: pointer;
   display: none;
 }
+
 .headphone {
-  position: absolute;
-  right: 70px;
-  bottom: 10px;
   cursor: pointer;
   display: none;
 }

@@ -112,6 +112,8 @@
           @input="update_oBarValues"
         />
 
+        <div></div>
+
         <!-- kitob tili bo'ycha sorov yuborish -->
         <hr class="my-4" />
         <h6>
@@ -185,21 +187,23 @@
                 alt=""
                 class="karzinka"
               />
-              <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
-
-              <img
-                src="../../assets/contact/bookopen.png"
-                alt=""
-                class="bookopen"
-
-              />
-              
-              
-              <img
-                src="../../assets/contact/headphone.png"
-                alt=""
-                class="headphone"
-              />
+              <div class="wrapper-icons">
+                <img
+                  src="../../assets/contact/eBook.png"
+                  alt=""
+                  class="ebook"
+                />
+                <img
+                  src="../../assets/contact/bookopen.png"
+                  alt=""
+                  class="bookopen"
+                />
+                <img
+                  src="../../assets/contact/headphone.png"
+                  alt=""
+                  class="headphone"
+                />
+              </div>
             </div>
             <div class="ps-2">
               <small class="title">{{ item.name }}</small>
@@ -219,10 +223,47 @@
         </div>
       </div>
     </div>
-    
 
+    <!-- input valiation -->
+    <input
+      ref="emailInput"
+      v-model="emailValue"
+      type="email"
+      placeholder="Email"
+    /><br />
+    <span v-if="emailError" style="color: red">{{ emailError.message }}</span
+    ><br />
 
+    <input
+      ref="emailInput"
+      v-model="telNumber"
+      type="number"
+      placeholder="number"
+    /><br />
+    <span v-if="errorTel" style="color: red">{{ errorTel.message }}</span>
+    <br />
 
+    <input
+      ref="emailInput"
+      v-model="password"
+      type="text"
+      placeholder="password"
+    /><br />
+    <span v-if="passwordError" style="color: red">{{
+      passwordError.message
+    }}</span>
+    <br />
+    <input
+      ref="emailInput"
+      v-model="confirmPassword"
+      type="text"
+      placeholder="password"
+    /><br />
+    <span v-if="confirmError" style="color: red">{{
+      confirmError.message
+    }}</span>
+    <br />
+    <button @click="sendMassage">yuborish</button>
   </div>
 </template>
 <script setup>
@@ -232,9 +273,71 @@ import "@/node_modules/multi-range-slider-vue/MultiRangeSliderBarOnly.css";
 import { useCategory } from "@/store/category";
 const store = useCategory();
 const url = useRuntimeConfig().public.bookUrl;
-let lang_book = ref('all')
-let type_book = ref('all')
+let lang_book = ref("all");
+let type_book = ref("all");
 
+const emailValue = ref(null);
+const emailError = ref(null);
+const telNumber = ref(null);
+const errorTel = ref(null);
+const password = ref(null);
+const passwordError = ref(null);
+const confirmPassword = ref(null);
+const confirmError = ref(null);
+
+watch(emailValue, (newVAlue) => {
+  emailError.value = !isEmpty(newVAlue, "email").item
+    ? isEmpty(newVAlue, "email")
+    : validateEmail(newVAlue);
+});
+watch(telNumber, (newValue) => {
+  errorTel.value = !isEmpty(newValue, "Telifon nomeri").item
+    ? isEmpty(newValue, "Telifon nomeri")
+    : validateLength(newValue, 12, 12, "telfon nomeri");
+});
+watch(password, (newValue) => {
+  passwordError.value = passwordValidator(newValue);
+});
+watch(confirmPassword, (newValue) => {
+  confirmError.value = confirmedValidator(newValue, password.value);
+});
+
+const sendMassage = () => {
+  // Emailni tekshirish
+  emailError.value = !isEmpty(emailValue.value, "ismi").item
+    ? isEmpty(emailValue.value, "ismi")
+    : validateEmail(emailValue.value);
+
+  // telifon nomerni tekshirish
+  errorTel.value = errorTel.value = !isEmpty(emailValue.value, "Telifon nomeri")
+    .item
+    ? isEmpty(emailValue.value, "Telifon nomeri")
+    : validateLength(emailValue.value, 12, 12, "telfon nomeri");
+
+  // password validation
+  passwordError.value = passwordValidator(password.value);
+
+  // confirm password
+  confirmError.value = confirmedValidator(
+    confirmPassword.value,
+    password.value
+  );
+
+  let array = [
+    emailError.value,
+    errorTel.value,
+    passwordError.value,
+    confirmError.value,
+  ];
+  let validtaionDAta = validation(array);
+  console.log(validtaionDAta);
+
+  if (validtaionDAta) {
+    console.log("malumotlar yuborildi");
+  } else {
+    console.log("yuborilmadi");
+  }
+};
 
 const alld = ref(5);
 const typeBook = ref({
@@ -248,10 +351,10 @@ const languageType = ref({
   all: true,
   uz: false,
   ru: false,
-  en: false
-})
-let oBarMinValue = ref(0)
-let oBarMaxValue = ref(500000)
+  en: false,
+});
+let oBarMinValue = ref(1000);
+let oBarMaxValue = ref(500000);
 
 // Get ID
 const route = useRoute();
@@ -326,16 +429,23 @@ onMounted(() => {
   );
 });
 
-
 const selectBook = (id) => {
   const router = useRouter();
   router.push(`/book/${id}`);
 };
 </script>
 <style scoped>
+.wrapper-icons {
+  position: absolute;
+  display: flex;
+  gap: 5px;
+  right: 0.625rem;
+  bottom: 0.625rem;
+}
+
 .sideBar {
   height: auto;
-  border-radius: .625rem;
+  border-radius: 0.625rem;
   background: #fafafa;
 }
 
@@ -349,7 +459,7 @@ const selectBook = (id) => {
 }
 
 .categoriaData {
-  font-size: .875rem;
+  font-size: 0.875rem;
   font-weight: 500;
   color: #35363d;
 }
@@ -359,14 +469,14 @@ const selectBook = (id) => {
 }
 
 .categoriaAll {
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: #9196ad;
   cursor: pointer;
 }
 
 .price {
   color: #8f8e8e;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
 }
 
 .btnColor {
@@ -376,17 +486,17 @@ const selectBook = (id) => {
 .categoyImg {
   width: 100%;
   height: 100%;
-  border-radius: .4375rem;
+  border-radius: 0.4375rem;
 }
 
 .btnBestseller {
   background: #67c926;
   position: absolute;
   left: -0.3125rem;
-  top: .625rem;
+  top: 0.625rem;
   border: none;
-  border-radius: .1875rem;
-  font-size: .75rem;
+  border-radius: 0.1875rem;
+  font-size: 0.75rem;
   color: #fff;
   font-weight: 600;
   z-index: 1;
@@ -398,10 +508,10 @@ const selectBook = (id) => {
   background: #ff673d;
   position: absolute;
   left: -0.3125rem;
-  top: .625rem;
+  top: 0.625rem;
   border: none;
-  border-radius: .1875rem;
-  font-size: .75rem;
+  border-radius: 0.1875rem;
+  font-size: 0.75rem;
   color: #fff;
   font-weight: 600;
   width: 3.0625rem;
@@ -415,40 +525,31 @@ const selectBook = (id) => {
 
 .bookLike {
   position: absolute;
-  right: .625rem;
-  top: .625rem;
+  right: 0.625rem;
+  top: 0.625rem;
   cursor: pointer;
   display: none;
 }
 
 .karzinka {
   position: absolute;
-  right: .625rem;
+  right: 0.625rem;
   top: 2.8125rem;
   cursor: pointer;
   display: none;
 }
 
 .ebook {
-  position: absolute;
-  right: .625rem;
-  bottom: .625rem;
   cursor: pointer;
   display: none;
 }
 
 .bookopen {
-  position: absolute;
-  right: 2.5rem;
-  bottom: .625rem;
   cursor: pointer;
   display: none;
 }
 
 .headphone {
-  position: absolute;
-  right: 4.375rem;
-  bottom: .625rem;
   cursor: pointer;
   display: none;
 }
@@ -465,12 +566,12 @@ const selectBook = (id) => {
   width: 100%;
   display: grid;
   grid-template-columns: 23.5% 23.5% 23.5% 23.5%;
-  gap: .9375rem;
+  gap: 0.9375rem;
 }
 
 .starsNumbers {
   color: #9196ad;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
 }
 
 .title {
@@ -489,5 +590,3 @@ const selectBook = (id) => {
   cursor: pointer;
 }
 </style>
-
-

@@ -31,11 +31,20 @@ export class FechData {
       method: 'DELETE',
     })
   }
+  
+  likeDelete = (id, type) => {
+    return $fetch(`${url}/${this.api}/${id}?type=${encodeURIComponent(type)}`, {
+      method: 'DELETE',
+    })
+  }
+  
+  deleteAll = () => {
+    return $fetch(`${url}/${this.api}`, {
+      method: 'POST'
+    })
+  }
   // GetOneById
   getOne = (id) => {
     return $fetch(`${url}/${this.api}/${id}`)
   }
 }
-
-
-

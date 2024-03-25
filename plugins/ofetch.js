@@ -1,5 +1,9 @@
-import { ofetch } from 'ofetch'
-import { useTestTStore } from '@/store/home'
+import {
+  ofetch
+} from 'ofetch'
+import {
+  useTestTStore
+} from '@/store/home'
 
 // let jwtToken = localStorage.getItem('jwtToken')
 
@@ -11,8 +15,10 @@ export default defineNuxtPlugin((_nuxtApp) => {
     jwtToken = localStorage.getItem('jwtToken');
   }
   globalThis.$fetch = ofetch.create({
-    // data: tokens,
-    onRequest({ request, options }) {
+    onRequest({
+      request,
+      options
+    }) {
 
 
 
@@ -28,7 +34,9 @@ export default defineNuxtPlugin((_nuxtApp) => {
         // options.headers = { Authorization: `Bearer ${refreshToken}` }
       }
     },
-    onResponseError({ response }) {
+    onResponseError({
+      response
+    }) {
       const statusCode = response.status;
       if (statusCode === 401) {
 
@@ -40,6 +48,7 @@ export default defineNuxtPlugin((_nuxtApp) => {
         }
 
 
+        useTestTStore().refreshToken()
 
       }
     }

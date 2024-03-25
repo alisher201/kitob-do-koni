@@ -43,7 +43,7 @@
                 <span class="ms-2">{{ $t("home.basket.select") }}</span>
               </div>
               <div>
-                <p class="remove">{{ $t("home.basket.delete") }}</p>
+                <p @click="deleteAll" class="remove">{{ $t("home.basket.delete") }}</p>
               </div>
             </div>
             <div
@@ -51,7 +51,7 @@
               v-for="(item, idx) in store.basket"
               :key="idx"
             >
-              <pre>{{ item.product.price }}</pre>
+            <pre>{{ item.product.price }}</pre>
               <div class="me-3 d-flex align-items-center">
                 <input
                   type="checkbox"
@@ -95,7 +95,16 @@
                   <div class="d-flex flex-column justify-content-between">
                     <div>
                       <div class="d-flex">
-                        <div class="basketLike" @click="addFavourite(idx)">
+                        <div
+                          class="basketLike"
+                          @click="
+                            addFavourite(
+                              idx,
+                              item.product.id,
+                              item.product.type,
+                            )
+                          "
+                        >
                           <svg
                             width="22"
                             height="22"
@@ -227,8 +236,16 @@ const send = () => {
   console.log(array);
 };
 
-const addFavourite = (idx) => {
+const addFavourite = (idx, id, type) => {
   store.basket[idx].favorite = !store.basket[idx].favorite;
+  if (store.basket[idx].favorite == true) {
+    store.addFavourite({
+      product_id: id,
+      type: type,
+    });
+  } else {
+    store.favouriteDelete(id, type)
+  }
 };
 
 const selectAll = () => {
@@ -304,11 +321,12 @@ const productRemove = (idx) => {
 };
 
 const deleteBasket = (id) => {
-  console.log(id);
   store.basketDelete(id).then(() => {
     refresh();
   });
 };
+
+// functions
 
 watch(
   store,
@@ -368,6 +386,7 @@ const bookTypeadd = (id) => {
   font-size: 15px;
   color: #f83333;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .basketProduts {

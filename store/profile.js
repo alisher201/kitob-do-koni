@@ -49,7 +49,7 @@ export const ProfileHistory = defineStore("test", {
     async Book(){
       return await profile_my_books.get()
       .then((res)=>{
-        this.books = res
+        this.books = res.result.audios
       })
     }
   }

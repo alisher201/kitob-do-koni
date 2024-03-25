@@ -33,7 +33,9 @@
               v-model="telNumber"
               type="number"
               class="form-control"
-              placeholder="+998 00 000 00 00"
+              placeholder="998 00 000 00 00"
+              v-maska
+              data-maska="############"
             />
             <span v-if="errorTel" style="color: red">{{
               errorTel.message
@@ -49,65 +51,64 @@
         </div>
         <!-- PAGE 2 -->
         <div v-show="content == 2">
-          <div @submit="onSubmit" action="">
-            <div class="mb-3 mt-3 list">
-              <label for="email" class="form-label"
-                >Tasdiqlash kodi: <span>+998 97 589 53 69 </span> telefon
-                raqamga yu bordik</label
-              >
-              <input
-                v-model="code"
-                type="number"
-                class="form-control"
-                placeholder="sms codini kiritng"
-              />
-              <span v-if="errorCode" style="color: red">
-                {{ errorCode.message }}
-              </span>
-            </div>
-            <button @click="senDataUser2">Davom etish</button>
-            <div class="bottom">
-              <h2>
-                Avval ro'yhatdan o'tganmisiz?
-                <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
-              </h2>
-            </div>
+          <div class="mb-3 mt-3 list">
+            <label for="email" class="form-label"
+              >Tasdiqlash kodi: <span>+998 97 589 53 69 </span> telefon raqamga
+              yubordik</label
+            >
+            <input
+              v-model="code"
+              type="number"
+              class="form-control"
+              placeholder="sms codini kiritng"
+            />
+            <span v-if="errorCode" style="color: red">
+              {{ errorCode.message }}
+            </span>
+          </div>
+          <button @click="senDataUser2">Davom etish</button>
+          <div class="bottom">
+            <h2>
+              Avval ro'yhatdan o'tganmisiz?
+              <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
+            </h2>
           </div>
         </div>
+        <!-- Page 3 -->
         <div v-show="content == 3">
-          <Form @submit="onSubmit" action="">
-            <div class="mb-3 mt-3 list inputbox">
-              <label for="password" class="form-label"
-                >Parol <span>*</span></label
-              >
-              <Field
-                name="password"
-                class="form-control"
-                type="password"
-                placeholder="Yangi parol"
-                :rules="validatePassword"
-              />
-            </div>
-            <div class="mb-3 mt-3 list inputbox">
-              <label for="newpassword" class="form-label"
-                >Parol <span>*</span></label
-              >
-              <Field
-                name="newpassword"
-                class="form-control"
-                type="newpassword"
-                placeholder="Yangi parol"
-                :rules="validateNewPassword"
-              />
-            </div>
-            <button>Yangi parolni o'rnatish</button>
-            <div class="bottom">
-              <h2>
-                Avval ro'yhatdan o'tganmisiz?
-                <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
-              </h2>
-            </div>
-          </Form>
+          <div class="mb-3 mt-3 list">
+            <label for="password" class="form-label"
+              >Parol <span>*</span></label
+            >
+            <input
+              class="form-control"
+              type="password"
+              placeholder="Yangi parol"
+              v-model="password"
+            />
+            <span v-if="passwordError" style="color: red">{{
+              passwordError.message
+            }}</span>
+          </div>
+          <div class="mb-3 mt-3 list">
+            <label class="form-label">Parol <span>*</span></label>
+            <input
+              class="form-control"
+              type="password"
+              placeholder="Yangi parolni takrorlang"
+              v-model="confirm_password"
+            />
+            <span v-if="confirm_passwordError" style="color: red">{{
+              confirm_passwordError.message
+            }}</span>
+          </div>
+          <button @click="senDataUser3">Yangi parolni o'rnatish</button>
+          <div class="bottom">
+            <h2>
+              Avval ro'yhatdan o'tganmisiz?
+              <NuxtLink to="/register">Ro'yxatdan o'tish</NuxtLink>
+            </h2>
+          </div>
         </div>
       </div>
     </div>
@@ -132,20 +133,36 @@ const errorTel = ref(null);
 const code = ref(null);
 const errorCode = ref(null);
 
+const generatepasword = ref({
+  password: null,
+  confirm_password: null,
+});
+
+const password = ref(null);
+const passwordError = ref(null);
+
+const confirm_password = ref(null);
+const confirm_passwordError = ref(null);
+
 let content = ref(1);
 
 watch(telNumber, (newValue) => {
-  console.log(newValue);
   errorTel.value = !isEmpty(newValue, "Telifon nomeri").item
     ? isEmpty(newValue, "Telifon nomeri")
     : validateLength(newValue, 12, 12, "telfon nomeri");
 });
 
 watch(code, (newValue) => {
-  console.log(newValue);
   errorCode.value = !isEmpty(newValue, "Sms codi").item
     ? isEmpty(newValue, "Sms codi")
     : validateLength(newValue, 6, 6, "sms codi");
+});
+
+watch(password, (newValue) => {
+  passwordError.value = passwordValidator(newValue);
+});
+watch(confirm_password, ( conf) => {
+  confirm_passwordError.value = confirmedValidator(password.value, conf);
 });
 
 const senDataUser1 = () => {
@@ -153,9 +170,22 @@ const senDataUser1 = () => {
   let array = [errorTel.value];
   let validtaionDAta = validation(array);
   forget.value.phone = telNumber.value;
-  if (validtaionDAta) {
-    store.forgetPassword(forget.value);
-    content = 2;
+  if (telNumber.value && validtaionDAta) {
+    store
+      .forgetPassword(forget.value)
+      .then(() => {
+        content.value = 2;
+      })
+      .catch((error) => {
+        useNuxtApp().$toast.error(error.response._data.message, {
+          autoClose: 2000,
+          dangerouslyHTMLString: true,
+        });
+      });
+  } else {
+    errorTel.value = !isEmpty(telNumber.value, "Telifon nomeri").item
+      ? isEmpty(telNumber.value, "Telifon nomeri")
+      : validateLength(telNumber.value, 12, 12, "telfon nomeri");
   }
 };
 
@@ -163,14 +193,36 @@ const senDataUser2 = () => {
   errorCode.value = validateLength(code.value, 6, 6, "sms codi");
   let array2 = [errorCode.value];
   let validtaioncode = validation(array2);
-  console.log(validtaioncode);
   checkforget.value.code = code.value;
   checkforget.value.phone = telNumber.value;
-  console.log(checkforget.value);
-  if (validtaioncode) {
-    store.checkforgetpassword(checkforget.value)
-    // content = 3;
+  if (validtaioncode && code.value) {
+    store.checkforgetpassword(checkforget.value).then((res) => {
+      if (res.error) {
+        useNuxtApp().$toast.error(res.message, {
+          autoClose: 2000,
+          dangerouslyHTMLString: true,
+        });
+      } else {
+        localStorage.setItem("jwtToken", res.result.token);
+        localStorage.setItem("refreshToken", res.result.refresh_token);
+        content.value = 3;
+      }
+    });
+  } else {
+    errorCode.value = !isEmpty(code.value, "Sms codi").item
+      ? isEmpty(code.value, "Sms codi")
+      : validateLength(code.value, 6, 6, "sms codi");
   }
+};
+
+const senDataUser3 = () => {
+  generatepasword.value.password = password.value;
+  generatepasword.value.confirm_password = confirm_password.value;
+  console.log(confirm_passwordError.value.item);
+  if (confirm_passwordError.value.item) {
+    store.changepassword(generatepasword.value)
+  }
+  
 };
 </script>
   
