@@ -3,9 +3,9 @@
     <SeoKit />
     <Header />
 
-    <div class="d-flex container " style=" height;:100%">
+    <div class="d-flex container" >
       <UserProfile />
-      <slot  />
+      <slot />
     </div>
     <Footer />
   </div>

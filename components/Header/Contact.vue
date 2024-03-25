@@ -3,7 +3,6 @@
     <div class="contacts d-flex justify-content-center text-white">
       <div class="row row-cols-2 d-flex align-items-center container px-0">
         <div class="col px-0">+998901237590</div>
-
         <div class="col px-0 d-flex justify-content-end">
           <div class="col-5 d-flex justify-content-between">
             

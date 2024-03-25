@@ -1,34 +1,33 @@
 <script setup>
-// import { toast } from 'vue3-toastify';
-
 import bookImg from "../../assets/contact/bookimg.png";
 import bookImg1 from "../../assets/contact/bookImg2.png";
-
-const store = usePayment()
-const route = useRoute()
-const url = useRuntimeConfig().public.bookUrl
-const siteUrl = useRuntimeConfig().public.siteUrl
-let comitCount = ref(0)
-let ratings = ref(0)
-let type = ref([])
-let cont = ref(null)
-const storeBasket = useBasketStore()
-let bookType = ref(null)
-let is_book = ref(false)
-let comentsData = ref([])
-let routePath = route.path
-let copyPath = siteUrl + routePath
-
+const store = usePayment();
+const route = useRoute();
+const url = useRuntimeConfig().public.bookUrl;
+const siteUrl = useRuntimeConfig().public.siteUrl;
+const router = useRouter();
+let comitCount = ref(0);
+let ratings = ref(0);
+let type = ref([]);
+const storeBasket = useBasketStore();
+let bookType = ref(null);
+let is_book = ref(false);
+let comentsData = ref([]);
+let routePath = route.path;
+let copyPath = siteUrl + routePath;
+let bookPrice = ref(null);
+let file_fragment = ref(null);
+let file_type = ref(null);
+const reading = ref(null);
+let swiper = null;
+const onSwiper = (sw) => {
+  swiper = sw;
+};
 
 const copyLink = () => {
-  navigator.clipboard.writeText(copyPath)
-  // console.log(copyPath);
-
-}
-
-
-
-let bookcontent = ref(1)
+  navigator.clipboard.writeText(copyPath);
+};
+let bookcontent = ref(1);
 const bookImgs = [
   { imgs: bookImg, bookTitle: "Rebekka", author: "Jon Duglas" },
   {
@@ -52,105 +51,165 @@ const bookImgs = [
     bookTitle: "Kitoblar qanday o'qiladi",
     author: "Sidni Sheldon",
   },
-
+  {
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  {
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  {
+    imgs: bookImg1,
+    bookTitle: "Kitoblar qanday o'qiladi",
+    author: "Sidni Sheldon",
+  },
+  
 ];
 
 const ordrItem = () => {
-  let orderdata = {
-    booktype: bookType.value
+  let type = null
+  if (bookPrice.value) {
+    if (store.book?.type) {
+      type = "book"
+    } else {
+      type = "other"
+    }
+    let orderdata = {
+      booktype: bookType.value,
+    };
+    let Book = [{
+      bookTypeId : orderdata.booktype,
+      productId: route.params.id,
+      quantity: 1,
+      productType: type
+
+    }]
+    let Productdata = JSON.stringify(Book);
+    localStorage.setItem('Product', Productdata)
+
+    
+
+    console.log(route.params.id);
+    router.push("/OrderItem");
+  } else {
+    alert("uxlading");
   }
-  const router = useRouter()
-  localStorage.setItem('bookTypeId',orderdata.booktype)
-  localStorage.setItem('productId',route.params.id)
-  localStorage.setItem('quantity',1)
-
-  // localStorage.setItem('bookType',bookType.value)
-  // localStorage.setItem('price', store.book?.type?.price )
-  localStorage.setItem('price', 1 )
-
-  console.log(route.params.id);
-  // localStorage.setItem()
-  router.push('/OrderItem')
-}
+};
 const fetchBookOne = () => {
-  refresh()
-
-}
-const refresh = () => {
-  store.fetch_book_one(route.params.id)
+  refresh();
+};
+const refresh = async () => {
+  await store
+    .fetch_book_one(route.params.id)
     .then(() => {
-
-      comentsData.value = [...store.book.reviews, ...store.book.shop_reviews]
-
-
-      let elementLength = comentsData.value.length
-      let sum = 0
+      comentsData.value = [...store.book.reviews, ...store.book.shop_reviews];
+      let elementLength = comentsData.value.length;
+      let sum = 0;
       if (store.book) {
-        comentsData.value.forEach(element => {
-          let ratingData = element.rating
-          sum += ratingData
-        })
-        ratings.value = sum / elementLength
-        comitCount.value = elementLength
+        comentsData.value.forEach((element) => {
+          let ratingData = element.rating;
+          sum += ratingData;
+        });
+        ratings.value = sum / elementLength;
+        comitCount.value = elementLength;
       }
-
 
       if (store.book && store.book.type) {
-        store.book.type.forEach(item => {
-          type.value.push(item.type)
+        store.book.type.forEach((item) => {
+          type.value.push(item.type);
           if (item.type) {
             console.log(is_book.value);
-            is_book.value = true
+            is_book.value = true;
           }
-        })
+        });
       }
-
-
     })
-    .catch(error => {
-      console.error('Error fetching book:', error);
+    .catch((error) => {
+      console.error("Error fetching book:", error);
     });
-}
+};
 
 const basketAdd = (id, type) => {
-  storeBasket.basketAdd({ product_id: id, type: type.length ? 'book' : 'product' })
+  storeBasket
+    .basketAdd({ product_id: id, type: type.length ? "book" : "product" })
     .then(() => {
-      alert('Siz savatga qo`shildi')
-    if(type.length) {
-      localStorage.setItem('productType','book')
-    }
-    else{
-      localStorage.setItem('productType','product')
-    }
-    })
-}
+      notify();
+    });
+};
 
 onMounted(() => {
-  refresh()
-})
+  refresh().then(() => {
+    bookTypeadd(
+      store.book.type[0].id,
+      store.book.type[0].price,
+      store.book.type[0].file_fragment,
+      store.book.type[0].type
+    );
+  });
+  store.Popular_recent()
+
+});
+
+const notify = () => {
+  useNuxtApp().$toast.success("Savatchaga qo'shildi", {
+    autoClose: 5000,
+    dangerouslyHTMLString: true,
+  });
+};
+const bookTypeadd = (id, price, file, type) => {
+  bookType.value = id;
+  bookPrice.value = price;
+  file_fragment.value = file;
+  file_type.value = type;
+  if (type == "audio" && file) {
+    console.log('file_fragment');
+    reading.value = 2;
+  } else if ((type == "paper" || type == "ebook") && file) {
+    reading.value = 1;
+  }
+};
+
+const fragment = ()=>{
+  let data = JSON.stringify(file_fragment.value)
+  localStorage.setItem('epubUrl',data)
+  router.push('/reading')
+}
+const audio_fragment = () =>{
+  let data = JSON.stringify(file_fragment.value)
+  localStorage.setItem('audio_fragment',data)
+  router.push('/audio')
+}
+console.log("epubUrl");
 </script>
 
 <template>
   <div class="container mb-5 pb-5 px-0">
-    <div class="my-3"><small class="mt-5">
+    <div class="my-3">
+      <small class="mt-5">
         Bosh sahifa/
-        <span>{{ $i18n.locale == 'uz' ? store.book?.category[0]?.name_oz : store.book?.category[0]?.name_ru }}</span>
+        <span>{{
+          $i18n.locale == "uz"
+            ? store.book?.category[0]?.name_oz
+            : store.book?.category[0]?.name_ru
+        }}</span>
         <span>
           / {{ store.book?.name }} ({{ store.book?.author[0].fio }})
         </span>
-      </small></div>
+      </small>
+    </div>
     <div class="row">
-      <div class="col-4 ">
+      <div class="col-4">
         <div class="bookimg border">
           <img :src="url + '/' + store.book?.image" alt="" />
         </div>
 
         <div class="showImgs">
           <div class="showImg" v-for="item in store.book?.gallery" :key="item">
-            <img :src="url + '/' +  item.path" alt="" />
+            <img :src="url + '/' + item.path" alt="" />
           </div>
-
-
         </div>
       </div>
       <div class="col-8">
@@ -158,14 +217,22 @@ onMounted(() => {
           <div class="col-8">
             <p class="bookAuthor">{{ store.book?.author[0].fio }}</p>
 
-            <h3 class="bookTitle">{{ store.book?.name }} </h3>
+            <h3 class="bookTitle">{{ store.book?.name }}</h3>
           </div>
           <div class="col-4 d-flex align-items-center justify-content-end pe-0">
             <!-- like img  -->
-            <img src="../../assets/contact/oneBookLIke.png" alt="" class="me-2" />
+            <img
+              src="../../assets/contact/oneBookLIke.png"
+              alt=""
+              class="me-2"
+            />
 
             <!-- copy img -->
-            <img src="../../assets/contact/download.png" alt="" @click="copyLink" />
+            <img
+              src="../../assets/contact/download.png"
+              alt=""
+              @click="copyLink"
+            />
           </div>
         </div>
         <div class="d-flex align-items-center">
@@ -173,134 +240,189 @@ onMounted(() => {
             <img src="../../assets/contact/Star.png" alt="" class="" />
           </p>
 
-          <p class="star">{{ ratings.toFixed(1) }}</p> <small class="statCount">({{ comitCount }})</small>
+          <p class="star">{{ ratings.toFixed(1) }}</p>
+          <small class="statCount">({{ comitCount }})</small>
           <p class="mx-2">|</p>
           <p><img src="../../assets/contact/chat.png" alt="" /></p>
           <p class="commentCount">{{ comitCount }}</p>
-          <p class="statCount small ">{{ $t("home.review") }}</p>
+          <p class="statCount small">{{ $t("home.review") }}</p>
         </div>
         <div>
           <span class="statCount">{{ $t("home.cost") }}:</span>
           <div class="mb-3">
-            <span  class="bookPrice">{{ store.book?.type?.price }} {{ $t("home.basket.sum") }}</span>
-            <small class="discount ms-3"><del>185 000 {{ $t("home.basket.sum") }}</del></small>
+            <span class="bookPrice"
+              >{{ bookPrice }}{{ $t("home.basket.sum") }}</span
+            >
+            <small class="discount ms-3"
+              ><del>185 000 {{ $t("home.basket.sum") }}</del></small
+            >
           </div>
         </div>
 
         <div class="row">
           <div class="col-6">
             <!-- booktype -->
-
             <div class="d-flex justify-content-between">
-              <button class="booktype btn border px-3" v-for="(item,index) in store?.book?.type " :key="index"    @click="bookType= item.id"
-                :class="{ 'bookTypeActive': bookType == item.id }">
-                <img  src="@/assets/contact/book-open.png" alt="" /><small class="ms-2">{{item.type}}</small>
+              <button
+                class="booktype btn border px-3"
+                v-for="(item, index) in store?.book?.type"
+                :key="index"
+                @click="  bookTypeadd(item.id,item.price,item.file_fragment,item.type)"
+                :class="{ bookTypeActive: bookType == item.id }">
+                <img src="@/assets/contact/book-open.png" alt="" /><small class="ms-2">{{ item.type }}</small>
               </button>
-
-              <!-- <button  class="btn border px-4 booktype" v-if="type.includes('audio')" @click="bookType = 2"
-                :class="{ 'bookTypeActive': bookType == 2 }">
-                <img src="@/assets/contact/headphones.png" alt="" /><small class="ms-2">Audio</small>
-              </button>
-
-              <button class="btn border px-3 booktype" v-if="type.includes('ebook')" @click="bookType = 3"
-                :class="{ 'bookTypeActive': bookType == 3 }">
-                <img src="@/assets/contact/ebookk.png" alt="" /><small class="ms-2">eBook</small>
-              </button> -->
             </div>
-            <div v-for="(item,index) in store?.book?.type " :key="index">
-              <pre>{{ item.id }}</pre>
-            </div>
-            <pre>{{ store?.book?.type }}</pre>
-            <!-- fragment -->
             <div class="mt-2 row">
               <div class="col-6">
-                <button class="btn border w-100 fragment">
-                  <img src="@/assets/contact/book-open2.png" alt="" />{{ $t("home.reading") }}
+                <button @click="fragment " :disabled="reading !==1 " :style="{   cursor: reading !== 1 ? 'no-drop' : 'auto', }" class="btn border w-100 fragment">
+                  <img src="@/assets/contact/book-open2.png" alt="" />{{
+                    $t("home.reading")
+                  }}
                 </button>
               </div>
               <div class="col-6">
-                <button class="btn border w-100 fragment">
-                  <img src="@/assets/contact/headphones2.png" alt="" />{{ $t("home.audio") }}
+                <button @click="audio_fragment" style="display:flex; align-items:center; justify-content:center;" :disabled="reading !== 2" :style="{   cursor:   reading !== 2  ? 'no-drop' : 'auto', }" class="btn border w-100 fragment">
+                  <img src="@/assets/contact/headphones2.png" style="margin-right: 5px;"  alt="" />{{
+                    $t("home.audio")
+                  }}
                 </button>
               </div>
             </div>
+            <!-- <pre>{{ file_type }}</pre> -->
+            <!-- {{ reading }} -->
+            <!-- {{ file_fragment }} -->
 
-            <!-- basket -->
-            <button class="w-100 basket mt-2" @click="basketAdd(store.book.id, store.book.type)">{{ $t("home.addBasket")
-            }}</button>
-
-            <!-- prompt payment -->
-            <button class="w-100 buy mt-2" @click="ordrItem">{{ $t("home.quickBuy") }}</button>
+            <button
+              :disabled="bookPrice == null"
+              :style="{ cursor: bookPrice == null ? 'no-drop' : 'auto' }"
+              class="w-100 basket mt-2"
+              @click="basketAdd(store.book.id, store.book.type)"
+            >
+              {{ $t("home.addBasket") }}
+            </button>
+            <button class="w-100 buy mt-2" @click="ordrItem">
+              {{ bookPrice ? $t("home.quickBuy") : "Yuklab olish" }}
+            </button>
           </div>
         </div>
       </div>
     </div>
     <div class="bookData">
       <div class="aboutMenu d-flex">
-        <div class=""
-          :style="{ 'border-bottom': bookcontent === 1 ? '2px solid #307cce' : 'none', 'padding-bottom': bookcontent === 1 ? '8px' : '0', 'color': bookcontent === 1 ? '#307cce' : 'initial' }"
-          @click="bookcontent = 1">{{ $t("home.info") }}</div>
-        <div class="ms-3"
-          :style="{ 'border-bottom': bookcontent === 2 ? '2px solid #307cce' : 'none', 'padding-bottom': bookcontent === 2 ? '8px' : '0', 'color': bookcontent === 2 ? '#307cce' : 'initial' }"
-          @click="bookcontent = 2">{{ $t("home.content") }}
+        <div
+          class=""
+          :style="{
+            'border-bottom': bookcontent === 1 ? '2px solid #307cce' : 'none',
+            'padding-bottom': bookcontent === 1 ? '8px' : '0',
+            color: bookcontent === 1 ? '#307cce' : 'initial',
+          }"
+          @click="bookcontent = 1"
+        >
+          {{ $t("home.info") }}
         </div>
-        <div class="ms-3"
-          :style="{ 'border-bottom': bookcontent === 3 ? '2px solid #307cce' : 'none', 'padding-bottom': bookcontent === 3 ? '8px' : '0', 'color': bookcontent === 3 ? '#307cce' : 'initial' }"
-          @click="bookcontent = 3">{{ $t("home.reviews") }}
+        <div
+          class="ms-3"
+          :style="{
+            'border-bottom': bookcontent === 2 ? '2px solid #307cce' : 'none',
+            'padding-bottom': bookcontent === 2 ? '8px' : '0',
+            color: bookcontent === 2 ? '#307cce' : 'initial',
+          }"
+          @click="bookcontent = 2"
+        >
+          {{ $t("home.content") }}
+        </div>
+        <div
+          class="ms-3"
+          :style="{
+            'border-bottom': bookcontent === 3 ? '2px solid #307cce' : 'none',
+            'padding-bottom': bookcontent === 3 ? '8px' : '0',
+            color: bookcontent === 3 ? '#307cce' : 'initial',
+          }"
+          @click="bookcontent = 3"
+        >
+          {{ $t("home.reviews") }}
         </div>
       </div>
-      <hr class="mt-0">
+      <hr class="mt-0" />
       <div v-show="bookcontent == 1">
-        <BookAbaut />
+        <BookAbaut  />
       </div>
       <div v-show="bookcontent == 2">
         <h1>ma'lumot yo'q</h1>
       </div>
 
       <div class="comments" v-if="bookcontent == 3">
-        <BookComments :comments="comentsData" :ratings="ratings.toFixed(1)" :commitCount="comitCount" :is_books="is_book"
-          @fetchBookOne="fetchBookOne" />
-
+        <BookComments
+          :comments="comentsData"
+          :ratings="ratings.toFixed(1)"
+          :commitCount="comitCount"
+          :is_books="is_book"
+          @fetchBookOne="fetchBookOne"
+        />
       </div>
-
     </div>
 
-    <div class=" mt-5">
-      <div class=" d-flex justify-content-between">
-        <h6 class=" p-0">{{ $t("home.recently") }}</h6>
+    <div class="mt-5 mb-5">
+      <div class="d-flex justify-content-between mb-3">
+        <h6 class="p-0">{{ $t("home.recently") }}</h6>
         <div>
-          <button class="nextRight me-2">
+          <button class="nextRight me-2" @click="swiper.slidePrev()">
             <img src="@/assets/contact/arrowRight.png" alt="" />
           </button>
-          <button class="nextLeft">
+          <button class="nextLeft" @click="swiper.slideNext()">
             <img src="@/assets/contact/arrowLeft.png" alt="" />
           </button>
         </div>
-
       </div>
-      <div class=" bookGrid mt-3">
-        <div class="p-0 dataItem" v-for="(item, index) in bookImgs" :key="index">
+        
+      <Swiper
+        :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
+        :grid="{ rows: 1, fill: 'row' }"
+        :slides-per-view="6"
+        :space-between="10"
+        :pagination="{ clickable: true }"
+        @swiper="onSwiper"
+      >
+      <!-- <div class="bookGrid mt-3"> -->
+        <SwiperSlide
+          class="p-0 dataItem"
+          v-for="(item, index) in bookImgs"
+          :key="index"
+        >jsjdj
           <div class="bookDataa">
             <img :src="item.imgs" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
-            <img src="../../assets/contact/booklike.png" alt="" class="bookLike" />
-            <img src="../../assets/contact/karzinka.png" alt="" class="karzinka" />
+            <img
+              src="../../assets/contact/booklike.png"
+              alt=""
+              class="bookLike"
+            />
+            
+            <img
+              src="../../assets/contact/karzinka.png"
+              alt=""
+              class="karzinka"
+            />
             <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
           </div>
           <div class="ps-2">
             <small class="title">{{ item.bookTitle }}</small>
           </div>
-          <div class="ps-2"><small class="author">{{ item.author }}</small></div>
+          <div class="ps-2">
+            <small class="author">{{ item.author }}</small>
+          </div>
           <img src="../../assets/contact/Star.png" alt="" />
           <small class="stats ms-2">5,0</small>
           <span class="starsNumbers">(32)</span>
-        </div>
-      </div>
+        </SwiperSlide>
+      <!-- </div> -->
+    </Swiper>
     </div>
     <pre>
-        {{ store.book }}
-      </pre>
+      {{ store.recent }} 
+    </pre>
+      
   </div>
 </template>
 
@@ -313,7 +435,6 @@ onMounted(() => {
   height: 300px;
   background: #e6e8ec66;
   border-radius: 15px;
-  /* margin-left: 10px; */
 }
 
 .bookimg img {
@@ -408,10 +529,9 @@ onMounted(() => {
 .bookData {
   /* width: 1198px; */
   height: auto;
-  background: #FAFAFA;
+  background: #fafafa;
   margin-top: 40px;
   border-radius: 10px;
-
 }
 
 .aboutBook {
@@ -421,19 +541,17 @@ onMounted(() => {
 }
 
 .aboutMenu {
-
   padding: 32px 32px 0 32px;
 }
 
 .comments {
   padding: 0 32px 32px 32px;
-
 }
 
 .nextRight {
   width: 30px;
   height: 30px;
-  background: #F6F6F6;
+  background: #f6f6f6;
   border-radius: 20px 0 0 20px;
   cursor: pointer;
   border: none;
@@ -442,7 +560,7 @@ onMounted(() => {
 .nextLeft {
   width: 30px;
   height: 30px;
-  background: #F6F6F6;
+  background: #f6f6f6;
   border-radius: 0 20px 20px 0;
   cursor: pointer;
   border: none;
@@ -461,10 +579,8 @@ onMounted(() => {
 }
 
 .dataItem {
-  box-shadow: 0px 2px 4px 0px #DBDBDB40;
+  box-shadow: 0px 2px 4px 0px #dbdbdb40;
   border-radius: 0 0 7px 7px;
-
-
 }
 
 .btnBestseller {
@@ -546,7 +662,7 @@ onMounted(() => {
 }
 
 .bookTypeActive {
-  border: 1px solid #41A2DB !important;
-  color: #41A2DB !important;
+  border: 1px solid #41a2db !important;
+  color: #41a2db !important;
 }
 </style>

@@ -25,7 +25,7 @@
           <button class="nextRight me-2" @click="swiper.slidePrev()">
             <img src="@/assets/contact/arrowRight.png" alt="" />
           </button>
-          <button class="nextLeft" @click="swiper.slidePrev()">
+          <button class="nextLeft" @click="swiper.slideNext()">
             <img src="@/assets/contact/arrowLeft.png" alt="" />
           </button>
         </div>
@@ -38,7 +38,7 @@
         :pagination="{ clickable: true }"
         @swiper="onSwiper"
       >
-        <SwiperSlide v-for="(item, idx) in bookImgs" :key="idx">
+        <SwiperSlide  v-for="(item, idx) in bookImgs" :key="idx">
           <div class="bookData">
             <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
             <button class="btnBestseller">Bestseller</button>

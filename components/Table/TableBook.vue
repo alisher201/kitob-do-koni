@@ -2,10 +2,7 @@
     <div>
         <div style="background-color:white;">
             <div class="wrapper">
-                <div class="main" v-for="(item, index) in store.books.result?.ebooks" :key="index"
-                   >
-                  
-                   
+                <div class="main" v-for="(item, index) in store.books?.result?.ebooks" :key="index">                   
                     <div class=""  @click="readingLInk(item.file_path)">
                         <img :src="' https://beta.kytab.uz' + item.book.image" alt="">
                         <h2>{{ item.book.name }}</h2>
@@ -19,9 +16,10 @@
 
                 </div>
             </div>
-            <!-- <pre style="">{{ store.books.result[0].file_path }}</pre> -->
+            <!-- <pre style="">{{ store.books.result.ebooks}}</pre> -->
         </div>
     </div>
+
 </template>
 
 <script setup>
@@ -36,10 +34,6 @@ const readingLInk = (item) => {
 
 onMounted(() => {
     store.Book()
-
-
-
-
 })
 
 </script>

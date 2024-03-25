@@ -1,9 +1,11 @@
 <template>
-    <div >
-      <div class="main">
+    <div style="width:100%;" >
+      <div class="main  container">
+        
+      <div class=" row " v-if="(store?.notifications?.result)" >
         <h1 class="h1">Bildirishnoma</h1>
-        <div class="row">
-          <div class="main_list row " >
+        <div class="row ">
+          <div class="main_list col " >
             <div class="img1 col-sm-6"  v-for="(item,index) in store?.notifications?.result" :key="index" @click="selectImg(item.id)">
               <div>
                 <img :src="'https://beta.kytab.uz'+item.parent.image"  alt="">
@@ -17,9 +19,18 @@
             </div>
           </div>
         </div>
+
+      
+       
         <!-- <pre>{{ store.notifications?.result}}</pre> -->
+        <!-- <pre>{{store}}</pre> -->
         <!-- <pre>{{store.notifications?.result[0].parent}}sal</pre> -->
       </div>
+      <div v-else>
+        <TableNotfound />
+      </div>
+    </div>
+
     </div>
   </template>
   <script setup>
@@ -47,15 +58,15 @@ const selectImg = (id) =>{
     border-bottom: none;
   }
   .main {
-    width: 948px;
+    // width: 948px;
     // height: 325px
-    top: 232px;
-    left: 479px;
+    // top: 232px;
+    // left: 479px;
     border-radius: 10px;
     // color: #FAFAFA;
-    // background-color:#FAFAFA;      
-    background-color: red;
-    margin: 60px 121px 283px 40px;
+    background-color:#FAFAFA;      
+    // background-color: red;
+    margin: 60px 0px 0px 14px;
     
   }
   .h1{
@@ -76,8 +87,8 @@ const selectImg = (id) =>{
       padding:4px;
       margin:18px 0px 0px 30px;
       gap: 20px;
-      background-color: blue;
-      width: 909px;
+      // background-color: rgb(190, 190, 222);
+      // width: 909px;
       // height: 280px;
       grid-template-columns: repeat(auto-fit,minmax(300px,2fr));
   }

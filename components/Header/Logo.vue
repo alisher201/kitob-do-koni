@@ -18,6 +18,7 @@
         {{ searchList }} -->
         <div style="position: relative; z-index: 4;">
           <div class="input-group" style="width: 479px">
+
             <!-- <input
               type="text"
               @change="result"
@@ -156,11 +157,14 @@ const selectData = (data) => {
 }
 const profile = () => {
   let get = localStorage.getItem("type")  
-  if (get =="guest") {
-    router.push('/login')
+  if (get =="client") {
+    router.push('/profile')
+
+
   }
   else {
-    router.push('/profile')
+    router.push('/login')
+
   }
 }
 

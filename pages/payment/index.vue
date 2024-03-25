@@ -85,14 +85,19 @@
                 <p class="modalContent">{{ $t("home.transaction") }}</p>
                 <p class="modalContent">165 000 {{ $t("home.basket.sum") }}</p>
               </div>
-              <div class="mt-4"><input type="text" class="form-control" :placeholder="$t('home.oneTimeCode')" /></div>
+              <div class="mt-4"><input type="text" v-model="pay.sms" class="form-control" :placeholder="$t('home.oneTimeCode')" /></div>
               <div class="mt-4">
                 <p class="modalContent text-center">{{ $t("home.resend") }}</p>
               </div>
               <div class="mt-4">
-                <p class="peymentcancel text-center" type="button" data-bs-dismiss="modal">{{ $t("home.cancel") }}</p>
+                <button class="modalbutton" data-bs-dismiss="modal" type="button" @click="start">Yuborish</button>
+              </div>
+              <div class="mt-2">
+                <button class="peymentcancel text-center" type="button" data-bs-dismiss="modal">{{ $t("home.cancel") }}</button>
               </div>
             </div>
+            <!-- <pre>{{ store.exists?.token}}</pre>
+            <pre>{{ store.exists }}</pre> -->
           </div>
         </div>
       </div>
@@ -116,29 +121,67 @@ let form =ref( {
   card_name:null,
   card_date:null,
 })
+let pay = ref({
+  sms:null,
+})
 
 const send = async() =>{
+
   let name = form.value.card_name?.toLowerCase()
   let payload = {
     name:name,
     pan:form.value.card_code,
     expiry:form.value.card_date
   }
-  console.log(payload)
-  await store.Order_Token(payload)
-  .then(() =>{
-    let token = store.token
-    localStorage.setItem('token',token)
-    console.log(token,'token') 
-    let order = {
-      token:localStorage.getItem('token'),
-      invoice_id:localStorage.getItem('invoice_id'),
-    }
-    store.Order_Transaction(token)
-  })
+  let p ={
+    pan:form.value.card_code,
     
+  }
+  
+  console.log(payload)
+  await store.Order_Exists(p)
+  .then(() =>{
+    if(store.exists?.token){
+        let token = store.exists?.token
+      localStorage.setItem('token',token)
+      console.log(token,'token') 
+      let order = {
+        token:localStorage.getItem('token'),
+        invoice_id:localStorage.getItem('invoiceId'),
+      }
+      store.Order_Transaction(order)
+    }
+    else{
+      store.Order_Token(payload)
+
+    .then(() =>{
+      let token = store?.token?.token
+      localStorage.setItem('token',token)
+      console.log(token,'token') 
+      let order = {
+        token:localStorage.getItem('token'),
+        invoice_id:localStorage.getItem('invoiceId'),
+      }
+      store.Order_Transaction(order)
+    })
+    }
+  })
 
 }
+const start = ()=>{
+      let message={
+        invoice_id : localStorage.getItem('invoiceId'),
+        sms:pay.value.sms
+      }
+      store.Order_Complete(message)
+}
+
+
+
+
+
+
+
 </script>
 <style scoped>
 .cardData {
@@ -228,15 +271,7 @@ const send = async() =>{
 
 
 
-/* .modalContainer {
-  background-color: #31313159;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 140vh;
-  z-index: 999;
 
-} */
 
 .modalData {
   width: 524px;
@@ -258,8 +293,21 @@ const send = async() =>{
   font-weight: 500;
 
 }
-
+.modalbutton{
+  width: 100%;
+  background-color:blue;
+  color:white;
+  height: 5vh;
+  border:none;
+  border-radius: 5px;
+}
 .peymentcancel {
-  color: #727171;
+  color:white;
+  width: 100%;
+  background-color: red;
+  height: 5vh;
+  border: none;
+  border-radius: 5px;
+
 }
 </style>

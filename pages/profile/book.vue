@@ -11,13 +11,28 @@
           <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">Elektron kitob</div>
           <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">Audio kitob</div>
         </div>
-        <div   v-show="content == 1"><TableBook/></div>
-        <!-- <div v-else v-show="content == 1"><TableNotfound/></div> -->
+        <div>
+          <div v-if="(store.books?.result?.ebooks)">
+            <div   v-show="content == 1"><TableBook/></div>
+          </div>
+          <div v-else>
+             <div   v-show="content == 1"><TableNotfound/></div>
+          </div>
 
-        <!-- <div  v-show="content == 2"><TableAudio/></div> -->
-        <div   v-show="content == 2"><TableNotfound/></div>
+        </div>
+        <div>
+          <div v-if="(store.books?.result?.ebooks)">
+            <div   v-show="content == 2"><TableAudio/></div>
+
+          </div>
+          <div v-else>
+            <div   v-show="content == 2"><TableNotfound/></div>
+
+          </div>
+
+        </div>
+
         
-        <!-- <pre style="background-color:white  ">{{ item  }}</pre> -->
       </div>
         
       </div>

@@ -6,7 +6,7 @@
                 <h2>Bu yerda kitoblaringiz saqlanadi</h2>
                 <p>Bizning do'konimizda kitoblarni tanlang va ularni istalgan qurilmada o'qing</p>
                 <NuxtLink to="">
-                    <button>Bosh Sahifa</button>
+                    <button @click="send">Bosh Sahifa</button>
                 </NuxtLink>
             </div>
         </div>
@@ -14,7 +14,10 @@
 </template>
 
 <script setup>
-
+const router = useRouter()
+const send=()=>{
+    router.push('/')
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container px-0" style="display:flex; justify-content:space-between">
-      <div class="main">
+      <div class="main row">
         <div style="padding: 22px">
           <div style="display: flex">
             <div class="aylana">
@@ -38,12 +38,6 @@
           </NuxtLink>
         </div>
       </div>
-      <!-- <div v-if="notification">
-        <UserProfileImg />
-      </div>
-      <div v-else>
-        <UserProfileSinglePage/>
-      </div> -->
     </div>
   </div>
 </template> 
@@ -65,7 +59,8 @@ const notification = ref(true)
 
 .main {
   background-color: #fafafa;
-  width: 358px;
+  // background-color: red;
+  // width: 358px;
   height: 392px;
   top: 232px;
   left: 121px;
