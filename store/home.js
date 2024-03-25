@@ -112,13 +112,7 @@ export const useTestTStore = defineStore("home", {
 
       const refreshToken = localStorage.getItem('refreshToken')
 
-     await $fetch(`${this.url}/refresh`, {
-        headers: {
-          Authorization: refreshToken
-
-        }
-      })
-      // refresh.get()
+     await $fetch(`${this.url}/refresh`)
       .then(res => {
         if(res?.success) {
           localStorage.setItem('jwtToken', res.result.token)

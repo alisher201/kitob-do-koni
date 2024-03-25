@@ -1,18 +1,22 @@
 import { createI18n } from "vue-i18n";
 import ru from "../locales/ru.json";
 import uz from "../locales/uz.json";
-let langData 
+
+
+
+export default defineNuxtPlugin(({ vueApp }) => {
+
+  let langData 
 if (process.client) {
   let storogeData = window.localStorage.getItem('language');
   if (storogeData) {
     langData = storogeData
+    console.log('if');
   } else {
     langData = 'uz'
+    console.log('else');
   }
 }
-
-
-export default defineNuxtPlugin(({ vueApp }) => {
   const i18n = createI18n({
     legacy: false,
     globalInjection: true,
