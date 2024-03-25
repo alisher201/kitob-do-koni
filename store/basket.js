@@ -30,7 +30,9 @@ export const useBasketStore = defineStore("basket", {
     //     }
     //   }
     async basketAdd(data) {
-      return await cart.create(data)
+      const response = await cart.create(data);
+      await this.basketGet();
+      return response;
     },
     
     async basketDelete(data) {
@@ -47,7 +49,9 @@ export const useBasketStore = defineStore("basket", {
         })
     },
     async addFavourite(data) {
-      return await likeAdd.create(data)
+      const response = await likeAdd.create(data);
+      await this.favourite();
+      return response;
     },
     async favourite(data) {
       return await getLike.get(data)
@@ -56,7 +60,9 @@ export const useBasketStore = defineStore("basket", {
         })
     },
     async favouriteDelete(id, type) {
-      return await likeDelete.likeDelete(id, type)
+      const response = await likeDelete.likeDelete(id, type);
+      await this.favourite();
+      return response;
     },
   }
 });
