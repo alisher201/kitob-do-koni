@@ -13,7 +13,6 @@
 <script setup>
 const store = useTestTStore();
 onMounted(() => {
-  store.language = localStorage.getItem('language')
   store.fechBooks().then((a) => {
   });
 
