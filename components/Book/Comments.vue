@@ -136,7 +136,7 @@
               </div>
 
               <div class="d-flex justify-content-between mt-4">
-                <p class="small">{{ items.created_at }}</p>
+                <p class="small">{{ extractCreatedAt(items.created_at) }}</p>
                 <img src="@/assets/contact/comments.png" alt="" />
               </div>
               <img src="@/assets/contact/Lines.png" alt="" class="w-100 mt-4" />
@@ -203,6 +203,12 @@ const sendCommit = () => {
     });
   }
 };
+
+function extractCreatedAt(createdAt) {
+  const dateParts = createdAt.split('T')[0];
+  return dateParts;
+}
+
 onMounted(() => {
   // store.create_commit({ rating: 5, commit: 'lorem' })
 });
