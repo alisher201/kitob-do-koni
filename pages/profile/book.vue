@@ -6,10 +6,10 @@
         <div >
         <!-- <pre>{{ itm.type }}</pre> -->
 
-        <h1 class="h1">Mening Kitoblarim</h1>
+        <h1 class="h1">{{ $t("home.profile.My books") }}</h1>
         <div class="main_div">
-          <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">Elektron kitob</div>
-          <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">Audio kitob</div>
+          <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">{{ $t("home.profile.Electronic book") }}</div>
+          <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">{{ $t("home.profile.Audio book") }}</div>
         </div>
         <div>
           <div v-if="(store.books?.result?.ebooks)">
@@ -87,7 +87,7 @@
     
   }
   .main_p {
-    width: 108px;
+    width: full;
     height: 35px;
     top: 292px;
     left: 509px;

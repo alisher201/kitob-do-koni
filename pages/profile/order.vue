@@ -3,11 +3,11 @@
       <div class="main  ">
         <div class="row">
           <div class="row  ">
-            <h1 class="h1">Buyurtmalar tarixi</h1>
+            <h1 class="h1">{{ $t("home.profile.Order history") }}</h1>
             <div class="main_div ">
-              <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">Muddatli to'lov</div>
-              <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">Yetkazib berilgan</div>
-              <div  class="main_p" :class="{'price' :content == 3}" @click="content = 3">Naqd to'lov</div>
+              <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">{{ $t("home.profile.Installment payment") }}</div>
+              <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">{{ $t("home.profile.Delivered") }}</div>
+              <div  class="main_p" :class="{'price' :content == 3}" @click="content = 3">{{ $t("home.profile.cash payment") }}</div>
             </div>
             <div v-show="content == 1"><Table/></div>
             <div v-show="content == 2"><TablePrice/></div>
@@ -63,7 +63,7 @@ onMounted(() => {
   
 }
 .main_p {
-  width: 138px;
+  width: full;
   height: 35px;
   top: 292px;
   left: 509px;

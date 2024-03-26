@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="wrapper">
-      <h1 class="wrapper_h1">Profile sozlamalar</h1>
+      <h1 class="wrapper_h1">{{ $t("home.profile.Profile settings") }}</h1>
       <div class="main"  :key="index">
         <div class="main_div">
-          <h2>Shaxsiy ma’lumotlar</h2>
+          <h2>{{ $t("home.profile.personal information") }}</h2>
           <div class="main_section">
             <img v-if="(!form.image)" src="../../assets/profile/doira.png" alt="" />
             <img v-else :src="'https://kytabshop.al-raqam.com/' + form.image" alt="" />
@@ -19,22 +19,22 @@
             <form :class="{'content' : content==1}" @click="content = 1"  class="form" >
                 <div class="d-flex">  
                     <div class="mt-1">
-                         <label for="email" class="form-label" >Ism Familiya:</label>
+                         <label for="email" class="form-label" >{{ $t("home.profile.first name last name") }}</label>
                          <input v-model="form.full_name" type="text" class="form-control form_input " id="full_name" placeholder="Enter name" name="full_name" >
       
                       </div>
                      <div style="margin:0px 0px 0px 20px" class="mt-1">
-                          <label for="email" class="form-label">Tug'ulgan sana </label>
+                          <label for="email" class="form-label">{{ $t("home.profile.Date of birth") }} </label>
                          <input v-model="form.birth_date" type="date" class="form-control form_input" id="date" placeholder="Enter date" name="birth_date">
                       </div>
                 </div>
                 <div class="d-flex">  
                     <div class="mt-1">
-                         <label for="text" class="form-label">Telefon raqam</label>
+                         <label for="text" class="form-label">{{ $t("home.profile.Phone number") }}</label>
                          <input v-model="form.phone" type="text" class="form-control form_input " id="email" placeholder="Telefon raqam" name="phone">
                       </div>
                      <div style="margin:0px 0px 0px 20px" class="mt-1">
-                          <label for="text" class="form-label">Jinsi</label>
+                          <label for="text" class="form-label">{{$t("home.profile.sex")}}</label>
                           <!-- <input v-model="form.gender" type="text" class="form-control form_input" id="email" placeholder="Jinsi" name="gender"> -->
                           <select v-model="form.gender" class="form-select form-control form_input" id="sel1" name="sellist1">
                             <option>male</option>
@@ -47,12 +47,12 @@
                     <input v-model="form.email" type="text" class="form-control" id="email" placeholder="email" name="email">
                 </div>
                 <div class="mt-1">
-                    <label for="text" class="form-label">Manzil</label>
+                    <label for="text" class="form-label">{{ $t("home.profile.Address") }}</label>
                     <input v-model="form.address" type="text" class="form-control" id="email" placeholder="Manzil" name="address">
                 </div>
                 <div v-show="content == 1" class="mt-3 button" >
-                    <button>Bekor qilish</button>
-                    <button type="button" @click="send" >O'zgartirishni saqlash</button>
+                    <button>{{ $t("home.profile.Cancellation") }}</button>
+                    <button type="button" @click="send" >{{ $t("home.profile.Save changes") }}</button>
                 </div>
             </form> 
            <!-- <pre>{{ store?.settings }}</pre> -->
@@ -61,27 +61,27 @@
       <div>
         <form class="form_password" action="">
             <div class="form_password_flex">
-                <h1>Parolni o'zgartirishni</h1>
+                <h1>{{ $t("home.profile.change password") }}</h1>
                  <img style="height:22px;width:22px;margin-right:20px"  src="../../assets/profile/Vector.png" alt="">
 
             </div>
             <div :class="{'template' : template==1}" @click="template = 1" class="d-flex" style="justify-content:space-around">  
                 <div class="mt-1">
-                    <label for="email" class="label">Joriy parol</label>
+                    <label for="email" class="label">{{ $t("home.profile.Current password") }}</label>
                     <input v-model="forms.old_password" type="text" class="form-control input " id="email" placeholder="Joriy parol" name="old_pasword">
                 </div>
                 <div style="margin:0px 0px 0px 0px" class="mt-1">
-                    <label for="email" class="label">Yangi parol </label>
+                    <label for="email" class="label">{{ $t("home.profile.New Password") }}</label>
                     <input v-model="forms.new_password" type="text" class="form-control input" id="email" placeholder="yangi parol" name="new_password">
                 </div>
                 <div class="mt-1" >
-                    <label for="email" class="label">Yangi parol</label>
+                    <label for="email" class="label">{{ $t("home.profile.New Password") }}</label>
                     <input v-model="forms.confirm_new_password" type="text" class="form-control input " id="email" placeholder="yangi parol" name="confirm_password">
                 </div>
             </div>
             <div v-show="template == 1" class="mt-3 button" style="margin:0px 25px 0px 0px" >
-                <button>Bekor qilish</button>
-                <button type="button" @click="Check">O'zgartirishni saqlash</button>
+                <button>{{ $t("home.profile.Cancellation") }}</button>
+                <button type="button" @click="Check">{{ $t("home.profile.Save changes") }}</button>
             </div>  
         </form>
       </div>
@@ -150,7 +150,7 @@ onMounted(()=> {
   margin: 40px 121px 171px 30px;
 }
 .wrapper_h1 {
-  width: 170px;
+  width: full;
   height: 44px;
   top: 250px;
   left: 509px;
@@ -173,9 +173,15 @@ onMounted(()=> {
   margin: 20px 30px 0px 30px;
   display: flex;
 }
+.main_div{
+  // background-color: red;
+  align-items: center;
+  justify-content: center;
+  
+}
 .main_div h2 {
-  margin: 18px 10px 20px 20px;
-  width: 161px;
+  margin: 18px 10px 20px 0px;
+  width: 100%;
   height: 40px;
   top: 315px;
   left: 529px;
@@ -191,9 +197,12 @@ onMounted(()=> {
 .main_image{
   display: flex;
   justify-content: center;
+  align-items: center;
+  // background-color: red;
+  margin-right: 10px;
 }
 .main_image label{
-  // margin-left: 40px;
+
   background-color: rgb(92, 92, 226);
   color:white;
   padding:3px;
@@ -289,7 +298,7 @@ onMounted(()=> {
     align-items: center;
 }
 .label{
-  width: 121px;
+  width: full;
   height: 40px;
   font-family: Manrope;
   font-size: 16px;

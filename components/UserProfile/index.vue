@@ -15,46 +15,25 @@
             </div>
           </div>
           <img src="@/assets/profile/chiziq.svg" alt="" />
-          
-          <!-- <div @click="router.push('/profile')"  class="main_list" :class="{ 'background-blue': $route.path == '/profile' }" >
-            <img class="rasm"  src="@/assets/profile/Frame.svg" alt="" />
-            <p  class="h2">Bildirishnoma</p>
-          </div>
-          <div  @click="router.push('/profile/order')"  class="main_list" >
-            <img class="rasm" src="@/assets/profile/qongiroq.svg" alt="" />
-            <p  href="" class="h2">Buyurtma tarixi</p>
-          </div>
-          <div  @click="router.push('/profile/book')"   class="main_list">
-            <img class="rasm" src="@/assets/profile/watch.svg" alt="" />
-            <p href="" class="h2">Mening Kitoblarim</p>
-          </div>
-          <div  @click="router.push('/profile/settings')"  class="main_list">
-            <img class="rasm" src="@/assets/profile/nastroyka.svg" alt="" />
-            <p href="" class="h2">Profil sozlamalar</p>
-          </div>
-          <div @click="router.push('/')" class="main_list">
-            <img class="rasm" src="@/assets/profile/tabler_logout.svg" alt="" />
-            <p to="" class="h2" style="color: red">chiqish</p>
-          </div> -->
           <div @click="router.push('/profile')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile' }">
             <img class="rasm" src="@/assets/profile/Frame.svg" alt="" />
-            <p class="h2">Bildirishnoma</p>
+            <p class="h2">{{$t("home.profile.Notification")}}</p>
           </div>
           <div @click="router.push('/profile/order')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/order' }">
             <img class="rasm" src="@/assets/profile/qongiroq.svg" alt="" />
-            <p class="h2">Buyurtma tarixi</p>
+            <p class="h2">{{ $t("home.profile.Order history") }}</p>
           </div>
           <div @click="router.push('/profile/book')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/book' }">
             <img class="rasm" src="@/assets/profile/watch.svg" alt="" />
-            <p class="h2">Mening Kitoblarim</p>
+            <p class="h2">{{ $t("home.profile.My books") }}</p>
           </div>
           <div @click="router.push('/profile/settings')" class="main_list" :class="{ 'router-link-active': $route.path === '/profile/settings' }">
             <img class="rasm" src="@/assets/profile/nastroyka.svg" alt="" />
-            <p class="h2">Profil sozlamalar</p>
+            <p class="h2">{{ $t("home.profile.Profile settings") }}</p>
           </div>
           <div @click="router.push('/') " class="main_list" :class="{ 'router-link-active': $route.path === '/' }">
             <img class="rasm" src="@/assets/profile/tabler_logout.svg" alt="" />
-            <p class="h2" style="color: red">chiqish</p>
+            <p class="h2" style="color: red">{{ $t("home.profile.Exit") }}</p>
           </div>
         </div>
       </div>
@@ -72,19 +51,13 @@ const router = useRouter()
 </script>
   <style lang="scss" scoped>
 
-// .router-link-active{
-//   background-color: #e22323;
-//   border-bottom: none; 
-//   text-decoration: none;
-// }
 .router-link-active {
   background-color: rgb(226, 231, 121);
 }
 
 .main {
   background-color: #fafafa;
-  // background-color: red;
-  // width: 358px;
+
   height: 392px;
   top: 232px;
   left: 121px;

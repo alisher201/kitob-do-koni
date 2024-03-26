@@ -431,9 +431,9 @@ console.log("epubUrl");
       <!-- </div> -->
     </Swiper>
     </div>
-    <pre>
+    <!-- <pre>
       {{ store.recent }} 
-    </pre>
+    </pre> -->
       
   </div>
 </template>

@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="div">
-            <h1 class="h1">Bildirishnoma</h1>
+            <h1 class="h1">{{$t("home.profile.Notification")}}</h1>
             <div class="div1">
                 <img src="@/assets/profile/Not_found.svg" alt="">
-                <h2>Yangi bildirishnoma yo’q</h2>
+                <h2>{{$t("home.profile.There are no new notifications")}}</h2>
             </div>
         </div>  
     </div>

@@ -3,7 +3,7 @@
       <div class="main  container">
         
       <div class=" row " v-if="(store?.notifications?.result)" >
-        <h1 class="h1">Bildirishnoma</h1>
+        <h1 class="h1">{{$t("home.profile.Notification")}}</h1>
         <div class="row ">
           <div class="main_list col " >
             <div class="img1 col-sm-6"  v-for="(item,index) in store?.notifications?.result" :key="index" @click="selectImg(item.id)">

@@ -100,6 +100,42 @@
     },
     "favorites": {
       "interested": "Вам может быть интересно"
+    },
+    "profile": {
+      "Notification":"Уведомление",
+      "Order history":"История заказов",
+      "My books":"Мои книги",
+      "Profile settings":"Настройки профиля",
+      "Exit":"Выход",
+      "Installment payment":"Рассрочка платежа",
+      "Delivered":"Доставленный",
+      "cash payment":"Наличный расчет",
+      "Act number":"Номер акта",
+      "Date of order":"Дата заказа",
+      "Total":"Общий",
+      "Paid":"Оплаченный",
+      "Residual":"Остальные",
+      "Status":"Положение дел",
+      "Order number":"Номер заказа",
+      "Cost":"Расходы",
+      "Your book is stored in the buyer":"Ваша книга хранится в покупателе",
+      "Choose books in our store and read them on any device":"Выбирайте книги в нашем магазине и читайте их на любом устройстве",
+      "Homepage":"Домашняя страница",
+      "personal information":"персональная информация",
+      "first name last name":"имя Фамилия",
+      "Date of birth":"Дата рождения",
+      "Phone number":"",
+      "sex":"секс",
+      "Address":"Адрес",
+      "Cancellation":"Отмена",
+      "Save changes":"Сохранить изменения",
+      "change password":"изменить пароль",
+      "Current password":"Текущий пароль",
+      "New Password":"Новый пароль",
+      "Electronic book":"Электронная книга",
+      "Audio book":"Аудиокнига",
+      "There are no new notifications":"Новых уведомлений нет"
+
     }
   },
   "footer": {

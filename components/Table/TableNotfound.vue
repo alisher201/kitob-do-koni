@@ -3,10 +3,10 @@
         <div class="main">
             <div class="main_list">
                 <img src="../../assets/profile/book.png" alt="">
-                <h2>Bu yerda kitoblaringiz saqlanadi</h2>
-                <p>Bizning do'konimizda kitoblarni tanlang va ularni istalgan qurilmada o'qing</p>
+                <h2>{{$t("home.profile.Your book is stored in the buyer")}}</h2>
+                <p>{{$t("home.profile.Choose books in our store and read them on any device")}}</p>
                 <NuxtLink to="">
-                    <button @click="send">Bosh Sahifa</button>
+                    <button @click="send">{{ $t("home.profile.Homepage") }}</button>
                 </NuxtLink>
             </div>
         </div>
@@ -57,7 +57,7 @@ h2{
     letter-spacing: 0em;
     text-align: left;
     color: #000000;
-    margin: 10px 30px 8px 65px;
+    margin: 10px 30px 25px 65px;
 }
 p{
     width: 342px;
@@ -73,7 +73,7 @@ p{
     color:#9196AD;
 }
 button{
-    width: 135px;
+    width: 195px;
     height: 35px;
     top: 658px;
     left: 827px;
@@ -81,7 +81,7 @@ button{
     background-color:#307CCE;
     color:white;
     border:none;
-    margin:20px 108px 0px 110px;
+    margin:20px 148px 0px 60px;
 
 }
 </style>
