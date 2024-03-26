@@ -1,12 +1,23 @@
 <template>
-    <ContactForm />
+    <div>
+        <HomeCarousel />
+        <HomePossibilities />
+        <HomeMarketFast :title="'Bozori chaqqon'" :bookImgs="store.books.special_offer" />
+        <HomeMarketFast :title="'Mashhurlar'" :bookImgs="store.books.salable" />
+        <HomeMarketFast :title="'Maxsus taklif'" :bookImgs="store.books.popular" />
+        <HomeMobileApp />
+        <!-- <ProductsBreadCrumbs />
+        <ProductsGrid /> -->
+    </div>
 </template>
 
 <script setup>
-definePageMeta({
-    title: 'Contact-Us'
-})
-useHead({
-    link: [{ rel: 'canonical', href: 'https://vue-ecom.vercel.app/contact' }],
+
+
+const store = useTestTStore();
+onMounted(() => {
+    store.fechBooks()
+
+
 });
 </script>

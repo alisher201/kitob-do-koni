@@ -11,10 +11,8 @@ if (process.client) {
   let storogeData = window.localStorage.getItem('language');
   if (storogeData) {
     langData = storogeData
-    console.log('if');
   } else {
     langData = 'uz'
-    console.log('else');
   }
 }
   const i18n = createI18n({

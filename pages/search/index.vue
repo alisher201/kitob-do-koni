@@ -1,9 +1,11 @@
 <template>
     <div>        
         <div class="container px-0">
+          <pre>
+          </pre>
             <div class="text-center my-5" >
                   <div class="main_product col-4">
-                    <div class=" product " v-for="(item,index) in store.serchResult?.result" :key="index">
+                    <div class=" product " v-for="(item,index) in store.productSearch" :key="index">
                    
                       <div class="product_list">
                           <img class="" :src="'https://kytabshop.al-raqam.com'+'/'+item.image" alt="" aria-placeholder="s">

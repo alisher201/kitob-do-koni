@@ -15,7 +15,7 @@ export const useTestTStore = defineStore("home", {
     searchValue: null,
     Searchhistory: null,
     bookSearchdata: null,
-    productSearch: null,
+    productSearch: [],
 
   }),
   actions: {
@@ -90,7 +90,16 @@ export const useTestTStore = defineStore("home", {
       return await $fetch(`${this.url}/book/search?name=${data}`)
         .then(res => {
           if (res.success) {
-            this.bookSearchdata = res
+
+            this.productSearch.push(...res.result.books)
+          }
+        })
+    },
+    async fetchProductSearch(data) {
+      return await $fetch(`${this.url}/product/search?name=${data}`)
+        .then(res => {
+          if (res.success) {
+            this.productSearch.push(...res.result) 
           }
         })
     },
