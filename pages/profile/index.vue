@@ -10,7 +10,6 @@
               <div>
                 <img :src="'https://beta.kytab.uz'+item.parent.image"  alt="">
                 <!-- <pre>{{ item.parent.image }}</pre> -->
-
               </div>  
                 <div >
                     <h2>{{item.parent.title}}</h2>
@@ -24,7 +23,6 @@
         <TableNotfound />
       </div>
     </div>
-
     </div>
   </template>
   <script setup>

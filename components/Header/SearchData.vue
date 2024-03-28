@@ -1,12 +1,14 @@
 <template>
   <div>
-    <!-- {{ store.productSearch.result }} -->
+
+
+
     <div class="searchData">
       <div v-if="store.searchValue">
-        <div v-for="(item, idx) in store.productSearch?.result" :key="idx"
+        <div v-for="(item, idx) in store.productSearch" :key="idx"
           class="my-2 bookList d-flex justify-content-between align-items-center">
           <div> <img src="../../assets/contact/searchIcon.png"/><span class="popularBookName ms-2"
-              @click="popularBook(item.name_uz)">{{ $i18n.locale == 'uz'? item.name_uz : item.name_ru }}</span> </div>
+              @click="popularBook(item.name_uz)">{{ $i18n.locale == 'uz'? item.name_uz : item.name_ru }}  </span> </div>
 
         </div>
       </div>

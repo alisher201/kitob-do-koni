@@ -5,29 +5,30 @@
       
         <div >
         <!-- <pre>{{ itm.type }}</pre> -->
+        <!-- <pre>{{ store.books?.result }}</pre> -->
 
         <h1 class="h1">{{ $t("home.profile.My books") }}</h1>
         <div class="main_div">
           <div  class="main_p" :class="{'price' :content == 1}" @click="content = 1">{{ $t("home.profile.Electronic book") }}</div>
           <div  class="main_p" :class="{'price' :content == 2}" @click="content = 2">{{ $t("home.profile.Audio book") }}</div>
         </div>
+
         <div>
           <div v-if="(store.books?.result?.ebooks)">
             <div   v-show="content == 1"><TableBook/></div>
           </div>
           <div v-else>
-             <div   v-show="content == 1"><TableNotfound/></div>
+               <div   v-show="content == 1"><TableNotfound/></div>
           </div>
 
         </div>
         <div>
-          <div v-if="(store.books?.result?.ebooks)">
+          <div v-if="(store.books?.result?.audios)">
             <div   v-show="content == 2"><TableAudio/></div>
 
           </div>
           <div v-else>
             <div   v-show="content == 2"><TableNotfound/></div>
-
           </div>
 
         </div>
@@ -54,11 +55,10 @@
   <style lang="scss" scoped>
   .main {
     width: 920px;
-    height: 500px;
+    height: 226px;
     top: 232px;
     left: 30px;
     background-color: #fafafa;
-    // background-color: blue;  
     margin: 40px 121px 412px 30px;
   }
   .h1 {

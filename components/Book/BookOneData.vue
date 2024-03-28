@@ -95,7 +95,13 @@ const ordrItem = () => {
     console.log(route.params.id);
     router.push("/OrderItem");
   } else {
-    alert("uxlading");
+    alert("Sizning profilingizda ma'lumot saqaldi");
+    let booktype = {
+      book_type_id : bookType.value,
+    }
+    store.AddBook(booktype)
+    console.log(booktype,'sa');
+
   }
 };
 const fetchBookOne = () => {
@@ -183,6 +189,21 @@ const audio_fragment = () =>{
   router.push('/audio')
 }
 console.log("epubUrl");
+
+// const fileupload =(e) =>{
+//   let file = e.target.files[0]
+//   let formdata = new FormData()
+//   formdata.append('image',file)
+//   formdata.append('type','product')
+//   formdata.append('height','1000')
+//   formdata.append('width','1000')
+//   formdata.append('x','0')
+//   formdata.append('y','0')
+//   $fetch('https://kytabshop.al-raqam.com/file/create',{
+//     method: 'POST',
+//     body:formdata
+//   })
+// }
 </script>
 
 <template>
@@ -235,6 +256,7 @@ console.log("epubUrl");
             />
           </div>
         </div>
+
         <div class="d-flex align-items-center">
           <p class="d-flex align-items-center">
             <img src="../../assets/contact/Star.png" alt="" class="" />
@@ -258,7 +280,6 @@ console.log("epubUrl");
             >
           </div>
         </div>
-
         <div class="row">
           <div class="col-6">
             <!-- booktype -->
@@ -272,6 +293,7 @@ console.log("epubUrl");
                 <img src="@/assets/contact/book-open.png" alt="" /><small class="ms-2">{{ item.type }}</small>
               </button>
             </div>
+            
             <div class="mt-2 row">
               <div class="col-6">
                 <button @click="fragment " :disabled="reading !==1 " :style="{   cursor: reading !== 1 ? 'no-drop' : 'auto', }" class="btn border w-100 fragment">
@@ -308,6 +330,8 @@ console.log("epubUrl");
         </div>
       </div>
     </div>
+    <!-- <pre>{{ store.book }}</pre> -->
+
     <div class="bookData">
       <div class="aboutMenu d-flex">
         <div
@@ -375,6 +399,7 @@ console.log("epubUrl");
           </button>
         </div>
       </div>
+      <!-- <input type="file" @change="fileupload"> -->
         
       <Swiper
         :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
@@ -385,14 +410,15 @@ console.log("epubUrl");
         @swiper="onSwiper"
       >
       <!-- <div class="bookGrid mt-3"> -->
-        <SwiperSlide
+        <div v-if="store.recent && store.recent.product">
+          <SwiperSlide
           class="p-0 dataItem"
           v-for="(item, index) in store.recent"
           :key="index"
         >
           <div class="bookDataa">
-            <img v-if="item.type == 'book'" :src="'https://beta.kytab.uz'+item.product.image" alt="" class="categoyImg" />
-            <img v-else :src="'https://kytabshop.al-raqam.com'+item.product.image" alt="" class="categoyImg" />
+            <!-- <img v-if="item.type == 'book'" :src="'https://beta.kytab.uz'+item.product.image" alt="" class="categoyImg" />
+            <img v-else :src="'https://kytabshop.al-raqam.com'+item.product.image" alt="" class="categoyImg" /> -->
             
             <button class="btnBestseller">Bestseller</button>
             <button class="newBook">Yangi</button>
@@ -410,8 +436,11 @@ console.log("epubUrl");
             <img src="../../assets/contact/eBook.png" alt="" class="ebook" />
           </div>
           <div class="ps-2">
-            <small class="title">{{ item.product.name }}</small>
-            <small class="title">{{ item.product.name_uz}}</small>
+            <small class="title">{{ item.product?.name}}</small>
+            <pre>
+            {{ item.product}}
+
+            </pre>
 
           </div>
           <div class="ps-2">
@@ -428,6 +457,8 @@ console.log("epubUrl");
           <small class="stats ms-2">5,0</small>
           <span class="starsNumbers">(32)</span>
         </SwiperSlide>
+        </div>
+     
       <!-- </div> -->
     </Swiper>
     </div>

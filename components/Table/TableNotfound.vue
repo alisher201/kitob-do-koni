@@ -1,42 +1,47 @@
 <template>
-    <div>
-        <div class="main">
-            <div class="main_list">
+  <div>
+    <div class="main">
+      <div class="wrapper">
+      </div>
+      <div class="main_list">
                 <img src="../../assets/profile/book.png" alt="">
                 <h2>{{$t("home.profile.Your book is stored in the buyer")}}</h2>
                 <p>{{$t("home.profile.Choose books in our store and read them on any device")}}</p>
                 <NuxtLink to="">
                     <button @click="send">{{ $t("home.profile.Homepage") }}</button>
                 </NuxtLink>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>
+const store = ProfileHistory();
+const urlimg = useRuntimeConfig().public.bookUrl;
 const router = useRouter()
-const send=()=>{
-    router.push('/')
+const aludioLink = (item) => {
+  let audio = JSON.stringify(item)
+  localStorage.setItem('audioData', audio)
+  router.push('/audio')
 }
+
+const profile = () => {
+  store.Book();
+};
+
+onMounted(() => {
+  profile();
+});
 </script>
 
 <style lang="scss" scoped>
-.main{
-    width: 840px;
-    height: 238px;
-    top: 232px;
-    left: 479px;
-    border-radius: 10px;
-    background-color: #FAFAFA;
-}
-.main_list{
-    width: 342px;
-    height: 351px;
-    top: 342px;
-    left: 728px;
-    border-radius: 5px;
-    margin:0px 249px 77px 249px;
 
+.wrapper {
+    display: flex;
+    gap: 20px;
+}
+.main_list {
+  border-radius: 5px;
 }
 img{
     width: 200px;
@@ -72,16 +77,15 @@ p{
     text-align: center;
     color:#9196AD;
 }
-button{
-    width: 195px;
-    height: 35px;
-    top: 658px;
-    left: 827px;
-    border-radius: 5px;
-    background-color:#307CCE;
-    color:white;
-    border:none;
-    margin:20px 148px 0px 60px;
-
+button {
+  width: 195px;
+  height: 35px;
+  top: 658px;
+  left: 827px;
+  border-radius: 5px;
+  background-color: #307cce;
+  color: white;
+  border: none;
+  margin: 20px 148px 0px 60px;
 }
 </style>

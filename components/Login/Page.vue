@@ -29,7 +29,6 @@
 
             <input
               v-model="telNumber"
-              type="number"
               class="form-control"
               v-maska data-maska="############"
             />
@@ -50,6 +49,8 @@
             <span v-if="passwordError" style="color: red">{{
               passwordError.message
             }}</span>
+
+            <span v-if="error" style="color: red">{{ error }}</span>
 
             <div class="li">
               <NuxtLink to="/password" href="">Parolni unutdingizmi?</NuxtLink>
@@ -74,27 +75,37 @@ const router = useRouter();
 const userlogin = ref({
   phone: null,
   password: null,
-  // type: "client",
 });
 
 // Validatsiya
 
-const tel = ref(null);
 const telNumber = ref(null);
 const errorTel = ref(null);
 const password = ref(null);
 const passwordError = ref(null);
 
-watch(telNumber, (newValue) => {
-  errorTel.value = !isEmpty(newValue, "Telifon nomeri").item
-    ? isEmpty(newValue, "Telifon nomeri")
-    : validateLength(newValue, 12, 12, "telfon nomeri");
-});
+const tel = ref(telNumber.value);
+
+const error = ref(null);
+const maskval = (data) => {
+  let stringData = String(data)
+  return stringData.substring(1, 20).replace(/\s/g, "");
+};
+watch(
+  telNumber,
+  (newValue) => {
+    
+
+    errorTel.value = !isEmpty(maskval(newValue), "Telifon nomeri").item
+      ? isEmpty(maskval(newValue), "Telifon nomeri")
+      : validateLength(maskval(newValue), 12, 12, "telfon nomeri");
+  },
+  { deep: true }
+);
 
 watch(password, (newValue) => {
   passwordError.value = passwordValidator(newValue);
 });
-
 
 const content = ref(null);
 onMounted(() => {
@@ -104,9 +115,14 @@ onMounted(() => {
 const senDataUser = () => {
   // Validatsiya
   // telefon
-  errorTel.value = validateLength(telNumber.value, 12, 12, "telfon nomeri");
+  errorTel.value = validateLength(
+    maskval(telNumber.value),
+    12,
+    12,
+    "telfon nomeri"
+  );
   // password
-  // passwordError.value = passwordValidator(password);
+  passwordError.value = passwordValidator(password.value);
   let array = [errorTel.value, passwordError.value];
   let validtaionDAta = validation(array);
   console.log(validtaionDAta);
@@ -121,6 +137,7 @@ const senDataUser = () => {
     router.push('/')
   }
 };
+
 </script>
   
   <style lang="scss" scoped>
@@ -254,12 +271,6 @@ button {
   font-size: 14px;
   font-weight: 500;
   line-height: 19px;
-  letter-spacing: 0.02em;
-  text-align: center;
-
-  font-family: TT Commons;
-  font-size: 14px;
-  line-height: 16px;
   letter-spacing: 0.02em;
   text-align: center;
   // color: #35363D

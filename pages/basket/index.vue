@@ -43,7 +43,7 @@
                 <span class="ms-2">{{ $t("home.basket.select") }}</span>
               </div>
               <div>
-                <p class="remove">{{ $t("home.basket.delete") }}</p>
+                <p @click="deleteAll" class="remove">{{ $t("home.basket.delete") }}</p>
               </div>
             </div>
             
@@ -77,7 +77,6 @@
                       <p class="bookPrice">{{ item.product.price }}</p>
                       <div class="basket">
                         <button
-                         
                           class="btn border px-3"
                           v-for="(itm, index) in item.product.types"
                           :key="index"
@@ -96,7 +95,16 @@
                   <div class="d-flex flex-column justify-content-between">
                     <div>
                       <div class="d-flex">
-                        <div class="basketLike" @click="addFavourite(idx)">
+                        <div
+                          class="basketLike"
+                          @click="
+                            addFavourite(
+                              idx,
+                              item.product.id,
+                              item.product.type,
+                            )
+                          "
+                        >
                           <svg
                             width="22"
                             height="22"
@@ -138,7 +146,7 @@
                       <button 
                         class="btn"
                         @click="productRemove(idx)"
-                        :disabled="item.product.count == 1  "
+                        :disabled="item.product.count == 1  || types == 'audio' && item.product.type == 'book' || types == 'ebook' && item.product.type == 'book'"
 
                       >
                         <img src="../../assets/contact/minus.png" alt="" />
@@ -230,8 +238,16 @@ const send = () => {
   console.log(array);
 };
 
-const addFavourite = (idx) => {
+const addFavourite = (idx, id, type) => {
   store.basket[idx].favorite = !store.basket[idx].favorite;
+  if (store.basket[idx].favorite == true) {
+    store.addFavourite({
+      product_id: id,
+      type: type,
+    });
+  } else {
+    store.favouriteDelete(id, type)
+  }
 };
 
 const selectAll = () => {
@@ -308,11 +324,12 @@ const productRemove = (idx) => {
 };
 
 const deleteBasket = (id) => {
-  console.log(id);
   store.basketDelete(id).then(() => {
     refresh();
   });
 };
+
+// functions
 
 watch(
   store,
@@ -377,6 +394,7 @@ const bookTypeadd = (id,type) => {
   font-size: 15px;
   color: #f83333;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .basketProduts {

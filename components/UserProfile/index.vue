@@ -52,7 +52,7 @@ const router = useRouter()
   <style lang="scss" scoped>
 
 .router-link-active {
-  background-color: rgb(226, 231, 121);
+  background-color: #F1F1F1
 }
 
 .main {

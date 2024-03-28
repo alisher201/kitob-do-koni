@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { book, rating,popular_recent } from '@/utils/payment'
+import { book, rating,popular_recent,profile_my_books_create } from '@/utils/payment'
 
 export const usePayment = defineStore('payment', {
     stor: () => ({
@@ -24,7 +24,10 @@ export const usePayment = defineStore('payment', {
                 .then(res => {
                     this.recent = res.result
                 })
-        }
+        },
+        async AddBook(data){
+            return await profile_my_books_create.create(data)
+          }
     }
 
 })

@@ -73,11 +73,14 @@
                 <span v-if="items && items.comment && items.comment.length <= more">{{ items.comment }}</span>
                 <span v-else>
                   <span v-if="items && items.comment && typeof items.comment == 'string'">
-                    {{ items?.comment.substring(0, more) }}
+                    {{ items?.comment.substring(0, more) }}...
                   </span>
 
-                  <small @click="more = 1000000" style="color: #307CCE; font-weight: 600; cursor: pointer;">Ko'proq
-                    o'qish</small>
+                  <small @click="more = 1000000" style="color: #307CCE; padding-left: 5px; font-weight: 600; cursor: pointer;">Ko'proq
+                    o'qish...</small>
+                  <small @click="less = 130" style="color: #307CCE; padding-left: 5px; font-weight: 600; cursor: pointer;">Kamroq
+                    o'qish...</small>
+                    
                 </span>
               </div>
               <div class="d-flex justify-content-between mt-4">
@@ -128,6 +131,7 @@ const commitData = ref({
 })
 
 let more = ref(130)
+let less = ref(1000000)
 const clearData = () => {
   commitData.value.rating = null
   commitData.value.comment = null

@@ -39,10 +39,6 @@ const readingLInk = (item) => {
 
 onMounted(() => {
     store.Book()
-
-
-
-
 })
 
 </script>
@@ -81,7 +77,7 @@ onMounted(() => {
 }
 img{
     width: 11.375rem;
-    height: 11.375rem;
+    height: 13.375rem;
 }
 
 .main_list {

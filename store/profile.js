@@ -51,6 +51,7 @@ export const ProfileHistory = defineStore("test", {
       .then((res)=>{
         this.books = res
       })
-    }
+    },
+   
   }
 })
