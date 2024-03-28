@@ -146,6 +146,21 @@ const basketAdd = (id, type) => {
     });
 };
 
+const addFavourite = (id, bookId) => {
+
+  store.book.favorite = !store.book.favorite;
+  
+  if (store.book.favorite) {
+    storeBasket.addFavourite({
+      product_id: id,
+      type:  bookId.length ? "book" : "product",
+    });
+  } else {
+    const type =  bookId.length ? "book" : "product" ;
+    storeBasket.favouriteDelete(id, type);
+  }
+};
+
 onMounted(() => {
   refresh().then(() => {
     bookTypeadd(
@@ -246,6 +261,8 @@ console.log("epubUrl");
               src="../../assets/contact/oneBookLIke.png"
               alt=""
               class="me-2"
+              style="cursor: pointer"
+              @click="addFavourite(store.book.id, store.book.type)"
             />
 
             <!-- copy img -->

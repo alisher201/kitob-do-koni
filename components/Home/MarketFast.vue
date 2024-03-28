@@ -41,8 +41,11 @@
         <SwiperSlide v-for="(item, idx) in props.bookImgs" :key="idx">
           <div @click="$router.push(`/book/${item.id}`)" class="bookData">
             <img :src="urlimg + '/' + item?.image" alt="" class="categoyImg" />
-            <button class="btnBestseller">Bestseller</button>
-            <button class="newBook">Yangi</button>
+            <!-- <button class="btnBestseller">Bestseller</button>
+            <button class="newBook">Yangi</button> -->
+            <button :class="item.is_bestseller == 1 ? 'btnBestseller' : 'newBook'">
+                 {{ item.is_bestseller == 1 ? 'Bestseller' : 'Yangi' }}
+            </button>
             <div
               class="likeBox"
               @click="addFavourite($event, idx, item.id, item.type.book_id)"

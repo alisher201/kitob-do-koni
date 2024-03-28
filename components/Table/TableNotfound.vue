@@ -43,6 +43,11 @@ onMounted(() => {
 .main_list {
   border-radius: 5px;
 }
+.main{
+  margin-left: 250px;
+  // margin-top:90px;
+
+}
 img{
     width: 200px;
     height: 200px;

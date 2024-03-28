@@ -173,9 +173,9 @@
             <div class="bookData">
               
               <img :src="url + '/' + item?.image" class="categoyImg" />
-              <button class="btnBestseller">Bestseller</button>
-              
-              <button class="newBook">Yangi</button>
+              <button :class="item.is_bestseller == 1 ? 'btnBestseller' : 'newBook'">
+                 {{ item.is_bestseller == 1 ? 'Bestseller' : 'Yangi' }}
+              </button>
               <img
                 src="../../assets/contact/booklike.png"
                 alt=""
@@ -186,6 +186,7 @@
                 src="../../assets/contact/karzinka.png"
                 alt=""
                 class="karzinka"
+                @click="basketAdd($event, item.id, item.type.length)"
               />
               <div class="wrapper-icons">
                 <img
@@ -272,6 +273,7 @@ import "@/node_modules/multi-range-slider-vue/MultiRangeSliderBlack.css";
 import "@/node_modules/multi-range-slider-vue/MultiRangeSliderBarOnly.css";
 import { useCategory } from "@/store/category";
 const store = useCategory();
+const storeBasket = useBasketStore()
 const url = useRuntimeConfig().public.bookUrl;
 let lang_book = ref("all");
 let type_book = ref("all");
@@ -284,6 +286,23 @@ const password = ref(null);
 const passwordError = ref(null);  
 const confirmPassword = ref(null);
 const confirmError = ref(null);
+
+
+const basketAdd = (e, id, type) => {
+  e.stopPropagation();
+  storeBasket
+    .basketAdd({ product_id: id, type: type ? "book" : "product" })
+    .then(() => {
+      notify();
+    });
+};
+
+const notify = () => {
+  useNuxtApp().$toast.success("Savatchaga qo'shildi", {
+    autoClose: 5000,
+    dangerouslyHTMLString: true,
+  });
+};
 
 watch(emailValue, (newVAlue) => {
   emailError.value = !isEmpty(newVAlue, "email").item

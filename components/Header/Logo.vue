@@ -1,22 +1,39 @@
 <template>
   <div>
-
-    <div style="position: absolute; background: #31313159; width: 100%; height: 130vh; z-index: 4; "
-      :style="{ display: inputFocus ? 'block' : 'none' }" @click="focusNone">
-    </div>
+    <div
+      style="
+        position: absolute;
+        background: #31313159;
+        width: 100%;
+        height: 130vh;
+        z-index: 4;
+      "
+      :style="{ display: inputFocus ? 'block' : 'none' }"
+      @click="focusNone"
+    ></div>
     <div class="containerLogo d-flex align-items-center">
-      <div class="container d-flex align-items-center justify-content-between px-0">
+      <div
+        class="container d-flex align-items-center justify-content-between px-0"
+      >
         <span class="py-0 pl-5">
           <img src="~/assets/kytabLogo.png" alt="site-logo" title="site-logo" />
         </span>
 
-        <button class="btn btnCategory ms-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-          aria-expanded="false" aria-controls="collapseExample">
+        <button
+          class="btn btnCategory ms-3"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseExample"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >
           <img src="~/assets/contact/category.png" alt="" /> Katalog
         </button>
-        <div style="position: relative; z-index: 4;">
+        <!-- {{ inputFocus }}
+        {{ searchList }} -->
+        <div style="position: relative; z-index: 4">
           <div class="input-group" style="width: 479px">
-            <!-- <input
+            <input
               type="text"
               @change="result"
               v-model="searchbooks"
@@ -24,19 +41,21 @@
               style="height: 44px"
               placeholder="kitob izlash..."
               @focus="BookSearch"
-              @blur="inputBlur"
-            /> -->
+              @keydown.enter="searchProduct"
+            />
 
-
-            <input type="text" @change="result" v-model="searchbooks" class="form-control" style="height: 44px"
-              placeholder="kitob izlash..." @focus="BookSearch" @keydown.enter="searchProduct" />
-
-
-            <span class="input-group-text d-flex justify-content-center align-items-center"
-              style="width: 68px; height: 44px" @click="searchProduct"><img src="~/assets/contact/bx_search-alt-2.png"
-                alt="" /></span>
+            <span
+              class="input-group-text d-flex justify-content-center align-items-center"
+              style="width: 68px; height: 44px"
+              @click="searchProduct"
+              ><img src="~/assets/contact/bx_search-alt-2.png" alt=""
+            /></span>
           </div>
-          <div class="mt-2" style="position: absolute; z-index: 999; width: 100%;" v-if="inputFocus && searchList">
+          <div
+            class="mt-2"
+            style="position: absolute; z-index: 999; width: 100%"
+            v-if="inputFocus && searchList"
+          >
             <HeaderSearchData @searchEmit="selectData" />
           </div>
         </div>
@@ -55,6 +74,12 @@
           </svg>
           <span class="ms-1 forFont">{{ $t("header.basket") }}</span>
         </div>
+        <div  style="background-color:red; border-radius:  50%;padding: 3px; width:40px;display: flex;justify-content: center;">
+          <p style="color:white">
+            {{ basketLength }}
+
+          </p>
+        </div>
         <div class="dataCursor" @click="router.push('/favourite')">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"
             id="dataCursor">
@@ -63,6 +88,11 @@
               stroke="#35363D" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
           <span class="ms-1 forFont">{{ $t("header.favorites") }}</span>
+        </div>
+        <div  style="background-color:red; border-radius:  50%;padding: 3px; width:40px;display: flex;justify-content: center;">
+          <p style="color:white">
+            {{ likeLength }}
+          </p>
         </div>
         <div class="dataCursor" @click="profile">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"
@@ -90,36 +120,33 @@ const searchbooks = ref(null);
 const watchedValue = ref();
 let inputFocus = ref(false);
 const store = useTestTStore();
-let searchList = ref(true)
-
-
+let searchList = ref(true);
+const basketStore = useBasketStore();
+const basketLength = ref(0)
+const likeLength = ref(0)
 
 const BookSearch = () => {
-  document.body.style.overflow = 'hidden'
-  inputFocus.value = true
-  store.searchValue = null
-  store.searchValue = searchbooks.value
-}
-
+  document.body.style.overflow = "hidden";
+  inputFocus.value = true;
+  store.searchValue = null;
+  store.searchValue = searchbooks.value;
+};
 
 const selectData = (data) => {
   // store.serchResult = null
-  searchbooks.value = data
-  store.searchValue = null
+  searchbooks.value = data;
+  store.searchValue = null;
 
-  searchProduct()
-
-
-}
+  searchProduct();
+};
 const profile = () => {
-  let get = localStorage.getItem("type")
-  if (get == "guest") {
-    router.push('/login')
+  let get = localStorage.getItem("type");
+  if (get == "client") {
+    router.push("/profile");
+  } else {
+    router.push("/login");
   }
-  else {
-    router.push('/profile')
-  }
-}
+};
 
 watch(searchbooks, (newVal) => {
 
@@ -141,14 +168,11 @@ const sendRequest = () => {
         .fetchProductSearch(searchbooks.value).then(() => {
           if (store.productSearch.length == 0) {
         // searchList.value = false
-        searchList.value = false
-        store.searchValue = searchbooks.value
-
-      }
-      else {
-        store.searchValue = searchbooks.value
-        searchList.value = true
-
+        searchList.value = false;
+        store.searchValue = searchbooks.value;
+      } else {
+        store.searchValue = searchbooks.value;
+        searchList.value = true;
 
         if (!searchbooks.value) {
           store.productSearch = [];
@@ -194,11 +218,34 @@ const focusNone = () => {
 
 onMounted(() => {
   const jwtToken = localStorage.getItem('jwtToken')
-  if (!jwtToken) {
+  if(!jwtToken) {
     store.uuIdPost({
       uuid: String(new Date().getTime()),
-      model: navigator.userAgent
-    })
+      model: navigator.userAgent,
+    });
+  }
+  basketStore.basketGet().then(() => {
+    if (basketStore.basket) {
+      basketLength.value = basketStore.basket.length;
+    }
+  });
+  
+  basketStore.favourite().then(() => {
+    if (basketStore.like) {
+      likeLength.value = basketStore.like.length;
+    }
+  });
+});
+
+watch(() => basketStore.basket, (newBasket, oldBasket) => {
+  if (newBasket) {
+    basketLength.value = newBasket.length;
+  }
+});
+
+watch(() => basketStore.like, (newLike, oldLike) => {
+  if (newLike) {
+    likeLength.value = newLike.length;
   }
 });
 </script>

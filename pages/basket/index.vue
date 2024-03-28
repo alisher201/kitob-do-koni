@@ -290,7 +290,7 @@ const calulatorProduct = (arry) => {
 const refresh = () => {
   store.basketGet().then(() => {
     basketLength.value = store.basket.length;
-    basketLength.value == 0 ? (empty.value = 1) : (empty.value = 2);
+    basketLength.value === 0 ? (empty.value = 1) : (empty.value = 2);
     store.basket.forEach((item, idx) => {
       item.product.is_check = true;
       item.product.count = 1;
