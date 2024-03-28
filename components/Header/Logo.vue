@@ -258,20 +258,28 @@ onMounted(() => {
     });
   }
   basketStore.basketGet().then(() => {
-    basketLength.value = basketStore.basket.length;
+    if (basketStore.basket) {
+      basketLength.value = basketStore.basket.length;
+    }
   });
   
   basketStore.favourite().then(() => {
-    likeLength.value = basketStore.like.length;
+    if (basketStore.like) {
+      likeLength.value = basketStore.like.length;
+    }
   });
 });
 
 watch(() => basketStore.basket, (newBasket, oldBasket) => {
-  basketLength.value = newBasket.length;
+  if (newBasket) {
+    basketLength.value = newBasket.length;
+  }
 });
 
-watch(() => basketStore.like, (newLike, oldBasket) => {
-  likeLength.value = newLike.length;
+watch(() => basketStore.like, (newLike, oldLike) => {
+  if (newLike) {
+    likeLength.value = newLike.length;
+  }
 });
 </script>
 
