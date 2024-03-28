@@ -12,7 +12,7 @@
         }}
       </small>
     </div>
-
+    
     <div class="row mx-0 mt-3">
       <div class="col-4 sideBar p-4">
         <h6><strong>Katalog</strong></h6>
@@ -36,7 +36,6 @@
 
           {{ $i18n.locale == "uz" ? item.name_oz : item.name_ru }}
         </p>
-
         <!-- category all items -->
         <p
           v-if="alld == 5"
@@ -112,7 +111,6 @@
           @input="update_oBarValues"
         />
 
-        <div></div>
 
         <!-- kitob tili bo'ycha sorov yuborish -->
         <hr class="my-4" />

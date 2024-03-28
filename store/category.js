@@ -55,16 +55,24 @@ export const useCategory = defineStore("category", {
       let request = null
 
       if (type == 'all' && lang == 'all') {
-        request = `${this.url}/category/books/${id}?price_from=${price_from}&price_to=${price_to}`
+        // request = `${this.url}/category/books/${id}?price_from=${price_from}&price_to=${price_to}`
+        request = `${this.url}/category/books/${id}`
+
       }
       else if (type == 'all') {
-        request = `${this.url}/category/books/${id}?lang=${lang}&price_from=${price_from}&price_to=${price_to}`
+        // request = `${this.url}/category/books/${id}?lang=${lang}&price_from=${price_from}&price_to=${price_to}`
+        request = `${this.url}/category/books/${id}`
+
       }
       else if(lang == 'all'){
-        request = `${this.url}/category/books/${id}?type=${type}&price_from=${price_from}&price_to=${price_to}`
+        // request = `${this.url}/category/books/${id}?type=${type}&price_from=${price_from}&price_to=${price_to}`
+        request = `${this.url}/category/books/${id}`
+
       }
       else {
-        request = `${this.url}/category/books/${id}?type=${type}&lang=${lang}&price_from=${price_from}&price_to=${price_to}`
+        // request = `${this.url}/category/books/${id}?type=${type}&lang=${lang}&price_from=${price_from}&price_to=${price_to}`
+        request = `${this.url}/category/books/${id}`
+
 
       }
 

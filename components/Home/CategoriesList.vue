@@ -2,11 +2,13 @@
   <div class="container px-0">
     <div class="row py-4">
         <div class="col-3 mb-4" v-for="(categoryData, idx) in store.category" :key="idx">
+        
             <strong>{{ categoryData.label }}</strong>
             <p class="categorya" v-for="(items, index) in categoryData.children" :key="index" @click="categoryGet(items.parent_id, items.id)">
-           <small> {{ items.label}}</small>
+             <small> {{ items.label}}</small>
            </p>
         </div>
+    
     </div>
   </div>
 </template>

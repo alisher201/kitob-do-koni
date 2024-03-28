@@ -29,6 +29,7 @@
         >
           <img src="~/assets/contact/category.png" alt="" /> Katalog
         </button>
+        
         <!-- {{ inputFocus }}
         {{ searchList }} -->
         <div style="position: relative; z-index: 4">
@@ -74,8 +75,8 @@
           </svg>
           <span class="ms-1 forFont">{{ $t("header.basket") }}</span>
         </div>
-        <div  style="background-color:red; border-radius:  50%;padding: 3px; width:40px;display: flex;justify-content: center;">
-          <p style="color:white">
+        <div  style="background-color:red; border-radius:  50%;padding: 5px;  width: 25px; height: 25px; display: flex; justify-content: center; align-items: center;">
+          <p style="color:white; font-size: 14px;">
             {{ basketLength }}
 
           </p>
@@ -89,8 +90,8 @@
           </svg>
           <span class="ms-1 forFont">{{ $t("header.favorites") }}</span>
         </div>
-        <div  style="background-color:red; border-radius:  50%;padding: 3px; width:40px;display: flex;justify-content: center;">
-          <p style="color:white">
+        <div  style="background-color:red; border-radius:  50%; padding: 5px; width: 25px; height: 25px; display: flex; justify-content: center; align-items: center;">
+          <p style="color:white; font-size: 14px;">
             {{ likeLength }}
           </p>
         </div>
