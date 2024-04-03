@@ -303,6 +303,11 @@ const refresh = () => {
     });
   });
 };
+const deleteAll = () => {
+  store.removeCarts().then(() => {
+    refresh()
+  })
+};
 
 const productAdd = (idx) => {
 
