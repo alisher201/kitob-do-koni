@@ -17,14 +17,16 @@
 
 <script setup>
 const store = ProfileHistory();
-const urlimg = useRuntimeConfig().public.bookUrl;
+// const urlimg = useRuntimeConfig().public.bookUrl;
 const router = useRouter()
-const aludioLink = (item) => {
-  let audio = JSON.stringify(item)
-  localStorage.setItem('audioData', audio)
-  router.push('/audio')
+// const aludioLink = (item) => {
+//   let audio = JSON.stringify(item)
+//   localStorage.setItem('audioData', audio)
+//   router.push('/audio')
+// }
+const send = ()=>{
+  router.push('/')
 }
-
 const profile = () => {
   store.Book();
 };

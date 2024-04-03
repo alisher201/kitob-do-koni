@@ -216,8 +216,9 @@
           </div>
         </div>
         <div v-else class="d-flex justify-content-center align-items-center">
-          <h1 style="color: red">
-            {{ store.errorCategory }}
+          <h1>
+            <!-- {{ store.errorCategory }} -->
+            Malumot topilmadi
           </h1>
         </div>
       </div>

@@ -44,7 +44,7 @@ export const useCategory = defineStore("category", {
             this.errorCategory = error.response.status
           }
           else {
-            this.errorCategory = 'ABDULLOHNI XATOSI  :))))'
+            this.errorCategory = 'Malumot topilmadi'
           }
         })
 
