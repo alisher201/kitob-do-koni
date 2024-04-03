@@ -12,7 +12,7 @@
         }}
       </small>
     </div>
-    
+
     <div class="row mx-0 mt-3">
       <div class="col-4 sideBar p-4">
         <h6><strong>Katalog</strong></h6>
@@ -93,7 +93,6 @@
               class="form-control mb-1"
               v-model="oBarMinValue"
             />
-            
           </div>
           <div class="col-6">
             <label class="price">{{ $t("home.upTo") }}</label
@@ -110,7 +109,6 @@
           :rangeMargin="0"
           @input="update_oBarValues"
         />
-
 
         <!-- kitob tili bo'ycha sorov yuborish -->
         <hr class="my-4" />
@@ -153,7 +151,6 @@
         <div class="d-flex justify-content-between">
           <h6 class="p-0">{{ $t("home.catalog") }}</h6>
           <button class="categoriaAll btn btnColor">
-            <!-- {{ $t("home.sorting") }} -->
             <img src="@/assets/contact/arrowDown.png" alt="" />
           </button>
         </div>
@@ -169,17 +166,18 @@
               <pre>{{ item }}</pre>
             </div> -->
             <div class="bookData">
-              
               <img :src="url + '/' + item?.image" class="categoyImg" />
-              <button :class="item.is_bestseller == 1 ? 'btnBestseller' : 'newBook'">
-                 {{ item.is_bestseller == 1 ? 'Bestseller' : 'Yangi' }}
+              <button
+                :class="item.is_bestseller == 1 ? 'btnBestseller' : 'newBook'"
+              >
+                {{ item.is_bestseller == 1 ? "Bestseller" : "Yangi" }}
               </button>
               <img
                 src="../../assets/contact/booklike.png"
                 alt=""
                 class="bookLike"
               />
-              
+
               <img
                 src="../../assets/contact/karzinka.png"
                 alt=""
@@ -215,55 +213,94 @@
             <span class="starsNumbers">(32)</span>
           </div>
         </div>
-        <div v-else class="d-flex justify-content-center align-items-center">
-          <h1>
+        <div v-else class="d-flex justify-content-center align-items-center  category">
+          <h1 style="font-size: xx-large;">
             <!-- {{ store.errorCategory }} -->
-            Malumot topilmadi
+            Ushbu kategoriya bo'yicha malumot topilmadi
           </h1>
+        </div>
+
+        <div class="mt-5 mb-5">
+          <div class="d-flex justify-content-between mb-3">
+            <h6 class="p-0">{{ $t("home.recently") }}</h6>
+            <div>
+              <button class="nextRight me-2" @click="swiper.slidePrev()">
+                <img src="@/assets/contact/arrowRight.png" alt="" />
+              </button>
+              <button class="nextLeft" @click="swiper.slideNext()">
+                <img src="@/assets/contact/arrowLeft.png" alt="" />
+              </button>
+            </div>
+          </div>
+          <Swiper
+            :modules="[SwiperAutoplay, SwiperEffectCreative, SwiperPagination]"
+            :grid="{ rows: 1, fill: 'row' }"
+            :slides-per-view="6"
+            :space-between="10"
+            :pagination="{ clickable: true }"
+            @swiper="onSwiper"
+          >
+            <!-- <div class="bookGrid mt-3"> -->
+            <div v-if="store1.recent && store1.recent.product">
+              <SwiperSlide
+                class="p-0 dataItem"
+                v-for="(item, index) in store.recent"
+                :key="index"
+              >
+                <div class="dataItem">
+                  <!-- <img v-if="item.type == 'book'" :src="'https://beta.kytab.uz'+item.product.image" alt="" class="categoyImg" />
+            <img v-else :src="'https://kytabshop.al-raqam.com'+item.product.image" alt="" class="categoyImg" /> -->
+
+                  <button class="btnBestseller">Bestseller</button>
+                  <button class="newBook">Yangi</button>
+                  <img
+                    src="../../assets/contact/booklike.png"
+                    alt=""
+                    class="bookLike"
+                  />
+
+                  <img
+                    src="../../assets/contact/karzinka.png"
+                    alt=""
+                    class="karzinka"
+                  />
+                  <img
+                    src="../../assets/contact/eBook.png"
+                    alt=""
+                    class="ebook"
+                  />
+                </div>
+                <div class="ps-2">
+                  <small class="title">{{ item.product?.name }}</small>
+                  <pre>
+            {{ item.product }}
+
+            </pre
+                  >
+                </div>
+                <div class="ps-2">
+                  <small class="author">{{ item.product.author }}</small>
+                  <small class="author">{{
+                    item.product.description_uz
+                  }}</small>
+                </div>
+                <div>
+                  <small v-if="item.product.price" class="price"
+                    >{{ item.product.price }} so'm</small
+                  >
+                  <!-- <small v-else class="price">Tekin</small> -->
+                </div>
+                <img src="../../assets/contact/Star.png" alt="" />
+                <small class="stats ms-2">5,0</small>
+                <span class="starsNumbers">(32)</span>
+              </SwiperSlide>
+            </div>
+
+            <!-- </div> -->
+          </Swiper>
         </div>
       </div>
     </div>
-
-    <!-- input valiation -->
-    <input
-      ref="emailInput"
-      v-model="emailValue"
-      type="email"
-      placeholder="Email"
-    /><br />
-    <span v-if="emailError" style="color: red">{{ emailError.message }}</span
-    ><br />
-
-    <input
-      ref="emailInput"
-      v-model="telNumber"
-      type="number"
-      placeholder="number"
-    /><br />
-    <span v-if="errorTel" style="color: red">{{ errorTel.message }}</span>
-    <br />
-
-    <input
-      ref="emailInput"
-      v-model="password"
-      type="text"
-      placeholder="password"
-    /><br />
-    <span v-if="passwordError" style="color: red">{{
-      passwordError.message
-    }}</span>
-    <br />
-    <input
-      ref="emailInput"
-      v-model="confirmPassword"
-      type="text"
-      placeholder="password"
-    /><br />
-    <span v-if="confirmError" style="color: red">{{
-      confirmError.message
-    }}</span>
-    <br />
-    <button @click="sendMassage">yuborish</button>
   </div>
 </template>
 <script setup>
@@ -272,20 +309,15 @@ import "@/node_modules/multi-range-slider-vue/MultiRangeSliderBlack.css";
 import "@/node_modules/multi-range-slider-vue/MultiRangeSliderBarOnly.css";
 import { useCategory } from "@/store/category";
 const store = useCategory();
-const storeBasket = useBasketStore()
+const store1 = usePayment();
+const storeBasket = useBasketStore();
 const url = useRuntimeConfig().public.bookUrl;
 let lang_book = ref("all");
 let type_book = ref("all");
-
-const emailValue = ref(null);
-const emailError = ref(null);
-const telNumber = ref(null);
-const errorTel = ref(null);
-const password = ref(null);
-const passwordError = ref(null);  
-const confirmPassword = ref(null);
-const confirmError = ref(null);
-
+let swiper = null;
+const onSwiper = (sw) => {
+  swiper = sw;
+};
 
 const basketAdd = (e, id, type) => {
   e.stopPropagation();
@@ -301,60 +333,6 @@ const notify = () => {
     autoClose: 5000,
     dangerouslyHTMLString: true,
   });
-};
-
-watch(emailValue, (newVAlue) => {
-  emailError.value = !isEmpty(newVAlue, "email").item
-    ? isEmpty(newVAlue, "email")
-    : validateEmail(newVAlue);
-});
-watch(telNumber, (newValue) => {
-  errorTel.value = !isEmpty(newValue, "Telifon nomeri").item
-    ? isEmpty(newValue, "Telifon nomeri")
-    : validateLength(newValue, 12, 12, "telfon nomeri");
-});
-watch(password, (newValue) => {
-  passwordError.value = passwordValidator(newValue);
-});
-watch(confirmPassword, (newValue) => {
-  confirmError.value = confirmedValidator(newValue, password.value);
-});
-
-const sendMassage = () => {
-  // Emailni tekshirish
-  emailError.value = !isEmpty(emailValue.value, "ismi").item
-    ? isEmpty(emailValue.value, "ismi")
-    : validateEmail(emailValue.value);
-
-  // telifon nomerni tekshirish
-  errorTel.value = errorTel.value = !isEmpty(emailValue.value, "Telifon nomeri")
-    .item
-    ? isEmpty(emailValue.value, "Telifon nomeri")
-    : validateLength(emailValue.value, 12, 12, "telfon nomeri");
-
-  // password validation
-  passwordError.value = passwordValidator(password.value);
-
-  // confirm password
-  confirmError.value = confirmedValidator(
-    confirmPassword.value,
-    password.value
-  );
-
-  let array = [
-    emailError.value,
-    errorTel.value,
-    passwordError.value,
-    confirmError.value,
-  ];
-  let validtaionDAta = validation(array);
-  console.log(validtaionDAta);
-
-  if (validtaionDAta) {
-    console.log("malumotlar yuborildi");
-  } else {
-    console.log("yuborilmadi");
-  }
 };
 
 const alld = ref(5);
@@ -567,6 +545,7 @@ const selectBook = (id) => {
   display: none;
 }
 
+
 .headphone {
   cursor: pointer;
   display: none;
@@ -606,5 +585,116 @@ const selectBook = (id) => {
 
 .bookTypeRequest {
   cursor: pointer;
+}
+
+.dataItem {
+  box-shadow: 0px 2px 4px 0px #dbdbdb40;
+  border-radius: 0 0 7px 7px;
+}
+
+.btnBestseller {
+  background: #67c926;
+  position: absolute;
+  left: -5px;
+  top: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 600;
+  z-index: 1;
+  width: 78px;
+  height: 23px;
+}
+
+.newBook {
+  background: #ff673d;
+  position: absolute;
+  left: -5px;
+  top: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 600;
+  width: 49px;
+  height: 23px;
+}
+
+.karzinka {
+  position: absolute;
+  right: 10px;
+  top: 45px;
+  cursor: pointer;
+  display: none;
+}
+
+.nextRight {
+  width: 30px;
+  height: 30px;
+  background: #f6f6f6;
+  border-radius: 20px 0 0 20px;
+  cursor: pointer;
+  border: none;
+}
+
+.nextLeft {
+  width: 30px;
+  height: 30px;
+  background: #f6f6f6;
+  border-radius: 0 20px 20px 0;
+  cursor: pointer;
+  border: none;
+}
+.ebook {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  cursor: pointer;
+  display: none;
+}
+
+.bookDataa:hover .bookLike,
+.bookDataa:hover .ebook,
+.bookDataa:hover .karzinka {
+  display: block;
+}
+
+.title {
+  font-weight: 1000;
+  color: black;
+}
+
+.author {
+  color: #5b5e6d;
+  font-weight: 600;
+}
+
+.bookLike {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  display: none;
+}
+
+.categoyImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+}
+
+.aboutMenu div:hover {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.bookTypeActive {
+  border: 1px solid #41a2db !important;
+  color: #41a2db !important;
+}
+.price {
+  color: black;
+  font-weight: 800;
 }
 </style>

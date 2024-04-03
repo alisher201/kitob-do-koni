@@ -426,6 +426,7 @@ console.log("epubUrl");
         :pagination="{ clickable: true }"
         @swiper="onSwiper"
       >
+      
       <!-- <div class="bookGrid mt-3"> -->
         <div v-if="store.recent && store.recent.product">
           <SwiperSlide
