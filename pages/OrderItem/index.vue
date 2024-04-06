@@ -286,8 +286,8 @@
   </div>
 </template>
 <script setup>
-import click from "~/assets/contact/click.png";
-import payme from "@/assets/contact/payme.png";
+// import click from "~/assets/contact/click.png";
+// import payme from "@/assets/contact/payme.png";
 const content = ref(null);
 const router = useRouter();
 let url = useRuntimeConfig().public.bookUrl;
