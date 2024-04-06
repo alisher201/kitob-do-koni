@@ -7,9 +7,9 @@
         class="container mb-5 pb-5 px-0 d-flex flex-column align-items-center"
         style="position: relative"
       >
-        <div class="cardData">
-          <div class="cardImg">
-            <div class="cardList">
+        <div class="cardData"  >
+          <div class="cardImg" >
+            <div class="cardList" style="background-color:rgb(85, 85, 235)" >
               <div class="d-flex justify-content-between">
                 <p class="cardNumber">{{ $t("home.cardNum") }}</p>
                 <img src="../../assets/contact/uzcardlogo.png" alt="" />
@@ -53,6 +53,10 @@
                 class="form-control"
                 placeholder="******************"
               />
+              <span v-if="errorTel" style="color: red">{{
+              errorTel.message
+            }}</span>
+              
             </div>
             <div class="row">
               <div class="col-7">
@@ -80,6 +84,7 @@
             </div>
             <div class="cardPeymentContainer">
               <button
+              style="background-color: rgb(66, 66, 244);"
                 @click="send"
                 class="w-100 cardPeyment fw-bold text-white"
                 data-bs-toggle="modal"
@@ -108,7 +113,7 @@
             </div>
           </div>
         </div>
-        {{ store.token }}
+        <!-- {{ store.token }} -->
 
         <!-- Modal -->
         <div
@@ -220,7 +225,19 @@ let pay = ref({
   sms: null,
 });
 
+
+const emailError = ref(null);
+const errorTel = ref(null);
+const passwordError = ref(null);
+const {card_code, full_name, password } = toRefs(form.value);
+
+watch(card_code, (newValue) => {errorTel.value = !isEmpty(newValue, "Telifon nomeri").item ? isEmpty(newValue, "Telifon nomeri")
+    : validateLength(newValue, 16, 16, "telfon nomeri");
+}, { deep: true });
+
 const send = async () => {
+  errorTel.value = validateLength(form.value.card_code, 16, 16, "card nomeri");
+
   let name = form.value.card_name?.toLowerCase();
   let payload = {
     name: name,
@@ -230,7 +247,6 @@ const send = async () => {
   let p = {
     pan: form.value.card_code,
   };
-
   console.log(payload);
   await store.Order_Exists(p).then(() => {
     if (store.exists?.token) {

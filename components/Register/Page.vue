@@ -96,6 +96,7 @@
 
 <script setup>
 import {useTestTStore} from '@/store/home.js' 
+const router = useRouter()
 const store = useTestTStore();
 let userRegister = ref({
   full_name: null,
@@ -141,6 +142,7 @@ const senDataUser = async () => {
   if (validtaionDAta) {
     console.log('malumotlar yuborildi');
     localStorage.setItem("phone",userRegister.value.phone)
+    router.push('/profile')
   }
   else {
     console.log('yuborilmadi');

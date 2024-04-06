@@ -125,11 +125,12 @@
                 :placeholder="$t('home.enterCode')"
                 class="orderPromokod"
               />
-              <button class="submitProma">{{ $t("home.apply") }}</button>
+              <button class="submitProma"  style="background-color:rgb(72, 72, 240)">{{ $t("home.apply") }}</button>
             </div>
             <div v-if="usertype == 'guest'">
               <button
                 class="w-100 cardPeyment fw-bold text-white sendOrder mt-3"
+                style="background-color:rgb(72, 72, 240)"
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
                 type="button"
@@ -141,6 +142,7 @@
             <div v-else>
               <button
                 class="w-100 cardPeyment fw-bold text-white sendOrder mt-3"
+                style="background-color:rgb(72, 72, 240)"
                 type="button"
                 @click="send"
               >
@@ -400,6 +402,8 @@ const al = ()=>{
         //  console.log(Payment.value.deliveryMethod,'deliver');
           store.Order_Payment(payload)
           console.log('cash ishladi')
+          notify()
+
           
     }
     else{
@@ -414,7 +418,12 @@ const al = ()=>{
     
   }
 }
-
+ const notify = () => {
+      useNuxtApp().$toast.success("Buyurtmangiz amalga oshirildi", {
+        autoClose: 5e3,
+        dangerouslyHTMLString: true
+      });
+    }
 const peymentType = [
   { imgs: payme ,name:'card'},
   { imgs: click ,name:'card'},
