@@ -1,9 +1,5 @@
 <template>
   <div>
-    <!-- <pre>
-    {{ store.forget }}
-
-    </pre> -->
     <div class="container mb-5 pb-5 px-0">
       <h4 class="mt-4" style="font-weight: 700">{{ $t("home.processing") }}</h4>
       <div class="d-flex justify-content-between">
@@ -23,9 +19,6 @@
                 class="form-control"
                 :placeholder="$t('home.entersurname')"
               />
-              <span v-if="emailError" style="color: red" name="full_name">{{
-                emailError.message
-              }}</span>
             </div>
             <div v-if="usertype == 'guest'">
               <label for="" class="processingLabel mb-1"
@@ -37,9 +30,6 @@
                 class="form-control"
                 :placeholder="$t('home.enternum')"
               />
-              <span v-if="errorTel" style="color: red">{{
-                errorTel.message
-              }}</span>
             </div>
 
             <div>
@@ -56,9 +46,6 @@
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </select>
-              <span v-if="emailError" style="color: red" name="full_name">{{
-                emailError.message
-              }}</span>
             </div>
             <div>
               <label for="" class="processingLabel mb-1"
@@ -70,9 +57,6 @@
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </select>
-              <span v-if="emailError" style="color: red" name="full_name">{{
-                emailError.message
-              }}</span>
             </div>
             <div>
               <label for="" class="processingLabel mb-1"
@@ -84,15 +68,8 @@
                 class="form-control"
                 :placeholder="$t('home.enteraddress')"
               />
-              <span v-if="emailError" style="color: red" name="full_name">{{
-                emailError.message
-              }}</span>
             </div>
           </div>
-          <!-- <div class="mt-3">
-            <label for="" class="processingLabel mb-1">{{ $t("home.courier") }}</label>
-            <input v-model="Payment.comment" type="text" class="form-control"/>
-          </div> -->
         </div>
         <!-- buyurtma haqida -->
         <div class="yourOrderContainer">
@@ -125,12 +102,17 @@
                 :placeholder="$t('home.enterCode')"
                 class="orderPromokod"
               />
-              <button class="submitProma"  style="background-color:rgb(72, 72, 240)">{{ $t("home.apply") }}</button>
+              <button
+                class="submitProma"
+                style="background-color: rgb(72, 72, 240)"
+              >
+                {{ $t("home.apply") }}
+              </button>
             </div>
             <div v-if="usertype == 'guest'">
               <button
                 class="w-100 cardPeyment fw-bold text-white sendOrder mt-3"
-                style="background-color:rgb(72, 72, 240)"
+                style="background-color: rgb(72, 72, 240)"
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
                 type="button"
@@ -142,7 +124,7 @@
             <div v-else>
               <button
                 class="w-100 cardPeyment fw-bold text-white sendOrder mt-3"
-                style="background-color:rgb(72, 72, 240)"
+                style="background-color: rgb(72, 72, 240)"
                 type="button"
                 @click="send"
               >
@@ -168,7 +150,6 @@
             :style="{ gridArea: `cardItem${idx + 1}` }"
             @click="Payment.card = item.name"
           >
-            <!-- <p>{{ Payment.card }}</p> -->
             <input
               class="form-check-input"
               type="radio"
@@ -241,9 +222,6 @@
           </div>
         </div>
       </div>
-      <!-- <pre>{{store?.invoic_id?.invoice_id}}</pre>     -->
-      <!-- <pre>{{ store?.delivery }}</pre>
-      <pre>{{ typeof usertype }}</pre> -->
       <div>
         <div
           class="modal fade"
@@ -309,171 +287,100 @@
 </template>
 <script setup>
 import click from "~/assets/contact/click.png";
-// import humo from "@/assets/contact/humo.png";
-// import mastercard from "@/assets/contact/mastercard.png";
-// import oson from "@/assets/contact/oson.png";
 import payme from "@/assets/contact/payme.png";
-// import paynet from "@/assets/contact/paynet.png";
-// import uzcard from "@/assets/contact/click.png";
-// import visa from "@/assets/contact/visa.png";
-// import uzum from "@/assets/contact/uzum.png";
-// import stanart from "../../assets/contact/standart.png";
-// import regions from "../../assets/contact/regions.png";
-// import express from "../../assets/contact/express.png";
-const content = ref(null)
-const router = useRouter()
-let url = useRuntimeConfig().public.bookUrl
-definePageMeta({
+const content = ref(null);
+const router = useRouter();
+let url = useRuntimeConfig().public.bookUrl;
+// definePageMeta({
+//   layout: "OrderItem",
+// });
+let Payment = ref({
+  full_name: null,
+  phone: null,
+  deliver: null,
+  district: null,
+  address: null,
+  comment: null,
+  card: null,
+  deliveryMethod: null,
+  sms: null,
+});
+const usertype = ref(null);
+console.log(Payment.value.deliveryMethod, "deliver");
+const price = ref(null);
+const store = OrderPayment();
+onMounted(() => {
+  store.Order_delivery();
+  usertype.value = localStorage.getItem("type");
+  definePageMeta({
   layout: "OrderItem",
 });
-let Payment = ref({
-  full_name:null,
-  phone:null,
-  deliver:null,
-  district:null,
-  address:null,
-  comment:null,
-  card:null,
-  deliveryMethod:null,
-  sms:null,
-})
-const usertype = ref(null)
-// console.log(Payment); 
-console.log(Payment.value.deliveryMethod,'deliver');
-const price = ref(null)
-
-console.log();
-const store = OrderPayment()
-onMounted(()=>{
-  store.Order_delivery()
-   usertype.value  = localStorage.getItem("type") 
-})
-const start=()=>{
+});
+const start = () => {
   let guest = {
-    phone:Payment.value.phone,
-    code:Payment.value.sms
-  }
-      store.Order_Forget(guest)
-      .then(()=>{
-          localStorage.setItem('jwtToken',store.forget.token);
-          localStorage.setItem('efreshToken',store.forget.refresh_token);
-          localStorage.setItem('type', store.forget.user_data.type)
-          localStorage.setItem("phone", store.forget.user_data.phone)
+    phone: Payment.value.phone,
+    code: Payment.value.sms,
+  };
+  store.Order_Forget(guest).then(() => {
+    localStorage.setItem("jwtToken", store.forget.token);
+    localStorage.setItem("efreshToken", store.forget.refresh_token);
+    localStorage.setItem("type", store.forget.user_data.type);
+    localStorage.setItem("phone", store.forget.user_data.phone);
 
-          al()
-          console.log('al ishladi')
-      });
-      
- }
-const send = async() => {
+    al();
+    // console.log("al ishladi");
+  });
+};
+const send = async () => {
   let pay = {
-    full_name:Payment.value.full_name,
-    phone:Payment.value.phone,
+    full_name: Payment.value.full_name,
+    phone: Payment.value.phone,
+  };
+  console.log(usertype.value, "usertype");
+  if (usertype.value == "guest") {
+    await store.Order_check(pay);
+  } else {
+    console.log("al ishladi");
+    al();
   }
-  console.log(usertype.value,'usertype');
-  if(usertype.value == "guest"){
-    await store.Order_check(pay)
+};
+const al = () => {
+  let check = Payment.value.deliver + " " + Payment.value.district + " " +  Payment.value.address;
+  let deliveryMethodd = Payment.value.deliveryMethod;
+  let delivery = deliveryMethodd?.toLowerCase();
+  let product = localStorage.getItem("Product");
+  let products = JSON.parse(product);
+  let payload = {
+    deliveryAddress: check,
+    paymentMethod: Payment.value.card,
+    deliveryMethod: delivery,
 
+    productList: products,
+  };
+  if (Payment.value.card == "cash") {
+    console.log("buyurtmangiz jo'natildi");
+    store.Order_Payment(payload);
+    console.log("cash ishladi");
+    notify();
+  } else {
+    console.log(Payment.value.card, "payment");
+    store.Order_Payment(payload).then(() => {
+      let invoice_id = store?.invoic_id?.invoice_id;
+      localStorage.setItem("invoiceId", invoice_id);
+    });
+    router.push("/payment");
   }
-  else{
-    console.log('al ishladi');
-   al() 
-  } 
-}
-const al = ()=>{
-  
-  let check = Payment.value.deliver + " " + Payment.value.district + " " + Payment.value.address
-    let deliveryMethodd =  Payment.value.deliveryMethod
-    let delivery = deliveryMethodd?.toLowerCase()
-    let product = localStorage.getItem("Product")
-    let products = JSON.parse(product)
-    let payload = {
-      deliveryAddress:check,
-      paymentMethod  : Payment.value.card,
-      deliveryMethod : delivery,
-    
-      productList :products
-      
-    
-    }
-    if(Payment.value.card == 'cash'){
-        console.log("buyurtmangiz jo'natildi");
-        // console.log(Payment.value.card,'card');
-        //  console.log(Payment.value.deliveryMethod,'deliver');
-          store.Order_Payment(payload)
-          console.log('cash ishladi')
-          notify()
-
-          
-    }
-    else{
-      console.log(Payment.value.card,'payment');
-       store.Order_Payment(payload)
-      .then(()=>{
-        let invoice_id = store?.invoic_id?.invoice_id
-        localStorage.setItem("invoiceId",invoice_id)
-      
-      })
-      router.push('/payment')
-    
-  }
-}
- const notify = () => {
-      useNuxtApp().$toast.success("Buyurtmangiz amalga oshirildi", {
-        autoClose: 5e3,
-        dangerouslyHTMLString: true
-      });
-    }
+};
+const notify = () => {
+  useNuxtApp().$toast.success("Buyurtmangiz amalga oshirildi", {
+    autoClose: 5e3,
+    dangerouslyHTMLString: true,
+  });
+};
 const peymentType = [
-  { imgs: payme ,name:'card'},
-  { imgs: click ,name:'card'},
-  // { imgs: uzum },
-  // { imgs: paynet },
-  // { imgs: oson },
-  // { imgs: uzcard },
-  // { imgs: humo },
-  // { imgs: mastercard },
-  // { imgs: visa },
+  { imgs: payme, name: "card" },
+  { imgs: click, name: "card" },
 ];
-
-// const emailError = ref(null);
-
-// // const full_name = ref(null)
-// const errorTel = ref(null)
-// // const delevireyAdress = ref(null)
-
-
-
-// watch(Payment.value.full_name, (newVAlue) => {
-//   emailError.value = isEmpty(newVAlue, "string");
-// }, { deep: true });
-
-// watch(Payment.value.phone, (newValue) => {errorTel.value = !isEmpty(newValue, "Telifon nomeri").item ? isEmpty(newValue, "Telifon nomeri")
-//     : validateLength(newValue, 12, 12, "telfon nomeri");
-// }, { deep: true });
-
-
-// watch(Payment.value.deliver, (newVAlue) => {
-//   emailError.value = isEmpty(newVAlue, "string");
-// }, { deep: true });
-// watch(Payment.value.district, (newVAlue) => {
-//   emailError.value = isEmpty(newVAlue, "string");
-// }, { deep: true });
-
-// watch(Payment.value.address, (newVAlue) => {
-//   emailError.value = isEmpty(newVAlue, "string");
-// }, { deep: true });
-
-// watch(Payment.value.card, (newVAlue) => {
-//   emailError.value = isEmpty(newVAlue, "string");
-// }, { deep: true });
-
-// watch(Payment.value.deliveryMethod, (newVAlue) => {
-//   emailError.value = isEmpty(newVAlue, "string");
-// }, { deep: true });
-
-
-
 </script>
 <style>
 .OrderProcessing {
